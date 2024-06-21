@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import App from "./App.jsx";
 import Products from "./components/Products/Products.jsx";
+import Categories from "./components/Products/Categories.jsx";
+import Items from "./components/Products/Items.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import Cart from "./components/Cart.jsx";
 import "./index.css";
@@ -17,7 +19,10 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<App />}>
-        <Route path="" element={<Products />} />
+        <Route path="Products/" element={<Products />}>
+          <Route path="" element={<Categories />} />
+          <Route path="Items" element={<Items />} />
+        </Route>
         <Route path="Wishlist" element={<Wishlist />} />
         <Route path="Cart" element={<Cart />} />
       </Route>

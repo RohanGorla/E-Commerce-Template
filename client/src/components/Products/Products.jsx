@@ -1,31 +1,17 @@
 import { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
+import Categories from "./Categories";
+import Items from "./Items";
 import "../../styles/Products.css";
 
 function Products() {
   const content = useOutletContext();
-//   console.log(content);
+  const [show, setShow] = useState(false);
+  // console.log(content);
 
   return (
     <>
-      <h1>Products List</h1>
-      {content.products.map((product, index) => {
-        return (
-          <div key={index} style={{ padding: "2em 1em", margin: "1em 0" }}>
-            <h2>{product.title}</h2>
-            <p>{product.category}</p>
-            <p>{product.description}</p>
-            <p>{product.id}</p>
-            <button
-              onClick={() => {
-                content.addToCart(product.id);
-              }}
-            >
-              Add to cart
-            </button>
-          </div>
-        );
-      })}
+      <Outlet context={content}/>
     </>
   );
 }

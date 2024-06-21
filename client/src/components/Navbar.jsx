@@ -18,7 +18,7 @@ function Navbar() {
         >
           <li className="nav-item">
             <NavLink
-              to={""}
+              to={"/Products"}
               style={({isActive}) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }

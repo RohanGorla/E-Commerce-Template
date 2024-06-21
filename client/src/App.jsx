@@ -7,17 +7,23 @@ import { Outlet } from "react-router-dom";
 function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [category, setCategory] = useState();
   // console.log(cart);
 
   async function getProducts() {
-    let response = await fetch("https://dummyjson.com/products?limit=200");
-    let data = await response.json();
-    setProducts(data.products);
+    if (category) {
+      let response = await fetch(
+        `https://dummyjson.com/products/category/${category}`
+      );
+      let data = await response.json();
+      console.log(data);
+      setProducts(data.products);
+    }
   }
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [category]);
 
   function addToCart(id) {
     console.log(id);
@@ -39,7 +45,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Outlet context={{ products, addToCart, cart }} />
+      <Outlet context={{ products, cart, category, addToCart, setCategory }} />
       <Footer />
     </>
   );
