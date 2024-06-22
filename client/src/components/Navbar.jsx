@@ -18,11 +18,23 @@ function Navbar() {
         >
           <li className="nav-item">
             <NavLink
-              to={"/Products"}
-              style={({isActive}) => {
+              to={""}
+              style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" }
+                  : { textDecoration: "none", color: "black" };
+              }}
+            >
+              Home
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to={"/products"}
+              style={({ isActive }) => {
+                return isActive
+                  ? { textDecoration: "none", color: "red" }
+                  : { textDecoration: "none", color: "black" };
               }}
             >
               Products
@@ -30,11 +42,11 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <NavLink
-              to={"/Wishlist"}
-              style={({isActive}) => {
+              to={"/wishlist"}
+              style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" }
+                  : { textDecoration: "none", color: "black" };
               }}
             >
               Wishlist
@@ -42,14 +54,26 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <NavLink
-              to={"/Cart"}
-              style={({isActive}) => {
+              to={"/cart"}
+              style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" }
+                  : { textDecoration: "none", color: "black" };
               }}
             >
               Cart
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to={"/register"}
+              style={({ isActive }) => {
+                return isActive
+                  ? { textDecoration: "none", color: "red" }
+                  : { textDecoration: "none", color: "black" };
+              }}
+            >
+              Log in
             </NavLink>
           </li>
         </ul>
