@@ -7,6 +7,7 @@ function AddProduct() {
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState("");
   const [productCat, setProductCat] = useState("");
+  const [actCat, setActCat] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -85,6 +86,26 @@ function AddProduct() {
         <div>
           <input type="submit"></input>
         </div>
+      </form>
+      <p style={{ textAlign: "center", marginTop:'3em' }}>Add Category</p>
+      <form
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ margin: "1em 0" }}>
+          <label style={{ margin: "0 1em" }}>Category</label>
+          <input
+            type="text"
+            onChange={(e) => {
+              setActCat(e.target.value);
+            }}
+            value={actCat}
+          ></input>
+        </div>
+        <input type="submit"></input>
       </form>
     </>
   );
