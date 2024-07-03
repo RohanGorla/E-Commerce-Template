@@ -76,6 +76,18 @@ function Navbar() {
               Log in
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink
+              to={"/addproduct"}
+              style={({ isActive }) => {
+                return isActive
+                  ? { textDecoration: "none", color: "red" }
+                  : { textDecoration: "none", color: "black" };
+              }}
+            >
+              Add product
+            </NavLink>
+          </li>
         </ul>
       </div>
     </>

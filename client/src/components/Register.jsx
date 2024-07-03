@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Register() {
@@ -8,6 +9,8 @@ function Register() {
   const [pass, setPass] = useState("");
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
+
+  const navigate = useNavigate();
 
   async function addUser() {
     await axios
@@ -19,6 +22,9 @@ function Register() {
       })
       .then((response) => {
         console.log(response);
+        if (response.data) {
+          navigate("/products");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -33,6 +39,9 @@ function Register() {
       })
       .then((response) => {
         console.log(response);
+        if (response.data) {
+          navigate("/products");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -92,7 +101,10 @@ function Register() {
         </div>
 
         <div style={{ margin: "1em 0" }}>
-          <button style={{ padding: ".3em .4em" }} onClick={addUser}>
+          <button
+            style={{ padding: ".3em .4em" }}
+            onClick={mail && password ? addUser : null}
+          >
             Sign up
           </button>
         </div>
@@ -119,7 +131,10 @@ function Register() {
           ></input>
         </div>
         <div style={{ margin: "1em 0" }}>
-          <button style={{ padding: ".3em .4em" }} onClick={checkUser}>
+          <button
+            style={{ padding: ".3em .4em" }}
+            onClick={email && pass ? checkUser : null}
+          >
             Log in
           </button>
         </div>

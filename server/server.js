@@ -23,7 +23,7 @@ db.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-  db.query("select * from register", (err, data) => {
+  db.query("select * from userinfo", (err, data) => {
     if (err) return res.send(err);
     res.send(data);
   });
@@ -34,11 +34,11 @@ app.post("/addUser", async (req, res) => {
   let token = await bcrypt.hash(req.body.mail, 10);
   let values = [[req.body.first, req.body.last, req.body.mail, hash, token]];
   db.query(
-    "insert into register (firstname, lastname, mailid, password, token) values ?",
+    "insert into userinfo (firstname, lastname, mailid, password, token) values ?",
     [values],
     (err, data) => {
       if (err) return res.send(err);
-      res.send(data);
+      res.send(true);
     }
   );
 });
@@ -49,7 +49,7 @@ app.post("/checkUser", async (req, res) => {
   let exists = false;
   let actualPassword;
   db.query(
-    "select mailid, password from register where mailid = ?",
+    "select mailid, password from userinfo where mailid = ?",
     [mailId],
     async (err, data) => {
       if (err) return res.send(err);
@@ -62,10 +62,11 @@ app.post("/checkUser", async (req, res) => {
         if (correct) {
           let token = await bcrypt.hash(mailId, 10);
           db.query(
-            "update register set ? where mailId = ?",
+            "update userinfo set ? where mailId = ?",
             [{ token: token }, mailId],
             (err, data) => {
-              if (err) res.send(err);
+              if (err) return res.send(err);
+              res.send(true);
             }
           );
         }
