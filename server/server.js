@@ -143,6 +143,45 @@ app.delete("/removecartitem", (req, res) => {
   });
 });
 
+app.post("/getfromwish", (req, res) => {
+  db.query("select * from wishlists", (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+    console.log("select * from wishlists data ->", data);
+    res.send(data);
+  });
+});
+
+app.post("/addtowish", (req, res) => {
+  const values = [req.body.id, req.body.title];
+  db.query(
+    "insert into wishlists (productid, title) values (?)",
+    [values],
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.send(err);
+      }
+      console.log("insert into wishlist data ->", data);
+      res.send(data);
+    }
+  );
+});
+
+app.delete("/removefromwish", (req, res) => {
+  const id = req.body.id;
+  db.query("delete from wishlists where id = ?", id, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+    console.log("remove from wishlist data ->", data);
+    res.send(data);
+  });
+});
+
 app.post("/getproducts", (req, res) => {
   const category = req.body.category;
   db.query("select * from products", category, (err, data) => {

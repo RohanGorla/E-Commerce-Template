@@ -27,6 +27,16 @@ function Items() {
     //   }
     // }
   }
+
+  async function addToWishlist(product) {
+    // console.log(product);
+    const response = await axios.post("http://localhost:3000/addtowish", {
+      id: product.id,
+      title: product.title,
+    });
+    console.log(response);
+  }
+
   return (
     <>
       {/* add a category button to go back to selecting categories if needed. */}
@@ -58,6 +68,14 @@ function Items() {
               }}
             >
               Add to cart
+            </button>
+            <button
+              onClick={() => {
+                // send all data about product needed for the cart along with user mail id.
+                addToWishlist(product);
+              }}
+            >
+              Wish list
             </button>
           </div>
         );
