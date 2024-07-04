@@ -100,6 +100,17 @@ app.post("/checkUser", async (req, res) => {
   );
 });
 
+app.post("/getcartitems", (req, res) => {
+  db.query("select * from cart", (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+    console.log("select * cart items data ->", data);
+    res.send(data);
+  });
+});
+
 app.post("/addtocart", (req, res) => {
   const id = req.body.id;
   const title = req.body.title;
@@ -120,13 +131,14 @@ app.post("/addtocart", (req, res) => {
   );
 });
 
-app.post("/getcartitems", (req, res) => {
-  db.query("select * from cart", (err, data) => {
+app.delete("/removecartitem", (req, res) => {
+  const id = req.body.id;
+  db.query("delete from cart where id = ?", id, (err, data) => {
     if (err) {
       console.log(err);
       return res.send(err);
     }
-    console.log("select * cart items data ->", data);
+    console.log("delete cart item data ->", data);
     res.send(data);
   });
 });

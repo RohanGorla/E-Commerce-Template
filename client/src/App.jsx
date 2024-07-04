@@ -7,9 +7,7 @@ import axios from "axios";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
   const [category, setCategory] = useState();
-  // console.log(cart);
 
   async function getProducts() {
     if (category) {
@@ -26,22 +24,14 @@ function App() {
     }
   }
 
-  async function getFromCart() {
-    console.log("cart");
-    const response = await axios.post("http://localhost:3000/getcartitems");
-    const data = response.data;
-    console.log(data);
-    setCart(data);
-  }
-
   useEffect(() => {
     getProducts();
   }, [category]);
 
   return (
     <>
-      <Navbar getCart={getFromCart}/>
-      <Outlet context={{ products, cart, category, setCategory }} />
+      <Navbar />
+      <Outlet context={{ products, category, setCategory }} />
       <Footer />
     </>
   );

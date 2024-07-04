@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "../styles/Navbar.css";
 
-function Navbar({ getCart }) {
+function Navbar() {
   return (
     <>
       <div className="navbar">
@@ -59,9 +59,6 @@ function Navbar({ getCart }) {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
                   : { textDecoration: "none", color: "black" };
-              }}
-              onClick={() => {
-                getCart();
               }}
             >
               Cart
