@@ -21,6 +21,20 @@ function AddProduct() {
     });
     const putURL = response.data;
     await axios.put(putURL, file, { headers: { "Content-Type": file.type } });
+    setFile("");
+    setTitle("");
+    setPrice("");
+    setDiscount("");
+    setProductCat("");
+  }
+
+  async function handleCategory(e) {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:3000/addcategory", {
+      category: actCat,
+    });
+    console.log(response);
+    setActCat("");
   }
 
   return (
@@ -87,13 +101,14 @@ function AddProduct() {
           <input type="submit"></input>
         </div>
       </form>
-      <p style={{ textAlign: "center", marginTop:'3em' }}>Add Category</p>
+      <p style={{ textAlign: "center", marginTop: "3em" }}>Add Category</p>
       <form
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
+        onSubmit={handleCategory}
       >
         <div style={{ margin: "1em 0" }}>
           <label style={{ margin: "0 1em" }}>Category</label>

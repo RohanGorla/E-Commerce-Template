@@ -3,7 +3,9 @@ import "../styles/Wishlist.css";
 
 function Wishlist() {
 
-    return <>Wishlist</>
+    return <>Wishlist
+    {/* add same features from cart */}
+    </>
 }
 
 export default Wishlist;

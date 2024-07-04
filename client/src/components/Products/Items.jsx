@@ -1,12 +1,13 @@
 import { useOutletContext } from "react-router-dom";
 
-function Items({ setShow }) {
-  const content = useOutletContext();
-//   console.log(content);
+function Items() {
+  const context = useOutletContext();
+//   console.log(context);
   return (
     <>
+      {/* add a category button to go back to selecting categories if needed. */}
       <h1>Products List</h1>
-      {content.products.map((product, index) => {
+      {context.products.map((product, index) => {
         return (
           <div key={index} style={{ padding: "2em 1em", margin: "1em 0" }}>
             <h2>{product.title}</h2>
@@ -15,7 +16,8 @@ function Items({ setShow }) {
             <p>{product.id}</p>
             <button
               onClick={() => {
-                content.addToCart(product.id);
+                // send all data about product needed for the cart along with user mail id.
+                context.addToCart(product.id);
               }}
             >
               Add to cart

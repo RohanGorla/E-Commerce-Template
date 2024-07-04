@@ -12,6 +12,7 @@ function Cart() {
             <h2>{item.title}</h2>
             <p>{item.description}</p>
             <p>{item.category}</p>
+            {/* Add remove from cart, go to buy buttons */}
           </div>
         );
       })}

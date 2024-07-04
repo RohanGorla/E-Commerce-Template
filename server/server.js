@@ -138,6 +138,33 @@ app.post("/addproduct", async (req, res) => {
   res.send(url);
 });
 
+app.get("/getallcategories", async (req, res) => {
+  db.query("select * from category", (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+    console.log(data);
+    res.send(data);
+  });
+});
+
+app.post("/addcategory", async (req, res) => {
+  const category = req.body.category;
+  db.query(
+    "insert into category (category) values (?)",
+    [category],
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.send(err);
+      }
+      console.log(data);
+      res.send("done");
+    }
+  );
+});
+
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
 });
