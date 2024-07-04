@@ -100,24 +100,48 @@ app.post("/checkUser", async (req, res) => {
   );
 });
 
-app.post("/addtocart", (req, res) => {});
+app.post("/addtocart", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const price = req.body.price;
+  const discount = req.body.discount;
+  const values = [id, title, price, discount];
+  db.query(
+    "insert into cart (productid, title, price, discount) values (?)",
+    [values],
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.send(err);
+      }
+      console.log(data);
+    }
+  );
+  db.query("select * from cart", (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+    console.log(data);
+    res.send(data);
+  });
+});
+
+app.post("/getproducts", (req, res) => {
+  const category = req.body.category;
+  db.query("select * from products", category, (err, data) => {
+    if (err) {
+      console.log(err);
+      return req.send(err);
+    }
+    console.log(data);
+    res.send(data);
+  });
+});
 
 app.post("/addproduct", async (req, res) => {
-  let code = random();
-  const type = req.body.type.split("/")[1];
-  const key = code + "." + type;
-  console.log(key);
-
-  const params = {
-    Bucket: bucketName,
-    Key: key,
-    ContentType: req.body.type,
-  };
-  const command = new PutObjectCommand(params);
-  let url = await getSignedUrl(s3, command);
-  console.log(url);
-
-  let values = [
+  // Adding values to DB
+  const values = [
     req.body.title,
     Number(req.body.price),
     Number(req.body.discount),
@@ -135,7 +159,24 @@ app.post("/addproduct", async (req, res) => {
       console.log(data);
     }
   );
-  res.send(url);
+
+  // Adding photo to S3 bucket and sending putobject-signed-url to client
+
+  /* const code = random();
+  const type = req.body.type.split("/")[1];
+  const key = code + "." + type;
+  console.log(key);
+
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+    ContentType: req.body.type,
+  };
+
+  const command = new PutObjectCommand(params);
+  const url = await getSignedUrl(s3, command);
+  console.log(url);
+  res.send(url); */
 });
 
 app.get("/getallcategories", async (req, res) => {

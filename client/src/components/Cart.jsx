@@ -8,7 +8,11 @@ function Cart() {
     <>
       {context.cart.map((item, index) => {
         return (
-          <div key={index} style={{margin:'1em 0', padding:'1em 2em'}}>
+          <div key={index} style={{ margin: "1em 0", padding: "1em 2em" }}>
+            <img
+              src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+              style={{ width: "300px" }}
+            ></img>
             <h2>{item.title}</h2>
             <p>{item.description}</p>
             <p>{item.category}</p>
