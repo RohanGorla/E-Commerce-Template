@@ -26,40 +26,22 @@ function App() {
     }
   }
 
+  async function getFromCart() {
+    console.log("cart");
+    const response = await axios.post("http://localhost:3000/getcartitems");
+    const data = response.data;
+    console.log(data);
+    setCart(data);
+  }
+
   useEffect(() => {
     getProducts();
   }, [category]);
 
-  async function addToCart(id, title, price, discount) {
-    console.log(id, title, price, discount);
-    const response = await axios.post("http://localhost:3000/addtocart", {
-      id: id,
-      title: title,
-      price: price,
-      discount: discount,
-    });
-    const data = response.data;
-    console.log(data);
-    setCart(data);
-    // for (let i = 0; i < products.length; i++) {
-    //   if (products[i].id == id) {
-    //     console.log(products[i].id);
-    //     let product = {
-    //       title: products[i].title,
-    //       description: products[i].description,
-    //       category: products[i].category,
-    //     };
-    //     setCart((prev) => {
-    //       return [...prev, product];
-    //     });
-    //   }
-    // }
-  }
-
   return (
     <>
-      <Navbar />
-      <Outlet context={{ products, cart, category, addToCart, setCategory }} />
+      <Navbar getCart={getFromCart}/>
+      <Outlet context={{ products, cart, category, setCategory }} />
       <Footer />
     </>
   );

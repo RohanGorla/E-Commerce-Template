@@ -14,8 +14,11 @@ function Cart() {
               style={{ width: "300px" }}
             ></img>
             <h2>{item.title}</h2>
-            <p>{item.description}</p>
-            <p>{item.category}</p>
+            <p>{item.price}</p>
+            <p>{item.discount}</p>
+            <p>
+              final price: {item.price - item.price * (item.discount / 100)}
+            </p>
             {/* Add remove from cart, go to buy buttons */}
           </div>
         );

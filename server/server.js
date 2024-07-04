@@ -115,14 +115,18 @@ app.post("/addtocart", (req, res) => {
         return res.send(err);
       }
       console.log(data);
+      res.send(data);
     }
   );
+});
+
+app.post("/getcartitems", (req, res) => {
   db.query("select * from cart", (err, data) => {
     if (err) {
       console.log(err);
       return res.send(err);
     }
-    console.log(data);
+    console.log("select * cart items data ->", data);
     res.send(data);
   });
 });
@@ -134,7 +138,7 @@ app.post("/getproducts", (req, res) => {
       console.log(err);
       return req.send(err);
     }
-    console.log(data);
+    console.log("select * from products data ->", data);
     res.send(data);
   });
 });
@@ -157,6 +161,10 @@ app.post("/addproduct", async (req, res) => {
         return;
       }
       console.log(data);
+      res.send(
+        "insert into products data ->",
+        data
+      ); /* Remove this when adding image to bucket to send url to client but not this data */
     }
   );
 
@@ -185,7 +193,7 @@ app.get("/getallcategories", async (req, res) => {
       console.log(err);
       return res.send(err);
     }
-    console.log(data);
+    console.log("select * from categories data ->", data);
     res.send(data);
   });
 });
