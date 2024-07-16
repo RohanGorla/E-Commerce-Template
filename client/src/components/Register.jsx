@@ -22,7 +22,9 @@ function Register() {
       })
       .then((response) => {
         console.log(response);
-        if (response.data) {
+        if (response.data.access) {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("mailId", mail);
           navigate("/products");
         }
       })
@@ -39,8 +41,12 @@ function Register() {
       })
       .then((response) => {
         console.log(response);
-        if (response.data) {
+        if (response.data.access) {
+          localStorage.setItem("mailId", email);
+          localStorage.setItem("token", response.data.token);
           navigate("/products");
+        } else {
+          console.log("false");
         }
       })
       .catch((err) => {

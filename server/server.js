@@ -11,6 +11,7 @@ import {
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { access } from "fs";
 
 const app = express();
 app.use(express.json());
@@ -63,7 +64,7 @@ app.post("/addUser", async (req, res) => {
     [values],
     (err, data) => {
       if (err) return res.send(err);
-      res.send(true);
+      res.send({ access: true, token: token });
     }
   );
 });
@@ -91,9 +92,11 @@ app.post("/checkUser", async (req, res) => {
             [{ token: token }, mailId],
             (err, data) => {
               if (err) return res.send(err);
-              res.send(true);
+              res.send({ access: true, token: token });
             }
           );
+        } else {
+          res.send({ access: false });
         }
       }
     }
@@ -101,7 +104,8 @@ app.post("/checkUser", async (req, res) => {
 });
 
 app.post("/getcartitems", (req, res) => {
-  db.query("select * from cart", (err, data) => {
+  const mailId = req.body.mailId;
+  db.query("select * from cart where mailid = ?", mailId, (err, data) => {
     if (err) {
       console.log(err);
       return res.send(err);
@@ -116,9 +120,10 @@ app.post("/addtocart", (req, res) => {
   const title = req.body.title;
   const price = req.body.price;
   const discount = req.body.discount;
-  const values = [id, title, price, discount];
+  const mailId = req.body.mailId;
+  const values = [mailId, id, title, price, discount];
   db.query(
-    "insert into cart (productid, title, price, discount) values (?)",
+    "insert into cart (mailid, productid, title, price, discount) values (?)",
     [values],
     (err, data) => {
       if (err) {
@@ -144,7 +149,8 @@ app.delete("/removecartitem", (req, res) => {
 });
 
 app.post("/getfromwish", (req, res) => {
-  db.query("select * from wishlists", (err, data) => {
+  const mailId = req.body.mailId;
+  db.query("select * from wishlists where mailid = ?", mailId, (err, data) => {
     if (err) {
       console.log(err);
       return res.send(err);
@@ -155,9 +161,9 @@ app.post("/getfromwish", (req, res) => {
 });
 
 app.post("/addtowish", (req, res) => {
-  const values = [req.body.id, req.body.title];
+  const values = [req.body.id, req.body.title, req.body.mailId];
   db.query(
-    "insert into wishlists (productid, title) values (?)",
+    "insert into wishlists (productid, title, mailid) values (?)",
     [values],
     (err, data) => {
       if (err) {
@@ -184,14 +190,18 @@ app.delete("/removefromwish", (req, res) => {
 
 app.post("/getproducts", (req, res) => {
   const category = req.body.category;
-  db.query("select * from products where category = ?", category, (err, data) => {
-    if (err) {
-      console.log(err);
-      return req.send(err);
+  db.query(
+    "select * from products where category = ?",
+    category,
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        return req.send(err);
+      }
+      console.log("select * from products data ->", data);
+      res.send(data);
     }
-    console.log("select * from products data ->", data);
-    res.send(data);
-  });
+  );
 });
 
 app.post("/addproduct", async (req, res) => {

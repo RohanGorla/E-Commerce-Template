@@ -6,10 +6,15 @@ function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
 
   async function getFromWish() {
-    const response = await axios.post("http://localhost:3000/getfromwish");
-    console.log(response);
-    const data = response.data;
-    setWishlist(data);
+    const mailId = localStorage.getItem("mailId");
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/getfromwish", {
+        mailId: mailId,
+      });
+      console.log(response);
+      const data = response.data;
+      setWishlist(data);
+    }
   }
 
   async function removeFromWish(id) {

@@ -10,10 +10,15 @@ function Cart() {
 
   async function getFromCart() {
     console.log("cart");
-    const response = await axios.post("http://localhost:3000/getcartitems");
-    const data = response.data;
-    console.log(data);
-    setCart(data);
+    const mailId = localStorage.getItem("mailId");
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/getcartitems", {
+        mailId: mailId,
+      });
+      const data = response.data;
+      console.log(data);
+      setCart(data);
+    }
   }
 
   async function removeFromCart(id) {

@@ -6,35 +6,43 @@ function Items() {
   //   console.log(context);
   async function addToCart(id, title, price, discount) {
     console.log(id, title, price, discount);
-    const response = await axios.post("http://localhost:3000/addtocart", {
-      id: id,
-      title: title,
-      price: price,
-      discount: discount,
-    });
-    console.log(response);
-    // for (let i = 0; i < products.length; i++) {
-    //   if (products[i].id == id) {
-    //     console.log(products[i].id);
-    //     let product = {
-    //       title: products[i].title,
-    //       description: products[i].description,
-    //       category: products[i].category,
-    //     };
-    //     setCart((prev) => {
-    //       return [...prev, product];
-    //     });
-    //   }
-    // }
+    const mail = localStorage.getItem("mailId");
+    if (mail) {
+      const response = await axios.post("http://localhost:3000/addtocart", {
+        id: id,
+        title: title,
+        price: price,
+        discount: discount,
+        mailId: mail,
+      });
+      console.log(response);
+      // for (let i = 0; i < products.length; i++) {
+      //   if (products[i].id == id) {
+      //     console.log(products[i].id);
+      //     let product = {
+      //       title: products[i].title,
+      //       description: products[i].description,
+      //       category: products[i].category,
+      //     };
+      //     setCart((prev) => {
+      //       return [...prev, product];
+      //     });
+      //   }
+      // }
+    }
   }
 
   async function addToWishlist(product) {
     // console.log(product);
-    const response = await axios.post("http://localhost:3000/addtowish", {
-      id: product.id,
-      title: product.title,
-    });
-    console.log(response);
+    const mail = localStorage.getItem("mailId");
+    if (mail) {
+      const response = await axios.post("http://localhost:3000/addtowish", {
+        id: product.id,
+        title: product.title,
+        mailId: mail,
+      });
+      console.log(response);
+    }
   }
 
   return (
