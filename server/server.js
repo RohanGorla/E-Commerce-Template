@@ -184,7 +184,7 @@ app.delete("/removefromwish", (req, res) => {
 
 app.post("/getproducts", (req, res) => {
   const category = req.body.category;
-  db.query("select * from products", category, (err, data) => {
+  db.query("select * from products where category = ?", category, (err, data) => {
     if (err) {
       console.log(err);
       return req.send(err);
@@ -201,19 +201,19 @@ app.post("/addproduct", async (req, res) => {
     Number(req.body.price),
     Number(req.body.discount),
     req.body.category,
-    key,
+    // key,
   ];
   db.query(
-    "insert into products (title, price, discount, category, imageTag) values (?)",
+    // "insert into products (title, price, discount, category, imageTag) values (?)",
+    "insert into products (title, price, discount, category) values (?)",
     [values],
     (err, data) => {
       if (err) {
         console.log(err);
         return;
       }
-      console.log(data);
+      console.log("insert into products data ->", data);
       res.send(
-        "insert into products data ->",
         data
       ); /* Remove this when adding image to bucket to send url to client but not this data */
     }

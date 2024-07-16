@@ -11,16 +11,17 @@ function AddProduct() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(file.name, file.type);
+    // console.log(file.name, file.type);
     const response = await axios.post("http://localhost:3000/addproduct", {
       title: title,
       price: price,
       discount: discount,
       category: productCat,
-      type: file.type,
+      // type: file.type,
     });
-    const putURL = response.data;
-    await axios.put(putURL, file, { headers: { "Content-Type": file.type } });
+    console.log(response);
+    // const putURL = response.data;
+    // await axios.put(putURL, file, { headers: { "Content-Type": file.type } });
     setFile("");
     setTitle("");
     setPrice("");
