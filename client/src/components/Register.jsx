@@ -5,8 +5,6 @@ import axios from "axios";
 function Register() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
 
@@ -25,28 +23,7 @@ function Register() {
         if (response.data.access) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("mailId", mail);
-          navigate("/products");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  async function checkUser() {
-    await axios
-      .post(`${import.meta.env.VITE_BASE_URL}/checkUser`, {
-        mail: email,
-        password: pass,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.access) {
-          localStorage.setItem("mailId", email);
-          localStorage.setItem("token", response.data.token);
-          navigate("/products");
-        } else {
-          console.log("false");
+          navigate("/account");
         }
       })
       .catch((err) => {
@@ -114,36 +91,13 @@ function Register() {
             Sign up
           </button>
         </div>
-      </div>
-      <div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>Email</label>
-          <input
-            type="mail"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-          ></input>
-        </div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>Password</label>
-          <input
-            type="password"
-            onChange={(e) => {
-              setPass(e.target.value);
-            }}
-            value={pass}
-          ></input>
-        </div>
-        <div style={{ margin: "1em 0" }}>
-          <button
-            style={{ padding: ".3em .4em" }}
-            onClick={email && pass ? checkUser : null}
-          >
-            Log in
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login
+        </button>
       </div>
     </div>
   );

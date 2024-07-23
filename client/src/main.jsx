@@ -13,8 +13,11 @@ import Categories from "./components/Products/Categories.jsx";
 import Items from "./components/Products/Items.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import Cart from "./components/Cart.jsx";
+import Account from "./components/Account.jsx";
 import Register from "./components/Register.jsx";
+import Login from "./components/Login.jsx";
 import AddProduct from "./components/AddProduct.jsx";
+import Profile from "./components/Profile.jsx";
 import "./index.css";
 
 const router = createBrowserRouter(
@@ -28,7 +31,10 @@ const router = createBrowserRouter(
         </Route>
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="account" element={<Account />} />
         <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="addproduct" element={<AddProduct />} />
       </Route>
     </>

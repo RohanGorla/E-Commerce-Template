@@ -22,7 +22,7 @@ function Navbar() {
               style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" };
+                  : { textDecoration: "none", color: "white" };
               }}
             >
               Home
@@ -34,7 +34,7 @@ function Navbar() {
               style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" };
+                  : { textDecoration: "none", color: "white" };
               }}
             >
               Products
@@ -46,7 +46,7 @@ function Navbar() {
               style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" };
+                  : { textDecoration: "none", color: "white" };
               }}
             >
               Wishlist
@@ -58,7 +58,7 @@ function Navbar() {
               style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" };
+                  : { textDecoration: "none", color: "white" };
               }}
             >
               Cart
@@ -66,14 +66,14 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <NavLink
-              to={"/register"}
+              to={"/account"}
               style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" };
+                  : { textDecoration: "none", color: "white" };
               }}
             >
-              Log in
+              My Account
             </NavLink>
           </li>
           <li className="nav-item">
@@ -82,7 +82,7 @@ function Navbar() {
               style={({ isActive }) => {
                 return isActive
                   ? { textDecoration: "none", color: "red" }
-                  : { textDecoration: "none", color: "black" };
+                  : { textDecoration: "none", color: "white" };
               }}
             >
               Add product
