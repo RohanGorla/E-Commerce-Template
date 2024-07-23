@@ -28,7 +28,7 @@ function Categories() {
               <h2>{cat.category}</h2>
               <button style={{padding:'.2em .3em', margin:'.5em 0'}}>
                 <Link
-                  to="Items"
+                  to="items"
                   onClick={() => {
                     context.setCategory(cat.category);
                   }}

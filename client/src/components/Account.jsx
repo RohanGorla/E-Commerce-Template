@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Account() {
@@ -12,7 +12,7 @@ function Account() {
     if (userMail && token) {
       authenticate();
     } else {
-      navigate("/register");
+      //   navigate("login");
     }
     async function authenticate() {
       let response = await axios.post(
@@ -25,7 +25,7 @@ function Account() {
       if (response.data.code) {
         setdata(response.data.data);
       } else {
-        navigate("/register");
+        // navigate("login");
       }
     }
   }
@@ -33,25 +33,35 @@ function Account() {
     authenticateUser();
   }, []);
   return (
-    <div>
-      {data.map((data) => {
-        return (
-          <div key={data.id}>
-            <h2>{data.firstname}</h2>
-          </div>
-        );
-      })}
-      <button
-        onClick={() => {
-          localStorage.removeItem("mailId");
-          localStorage.removeItem("token");
-          setdata([]);
-          authenticateUser();
-        }}
-      >
-        Sign out
-      </button>
-    </div>
+    <>
+      <div>
+        {data.map((data) => {
+          return (
+            <div key={data.id}>
+              <h2>{data.firstname}</h2>
+            </div>
+          );
+        })}
+        <button
+          onClick={() => {
+            localStorage.removeItem("mailId");
+            localStorage.removeItem("token");
+            setdata([]);
+            authenticateUser();
+          }}
+        >
+          Sign out
+        </button>
+        <button
+          onClick={() => {
+            navigate("login");
+          }}
+        >
+          Login
+        </button>
+      </div>
+      <Outlet />
+    </>
   );
 }
 

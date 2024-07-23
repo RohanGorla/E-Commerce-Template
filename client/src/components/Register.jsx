@@ -93,7 +93,7 @@ function Register() {
         </div>
         <button
           onClick={() => {
-            navigate("/login");
+            navigate("/account/login");
           }}
         >
           Login
