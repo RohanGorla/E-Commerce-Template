@@ -1,8 +1,24 @@
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Items() {
-  const context = useOutletContext();
+  const navigate = useNavigate();
+  const { item } = useParams();
+  console.log(item);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.post("http://localhost:3000/getproducts", {
+        category: item,
+      });
+      const data = response.data;
+      console.log(data);
+      setProducts(data);
+    }
+    getProducts();
+  }, []);
   //   console.log(context);
   async function addToCart(id, title, price, discount) {
     console.log(id, title, price, discount);
@@ -49,7 +65,14 @@ function Items() {
     <>
       {/* add a category button to go back to selecting categories if needed. */}
       <h1>Products List</h1>
-      {context.products.map((product, index) => {
+      <button
+        onClick={() => {
+          navigate("/products");
+        }}
+      >
+        Category
+      </button>
+      {products.map((product, index) => {
         return (
           <div key={index} style={{ padding: "2em 1em", margin: "1em 0" }}>
             <img

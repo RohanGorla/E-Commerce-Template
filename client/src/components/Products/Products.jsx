@@ -8,7 +8,7 @@ function Products() {
 
   return (
     <>
-      <Outlet context={context} />
+      <Outlet />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Account() {
@@ -12,7 +12,8 @@ function Account() {
     if (userMail && token) {
       authenticate();
     } else {
-      //   navigate("login");
+      console.log("in");
+      navigate("/account/login");
     }
     async function authenticate() {
       let response = await axios.post(
@@ -25,7 +26,7 @@ function Account() {
       if (response.data.code) {
         setdata(response.data.data);
       } else {
-        // navigate("login");
+        navigate("/account/login");
       }
     }
   }
@@ -52,15 +53,15 @@ function Account() {
         >
           Sign out
         </button>
-        <button
+        {/* <button
           onClick={() => {
             navigate("login");
           }}
         >
           Login
-        </button>
+        </button> */}
       </div>
-      <Outlet />
+      {/* <Outlet /> */}
     </>
   );
 }

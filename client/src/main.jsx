@@ -25,14 +25,14 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<App />}>
         <Route path="" element={<Home />} />
-        <Route path="products" element={<Products />}>
+        <Route path="products">
           <Route path="" element={<Categories />} />
-          <Route path="items" element={<Items />} />
+          <Route path="items/:item" element={<Items />} />
         </Route>
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="cart" element={<Cart />} />
         <Route path="account">
-          <Route path="" element={<Account />}/>
+          <Route path="" element={<Account />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
         </Route>
