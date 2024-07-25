@@ -220,6 +220,14 @@ app.delete("/removefromwish", (req, res) => {
   });
 });
 
+app.post("/getorders", (req, res) => {
+  let mail = req.body.mail;
+  db.query("select * from orders where mailid = ?", mail, (err, data) => {
+    if (err) return res.send(err);
+    return res.send(data);
+  });
+});
+
 app.post("/placeorder", (req, res) => {
   let mail = req.body.mail;
   console.log(mail);

@@ -17,6 +17,7 @@ import Checkout from "./components/Checkout.jsx";
 import Account from "./components/Account.jsx";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
+import Orders from "./components/Orders.jsx";
 import AddProduct from "./components/AddProduct.jsx";
 import Profile from "./components/Profile.jsx";
 import "./index.css";
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
           <Route path="" element={<Account />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
         <Route path="profile" element={<Profile />} />
         <Route path="addproduct" element={<AddProduct />} />

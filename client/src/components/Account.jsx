@@ -24,7 +24,7 @@ function Account() {
         }
       );
       if (response.data.code) {
-        setdata(response.data.data);
+        setdata(response.data.data[0]);
       } else {
         navigate("/account/login");
       }
@@ -36,26 +36,38 @@ function Account() {
   return (
     <>
       <div>
-        {data.map((data) => {
-          return (
-            <div key={data.id}>
-              <h2>
-                {data.firstname} {data.lastname}
-              </h2>
-            </div>
-          );
-        })}
-        <button
-          onClick={() => {
-            localStorage.removeItem("mailId");
-            localStorage.removeItem("token");
-            setdata([]);
-            authenticateUser();
-          }}
-        >
-          Sign out
-        </button>
+        <div>
+          <h2>
+            {data.firstname} {data.lastname}
+          </h2>
+          <p>{data.mailid}</p>
+        </div>
+        <div>
+          <button
+            style={{
+              borderStyle: "none",
+              borderRadius: "15px",
+              padding: "10px 15px",
+              margin: "10px 0",
+            }}
+            onClick={() => {
+              navigate("orders");
+            }}
+          >
+            Your Orders
+          </button>
+        </div>
       </div>
+      <button
+        onClick={() => {
+          localStorage.removeItem("mailId");
+          localStorage.removeItem("token");
+          setdata([]);
+          authenticateUser();
+        }}
+      >
+        Sign out
+      </button>
     </>
   );
 }
