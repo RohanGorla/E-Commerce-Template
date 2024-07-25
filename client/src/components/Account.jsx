@@ -49,6 +49,7 @@ function Account() {
               borderRadius: "15px",
               padding: "10px 15px",
               margin: "10px 0",
+              cursor: "pointer",
             }}
             onClick={() => {
               navigate("orders");

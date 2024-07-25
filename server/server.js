@@ -269,6 +269,14 @@ app.post("/placeorder", (req, res) => {
   });
 });
 
+app.post("/getproduct", (req, res) => {
+  const id = req.body.id;
+  db.query("select * from products where id = ?", id, (err, data) => {
+    if (err) return res.send(err);
+    return res.send(data);
+  });
+});
+
 app.post("/getproducts", (req, res) => {
   const category = req.body.category;
   db.query(

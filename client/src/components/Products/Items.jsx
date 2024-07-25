@@ -74,7 +74,13 @@ function Items() {
       </button>
       {products.map((product, index) => {
         return (
-          <div key={index} style={{ padding: "2em 1em", margin: "1em 0" }}>
+          <div
+            key={index}
+            style={{ padding: "2em 1em", margin: "1em 0", cursor: "pointer" }}
+            onClick={() => {
+              navigate(`/products/product/${product.id}`);
+            }}
+          >
             <img
               src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
               style={{ width: "300px" }}

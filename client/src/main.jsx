@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import App from "./App.jsx";
 import Home from "./components/Home.jsx";
-import Products from "./components/Products/Products.jsx";
+import product from "./components/Products/Product.jsx";
 import Categories from "./components/Products/Categories.jsx";
 import Items from "./components/Products/Items.jsx";
 import Wishlist from "./components/Wishlist.jsx";
@@ -21,6 +21,7 @@ import Orders from "./components/Orders.jsx";
 import AddProduct from "./components/AddProduct.jsx";
 import Profile from "./components/Profile.jsx";
 import "./index.css";
+import Product from "./components/Products/Product.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
         <Route path="products">
           <Route path="" element={<Categories />} />
           <Route path="items/:item" element={<Items />} />
+          <Route path="product/:product" element={<Product />} />
         </Route>
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="cart" element={<Cart />} />
