@@ -13,6 +13,7 @@ import Categories from "./components/Products/Categories.jsx";
 import Items from "./components/Products/Items.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import Cart from "./components/Cart.jsx";
+import Checkout from "./components/Checkout.jsx";
 import Account from "./components/Account.jsx";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
         <Route path="profile" element={<Profile />} />
         <Route path="addproduct" element={<AddProduct />} />
       </Route>
+      <Route path="checkout" element={<Checkout />} />
     </>
   )
 );

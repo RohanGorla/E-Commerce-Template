@@ -79,7 +79,7 @@ app.post("/checkUser", async (req, res) => {
     [mailId],
     async (err, data) => {
       if (err) return res.send(err);
-      if (data) {
+      if (data.length) {
         exists = true;
         actualPassword = data[0].password;
       }
@@ -119,6 +119,20 @@ app.post("/authenticateuser", async (req, res) => {
       }
     }
   );
+});
+
+app.post("/checkauthorized", async (req, res) => {
+  const mail = req.body.mail;
+  const token = req.body.token;
+  db.query("select token from userinfo where mailid = ?", mail, (err, data) => {
+    if (err) res.send(err);
+    if (data[0].token === token) {
+      db.query("select * from cart where mailid = ?", mail, (err, data) => {
+        if (err) res.send(err);
+        res.send(data);
+      });
+    }
+  });
 });
 
 app.post("/getcartitems", (req, res) => {

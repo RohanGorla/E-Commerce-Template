@@ -39,7 +39,9 @@ function Account() {
         {data.map((data) => {
           return (
             <div key={data.id}>
-              <h2>{data.firstname}</h2>
+              <h2>
+                {data.firstname} {data.lastname}
+              </h2>
             </div>
           );
         })}
@@ -53,15 +55,7 @@ function Account() {
         >
           Sign out
         </button>
-        {/* <button
-          onClick={() => {
-            navigate("login");
-          }}
-        >
-          Login
-        </button> */}
       </div>
-      {/* <Outlet /> */}
     </>
   );
 }
