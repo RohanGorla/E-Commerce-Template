@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { useOutletContext, useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/Cart.css";
 import axios from "axios";
 
 function Cart() {
   const [cart, setCart] = useState([]);
 
-  const context = useOutletContext();
-  const navigate = useNavigate();
   async function getFromCart() {
     console.log("cart");
     const mailId = localStorage.getItem("mailId");
@@ -36,13 +34,6 @@ function Cart() {
     <>
       {cart.length ? (
         <div>
-          {/* <button
-            onClick={() => {
-              navigate("/checkout");
-            }}
-          >
-            Checkout
-          </button> */}
           <Link
             to="/checkout"
             target="_blank"

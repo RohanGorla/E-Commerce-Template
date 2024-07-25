@@ -4,6 +4,20 @@ import axios from "axios";
 
 function Checkout() {
   const [data, setData] = useState([]);
+  const [ordered, setOrdered] = useState(false);
+
+  async function placeOrder() {
+    const mail = localStorage.getItem("mailId");
+    let orders = await axios.post("http://localhost:3000/placeorder", {
+      mail: mail,
+    });
+    console.log(orders);
+    // let response = await axios.delete("http://localhost:3000/placeorder", {
+    //   data: { mail },
+    // });
+    // console.log(response);
+  }
+
   useEffect(() => {
     const mailId = localStorage.getItem("mailId");
     const token = localStorage.getItem("token");
@@ -21,18 +35,50 @@ function Checkout() {
   }, []);
 
   return (
-    <div>
-      {data.map((data) => (
-        <div key={data.id} style={{margin:'30px 0'}}>
-          <h2>{data.title}</h2>
-          <p>MRP: {data.price} /-</p>
-          <p>
-            Final price:{" "}
-            {(data.price - (data.price * data.discount) / 100).toFixed(2)}/-
-          </p>
+    <>
+      {data.length ? (
+        <div>
+          <h1 style={{ textAlign: "center" }}>Your Products</h1>
+          {data.map((data) => (
+            <div key={data.id} style={{ margin: "30px 0" }}>
+              <h2>{data.title}</h2>
+              <p>MRP: {data.price} /-</p>
+              <p>
+                Final price:{" "}
+                {(data.price - (data.price * data.discount) / 100).toFixed(2)}{" "}
+                /-
+              </p>
+            </div>
+          ))}
+          <button
+            style={{
+              backgroundColor: "gold",
+              borderStyle: "none",
+              padding: "10px 15px",
+              borderRadius: "20px",
+              fontSize: "20px",
+              fontWeight: "700",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              placeOrder();
+              setOrdered(true);
+              setData([]);
+            }}
+          >
+            Place order
+          </button>
         </div>
-      ))}
-    </div>
+      ) : (
+        <div>
+          <h1>
+            {ordered
+              ? "Your order has been placed successfully!"
+              : "You have no Products to buy!"}
+          </h1>
+        </div>
+      )}
+    </>
   );
 }
 
