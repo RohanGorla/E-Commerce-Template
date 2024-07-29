@@ -78,7 +78,11 @@ function Items() {
             key={index}
             style={{ padding: "2em 1em", margin: "1em 0", cursor: "pointer" }}
             onClick={() => {
-              navigate(`/products/product/${product.id}`);
+              // navigate(`/products/product/${product.id}`);
+              // console.log(window.location.origin);
+              window.open(
+                `${window.location.origin}/products/product/${product.id}`
+              );
             }}
           >
             <img
