@@ -43,6 +43,9 @@ function Product() {
           fontWeight: "700",
           cursor: "pointer",
         }}
+        onClick={() => {
+          window.open(`${window.location.origin}/buy/${product}`);
+        }}
       >
         Buy now
       </button>

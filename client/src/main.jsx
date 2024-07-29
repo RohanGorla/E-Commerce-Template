@@ -8,9 +8,10 @@ import {
 } from "react-router-dom";
 import App from "./App.jsx";
 import Home from "./components/Home.jsx";
-import product from "./components/Products/Product.jsx";
 import Categories from "./components/Products/Categories.jsx";
 import Items from "./components/Products/Items.jsx";
+import Product from "./components/Products/Product.jsx";
+import Buy from "./components/Buy.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import Cart from "./components/Cart.jsx";
 import Checkout from "./components/Checkout.jsx";
@@ -21,7 +22,6 @@ import Orders from "./components/Orders.jsx";
 import AddProduct from "./components/AddProduct.jsx";
 import Profile from "./components/Profile.jsx";
 import "./index.css";
-import Product from "./components/Products/Product.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,6 +44,7 @@ const router = createBrowserRouter(
         <Route path="profile" element={<Profile />} />
         <Route path="addproduct" element={<AddProduct />} />
       </Route>
+      <Route path="buy/:product" element={<Buy />} />
       <Route path="checkout" element={<Checkout />} />
     </>
   )
