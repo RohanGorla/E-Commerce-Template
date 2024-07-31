@@ -5,6 +5,7 @@ import axios from "axios";
 function Checkout() {
   const [data, setData] = useState([]);
   const [ordered, setOrdered] = useState(false);
+  const [address, setAddress] = useState({});
 
   async function placeOrder() {
     const mail = localStorage.getItem("mailId");
@@ -21,6 +22,8 @@ function Checkout() {
   useEffect(() => {
     const mailId = localStorage.getItem("mailId");
     const token = localStorage.getItem("token");
+    const address = JSON.parse(localStorage.getItem("address"));
+    setAddress(address);
     async function checkAuthorized() {
       let response = await axios.post("http://localhost:3000/checkauthorized", {
         mail: mailId,
@@ -39,6 +42,18 @@ function Checkout() {
       {data.length ? (
         <div>
           <h1 style={{ textAlign: "center" }}>Your Products</h1>
+          {address ? (
+            <div>
+              <h2>Delivering to:</h2>
+              <p>{address?.username}</p>
+              <p>{address?.house}</p>
+              <p>{address?.street}</p>
+              <p>
+                {address?.city}, {address?.state}
+              </p>
+              <p>{address?.country}</p>
+            </div>
+          ) : null}
           {data.map((data) => (
             <div key={data.id} style={{ margin: "30px 0" }}>
               <h2>{data.title}</h2>

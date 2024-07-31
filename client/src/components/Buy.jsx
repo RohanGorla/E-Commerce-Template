@@ -4,6 +4,7 @@ import axios from "axios";
 
 function Buy() {
   const [productData, setProductData] = useState({});
+  const address = JSON.parse(localStorage.getItem("address"));
   const { product } = useParams();
   console.log(product);
   useEffect(() => {
@@ -23,6 +24,18 @@ function Buy() {
   return (
     <>
       <h1 style={{ textAlign: "center", margin: "20px 0px" }}>BUY PAGE</h1>
+      {address ? (
+        <div>
+          <h2>Delivering to:</h2>
+          <p>{address?.username}</p>
+          <p>{address?.house}</p>
+          <p>{address?.street}</p>
+          <p>
+            {address?.city}, {address?.state}
+          </p>
+          <p>{address?.country}</p>
+        </div>
+      ) : null}
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         <div style={{ width: "40%" }}>
           <img
