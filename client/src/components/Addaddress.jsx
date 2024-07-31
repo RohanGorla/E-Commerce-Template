@@ -22,6 +22,7 @@ function Addaddress() {
       country: country,
     });
     console.log(response);
+    useNavigate("/address");
   }
 
   return (

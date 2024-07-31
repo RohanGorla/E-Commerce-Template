@@ -269,6 +269,17 @@ app.post("/placeorder", (req, res) => {
   });
 });
 
+app.post("/getaddress", (req, res) => {
+  db.query(
+    "select * from address where usermail = ?",
+    req.body.mail,
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send(data);
+    }
+  );
+});
+
 app.post("/addaddress", (req, res) => {
   const values = [
     req.body.name,

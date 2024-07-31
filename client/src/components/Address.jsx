@@ -7,14 +7,18 @@ function Address() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const mail = localStorage.getItem("mailId");
-    console.log(mail);
     async function getAddress() {
-        let response = await axios.post("")
+      const mail = localStorage.getItem("mailId");
+      let response = await axios.post("http://localhost:3000/getaddress", {
+        mail: mail,
+      });
+      console.log(response);
+      setAddress(response.data);
     }
+    getAddress();
   }, []);
   return (
-    <div>
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
       <div
         style={{
           backgroundColor: "lightgrey",
@@ -22,12 +26,13 @@ function Address() {
           justifyContent: "center",
           alignItems: "center",
           color: "black",
-          width: "300px",
+          width: "350px",
           height: "250px",
           fontFamily: "monospace",
           fontWeight: "600",
           fontSize: "30px",
           borderRadius: "20px",
+          margin: "20px 20px",
           cursor: "pointer",
         }}
         onClick={() => {
@@ -36,7 +41,88 @@ function Address() {
       >
         <p>+ ADD ADDRESS</p>
       </div>
-      <div></div>
+      {address?.map((address, index) => {
+        return (
+          <div
+            key={index}
+            style={{
+              backgroundColor: "lightgrey",
+              color: "black",
+              width: "350px",
+              height: "250px",
+              fontFamily: "monospace",
+              borderRadius: "20px",
+              margin: "20px 20px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              const currentAddress = address;
+              console.log(currentAddress);
+              localStorage.setItem("address", JSON.stringify(currentAddress));
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "30px",
+                textAlign: "center",
+                padding: "25px 0",
+              }}
+            >
+              {address.username}
+            </h2>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "700",
+                margin: "10px 0",
+                marginLeft: "10px",
+              }}
+            >
+              {address.house}
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "700",
+                margin: "10px 0",
+                marginLeft: "10px",
+              }}
+            >
+              {address.street}
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "700",
+                margin: "10px 0",
+                marginLeft: "10px",
+              }}
+            >
+              {address.landmark}
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "700",
+                margin: "10px 0",
+                marginLeft: "10px",
+              }}
+            >
+              {address.city}, {address.state}
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "700",
+                margin: "10px 0",
+                marginLeft: "10px",
+              }}
+            >
+              {address.country}
+            </p>
+          </div>
+        );
+      })}
     </div>
   );
 }
