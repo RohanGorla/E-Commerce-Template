@@ -282,6 +282,7 @@ app.post("/getaddress", (req, res) => {
 
 app.post("/addaddress", (req, res) => {
   const values = [
+    req.body.mail,
     req.body.name,
     req.body.house,
     req.body.street,
@@ -291,7 +292,7 @@ app.post("/addaddress", (req, res) => {
     req.body.country,
   ];
   db.query(
-    "insert into address (username, house, street, landmark, city, state, country) values (?)",
+    "insert into address (usermail, username, house, street, landmark, city, state, country) values (?)",
     [values],
     (err, data) => {
       if (err) return res.send(err);

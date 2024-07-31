@@ -10,9 +10,12 @@ function Addaddress() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
+  const navigate = useNavigate();
 
   async function addAddress() {
+    const mail = localStorage.getItem("mailId");
     let response = await axios.post("http://localhost:3000/addaddress", {
+      mail: mail,
       name: fullName,
       house: house,
       street: street,
@@ -22,7 +25,7 @@ function Addaddress() {
       country: country,
     });
     console.log(response);
-    useNavigate("/address");
+    navigate("/account/address");
   }
 
   return (
