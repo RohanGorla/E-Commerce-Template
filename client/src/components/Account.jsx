@@ -42,24 +42,53 @@ function Account() {
           </h2>
           <p>{data.mailid}</p>
         </div>
-        <div>
-          <button
-            style={{
-              borderStyle: "none",
-              borderRadius: "15px",
-              padding: "10px 15px",
-              margin: "10px 0",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              navigate("orders");
-            }}
-          >
+        <div
+          style={{
+            backgroundColor: "wheat",
+            width: "250px",
+            height: "100px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderStyle: "none",
+            borderRadius: "15px",
+            padding: "10px 15px",
+            margin: "10px 0",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            navigate("orders");
+          }}
+        >
+          <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
             Your Orders
-          </button>
+          </p>
+        </div>
+        <div
+          style={{
+            backgroundColor: "wheat",
+            width: "250px",
+            height: "100px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderStyle: "none",
+            borderRadius: "15px",
+            padding: "10px 15px",
+            margin: "10px 0",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            navigate("address");
+          }}
+        >
+          <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
+            Your Address
+          </p>
         </div>
       </div>
       <button
+        style={{ padding: "15px 25px", borderRadius: "15px" }}
         onClick={() => {
           localStorage.removeItem("mailId");
           localStorage.removeItem("token");

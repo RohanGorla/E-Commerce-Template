@@ -269,6 +269,26 @@ app.post("/placeorder", (req, res) => {
   });
 });
 
+app.post("/addaddress", (req, res) => {
+  const values = [
+    req.body.name,
+    req.body.house,
+    req.body.street,
+    req.body.landmark,
+    req.body.city,
+    req.body.state,
+    req.body.country,
+  ];
+  db.query(
+    "insert into address (username, house, street, landmark, city, state, country) values (?)",
+    [values],
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send(data);
+    }
+  );
+});
+
 app.post("/getproduct", (req, res) => {
   const id = req.body.id;
   db.query("select * from products where id = ?", id, (err, data) => {

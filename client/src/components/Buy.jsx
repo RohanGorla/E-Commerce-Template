@@ -16,6 +16,10 @@ function Buy() {
     }
     getProduct();
   }, []);
+
+  function rohan() {
+    return "I am Rohan";
+  }
   return (
     <>
       <h1 style={{ textAlign: "center", margin: "20px 0px" }}>BUY PAGE</h1>
