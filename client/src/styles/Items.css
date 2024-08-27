@@ -1,0 +1,18 @@
+.Items_Main {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.Items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.Items_Buttons {
+    margin-top: 1em;
+}
+
+.Items_Buttons button {
+    padding: .2em .3em;
+    margin: .5em 0;
+}

@@ -1,0 +1,25 @@
+.categories_main {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); */
+    /* column-gap: 50px; */
+    /* min-height: 80vh; */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-wrap: wrap;
+}
+
+.category_card {
+    background-color: rgb(45, 40, 40);
+    width: 320px;
+    margin: 2em 2em;
+    padding: 4em 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}

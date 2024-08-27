@@ -1,6 +1,7 @@
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "../../styles/Items.css";
 
 function Items() {
   const navigate = useNavigate();
@@ -62,64 +63,68 @@ function Items() {
   }
 
   return (
-    <>
+    <div className="Items_Main">
       {/* add a category button to go back to selecting categories if needed. */}
       <h1>Products List</h1>
       <button
+        style={{ padding: ".2em .3em", margin: ".5em 0", cursor: "pointer" }}
         onClick={() => {
           navigate("/products");
         }}
       >
         Category
       </button>
-      {products.map((product, index) => {
-        return (
-          <div
-            key={index}
-            style={{ padding: "2em 1em", margin: "1em 0", cursor: "pointer" }}
-            onClick={() => {
-              window.open(
-                `${window.location.origin}/products/product/${product.id}`
-              );
-            }}
-          >
-            <img
-              src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-              style={{ width: "300px" }}
-            ></img>
-            <h2>{product.title}</h2>
-            <p>{product.category}</p>
-            <p>{product.price}</p>
-            <p>{product.discount}</p>
-            <p>
-              final price:{" "}
-              {product.price - product.price * (product.discount / 100)}
-            </p>
-            <button
-              onClick={() => {
-                // send all data about product needed for the cart along with user mail id.
-                addToCart(
-                  product.id,
-                  product.title,
-                  product.price,
-                  product.discount
-                );
-              }}
-            >
-              Add to cart
-            </button>
-            <button
-              onClick={() => {
-                // send all data about product needed for the cart along with user mail id.
-                addToWishlist(product);
-              }}
-            >
-              Wish list
-            </button>
-          </div>
-        );
-      })}
-    </>
+      <div className="Items">
+        {products.map((product, index) => {
+          return (
+            <div key={index} style={{ padding: "2em 1em", margin: "1em 0" }}>
+              <img
+                src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                style={{ width: "300px", cursor: "pointer" }}
+                onClick={() => {
+                  window.open(
+                    `${window.location.origin}/products/product/${product.id}`
+                  );
+                }}
+              ></img>
+              <h2>{product.title}</h2>
+              <p>{product.category}</p>
+              <p>{product.price}</p>
+              <p>{product.discount}</p>
+              <p>
+                final price:{" "}
+                {product.price - product.price * (product.discount / 100)}
+              </p>
+              <div className="Items_Buttons">
+                <button
+                  style={{ margin:'0 1em 0 0', cursor: "pointer" }}
+                  onClick={() => {
+                    // send all data about product needed for the cart along with user mail id.
+                    addToCart(
+                      product.id,
+                      product.title,
+                      product.price,
+                      product.discount
+                    );
+                  }}
+                >
+                  Add to cart
+                </button>
+                <button
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    // send all data about product needed for the cart along with user mail id.
+                    addToWishlist(product);
+                  }}
+                >
+                  Wish list
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
