@@ -17,6 +17,16 @@ function Login() {
       .then((response) => {
         console.log(response);
         if (response.data.access) {
+          console.log(response.data);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              firstname: response.data.firstname,
+              lastname: response.data.lastname,
+              mailId: email,
+              token: response.data.token,
+            })
+          );
           localStorage.setItem("mailId", email);
           localStorage.setItem("token", response.data.token);
           navigate("/account");

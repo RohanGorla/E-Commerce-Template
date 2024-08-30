@@ -5,6 +5,9 @@ import "../../styles/Products.css";
 
 function Product() {
   const [productData, setProductData] = useState({});
+  const address = JSON.parse(localStorage.getItem("address"));
+  console.log(address);
+  const [userName, setUserName] = useState("");
   const { product } = useParams();
   console.log(product);
   useEffect(() => {
@@ -19,37 +22,66 @@ function Product() {
   }, []);
 
   return (
-    <>
-      <img
-        src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-        style={{ width: "300px" }}
-      ></img>
-      <h2>{productData?.title}</h2>
-      <p>{productData?.price}</p>
-      <p>{productData.category}</p>
-      <p>{productData.price}</p>
-      <p>{productData.discount}</p>
-      <p>
-        final price:{" "}
-        {productData.price - productData.price * (productData.discount / 100)}
-      </p>
-      <button
-        style={{
-          backgroundColor: "gold",
-          borderStyle: "none",
-          padding: "10px 15px",
-          borderRadius: "10px",
-          fontSize: "20px",
-          fontWeight: "700",
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          window.open(`${window.location.origin}/buy/${product}`);
-        }}
-      >
-        Buy now
-      </button>
-    </>
+    <div className="Product_Container">
+      <div className="Product_Main">
+        <div className="Product_Image">
+          <img
+            src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+            style={{ width: "700px" }}
+          ></img>
+        </div>
+        <div className="Product_Details">
+          <p className="Product_Title">{productData?.title}</p>
+          <p className="Product_Category">{productData.category}</p>
+          <span className="Product_Discount">-{productData.discount}% </span>
+          <span className="Product_Final">
+            ₹
+            {productData.price -
+              productData.price * (productData.discount / 100)}
+          </span>
+          <p className="Product_Price">
+            M.R.P: <span className="MRP">₹{productData?.price}</span>
+          </p>
+          <div className="Delivery_Address">
+            <p>
+              Delivering to {address.username} - {address.street}
+            </p>
+            <p>{address.city}</p>
+          </div>
+          <div>
+            <button
+              style={{
+                backgroundColor: "gold",
+                borderStyle: "none",
+                padding: "10px 15px",
+                borderRadius: "10px",
+                fontSize: "20px",
+                fontWeight: "700",
+                cursor: "pointer",
+              }}
+              id="Buy_Button"
+              onClick={() => {
+                window.open(`${window.location.origin}/buy/${product}`);
+              }}
+            >
+              Buy now
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="Product_Review">
+        <div className="Write_Review">
+          <h3>Reviews</h3>
+          <textarea
+            placeholder="Write your review..."
+            rows={5}
+            cols={100}
+            id="Review_Input"
+          ></textarea>
+        </div>
+        <div className="Reviews"></div>
+      </div>
+    </div>
   );
 }
 

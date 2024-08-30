@@ -74,14 +74,20 @@ app.post("/checkUser", async (req, res) => {
   let password = req.body.password;
   let exists = false;
   let actualPassword;
+  let firstname;
+  let lastname;
+  let id;
   db.query(
-    "select mailid, password from userinfo where mailid = ?",
+    "select * from userinfo where mailid = ?",
     [mailId],
     async (err, data) => {
       if (err) return res.send(err);
       if (data.length) {
         exists = true;
         actualPassword = data[0].password;
+        firstname = data[0].firstname;
+        lastname = data[0].lastname;
+        id = data[0].id;
       }
       if (exists) {
         let correct = await bcrypt.compare(password, actualPassword);
@@ -92,7 +98,14 @@ app.post("/checkUser", async (req, res) => {
             [{ token: token }, mailId],
             (err, data) => {
               if (err) return res.send(err);
-              res.send({ access: true, token: token });
+              console.log(data);
+              res.send({
+                access: true,
+                token: token,
+                firstname: firstname,
+                lastname: lastname,
+                userId: id,
+              });
             }
           );
         } else {

@@ -23,6 +23,15 @@ function Register() {
         if (response.data.access) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("mailId", mail);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              firstname: first,
+              lastname: last,
+              mailId: mail,
+              token: response.data.token,
+            })
+          );
           navigate("/account");
         }
       })
