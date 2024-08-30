@@ -68,7 +68,7 @@ function Address() {
                 padding: "25px 0",
               }}
             >
-              {address.username}
+              {address.addressname}
             </h2>
             <p
               style={{

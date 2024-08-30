@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/Addaddress.css";
 
 function Addaddress() {
   const [fullName, setFullName] = useState("");
@@ -10,6 +11,7 @@ function Addaddress() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
+  // const [disable, setDisable] = useState(true);
   const navigate = useNavigate();
 
   async function addAddress() {
@@ -41,6 +43,8 @@ function Addaddress() {
           onChange={(e) => {
             setFullName(e.target.value);
           }}
+          // id={disable ? "disable" : "active"}
+          // disabled={disable}
         ></input>
       </div>
       <div style={{ margin: "20px 0" }}>
@@ -51,6 +55,7 @@ function Addaddress() {
           value={house}
           onChange={(e) => {
             setHouse(e.target.value);
+            // setDisable(false);
           }}
         ></input>
       </div>

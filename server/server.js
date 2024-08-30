@@ -305,7 +305,7 @@ app.post("/addaddress", (req, res) => {
     req.body.country,
   ];
   db.query(
-    "insert into address (usermail, username, house, street, landmark, city, state, country) values (?)",
+    "insert into address (usermail, addressname, house, street, landmark, city, state, country) values (?)",
     [values],
     (err, data) => {
       if (err) return res.send(err);
