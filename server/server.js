@@ -338,6 +338,36 @@ app.post("/getproducts", (req, res) => {
   );
 });
 
+app.post("/getreviews", (req, res) => {
+  const id = req.body.id;
+  db.query("select * from reviews where productid = ?", id, (err, data) => {
+    if (err) return res.send(err);
+    console.log(data);
+    res.send({ data, code: true });
+  });
+});
+
+app.post("/addreview", (req, res) => {
+  let values = [req.body.id, req.body.mail, req.body.user, req.body.review];
+  db.query(
+    "insert into reviews (productid, mailid, username, review) values (?)",
+    [values],
+    (err, data) => {
+      if (err) return res.send(err);
+      console.log(data);
+    }
+  );
+  db.query(
+    "select * from reviews where productid = ?",
+    req.body.id,
+    (err, data) => {
+      if (err) return res.send(err);
+      console.log(data);
+      res.send({ data: data, code: true });
+    }
+  );
+});
+
 app.post("/addproduct", async (req, res) => {
   // Adding values to DB
   const values = [

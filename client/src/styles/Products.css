@@ -27,6 +27,21 @@
     margin-top: 4em;
 }
 
+.More_Product_Images {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.More_Image_Box {
+    width: 80px;
+    margin: 0 1em;
+}
+
+.More_Image_Box img {
+    max-width: 100%;
+}
+
 .Product_Details {
     margin: 2em 0 0 10em;
 }
@@ -110,4 +125,16 @@
 #Review_Input {
     display: block;
     resize: vertical;
+}
+
+.Reviews {
+    margin-top: 1em;
+}
+
+.Individual_Review {
+    margin: 1em 0;
+}
+
+.Individual_Review h4 {
+    margin-bottom: .3em;
 }

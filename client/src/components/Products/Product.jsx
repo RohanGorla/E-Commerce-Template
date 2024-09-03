@@ -5,6 +5,8 @@ import "../../styles/Products.css";
 
 function Product() {
   const [productData, setProductData] = useState({});
+  const [review, setReview] = useState("");
+  const [reviews, setReviews] = useState([]);
   const address = JSON.parse(localStorage.getItem("address"));
   console.log(address);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -26,6 +28,24 @@ function Product() {
     }
   }
 
+  async function addReview() {
+    const mailId = localStorage.getItem("mailId");
+    const username = userInfo.firstname + " " + userInfo.lastname;
+    if (review) {
+      let response = await axios.post("http://localhost:3000/addreview", {
+        id: product,
+        mail: mailId,
+        user: username,
+        review: review,
+      });
+      console.log(response);
+      if (response.data.code) {
+        setReviews(response.data.data);
+      }
+      setReview("");
+    }
+  }
+
   useEffect(() => {
     async function getProduct() {
       let response = await axios.post("http://localhost:3000/getproduct", {
@@ -34,7 +54,16 @@ function Product() {
       console.log(response);
       setProductData(response.data[0]);
     }
+    async function getReviews() {
+      let response = await axios.post("http://localhost:3000/getreviews", {
+        id: product,
+      });
+      if (response.data.code) {
+        setReviews(response.data.data);
+      }
+    }
     getProduct();
+    getReviews();
   }, []);
 
   return (
@@ -45,6 +74,20 @@ function Product() {
             src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
             style={{ width: "700px" }}
           ></img>
+          <div className="More_Product_Images">
+            <div className="More_Image_Box">
+              <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/bestlaptops-2048px-9765.jpg?auto=webp&quality=75&width=1024"></img>
+            </div>
+            <div className="More_Image_Box">
+              <img src="https://www.itaf.eu/wp-content/uploads/2021/01/Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg"></img>
+            </div>
+            <div className="More_Image_Box">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlygWcz51gyDexlstejSgZZ2LSxqF4rBz3wQ&s"></img>
+            </div>
+            <div className="More_Image_Box">
+              <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D"></img>
+            </div>
+          </div>
           {/* <div className="Product_Review">
             <div className="Write_Review">
               <h3>Product Reviews</h3>
@@ -167,9 +210,25 @@ function Product() {
             rows={5}
             cols={100}
             id="Review_Input"
+            value={review}
+            onChange={(e) => {
+              setReview(e.target.value);
+            }}
           ></textarea>
+          <div className="Review_Submit_Btn">
+            <button onClick={addReview}>Submit</button>
+          </div>
         </div>
-        <div className="Reviews"></div>
+        <div className="Reviews">
+          {reviews?.map((review) => {
+            return (
+              <div key={review.id} className="Individual_Review">
+                <h4>{review.username}</h4>
+                <p>{review.review}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
