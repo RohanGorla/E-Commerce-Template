@@ -1,21 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
     --Title: 30px;
     --Price: 16px;
-    --Mrp: 14px;
+    --Final_Heading: 22px;
+    --Mrp: 15px;
     --Final: 20px;
+    --About_Title: 22px;
+    --About_Info: 17px;
+    --Font_Main: "Inter", sans-serif;
+    --Font_Side: "Roboto", sans-serif;
 }
 
 .Product_Container {
     max-width: 1300px;
     margin: 0 auto;
     /* background-color: rgb(35, 34, 34); */
-    /* font-family: "Roboto", sans-serif; */
-    /* font-family: "JetBrains Mono", monospace; */
-    font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
 }
@@ -24,19 +23,49 @@
     display: flex;
 }
 
+.Product_Image {
+    margin-top: 4em;
+}
+
 .Product_Details {
     margin: 2em 0 0 10em;
 }
 
 .Product_Title {
     font-size: var(--Title);
-    margin-bottom: .5em;
+    font-family: var(--Font_Main);
+    margin: .3em 0;
     font-weight: 600;
+}
+
+.Product_Category {
+    font-family: var(--Font_Main);
+    margin: .5em 0 .8em 0;
+}
+
+.Final_Price_Heading {
+    font-family: var(--Font_Main);
+    font-size: var(--Final_Heading);
+    margin-bottom: 1em;
+}
+
+.Product_Discount {
+    font-size: var(--Price);
+    font-family: var(--Font_Side);
+    margin: .3em 0;
+    font-weight: 200;
+}
+
+.Product_Final {
+    font-size: var(--Final);
+    font-family: var(--Font_Side);
+    margin-left: .5em;
+    font-weight: 400;
 }
 
 .Product_Price {
     font-size: var(--Mrp);
-    font-family: "Roboto", sans-serif;
+    font-family: var(--Font_Side);
     margin: .3em 0;
     font-weight: 300;
 }
@@ -45,33 +74,40 @@
     text-decoration: line-through;
 }
 
-.Product_Discount {
-    font-size: var(--Price);
-    font-family: "Roboto", sans-serif;
-    margin: .3em 0;
-    font-weight: 200;
-}
-
-.Product_Final {
-    font-size: var(--Final);
-    font-family: "Roboto", sans-serif;
-    margin-left: .5em;
-    font-weight: 400;
+.Delivery_Address {
+    margin: 1em 0;
 }
 
 .Delivery_Address p {
     font-weight: 300;
+    font-family: var(--Font_Main);
+}
+
+.Products_Buttons {
+    margin-bottom: 1em;
+}
+
+.Buy_Button {
+    font-family: var(--Font_Side);
+    margin: 0 .5em 0 0;
+}
+
+.About_Product h4 {
+    font-size: var(--About_Title);
+    font-family: var(--Font_Main);
+}
+
+.About_Product p {
+    font-family: var(--Font_Side);
+    font-size: var(--About_Info);
+    margin: 1em 0;
 }
 
 .Product_Review {
-    
+    font-family: var(--Font_Main);
 }
 
 #Review_Input {
     display: block;
     resize: vertical;
-}
-
-#Buy_Button {
-    font-family: "Roboto", sans-serif;
 }

@@ -330,7 +330,7 @@ app.post("/getproducts", (req, res) => {
     (err, data) => {
       if (err) {
         console.log(err);
-        return req.send(err);
+        return res.send(err);
       }
       console.log("select * from products data ->", data);
       res.send(data);

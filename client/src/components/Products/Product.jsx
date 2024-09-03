@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet, useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../../styles/Products.css";
 
@@ -7,9 +7,25 @@ function Product() {
   const [productData, setProductData] = useState({});
   const address = JSON.parse(localStorage.getItem("address"));
   console.log(address);
-  const [userName, setUserName] = useState("");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  console.log(userInfo);
   const { product } = useParams();
   console.log(product);
+
+  async function addToCart() {
+    const mail = localStorage.getItem("mailId");
+    if (mail) {
+      const response = await axios.post("http://localhost:3000/addtocart", {
+        id: product,
+        title: productData.title,
+        price: productData.price,
+        discount: productData.discount,
+        mailId: mail,
+      });
+      console.log(response);
+    }
+  }
+
   useEffect(() => {
     async function getProduct() {
       let response = await axios.post("http://localhost:3000/getproduct", {
@@ -29,15 +45,40 @@ function Product() {
             src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
             style={{ width: "700px" }}
           ></img>
+          {/* <div className="Product_Review">
+            <div className="Write_Review">
+              <h3>Product Reviews</h3>
+              <p>
+                Reviewing as {userInfo.firstname} {userInfo.lastname}
+              </p>
+              <textarea
+                placeholder="Write your review..."
+                rows={5}
+                cols={100}
+                id="Review_Input"
+              ></textarea>
+            </div>
+            <div className="Reviews"></div>
+          </div> */}
         </div>
         <div className="Product_Details">
           <p className="Product_Title">{productData?.title}</p>
-          <p className="Product_Category">{productData.category}</p>
+          <p className="Product_Category">Category - {productData.category}</p>
+          <div
+            style={{
+              height: "1px",
+              backgroundColor: "white",
+              marginBottom: "1.5em",
+            }}
+          ></div>
+          <p className="Final_Price_Heading">Final price:</p>
           <span className="Product_Discount">-{productData.discount}% </span>
           <span className="Product_Final">
             ₹
-            {productData.price -
-              productData.price * (productData.discount / 100)}
+            {(
+              productData.price -
+              productData.price * (productData.discount / 100)
+            ).toFixed(2)}
           </span>
           <p className="Product_Price">
             M.R.P: <span className="MRP">₹{productData?.price}</span>
@@ -48,7 +89,7 @@ function Product() {
             </p>
             <p>{address.city}</p>
           </div>
-          <div>
+          <div className="Products_Buttons">
             <button
               style={{
                 backgroundColor: "gold",
@@ -59,19 +100,68 @@ function Product() {
                 fontWeight: "700",
                 cursor: "pointer",
               }}
-              id="Buy_Button"
+              className="Buy_Button"
               onClick={() => {
                 window.open(`${window.location.origin}/buy/${product}`);
               }}
             >
               Buy now
             </button>
+            <button
+              style={{
+                backgroundColor: "gold",
+                borderStyle: "none",
+                padding: "10px 15px",
+                borderRadius: "10px",
+                fontSize: "20px",
+                fontWeight: "700",
+                cursor: "pointer",
+              }}
+              className="Buy_Button"
+              onClick={() => {
+                // window.open(`${window.location.origin}/buy/${product}`);
+                addToCart();
+              }}
+            >
+              Add to cart
+            </button>
+          </div>
+          <div className="About_Product">
+            <h4>About the product</h4>
+            <p>
+              Introducing our latest electronic product, the ProSound Wireless
+              Earbuds—your perfect companion for an immersive audio experience.
+              With sleek design and cutting-edge technology, these earbuds
+              deliver crystal-clear sound and deep bass, ensuring you never miss
+              a beat.
+            </p>
+            <p>
+              When you purchase the ProSound Wireless Earbuds, you'll receive
+              everything you need to get started. Inside the box, you'll find
+              the earbuds themselves, along with a compact charging case that
+              provides up to 20 hours of additional playtime.
+            </p>
+            <p>
+              We've also added a few extras to enhance your experience with the
+              ProSound Wireless Earbuds. Included in the package is a quick
+              start guide to help you set up your earbuds in minutes, along with
+              a warranty card that provides coverage for any manufacturing
+              defects for up to one year.
+            </p>
+            <p>
+              Lastly, the ProSound Wireless Earbuds come with access to our
+              dedicated customer support team, available 24/7 to assist you with
+              any questions or issues.
+            </p>
           </div>
         </div>
       </div>
       <div className="Product_Review">
         <div className="Write_Review">
-          <h3>Reviews</h3>
+          <h3>Product Reviews</h3>
+          <p>
+            Reviewing as {userInfo.firstname} {userInfo.lastname}
+          </p>
           <textarea
             placeholder="Write your review..."
             rows={5}
