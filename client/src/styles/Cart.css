@@ -1,0 +1,14 @@
+.Cart_Main {
+    max-width: 1300px;
+    margin: 0 auto;
+    /* background-color: rgb(31, 30, 30); */
+}
+
+.Cart_Items_Container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.Cart_Buttons {
+    margin-top: .7em;
+}
