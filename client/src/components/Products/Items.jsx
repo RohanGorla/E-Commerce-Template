@@ -57,6 +57,8 @@ function Items() {
         id: product.id,
         title: product.title,
         mailId: mail,
+        price: product.price,
+        discount: product.discount,
       });
       console.log(response);
     }
@@ -97,7 +99,7 @@ function Items() {
               </p>
               <div className="Items_Buttons">
                 <button
-                  style={{ margin:'0 1em 0 0', cursor: "pointer" }}
+                  style={{ margin: "0 1em 0 0", cursor: "pointer" }}
                   onClick={() => {
                     // send all data about product needed for the cart along with user mail id.
                     addToCart(

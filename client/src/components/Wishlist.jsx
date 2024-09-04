@@ -4,9 +4,9 @@ import axios from "axios";
 
 function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
+  const mailId = localStorage.getItem("mailId");
 
   async function getFromWish() {
-    const mailId = localStorage.getItem("mailId");
     if (mailId) {
       const response = await axios.post("http://localhost:3000/getfromwish", {
         mailId: mailId,
@@ -15,6 +15,17 @@ function Wishlist() {
       const data = response.data;
       setWishlist(data);
     }
+  }
+
+  async function addToCart(product) {
+    let response = await axios.post("http://localhost:3000/addtocart", {
+      id: product.productid,
+      title: product.title,
+      price: product.price,
+      discount: product.discount,
+      mailId: mailId,
+    });
+    console.log(response);
   }
 
   async function removeFromWish(id) {
@@ -30,7 +41,7 @@ function Wishlist() {
   }, []);
 
   return (
-    <>
+    <div className="Wishlist_Main">
       Wishlist
       {/* add same features from cart */}
       {wishlist.map((item, index) => {
@@ -41,7 +52,16 @@ function Wishlist() {
               style={{ width: "300px" }}
             ></img>
             <h2>{item.title}</h2>
-            <button>Add to cart</button>
+            <p>
+              {(item.price - item.price * (item.discount / 100)).toFixed(2)}
+            </p>
+            <button
+              onClick={() => {
+                addToCart(item);
+              }}
+            >
+              Add to cart
+            </button>
             <button
               onClick={() => {
                 removeFromWish(item.id);
@@ -52,7 +72,7 @@ function Wishlist() {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 

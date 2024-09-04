@@ -206,9 +206,15 @@ app.post("/getfromwish", (req, res) => {
 });
 
 app.post("/addtowish", (req, res) => {
-  const values = [req.body.id, req.body.title, req.body.mailId];
+  const values = [
+    req.body.id,
+    req.body.title,
+    req.body.mailId,
+    req.body.price,
+    req.body.discount,
+  ];
   db.query(
-    "insert into wishlists (productid, title, mailid) values (?)",
+    "insert into wishlists (productid, title, mailid, price, discount) values (?)",
     [values],
     (err, data) => {
       if (err) {
