@@ -18,6 +18,7 @@ import Checkout from "./components/Checkout.jsx";
 import Account from "./components/Account.jsx";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
+import Credentials from "./components/Credentials.jsx";
 import Orders from "./components/Orders.jsx";
 import Address from "./components/Address.jsx";
 import Addaddress from "./components/Addaddress.jsx";
@@ -46,12 +47,18 @@ const router = createBrowserRouter(
             <Route path="" element={<Address />} />
             <Route path="addaddress" element={<Addaddress />} />
           </Route>
+          <Route path="credentials">
+            <Route path="" element={<Credentials />} />
+            {/* <Route path="Name" />
+            <Route path="Mail" />
+            <Route path="Password" /> */}
+          </Route>
         </Route>
         <Route path="profile" element={<Profile />} />
         <Route path="addproduct" element={<AddProduct />} />
       </Route>
-      <Route path="buy/:product" element={<Buy />} />
       <Route path="checkout" element={<Checkout />} />
+      <Route path="buy/:product" element={<Buy />} />
     </>
   )
 );

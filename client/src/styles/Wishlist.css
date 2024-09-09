@@ -9,10 +9,6 @@
     background-color: rgb(24, 23, 23);
     padding: 1em 2em;
     border-radius: 7px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 7em; */
     display: grid;
     grid-template-columns: 2fr 1fr ;
     align-items: center;
