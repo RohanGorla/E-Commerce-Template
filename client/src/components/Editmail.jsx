@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Edit.css";
 
 function Editmail() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [newMail, setNewMail] = useState(userInfo.mailId);
 
@@ -31,13 +31,14 @@ function Editmail() {
   return (
     <div className="Edit_Main">
       <div className="Edit_Notes">
-        <h2>Edit your mail.</h2>
+        <h2>Change your mail.</h2>
         <p>Edit your mail id and click save to save changes.</p>
       </div>
       <div className="Edit_Box">
         <div className="Edit_Input">
+        <label>New email</label>
           <input
-          className="Editmail_Input"
+            className="Editmail_Input"
             type="text"
             value={newMail}
             onChange={(e) => {
@@ -47,7 +48,7 @@ function Editmail() {
         </div>
         <div>
           <button className="Savechanges_Btn" onClick={editmail}>
-            Save
+            Save changes
           </button>
         </div>
       </div>
