@@ -374,6 +374,20 @@ app.post("/addreview", (req, res) => {
   );
 });
 
+app.put("/editusername", (req, res) => {
+  const first = req.body.firstname;
+  const last = req.body.lastname;
+  const mail = req.body.usermail;
+  db.query(
+    "update userinfo set ? where mailId = ?",
+    [{ firstname: first, lastname: last }, mail],
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send({ access: true });
+    }
+  );
+});
+
 app.post("/addproduct", async (req, res) => {
   // Adding values to DB
   const values = [

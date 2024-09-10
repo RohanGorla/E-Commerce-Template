@@ -19,6 +19,9 @@ import Account from "./components/Account.jsx";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
 import Credentials from "./components/Credentials.jsx";
+import Editname from "./components/Editname.jsx";
+import Editmail from "./components/Editmail.jsx";
+import Editpassword from "./components/Editpassword.jsx";
 import Orders from "./components/Orders.jsx";
 import Address from "./components/Address.jsx";
 import Addaddress from "./components/Addaddress.jsx";
@@ -49,9 +52,9 @@ const router = createBrowserRouter(
           </Route>
           <Route path="credentials">
             <Route path="" element={<Credentials />} />
-            {/* <Route path="Name" />
-            <Route path="Mail" />
-            <Route path="Password" /> */}
+            <Route path="editname" element={<Editname />} />
+            <Route path="editmail" element={<Editmail />} />
+            <Route path="editpassword" element={<Editpassword />} />
           </Route>
         </Route>
         <Route path="profile" element={<Profile />} />
