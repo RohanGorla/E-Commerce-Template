@@ -128,7 +128,7 @@ app.post("/authenticateuser", async (req, res) => {
       if (actualToken === token) {
         res.send({ code: true, data });
       } else {
-        res.send({ code: true });
+        res.send({ code: false });
       }
     }
   );
@@ -397,6 +397,35 @@ app.put("/editusermail", (req, res) => {
     (err, data) => {
       if (err) return res.send(err);
       res.send({ access: true });
+    }
+  );
+});
+
+app.put("/edituserpassword", (req, res) => {
+  const mail = req.body.mail;
+  const token = req.body.token;
+  const oldPassword = req.body.old;
+  const newPassword = req.body.new;
+  db.query(
+    "select password from userinfo where mailid = ?",
+    [mail],
+    async (err, data) => {
+      if (err) return res.send({ access: false });
+      console.log(data[0].password);
+      let correct = await bcrypt.compare(oldPassword, data[0].password);
+      if (correct) {
+        let newPasswordToken = await bcrypt.hash(newPassword, 10);
+        db.query(
+          "update userinfo set ? where token = ?",
+          [{ password: newPasswordToken }, token],
+          (err, data) => {
+            if (err) return res.send({ access: false });
+            res.send({ access: true });
+          }
+        );
+      } else {
+        res.send({ access: false });
+      }
     }
   );
 });

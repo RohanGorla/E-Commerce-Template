@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Edit.css";
 
 function Editmail() {
+  const navigate = useNavigate()
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [newMail, setNewMail] = useState(userInfo.mailId);
 
@@ -23,6 +24,7 @@ function Editmail() {
         "address",
         JSON.stringify({ ...address, usermail: newMail })
       );
+      navigate("/account/credentials");
     }
   }
 
