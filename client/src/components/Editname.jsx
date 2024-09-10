@@ -30,12 +30,14 @@ function Editname() {
   return (
     <div className="Edit_Main">
       <div className="Edit_Notes">
-        <h2>Edit your name.</h2>
-        <p>Edit your user name and click save to save changes.</p>
+        <h2>Change your name</h2>
+        <p>Edit your user name and click save to save changes</p>
       </div>
       <div className="Edit_Box">
-        <div>
+        <div className="Edit_Input">
+          <label>First name</label>
           <input
+            className="Editname_Input"
             type="text"
             value={newFirst}
             onChange={(e) => {
@@ -43,8 +45,10 @@ function Editname() {
             }}
           ></input>
         </div>
-        <div>
+        <div className="Edit_Input">
+          <label>Last name</label>
           <input
+            className="Editname_Input"
             type="text"
             value={newLast}
             onChange={(e) => {
@@ -54,7 +58,7 @@ function Editname() {
         </div>
         <div>
           <button className="Savechanges_Btn" onClick={editname}>
-            Save
+            Save changes
           </button>
         </div>
       </div>

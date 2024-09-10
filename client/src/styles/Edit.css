@@ -1,0 +1,58 @@
+:root {
+    --Main_Font: "Inter", sans-serif;
+    --Main_Fontsize: 15px;
+    --Secondary_Font: "Roboto", sans-serif;
+    --Secondary_Fontsize: 17px;
+    --Button_Fontsize: 15px;
+}
+
+.Edit_Main {
+    max-width: 650px;
+    margin: 0 auto;
+    background-color: rgb(67, 66, 66);
+    padding: 2em 1.5em;
+    border-radius: 10px;
+}
+
+.Edit_Notes {
+    margin-bottom: 2em;
+    font-family: var(--Secondary_Font);
+}
+
+.Edit_Notes h2 {
+    margin-bottom: .2em;
+}
+
+.Edit_Input {
+    margin: 1em 0;
+}
+
+.Edit_Input label {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Secondary_Fontsize);
+    font-weight: 500;
+}
+
+.Savechanges_Btn {
+    font-size: var(--Secondary_Font);
+    font-size: var(--Button_Fontsize);
+    font-weight: 500;
+    padding: .5em 1.7em;
+    background-color: gold;
+    border-style: none;
+    border-radius: 4px;
+}
+
+/* Name editing */
+
+.Editname_Input {
+    display: block;
+    width: 130px;
+    font-family: var(--Secondary_Font);
+    font-size: var(--Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}

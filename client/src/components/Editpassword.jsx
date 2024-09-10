@@ -38,10 +38,10 @@ function Editpassword() {
         <p>Edit your password and click save to save changes.</p>
       </div>
       <div className="Edit_Box">
-        <div>
-          <label>Enter old password:</label>
-        </div>
-        <div>
+        <div className="Edit_Input">
+          <div>
+            <label>Enter old password:</label>
+          </div>
           <input
             type="text"
             value={pass}
@@ -50,10 +50,10 @@ function Editpassword() {
             }}
           ></input>
         </div>
-        <div>
-          <label>Enter new password:</label>
-        </div>
-        <div>
+        <div className="Edit_Input">
+          <div>
+            <label>Enter new password:</label>
+          </div>
           <input
             type="text"
             value={newpass}
@@ -62,10 +62,11 @@ function Editpassword() {
             }}
           ></input>
         </div>
-        <div>
-          <label>Re-enter new password:</label>
-        </div>
-        <div>
+
+        <div className="Edit_Input">
+          <div>
+            <label>Re-enter new password:</label>
+          </div>
           <input
             type="text"
             value={confirm}

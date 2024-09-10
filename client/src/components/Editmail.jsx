@@ -35,8 +35,9 @@ function Editmail() {
         <p>Edit your mail id and click save to save changes.</p>
       </div>
       <div className="Edit_Box">
-        <div>
+        <div className="Edit_Input">
           <input
+          className="Editmail_Input"
             type="text"
             value={newMail}
             onChange={(e) => {
