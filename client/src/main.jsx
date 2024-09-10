@@ -39,13 +39,13 @@ const router = createBrowserRouter(
           <Route path="items/:item" element={<Items />} />
           <Route path="product/:product" element={<Product />} />
         </Route>
-        <Route path="wishlist" element={<Wishlist />} />
         <Route path="cart" element={<Cart />} />
         <Route path="account">
           <Route path="" element={<Account />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="wishlist" element={<Wishlist />} />
           <Route path="address">
             <Route path="" element={<Address />} />
             <Route path="addaddress" element={<Addaddress />} />

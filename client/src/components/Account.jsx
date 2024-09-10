@@ -6,13 +6,13 @@ function Account() {
   const [data, setdata] = useState([]);
   const navigate = useNavigate();
   function authenticateUser() {
-    const userMail = localStorage.getItem("mailId");
-    const token = localStorage.getItem("token");
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userMail = userInfo.mailId;
+    const token = userInfo.token;
     console.log(userMail, token);
     if (userMail && token) {
       authenticate();
     } else {
-      console.log("in");
       navigate("/account/login");
     }
     async function authenticate() {
@@ -106,6 +106,28 @@ function Account() {
         >
           <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
             Login & Security
+          </p>
+        </div>
+        <div
+          style={{
+            backgroundColor: "wheat",
+            width: "250px",
+            height: "100px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderStyle: "none",
+            borderRadius: "15px",
+            padding: "10px 15px",
+            margin: "10px 0",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            navigate("wishlist");
+          }}
+        >
+          <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
+            Your wishlists
           </p>
         </div>
       </div>

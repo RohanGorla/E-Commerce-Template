@@ -40,7 +40,7 @@ function Navbar() {
               Products
             </NavLink>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <NavLink
               to={"/wishlist"}
               style={({ isActive }) => {
@@ -51,7 +51,7 @@ function Navbar() {
             >
               Wishlist
             </NavLink>
-          </li>
+          </li> */}
           <li className="nav-item">
             <NavLink
               to={"/cart"}
