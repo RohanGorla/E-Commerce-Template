@@ -21,12 +21,7 @@ function Editname() {
     if (response.data.access) {
       localStorage.setItem(
         "userInfo",
-        JSON.stringify({
-          firstname: newFirst,
-          lastname: newLast,
-          mailId: usermail,
-          token: userInfo.token,
-        })
+        JSON.stringify({ ...userInfo, firstname: newFirst, lastname: newLast })
       );
       navigate("/account/credentials");
     }

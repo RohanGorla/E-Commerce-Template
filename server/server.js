@@ -388,6 +388,19 @@ app.put("/editusername", (req, res) => {
   );
 });
 
+app.put("/editusermail", (req, res) => {
+  const newmail = req.body.newmail;
+  const token = req.body.token;
+  db.query(
+    "update userinfo set ? where token = ?",
+    [{ mailid: newmail }, token],
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send({ access: true });
+    }
+  );
+});
+
 app.post("/addproduct", async (req, res) => {
   // Adding values to DB
   const values = [
