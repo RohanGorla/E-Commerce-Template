@@ -40,9 +40,10 @@ function Editpassword() {
       <div className="Edit_Box">
         <div className="Edit_Input">
           <div>
-            <label>Enter old password:</label>
+            <label>Enter old password</label>
           </div>
           <input
+            className="Editpassword_Input"
             type="text"
             value={pass}
             onChange={(e) => {
@@ -52,9 +53,10 @@ function Editpassword() {
         </div>
         <div className="Edit_Input">
           <div>
-            <label>Enter new password:</label>
+            <label>Enter new password</label>
           </div>
           <input
+            className="Editpassword_Input"
             type="text"
             value={newpass}
             onChange={(e) => {
@@ -65,9 +67,10 @@ function Editpassword() {
 
         <div className="Edit_Input">
           <div>
-            <label>Re-enter new password:</label>
+            <label>Re-enter new password</label>
           </div>
           <input
+            className="Editpassword_Input"
             type="text"
             value={confirm}
             onChange={(e) => {
