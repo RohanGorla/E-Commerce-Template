@@ -13,7 +13,7 @@ function Editpassword() {
   const [confirm, setConfirm] = useState("");
 
   async function editpassword() {
-    if (newpass === confirm) {
+    if (newpass === confirm && newpass.length !== 0) {
       let response = await axios.put("http://localhost:3000/edituserpassword", {
         mail: usermail,
         token: token,
