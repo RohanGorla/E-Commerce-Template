@@ -10,25 +10,44 @@ function Editname() {
   console.log(usermail);
   const [newFirst, setNewFirst] = useState(userInfo.firstname);
   const [newLast, setNewLast] = useState(userInfo.lastname);
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function editname() {
-    let response = await axios.put("http://localhost:3000/editusername", {
-      firstname: newFirst,
-      lastname: newLast,
-      usermail: usermail,
-    });
-    console.log(response.data.access);
-    if (response.data.access) {
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify({ ...userInfo, firstname: newFirst, lastname: newLast })
-      );
-      navigate("/account/credentials");
+    if (newFirst.length !== 0) {
+      let response = await axios.put("http://localhost:3000/editusername", {
+        firstname: newFirst,
+        lastname: newLast,
+        usermail: usermail,
+      });
+      console.log(response.data.access);
+      if (response.data.access) {
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            ...userInfo,
+            firstname: newFirst,
+            lastname: newLast,
+          })
+        );
+        navigate("/account/credentials");
+      }
+    } else {
+      setError(true);
+      setErrorMsg("Firstname cannot be an empty string!");
     }
   }
 
   return (
     <div className="Edit_Main">
+      <div
+        className={
+          error ? "Edit_ErrorMsgBox--visible" : "Edit_ErrorMsgBox--invisible"
+        }
+      >
+        <p className="Edit_ErrorMsgHeading">Error!</p>
+        <p className="Edit_ErrorMsg">{errorMsg}</p>
+      </div>
       <div className="Edit_Notes">
         <h2>Change your name</h2>
         <p>Edit your user name and click save to save changes</p>
