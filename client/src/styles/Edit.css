@@ -89,6 +89,20 @@
     border-radius: 2px;
 }
 
+/* Otp for email change*/
+
+.Editemailotp_Input {
+    display: block;
+    width: 100px;
+    font-family: var(--Secondary_Font);
+    font-size: var(--Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}
+
 /* Password editing */
 
 .Editpassword_Input {

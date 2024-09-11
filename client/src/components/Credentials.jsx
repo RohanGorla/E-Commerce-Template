@@ -32,7 +32,7 @@ function Credentials() {
         <div
           className="Edit_Btn"
           onClick={() => {
-            navigate("email/editmail");
+            navigate("email");
           }}
         >
           Edit

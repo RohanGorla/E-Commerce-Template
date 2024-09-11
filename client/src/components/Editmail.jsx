@@ -1,47 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { nodemailer } from "nodemailer";
 import { useNavigate, Outlet, useOutletContext } from "react-router-dom";
 import "../styles/Edit.css";
 
 function Editmail() {
   const navigate = useNavigate();
-  const [otp, setOtp] = useOutletContext();
-  console.log(otp);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const [newMail, setNewMail] = useState(userInfo.mailId);
+  const context = useOutletContext();
 
   async function editmail(e) {
     e.preventDefault();
     let otpResponse = await axios.post(
       "http://localhost:3000/getemailchangeotp",
       {
-        mail: newMail,
+        mail: context.newMail,
       }
     );
     console.log(otpResponse);
     if (otpResponse.data.access) {
-      setOtp(otpResponse.data.otp);
+      context.setOtp(otpResponse.data.otp);
       navigate("/account/credentials/email/emailotp");
     }
-
-    // let response = await axios.put("http://localhost:3000/editusermail", {
-    //   newmail: newMail,
-    //   oldmail: userInfo.mailId,
-    //   token: userInfo.token,
-    // });
-    // if (response.data.access) {
-    //   localStorage.setItem(
-    //     "userInfo",
-    //     JSON.stringify({ ...userInfo, mailId: newMail })
-    //   );
-    //   let address = JSON.parse(localStorage.getItem("address"));
-    //   localStorage.setItem(
-    //     "address",
-    //     JSON.stringify({ ...address, usermail: newMail })
-    //   );
-    //   navigate("/account/credentials");
-    // }
   }
 
   return (
@@ -65,9 +43,9 @@ function Editmail() {
             <input
               className="Editmail_Input"
               type="email"
-              value={newMail}
+              value={context.newMail}
               onChange={(e) => {
-                setNewMail(e.target.value);
+                context.setNewMail(e.target.value);
               }}
             ></input>
           </div>
