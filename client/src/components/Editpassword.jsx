@@ -44,7 +44,7 @@ function Editpassword() {
           </div>
           <input
             className="Editpassword_Input"
-            type="text"
+            type="password"
             value={pass}
             onChange={(e) => {
               setPass(e.target.value);
@@ -57,7 +57,7 @@ function Editpassword() {
           </div>
           <input
             className="Editpassword_Input"
-            type="text"
+            type="password"
             value={newpass}
             onChange={(e) => {
               setNewpass(e.target.value);
@@ -71,7 +71,7 @@ function Editpassword() {
           </div>
           <input
             className="Editpassword_Input"
-            type="text"
+            type="password"
             value={confirm}
             onChange={(e) => {
               setConfirm(e.target.value);

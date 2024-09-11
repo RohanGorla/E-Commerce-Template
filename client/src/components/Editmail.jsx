@@ -8,7 +8,8 @@ function Editmail() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [newMail, setNewMail] = useState(userInfo.mailId);
 
-  async function editmail() {
+  async function editmail(e) {
+    e.preventDefault();
     let response = await axios.put("http://localhost:3000/editusermail", {
       newmail: newMail,
       oldmail: userInfo.mailId,
@@ -34,12 +35,12 @@ function Editmail() {
         <h2>Change your mail.</h2>
         <p>Edit your mail id and click save to save changes.</p>
       </div>
-      <div className="Edit_Box">
+      <form className="Edit_Box" onSubmit={editmail}>
         <div className="Edit_Input">
-        <label>New email</label>
+          <label>New email</label>
           <input
             className="Editmail_Input"
-            type="text"
+            type="email"
             value={newMail}
             onChange={(e) => {
               setNewMail(e.target.value);
@@ -47,11 +48,9 @@ function Editmail() {
           ></input>
         </div>
         <div>
-          <button className="Savechanges_Btn" onClick={editmail}>
-            Save changes
-          </button>
+          <input className="Savechanges_Btn" type="submit"></input>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
