@@ -4,6 +4,7 @@ import crypto from "crypto";
 import express from "express";
 import cors from "cors";
 import mysql from "mysql2";
+import nodemailer from "nodemailer";
 import {
   S3Client,
   GetObjectCommand,
@@ -386,6 +387,31 @@ app.put("/editusername", (req, res) => {
       res.send({ access: true });
     }
   );
+});
+
+app.post("/getemailchangeotp", (req, res) => {
+  const mailId = req.body.mail;
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "rohangorla07@gmail.com",
+      pass: "mkudexujvosolnth",
+    },
+  });
+
+  function sendmail() {
+    const OTP = Math.floor(Math.random() * 1000000);
+    transporter.sendMail({
+      to: mailId,
+      subject: "Sending Email using Node.js",
+      html: `Your OTP is ${OTP}`,
+    });
+    console.log("sent");
+    res.send({ access: true, otp: OTP });
+  }
+  sendmail();
 });
 
 app.put("/editusermail", (req, res) => {

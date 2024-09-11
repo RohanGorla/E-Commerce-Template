@@ -20,7 +20,9 @@ import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
 import Credentials from "./components/Credentials.jsx";
 import Editname from "./components/Editname.jsx";
+import Editmailbase from "./components/Editmailbase.jsx";
 import Editmail from "./components/Editmail.jsx";
+import Emailotp from "./components/Emailotp.jsx";
 import Editpassword from "./components/Editpassword.jsx";
 import Orders from "./components/Orders.jsx";
 import Address from "./components/Address.jsx";
@@ -53,7 +55,10 @@ const router = createBrowserRouter(
           <Route path="credentials">
             <Route path="" element={<Credentials />} />
             <Route path="editname" element={<Editname />} />
-            <Route path="editmail" element={<Editmail />} />
+            <Route path="email" element={<Editmailbase />}>
+              <Route path="" element={<Editmail />} />
+              <Route path="emailotp" element={<Emailotp />} />
+            </Route>
             <Route path="editpassword" element={<Editpassword />} />
           </Route>
         </Route>
