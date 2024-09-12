@@ -23,10 +23,12 @@ function Emailotp() {
           JSON.stringify({ ...userInfo, mailId: context.newMail })
         );
         let address = JSON.parse(localStorage.getItem("address"));
-        localStorage.setItem(
-          "address",
-          JSON.stringify({ ...address, usermail: context.newMail })
-        );
+        if (address) {
+          localStorage.setItem(
+            "address",
+            JSON.stringify({ ...address, usermail: context.newMail })
+          );
+        }
         navigate("/account/credentials");
       }
     } else {

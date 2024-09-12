@@ -391,28 +391,40 @@ app.put("/editusername", (req, res) => {
 
 app.post("/getemailchangeotp", (req, res) => {
   const mailId = req.body.mail;
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: true,
-    auth: {
-      user: process.env.SMTP_MAIL,
-      pass: process.env.SMTP_PASS,
-    },
-  });
+  db.query(
+    "select mailid from userInfo where mailid = ?",
+    [mailId],
+    (err, data) => {
+      if (err) return res.send(err);
+      if (data.length) {
+        res.send({
+          access: false,
+          error: "Email is already linked with another account!",
+        });
+      } else {
+        const transporter = nodemailer.createTransport({
+          host: process.env.SMTP_HOST,
+          port: process.env.SMTP_PORT,
+          secure: true,
+          auth: {
+            user: process.env.SMTP_MAIL,
+            pass: process.env.SMTP_PASS,
+          },
+        });
 
-  async function sendmail() {
-    // const OTP = Math.floor(Math.random() * 1000000) + 100000;
-    // let OTP;
-    const OTP = await crypto.randomInt(100000, 999999);
-    transporter.sendMail({
-      to: mailId,
-      subject: "Sending Email using Node.js",
-      html: `Your OTP is ${OTP}`,
-    });
-    res.send({ access: true, otp: OTP });
-  }
-  sendmail();
+        async function sendmail() {
+          const OTP = await crypto.randomInt(100000, 999999);
+          transporter.sendMail({
+            to: mailId,
+            subject: "Sending Email using Node.js",
+            html: `Your OTP is ${OTP}`,
+          });
+          res.send({ access: true, otp: OTP });
+        }
+        sendmail();
+      }
+    }
+  );
 });
 
 app.put("/editusermail", (req, res) => {
