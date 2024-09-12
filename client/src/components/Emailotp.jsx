@@ -7,6 +7,8 @@ function Emailotp() {
   const navigate = useNavigate();
   const context = useOutletContext();
   const [OTP, setOTP] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function checkotp() {
     if (context.otp === Number(OTP)) {
@@ -27,11 +29,22 @@ function Emailotp() {
         );
         navigate("/account/credentials");
       }
+    } else {
+      setError(true);
+      setErrorMsg("Wrong OTP!");
     }
   }
 
   return (
     <div className="Edit_Main">
+      <div
+        className={
+          error ? "Edit_ErrorMsgBox--visible" : "Edit_ErrorMsgBox--invisible"
+        }
+      >
+        <p className="Edit_ErrorMsgHeading">Error!</p>
+        <p className="Edit_ErrorMsg">{errorMsg}</p>
+      </div>
       <div className="Edit_Notes">
         <h2>Enter OTP.</h2>
         <p>Enter the otp that was sent to {context.newMail}.</p>
