@@ -1,0 +1,93 @@
+:root {
+    --Main_Font: "Inter", sans-serif;
+    --Secondary_Font: "Roboto", sans-serif;
+    --Acc_Head_fs: 35px;
+    --Acc_Username_fs: 20px;
+    --Acc_Usermail_fs: 17px;
+    --Acc_Cardname_fs: 20px;
+    --Acc_Carddetail_fs: 16px;
+    --Acc_SignoutBtn_fs: 16px;
+}
+
+.Account_Container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.Account_Heading {
+    text-align: center;
+    font-family: var(--Main_Font);
+    font-size: var(--Acc_Head_fs);
+    font-weight: 600;
+    margin-bottom: 1em;
+}
+
+.Account_Useroptions {
+    max-width: 800px;
+    margin: 0 auto 3em auto;
+    padding: 30px 25px;
+    border-style: none;
+    border-radius: 10px;
+    border: 2px white solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(67, 66, 66);
+}
+
+.Account_Username {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Acc_Username_fs);
+    margin-bottom: 5px;
+}
+
+.Account_Usermail {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Acc_Usermail_fs);
+}
+
+.Account_Signout_Btn {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Acc_SignoutBtn_fs);
+    font-weight: 500;
+    padding: 1em 1.5em;
+    border-style: none;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.Account_Main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.Account_Card {
+    background-color: rgb(67, 66, 66);
+    width: 250px;
+    display: flex;
+    border-style: none;
+    border-radius: 15px;
+    border: 1px white solid;
+    padding: 25px 15px 40px 15px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.Account_Cardname {
+    font-family: var(--Main_Font);
+    font-size: var(--Acc_Cardname_fs);
+    font-weight: 500;
+    margin-bottom: .3em;
+    /* color: black; */
+}
+
+.Account_Carddetail {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Acc_Carddetail_fs);
+    /* font-weight: 600; */
+    /* color: black; */
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/Account.css";
 
 function Account() {
   const [data, setdata] = useState([]);
@@ -34,117 +35,95 @@ function Account() {
     authenticateUser();
   }, []);
   return (
-    <>
-      <div>
-        <div>
-          <h2>
+    <div className="Account_Container">
+      <h2 className="Account_Heading">Your Account</h2>
+      <div className="Account_Useroptions">
+        <div className="Account_Userinfo">
+          <p className="Account_Username">
             {data.firstname} {data.lastname}
-          </h2>
-          <p>{data.mailid}</p>
+          </p>
+          <p className="Account_Usermail">{data.mailid}</p>
         </div>
+        <div className="Account_Signout">
+          <button
+            className="Account_Signout_Btn"
+            onClick={() => {
+              localStorage.removeItem("mailId");
+              localStorage.removeItem("token");
+              localStorage.removeItem("userInfo");
+              localStorage.removeItem("address");
+              setdata([]);
+              authenticateUser();
+            }}
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+      <div className="Account_Main">
         <div
-          style={{
-            backgroundColor: "wheat",
-            width: "250px",
-            height: "100px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderStyle: "none",
-            borderRadius: "15px",
-            padding: "10px 15px",
-            margin: "10px 0",
-            cursor: "pointer",
-          }}
+          className="Account_Card"
           onClick={() => {
             navigate("orders");
           }}
         >
-          <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
-            Your Orders
-          </p>
+          <div className="Account_Cardinfo">
+            <p className="Account_Cardname">Your Orders</p>
+            <p className="Account_Carddetail">View all your past orders.</p>
+          </div>
         </div>
         <div
-          style={{
-            backgroundColor: "wheat",
-            width: "250px",
-            height: "100px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderStyle: "none",
-            borderRadius: "15px",
-            padding: "10px 15px",
-            margin: "10px 0",
-            cursor: "pointer",
-          }}
+          className="Account_Card"
           onClick={() => {
             navigate("address");
           }}
         >
-          <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
-            Your Address
-          </p>
+          <div className="Account_Cardinfo">
+            <p className="Account_Cardname">Your Address</p>
+            <p className="Account_Carddetail">
+              Select your address to which your orders will be delivered.
+            </p>
+          </div>
         </div>
         <div
-          style={{
-            backgroundColor: "wheat",
-            width: "250px",
-            height: "100px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderStyle: "none",
-            borderRadius: "15px",
-            padding: "10px 15px",
-            margin: "10px 0",
-            cursor: "pointer",
-          }}
+          className="Account_Card"
           onClick={() => {
             navigate("credentials");
           }}
         >
-          <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
-            Login & Security
-          </p>
+          <div className="Account_Cardinfo">
+            <p className="Account_Cardname">Login & security</p>
+            <p className="Account_Carddetail">
+              View and edit your user credentials.
+            </p>
+          </div>
         </div>
         <div
-          style={{
-            backgroundColor: "wheat",
-            width: "250px",
-            height: "100px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderStyle: "none",
-            borderRadius: "15px",
-            padding: "10px 15px",
-            margin: "10px 0",
-            cursor: "pointer",
-          }}
+          className="Account_Card"
           onClick={() => {
             navigate("wishlist");
           }}
         >
-          <p style={{ fontSize: "20px", fontWeight: "800", color: "black" }}>
-            Your wishlists
-          </p>
+          <div className="Account_Cardinfo">
+            <p className="Account_Cardname">Your Wishlists</p>
+            <p className="Account_Carddetail">View all your wishlists.</p>
+          </div>
+        </div>
+        <div
+          className="Account_Card"
+          onClick={() => {
+            navigate("/addproduct");
+          }}
+        >
+          <div className="Account_Cardinfo">
+            <p className="Account_Cardname">Merchant account</p>
+            <p className="Account_Carddetail">
+              Sell your own products to customers.
+            </p>
+          </div>
         </div>
       </div>
-      <button
-        style={{ padding: "15px 25px", borderRadius: "15px" }}
-        onClick={() => {
-          localStorage.removeItem("mailId");
-          localStorage.removeItem("token");
-          localStorage.removeItem("userInfo");
-          localStorage.removeItem("address");
-          setdata([]);
-          authenticateUser();
-        }}
-      >
-        Sign out
-      </button>
-    </>
+    </div>
   );
 }
 
