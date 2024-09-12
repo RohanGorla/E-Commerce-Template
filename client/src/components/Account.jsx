@@ -7,8 +7,8 @@ function Account() {
   const navigate = useNavigate();
   function authenticateUser() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const userMail = userInfo.mailId;
-    const token = userInfo.token;
+    const userMail = userInfo?.mailId;
+    const token = userInfo?.token;
     console.log(userMail, token);
     if (userMail && token) {
       authenticate();
@@ -136,6 +136,8 @@ function Account() {
         onClick={() => {
           localStorage.removeItem("mailId");
           localStorage.removeItem("token");
+          localStorage.removeItem("userInfo");
+          localStorage.removeItem("address");
           setdata([]);
           authenticateUser();
         }}
