@@ -11,28 +11,50 @@ function Editpassword() {
   const [pass, setPass] = useState("");
   const [newpass, setNewpass] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function editpassword() {
-    if (newpass === confirm && newpass.length !== 0) {
-      let response = await axios.put("http://localhost:3000/edituserpassword", {
-        mail: usermail,
-        token: token,
-        old: pass,
-        new: newpass,
-      });
-      if (response.data.access) {
-        console.log("password changed successfully!");
-        navigate("/account/credentials");
+    if (newpass.length !== 0) {
+      if (newpass === confirm) {
+        let response = await axios.put(
+          "http://localhost:3000/edituserpassword",
+          {
+            mail: usermail,
+            token: token,
+            old: pass,
+            new: newpass,
+          }
+        );
+        if (response.data.access) {
+          console.log("password changed successfully!");
+          navigate("/account/credentials");
+        } else {
+          console.log("something wrong");
+          setError(true);
+          setErrorMsg(response.data.error);
+        }
       } else {
-        console.log("something wrong");
+        console.log("New passwords donot match!");
+        setError(true);
+        setErrorMsg("New passwords donot match!");
       }
     } else {
-      console.log("New passwords donot match!");
+      setError(true);
+      setErrorMsg("Passwords cannot be empty!");
     }
   }
 
   return (
     <div className="Edit_Main">
+      <div
+        className={
+          error ? "Edit_ErrorMsgBox--visible" : "Edit_ErrorMsgBox--invisible"
+        }
+      >
+        <p className="Edit_ErrorMsgHeading">Error!</p>
+        <p className="Edit_ErrorMsg">{errorMsg}</p>
+      </div>
       <div className="Edit_Notes">
         <h2>Edit your password.</h2>
         <p>Edit your password and click save to save changes.</p>

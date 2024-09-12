@@ -383,7 +383,7 @@ app.put("/editusername", (req, res) => {
     "update userinfo set ? where mailId = ?",
     [{ firstname: first, lastname: last }, mail],
     (err, data) => {
-      if (err) return res.send(err);
+      if (err) return res.send({access: false, error: "Some error occurred!"});
       res.send({ access: true });
     }
   );
@@ -395,7 +395,7 @@ app.post("/getemailchangeotp", (req, res) => {
     "select mailid from userInfo where mailid = ?",
     [mailId],
     (err, data) => {
-      if (err) return res.send(err);
+      if (err) return res.send({access: false, error: "Some error occurred!"});
       if (data.length) {
         res.send({
           access: false,
@@ -434,7 +434,7 @@ app.put("/editusermail", (req, res) => {
     "update userinfo set ? where token = ?",
     [{ mailid: newmail }, token],
     (err, data) => {
-      if (err) return res.send(err);
+      if (err) return res.send({access: false, error: "Some error occurred!"});
       res.send({ access: true });
     }
   );
@@ -449,7 +449,8 @@ app.put("/edituserpassword", (req, res) => {
     "select password from userinfo where mailid = ?",
     [mail],
     async (err, data) => {
-      if (err) return res.send({ access: false });
+      if (err)
+        return res.send({ access: false, error: "Some error occurred!" });
       console.log(data[0].password);
       let correct = await bcrypt.compare(oldPassword, data[0].password);
       if (correct) {
@@ -458,12 +459,13 @@ app.put("/edituserpassword", (req, res) => {
           "update userinfo set ? where token = ?",
           [{ password: newPasswordToken }, token],
           (err, data) => {
-            if (err) return res.send({ access: false });
+            if (err)
+              return res.send({ access: false, error: "Some error occurred!" });
             res.send({ access: true });
           }
         );
       } else {
-        res.send({ access: false });
+        res.send({ access: false, error: "Oldpassword incorrect!" });
       }
     }
   );
