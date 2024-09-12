@@ -7,7 +7,7 @@ function Editmailbase() {
   const [newMail, setNewMail] = useState(userInfo.mailId);
   return (
     <>
-      <Outlet context={{ otp, setOtp, newMail, setNewMail }} />
+      <Outlet context={{ otp, setOtp, newMail, setNewMail, userInfo }} />
     </>
   );
 }
