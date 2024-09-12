@@ -401,14 +401,15 @@ app.post("/getemailchangeotp", (req, res) => {
     },
   });
 
-  function sendmail() {
-    const OTP = Math.floor(Math.random() * 1000000);
+  async function sendmail() {
+    // const OTP = Math.floor(Math.random() * 1000000) + 100000;
+    // let OTP;
+    const OTP = await crypto.randomInt(100000, 999999);
     transporter.sendMail({
       to: mailId,
       subject: "Sending Email using Node.js",
       html: `Your OTP is ${OTP}`,
     });
-    console.log("sent");
     res.send({ access: true, otp: OTP });
   }
   sendmail();
