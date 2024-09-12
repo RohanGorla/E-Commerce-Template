@@ -392,12 +392,12 @@ app.put("/editusername", (req, res) => {
 app.post("/getemailchangeotp", (req, res) => {
   const mailId = req.body.mail;
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
     secure: true,
     auth: {
-      user: "rohangorla07@gmail.com",
-      pass: "mkudexujvosolnth",
+      user: process.env.SMTP_MAIL,
+      pass: process.env.SMTP_PASS,
     },
   });
 
