@@ -197,7 +197,28 @@ app.delete("/removecartitem", (req, res) => {
 app.post("/getwishlists", (req, res) => {
   let mailId = req.body.mailId;
   db.query(
-    "select * from wishlists where mailId = ?",
+    "select * from wishlists where mailid = ?",
+    [mailId],
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send(data);
+    }
+  );
+});
+
+app.post("/addwishlist", (req, res) => {
+  let mailId = req.body.mailId;
+  let listName = req.body.wishlistname;
+  db.query(
+    "insert into wishlists (mailid, wishlistname) values(?)",
+    [[mailId, listName]],
+    (err, data) => {
+      if (err) return res.send(err);
+      console.log(data);
+    }
+  );
+  db.query(
+    "select * from wishlists where mailid = ?",
     [mailId],
     (err, data) => {
       if (err) return res.send(err);
@@ -208,14 +229,18 @@ app.post("/getwishlists", (req, res) => {
 
 app.post("/getfromwish", (req, res) => {
   const mailId = req.body.mailId;
-  db.query("select * from wishlistitems where mailid = ?", mailId, (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.send(err);
+  db.query(
+    "select * from wishlistitems where mailid = ?",
+    mailId,
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.send(err);
+      }
+      console.log("select * from wishlistitems data ->", data);
+      res.send(data);
     }
-    console.log("select * from wishlistitems data ->", data);
-    res.send(data);
-  });
+  );
 });
 
 app.post("/addtowish", (req, res) => {
