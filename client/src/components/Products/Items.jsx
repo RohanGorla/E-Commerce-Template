@@ -8,6 +8,8 @@ function Items() {
   const { item } = useParams();
   console.log(item);
   const [products, setProducts] = useState([]);
+  const [wishlists, setWishlists] = useState([]);
+  const [selectedWishlist, setSelectedWistlist] = useState("");
 
   useEffect(() => {
     async function getProducts() {
@@ -18,7 +20,20 @@ function Items() {
       console.log(data);
       setProducts(data);
     }
+    async function getWishlists() {
+      if (mailId) {
+        const response = await axios.post(
+          "http://localhost:3000/getwishlists",
+          {
+            mailId: mailId,
+          }
+        );
+        console.log(response.data);
+        setWishlists(response.data);
+      }
+    }
     getProducts();
+    getWishlists();
   }, []);
   //   console.log(context);
   async function addToCart(id, title, price, discount) {
