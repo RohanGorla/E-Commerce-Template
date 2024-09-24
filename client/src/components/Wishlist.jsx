@@ -7,15 +7,27 @@ function Wishlist() {
   const [wishlists, setWishlists] = useState([]);
   const [selectedWishlist, setSelectedWistlist] = useState("");
   const [addListShow, setAddListShow] = useState(false);
+  const [newlist, setNewlist] = useState("");
   const mailId = localStorage.getItem("mailId");
+  console.log(selectedWishlist);
 
   async function getWishlists() {
     if (mailId) {
       const response = await axios.post("http://localhost:3000/getwishlists", {
         mailId: mailId,
       });
-      console.log(response.data);
       setWishlists(response.data);
+    }
+  }
+
+  async function addwishlist() {
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/addwishlist", {
+        mailId: mailId,
+        wishlistname: newlist,
+      });
+      setWishlists(response.data);
+      setAddListShow(false);
     }
   }
 
@@ -61,7 +73,35 @@ function Wishlist() {
     <div className="Wishlist_Container">
       <div
         className={addListShow ? "Addlist_Window--Active" : "Addlist_Window"}
-      ></div>
+      >
+        <div className="Addlist_Tint"></div>
+        <div className="Addlist_Container">
+          <h2 className="Addlist_Heading">Add new list</h2>
+          <p className="Addlist_Note">
+            Create a new wish list to save your favourite items!
+          </p>
+          <div className="Addlist_Input">
+            <input
+              type="text"
+              value={newlist}
+              onChange={(e) => {
+                setNewlist(e.target.value);
+              }}
+              placeholder="Enter list name"
+            ></input>
+          </div>
+          <div className="Addlist_Button">
+            <button
+              onClick={() => {
+                setAddListShow(false);
+              }}
+            >
+              Cancel
+            </button>
+            <button onClick={addwishlist}>Create</button>
+          </div>
+        </div>
+      </div>
       <div className="Wishlist_Selector">
         {/* <select
           onChange={(e) => {
@@ -79,7 +119,13 @@ function Wishlist() {
         </div>
         {wishlists.map((list, index) => {
           return (
-            <div className="Wishlist_Selector--List" key={index}>
+            <div
+              className="Wishlist_Selector--List"
+              key={index}
+              onClick={() => {
+                setSelectedWistlist(list.wishlistname);
+              }}
+            >
               <p className="Wishlist_Name">{list.wishlistname}</p>
             </div>
           );
