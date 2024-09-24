@@ -1,10 +1,87 @@
-.Wishlist_Main {
-    width: 1300px;
+.Wishlist_Container {
+    /* width: 80vw; */
+    max-width: 1300px;
+    height: 100vh;
     margin: 0 auto;
+    padding-top: 6em;
+    display: flex;
+    background-color: #242424;
+}
+
+.Addlist_Window--Active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: #242424;
+    opacity: .6;
+}
+
+.Addlist_Window {
+    display: none;
+}
+
+.Wishlist_Selector {
+    width: 20%;
+    max-height: 100vh;
+    overflow-y: scroll;
+    padding: 1em .5em 0 .5em;
+    /* background-color: #242424; */
+    /* background-color: rgb(24, 23, 23); */
+    /* background-color: black; */
+}
+
+.Wishlist_Selector::-webkit-scrollbar {
+    width: 0px;
+}
+
+.Wishlist_Heading {
+    display: flex;
+    align-items: center;
+}
+
+.Wishlists_Selector_Heading {
+    width: 100%;
+    text-align: center;
+    /* margin-bottom: 1.5em; */
+}
+
+.Wishlist_Selector--List {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em 0;
+    padding: 1.3em 0;
+    border-radius: 7px;
+    /* background-color: #242424; */
+    background-color: rgb(24, 23, 23);
+}
+
+.Wishlist_Name {
+    font-size: 20px;
+}
+
+.Wishlist_Main {
+    width: 80%;
+    max-width: 1100px;
+    padding: 1em 1.7em 0em 1.7em;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+
+.Wishlist_Main::-webkit-scrollbar {
+    width: 0px;
+}
+
+.Wishlist_Heading--Items {
+    justify-content: space-between;
+    padding-right: 4em;
 }
 
 .Wish_Item_Box {
-    max-width: 1100px;
+    
     margin:  1em auto;
     background-color: rgb(24, 23, 23);
     padding: 1em 2em;
@@ -21,6 +98,6 @@
     gap: 2em;
 }
 
-.Wish_Item_Image {
-    /* margin-right: 1em; */
-}
+/* .Wish_Item_Image {
+    margin-right: 1em;
+} */

@@ -4,7 +4,20 @@ import axios from "axios";
 
 function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
+  const [wishlists, setWishlists] = useState([]);
+  const [selectedWishlist, setSelectedWistlist] = useState("");
+  const [addListShow, setAddListShow] = useState(false);
   const mailId = localStorage.getItem("mailId");
+
+  async function getWishlists() {
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/getwishlists", {
+        mailId: mailId,
+      });
+      console.log(response.data);
+      setWishlists(response.data);
+    }
+  }
 
   async function getFromWish() {
     if (mailId) {
@@ -37,13 +50,54 @@ function Wishlist() {
   }
 
   useEffect(() => {
+    getWishlists();
+  }, []);
+
+  useEffect(() => {
     getFromWish();
   }, []);
 
   return (
-    <>
+    <div className="Wishlist_Container">
+      <div
+        className={addListShow ? "Addlist_Window--Active" : "Addlist_Window"}
+      ></div>
+      <div className="Wishlist_Selector">
+        {/* <select
+          onChange={(e) => {
+            setSelectedWistlist(e.target.value);
+          }}
+          // value={}
+        >
+          <option hidden>Select wishlist</option>
+          {wishlists.map((list) => {
+            return <option key={list.id}>{list.wishlistname}</option>;
+          })}
+        </select> */}
+        <div className="Wishlist_Heading Wishlist_Heading--Lists">
+          <h2 className="Wishlists_Selector_Heading">YOUR LISTS</h2>
+        </div>
+        {wishlists.map((list, index) => {
+          return (
+            <div className="Wishlist_Selector--List" key={index}>
+              <p className="Wishlist_Name">{list.wishlistname}</p>
+            </div>
+          );
+        })}
+      </div>
       {wishlist.length ? (
         <div className="Wishlist_Main">
+          <div className="Wishlist_Heading Wishlist_Heading--Items">
+            <h2 className="Selected_Listname">LIST NAME</h2>
+            <p
+              className="Create_Wishlist"
+              onClick={() => {
+                setAddListShow(true);
+              }}
+            >
+              Create list
+            </p>
+          </div>
           {wishlist.map((item, index) => {
             return (
               <div key={index} className="Wish_Item_Box">
@@ -119,7 +173,7 @@ function Wishlist() {
           <h1 style={{ textAlign: "center" }}>Wishlist is empty!</h1>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
