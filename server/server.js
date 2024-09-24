@@ -194,14 +194,26 @@ app.delete("/removecartitem", (req, res) => {
   });
 });
 
+app.post("/getwishlists", (req, res) => {
+  let mailId = req.body.mailId;
+  db.query(
+    "select * from wishlists where mailId = ?",
+    [mailId],
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send(data);
+    }
+  );
+});
+
 app.post("/getfromwish", (req, res) => {
   const mailId = req.body.mailId;
-  db.query("select * from wishlists where mailid = ?", mailId, (err, data) => {
+  db.query("select * from wishlistitems where mailid = ?", mailId, (err, data) => {
     if (err) {
       console.log(err);
       return res.send(err);
     }
-    console.log("select * from wishlists data ->", data);
+    console.log("select * from wishlistitems data ->", data);
     res.send(data);
   });
 });
@@ -215,14 +227,14 @@ app.post("/addtowish", (req, res) => {
     req.body.discount,
   ];
   db.query(
-    "insert into wishlists (productid, title, mailid, price, discount) values (?)",
+    "insert into wishlistitems (productid, title, mailid, price, discount) values (?)",
     [values],
     (err, data) => {
       if (err) {
         console.log(err);
         return res.send(err);
       }
-      console.log("insert into wishlist data ->", data);
+      console.log("insert into wishlistitems data ->", data);
       res.send(data);
     }
   );
@@ -230,12 +242,12 @@ app.post("/addtowish", (req, res) => {
 
 app.delete("/removefromwish", (req, res) => {
   const id = req.body.id;
-  db.query("delete from wishlists where id = ?", id, (err, data) => {
+  db.query("delete from wishlistitems where id = ?", id, (err, data) => {
     if (err) {
       console.log(err);
       return res.send(err);
     }
-    console.log("remove from wishlist data ->", data);
+    console.log("remove from wishlistitems data ->", data);
     res.send(data);
   });
 });
@@ -383,7 +395,8 @@ app.put("/editusername", (req, res) => {
     "update userinfo set ? where mailId = ?",
     [{ firstname: first, lastname: last }, mail],
     (err, data) => {
-      if (err) return res.send({access: false, error: "Some error occurred!"});
+      if (err)
+        return res.send({ access: false, error: "Some error occurred!" });
       res.send({ access: true });
     }
   );
@@ -395,7 +408,8 @@ app.post("/getemailchangeotp", (req, res) => {
     "select mailid from userInfo where mailid = ?",
     [mailId],
     (err, data) => {
-      if (err) return res.send({access: false, error: "Some error occurred!"});
+      if (err)
+        return res.send({ access: false, error: "Some error occurred!" });
       if (data.length) {
         res.send({
           access: false,
@@ -434,7 +448,8 @@ app.put("/editusermail", (req, res) => {
     "update userinfo set ? where token = ?",
     [{ mailid: newmail }, token],
     (err, data) => {
-      if (err) return res.send({access: false, error: "Some error occurred!"});
+      if (err)
+        return res.send({ access: false, error: "Some error occurred!" });
       res.send({ access: true });
     }
   );
