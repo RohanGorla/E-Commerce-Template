@@ -4,12 +4,13 @@ import axios from "axios";
 
 function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
+  const [allWishitems, setAllWishitems] = useState([]);
   const [wishlists, setWishlists] = useState([]);
   const [selectedWishlist, setSelectedWistlist] = useState("");
   const [addListShow, setAddListShow] = useState(false);
   const [newlist, setNewlist] = useState("");
   const mailId = localStorage.getItem("mailId");
-  console.log(selectedWishlist);
+  // console.log(selectedWishlist);
 
   async function getWishlists() {
     if (mailId) {
@@ -17,6 +18,8 @@ function Wishlist() {
         mailId: mailId,
       });
       setWishlists(response.data);
+      console.log("First list name is -> ", response.data[0].wishlistname);
+      setSelectedWistlist(response.data[0].wishlistname);
     }
   }
 
@@ -38,7 +41,7 @@ function Wishlist() {
       });
       console.log(response);
       const data = response.data;
-      setWishlist(data);
+      setAllWishitems(data);
     }
   }
 
@@ -61,13 +64,23 @@ function Wishlist() {
     getFromWish();
   }
 
+  async function changeWishlist() {
+    const newData = allWishitems.filter((item) => {
+      if (item.wishlistname == selectedWishlist) {
+        return item;
+      }
+    });
+    setWishlist(newData);
+  }
+
   useEffect(() => {
     getWishlists();
+    getFromWish();
   }, []);
 
   useEffect(() => {
-    getFromWish();
-  }, []);
+    changeWishlist();
+  }, [selectedWishlist, allWishitems]);
 
   return (
     <div className="Wishlist_Container">
@@ -134,7 +147,7 @@ function Wishlist() {
       {wishlist.length ? (
         <div className="Wishlist_Main">
           <div className="Wishlist_Heading Wishlist_Heading--Items">
-            <h2 className="Selected_Listname">LIST NAME</h2>
+            <h2 className="Selected_Listname">{selectedWishlist}</h2>
             <p
               className="Create_Wishlist"
               onClick={() => {
@@ -215,8 +228,25 @@ function Wishlist() {
           })}
         </div>
       ) : (
-        <div>
-          <h1 style={{ textAlign: "center" }}>Wishlist is empty!</h1>
+        <div className="Wishlist_Main">
+          <div className="Wishlist_Heading Wishlist_Heading--Items">
+            <h2 className="Selected_Listname">{selectedWishlist}</h2>
+            <p
+              className="Create_Wishlist"
+              onClick={() => {
+                setAddListShow(true);
+              }}
+            >
+              Create list
+            </p>
+          </div>
+          <div className="Wishlist_Empty">
+            <h1 style={{ textAlign: "center" }}>No items present!</h1>
+            <p style={{ textAlign: "center" }}>
+              No items to show. Add new items into wishlist or select another
+              wishlist.
+            </p>
+          </div>
         </div>
       )}
     </div>

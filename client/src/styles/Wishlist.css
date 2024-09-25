@@ -139,7 +139,6 @@
 }
 
 .Wish_Item_Box {
-    
     margin:  1em auto;
     background-color: rgb(24, 23, 23);
     padding: 1em 2em;
@@ -154,6 +153,12 @@
     display: flex;
     align-items: center;
     gap: 2em;
+}
+
+.Wishlist_Empty {
+    background-color: rgb(24, 23, 23);
+    max-width: 800px;
+    margin: 2em auto;
 }
 
 /* .Wish_Item_Image {
