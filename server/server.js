@@ -250,9 +250,10 @@ app.post("/addtowish", (req, res) => {
     req.body.mailId,
     req.body.price,
     req.body.discount,
+    req.body.wishlist,
   ];
   db.query(
-    "insert into wishlistitems (productid, title, mailid, price, discount) values (?)",
+    "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname) values (?)",
     [values],
     (err, data) => {
       if (err) {
