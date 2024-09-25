@@ -9,7 +9,10 @@ function Items() {
   console.log(item);
   const [products, setProducts] = useState([]);
   const [wishlists, setWishlists] = useState([]);
+  const [wishProduct, setWishProduct] = useState({});
   const [selectedWishlist, setSelectedWistlist] = useState("");
+  const [showSelectlist, setShowSelectlist] = useState(false);
+  const mailId = localStorage.getItem("mailId");
 
   useEffect(() => {
     async function getProducts() {
@@ -64,7 +67,7 @@ function Items() {
     }
   }
 
-  async function addToWishlist(product) {
+  async function addToWishlist(product, list) {
     // console.log(product);
     const mail = localStorage.getItem("mailId");
     if (mail) {
@@ -74,6 +77,7 @@ function Items() {
         mailId: mail,
         price: product.price,
         discount: product.discount,
+        wishlist: list,
       });
       console.log(response);
     }
@@ -81,6 +85,50 @@ function Items() {
 
   return (
     <div className="Items_Main">
+      <div
+        className={
+          showSelectlist
+            ? "Items_Wishlist_Selector--Active"
+            : "Items_Wishlist_Selector"
+        }
+      >
+        <div className="Items_Wishlist_Selector--Tint"></div>
+        <div className="Items_Wishlist_Selector--Container">
+          <div className="Items_Wishlist_Selector--Subcontainer">
+            <h2 className="Items_Wishlist_Selector--Heading">
+              Select wishlist
+            </h2>
+            <div className="Items_Wishlist_Selector--Lists">
+              {wishlists.map((list, index) => {
+                return (
+                  <div
+                    className="Items_Wishlist_Selector--List"
+                    key={index}
+                    onClick={() => {
+                      setSelectedWistlist(list.wishlistname);
+                      setShowSelectlist(false);
+                      addToWishlist(wishProduct, list.wishlistname);
+                    }}
+                  >
+                    <p className="Items_Wishlist_Selector--Listname">
+                      {list.wishlistname}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="Item_Wishlist_Selector--Cancel_Button">
+            <button
+              onClick={() => {
+                setShowSelectlist(false);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
       {/* add a category button to go back to selecting categories if needed. */}
       <h1>Products List</h1>
       <button
@@ -131,7 +179,9 @@ function Items() {
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     // send all data about product needed for the cart along with user mail id.
-                    addToWishlist(product);
+                    // addToWishlist(product);
+                    setShowSelectlist(true);
+                    setWishProduct(product);
                   }}
                 >
                   Wish list
