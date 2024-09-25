@@ -102,6 +102,11 @@
     border-radius: 7px;
     /* background-color: #242424; */
     background-color: rgb(24, 23, 23);
+    cursor: pointer;
+}
+
+.Wishlist_Selector--List:hover {
+    color: red;
 }
 
 .Wishlist_Name {
@@ -123,6 +128,14 @@
 .Wishlist_Heading--Items {
     justify-content: space-between;
     padding-right: 4em;
+}
+
+.Create_Wishlist {
+    cursor: pointer;
+}
+
+.Create_Wishlist:hover {
+    color: red;
 }
 
 .Wish_Item_Box {

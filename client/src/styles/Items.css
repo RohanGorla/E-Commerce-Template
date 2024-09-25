@@ -1,6 +1,110 @@
+::-webkit-scrollbar {
+    width: 0px;
+}
+
 .Items_Main {
     max-width: 1500px;
     margin: 0 auto;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+
+.Items_Wishlist_Selector {
+    display: none;
+}
+
+.Items_Wishlist_Selector--Active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Items_Wishlist_Selector--Tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: .6;
+    background-color: black;
+}
+
+.Items_Wishlist_Selector--Container {
+    position: absolute;
+    z-index: 1;
+    width: 300px;
+    height: 400px;
+    padding: 1em 0;
+    /* overflow-y: scroll; */
+    background-color: #242424;
+}
+
+.Items_Wishlist_Selector--Subcontainer {
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.Items_Wishlist_Selector--Heading {
+    text-align: center;
+    margin-top: .5em;
+}
+
+.Items_Wishlist_Selector--Lists {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    width: 270px;
+    margin: 0 auto;
+}
+
+.Items_Wishlist_Selector--List {
+    background-color: rgb(24, 23, 23);
+    text-align: center;
+    width: 100%;
+    margin: .5em 0;
+    padding: 1em;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.Items_Wishlist_Selector--List:hover {
+    color: red;
+}
+
+.Items_Wishlist_Selector--Listname {
+    font-size: 18px;
+}
+
+.Item_Wishlist_Selector--Cancel_Button {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+    background-color: #242424;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.Item_Wishlist_Selector--Cancel_Button button {
+    background-color: black;
+    color: white;
+    padding: 1em 2em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Item_Wishlist_Selector--Cancel_Button button:hover {
+    color: red;
 }
 
 .Items {
