@@ -512,6 +512,32 @@ app.put("/edituserpassword", (req, res) => {
   );
 });
 
+app.get("/getcatandcom", async (req, res) => {
+  let catData;
+  let comData;
+  db.query("select distinct category from Category", (err, data) => {
+    if (err) return res.send(err);
+    catData = data;
+    db.query("select distinct company from company", (err, data) => {
+      if (err) return res.send(err);
+      comData = data;
+      console.log(catData, comData);
+      res.send({ cat: catData, com: comData });
+    });
+  });
+});
+
+app.get("/getallcategories", async (req, res) => {
+  db.query("select * from category", (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+    console.log("select * from categories data ->", data);
+    res.send(data);
+  });
+});
+
 app.post("/addproduct", async (req, res) => {
   // Adding values to DB
   const values = [
@@ -519,11 +545,12 @@ app.post("/addproduct", async (req, res) => {
     Number(req.body.price),
     Number(req.body.discount),
     req.body.category,
+    req.body.company,
     // key,
   ];
   db.query(
     // "insert into products (title, price, discount, category, imageTag) values (?)",
-    "insert into products (title, price, discount, category) values (?)",
+    "insert into products (title, price, discount, category, company) values (?)",
     [values],
     (err, data) => {
       if (err) {
@@ -556,22 +583,27 @@ app.post("/addproduct", async (req, res) => {
   res.send(url); */
 });
 
-app.get("/getallcategories", async (req, res) => {
-  db.query("select * from category", (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.send(err);
-    }
-    console.log("select * from categories data ->", data);
-    res.send(data);
-  });
-});
-
 app.post("/addcategory", async (req, res) => {
   const category = req.body.category;
   db.query(
     "insert into category (category) values (?)",
     [category],
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.send(err);
+      }
+      console.log(data);
+      res.send("done");
+    }
+  );
+});
+
+app.post("/addcompany", async (req, res) => {
+  const company = req.body.company;
+  db.query(
+    "insert into company (company) values (?)",
+    [company],
     (err, data) => {
       if (err) {
         console.log(err);
