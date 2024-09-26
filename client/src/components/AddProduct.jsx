@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function AddProduct() {
@@ -7,7 +7,12 @@ function AddProduct() {
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState("");
   const [productCat, setProductCat] = useState("");
+  const [productCom, setProductCom] = useState("");
   const [actCat, setActCat] = useState("");
+  const [allCat, setAllCat] = useState([]);
+  const [newCompany, setNewCompany] = useState("");
+  const [allCom, setAllCom] = useState([]);
+  const [fetch, setFetch] = useState(true);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -17,6 +22,7 @@ function AddProduct() {
       price: price,
       discount: discount,
       category: productCat,
+      company: productCom,
       // type: file.type,
     });
     console.log(response);
@@ -36,7 +42,28 @@ function AddProduct() {
     });
     console.log(response);
     setActCat("");
+    setFetch(!fetch);
   }
+
+  async function handleCompany(e) {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:3000/addcompany", {
+      company: newCompany,
+    });
+    console.log(response);
+    setNewCompany("");
+    setFetch(!fetch);
+  }
+
+  useEffect(() => {
+    async function getCatAndCom() {
+      let response = await axios.get("http://localhost:3000/getcatandcom");
+      console.log(response);
+      setAllCat(response.data.cat);
+      setAllCom(response.data.com);
+    }
+    getCatAndCom();
+  }, [fetch]);
 
   return (
     <>
@@ -90,13 +117,48 @@ function AddProduct() {
         </div>
         <div style={{ margin: "1em 0" }}>
           <label style={{ margin: "0 1em" }}>Category</label>
-          <input
+          {/* <input
             type="text"
             onChange={(e) => {
               setProductCat(e.target.value);
             }}
             value={productCat}
-          ></input>
+          ></input> */}
+          <select
+            onChange={(e) => {
+              setProductCat(e.target.value);
+            }}
+          >
+            <option value="Select category" hidden>
+              Select category
+            </option>
+            {allCat.map((cat, index) => {
+              return (
+                <option value={cat.ctegory} key={index}>
+                  {cat.category}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div style={{ margin: "1em 0" }}>
+          <label style={{ margin: "0 1em" }}>Company</label>
+          <select
+            onChange={(e) => {
+              setProductCom(e.target.value);
+            }}
+          >
+            <option value="Select company" hidden>
+              Select company
+            </option>
+            {allCom.map((com, index) => {
+              return (
+                <option value={com.company} key={index}>
+                  {com.company}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div>
           <input type="submit"></input>
@@ -119,6 +181,27 @@ function AddProduct() {
               setActCat(e.target.value);
             }}
             value={actCat}
+          ></input>
+        </div>
+        <input type="submit"></input>
+      </form>
+      <p style={{ textAlign: "center", marginTop: "3em" }}>Add Company</p>
+      <form
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        onSubmit={handleCompany}
+      >
+        <div style={{ margin: "1em 0" }}>
+          <label style={{ margin: "0 1em" }}>Company</label>
+          <input
+            type="text"
+            onChange={(e) => {
+              setNewCompany(e.target.value);
+            }}
+            value={newCompany}
           ></input>
         </div>
         <input type="submit"></input>
