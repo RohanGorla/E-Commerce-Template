@@ -8,11 +8,17 @@ function Items() {
   const { item } = useParams();
   console.log(item);
   const [products, setProducts] = useState([]);
+  const [actualProducts, setActualProducts] = useState([]);
   const [wishlists, setWishlists] = useState([]);
   const [wishProduct, setWishProduct] = useState({});
   const [selectedWishlist, setSelectedWistlist] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState("");
+  const [allCat, setAllCat] = useState([]);
+  const [allCom, setAllCom] = useState([]);
   const [showSelectlist, setShowSelectlist] = useState(false);
+  const [showCompany, setShowCompany] = useState(true);
   const mailId = localStorage.getItem("mailId");
+  console.log("products -> ", products);
 
   useEffect(() => {
     async function getProducts() {
@@ -22,6 +28,7 @@ function Items() {
       const data = response.data;
       console.log(data);
       setProducts(data);
+      setActualProducts(data);
     }
     async function getWishlists() {
       if (mailId) {
@@ -38,7 +45,26 @@ function Items() {
     getProducts();
     getWishlists();
   }, []);
-  //   console.log(context);
+
+  useEffect(() => {
+    async function getCatAndCom() {
+      let response = await axios.get("http://localhost:3000/getcatandcom");
+      console.log(response);
+      setAllCat(response.data.cat);
+      setAllCom(response.data.com);
+    }
+    getCatAndCom();
+  }, []);
+
+  useEffect(() => {
+    let newData = actualProducts.filter((product) => {
+      if (product.company == selectedCompany) {
+        return product;
+      }
+    });
+    setProducts(newData);
+  }, [selectedCompany]);
+
   async function addToCart(id, title, price, discount) {
     console.log(id, title, price, discount);
     const mail = localStorage.getItem("mailId");
@@ -139,57 +165,134 @@ function Items() {
       >
         Category
       </button>
-      <div className="Items">
-        {products.map((product, index) => {
-          return (
-            <div key={index} style={{ padding: "2em 1em", margin: "1em 0" }}>
-              <img
-                src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-                style={{ width: "300px", cursor: "pointer" }}
-                onClick={() => {
-                  window.open(
-                    `${window.location.origin}/products/product/${product.id}`
-                  );
-                }}
-              ></img>
-              <h2>{product.title}</h2>
-              <p>{product.category}</p>
-              <p>{product.price}</p>
-              <p>{product.discount}</p>
-              <p>
-                final price:{" "}
-                {product.price - product.price * (product.discount / 100)}
-              </p>
-              <div className="Items_Buttons">
-                <button
-                  style={{ margin: "0 1em 0 0", cursor: "pointer" }}
+      <div className="Items_Container">
+        <div className="Items_Filters">
+          {/* <div
+            className={
+              showCompany
+                ? "Items_Filter_Company Items_Filter_Company--Active"
+                : "Items_Filter_Company Items_Filter_Company--Inactive"
+            }
+          >
+            {allCat.map((cat) => {
+              return (
+                <div className="Items_Filter_Company_Name_Container">
+                  <p className="Items_Filter_Company_Name">{cat.category}</p>
+                </div>
+              );
+            })}
+          </div> */}
+          <div
+            className={
+              showCompany
+                ? "Items_Filter_Company Items_Filter_Company--Active"
+                : "Items_Filter_Company Items_Filter_Company--Inactive"
+            }
+          >
+            {allCom.map((com, index) => {
+              return (
+                <div
+                  className="Items_Filter_Company_Name_Container"
                   onClick={() => {
-                    // send all data about product needed for the cart along with user mail id.
-                    addToCart(
-                      product.id,
-                      product.title,
-                      product.price,
-                      product.discount
-                    );
+                    setSelectedCompany(com.company);
                   }}
+                  key={index}
                 >
-                  Add to cart
-                </button>
-                <button
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    // send all data about product needed for the cart along with user mail id.
-                    // addToWishlist(product);
-                    setShowSelectlist(true);
-                    setWishProduct(product);
-                  }}
-                >
-                  Wish list
-                </button>
+                  <p className="Items_Filter_Company_Name">{com.company}</p>
+                </div>
+              );
+            })}
+          </div>
+          <button
+            onClick={() => {
+              setShowCompany(!showCompany);
+            }}
+          >
+            collapse
+          </button>
+        </div>
+        <div className="Items">
+          {products.map((product, index) => {
+            let mrp = product.price;
+            let offer_price = (
+              product.price -
+              product.price * (product.discount / 100)
+            ).toFixed(2);
+            let mrp_string = mrp.toString();
+            let offer_price_string = offer_price.toString().split(".")[0];
+            let offer_price_decimal = offer_price.toString().split(".")[1];
+            let mrp_array = mrp_string.split("").reverse();
+            let offer_price_array = offer_price_string.split("").reverse();
+            let mrp_iterator = Math.floor(mrp_array.length / 2);
+            let offer_price_iterator = Math.floor(offer_price_array.length / 2);
+            let k = 3;
+            for (let j = 0; j < mrp_iterator - 1; j++) {
+              mrp_array.splice(k, 0, ",");
+              k += 3;
+            }
+            k = 3;
+            for (let j = 0; j < offer_price_iterator - 1; j++) {
+              offer_price_array.splice(k, 0, ",");
+              k += 3;
+            }
+            let mrp_actual = mrp_array.reverse().join("");
+            let offer_price_actual =
+              offer_price_array.reverse().join("") + "." + offer_price_decimal;
+            console.log(offer_price_actual);
+            return (
+              <div key={index} className="Item_Container">
+                <div className="Item_Image">
+                  <img
+                    src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                    onClick={() => {
+                      window.open(
+                        `${window.location.origin}/products/product/${product.id}`
+                      );
+                    }}
+                  ></img>
+                </div>
+                <div className="Item_Details">
+                  <h2 className="Item_Name">{product.title}</h2>
+                  <p className="Item_Category">
+                    {product.category} - {product.company}
+                  </p>
+                  <p className="Item_Price">
+                    <span className="Item_Discount">-{product.discount}%</span>{" "}
+                    {offer_price_actual}
+                  </p>
+                  <p className="Item_MRP">{mrp_actual}</p>
+                  <div className="Item_Buttons">
+                    <button
+                      style={{ margin: "0 1em 0 0", cursor: "pointer" }}
+                      onClick={() => {
+                        // send all data about product needed for the cart along with user mail id.
+                        addToCart(
+                          product.id,
+                          product.title,
+                          product.price,
+                          product.discount
+                        );
+                      }}
+                    >
+                      Add to cart
+                    </button>
+                    <button
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        // send all data about product needed for the cart along with user mail id.
+                        // addToWishlist(product);
+                        setShowSelectlist(true);
+                        setWishProduct(product);
+                      }}
+                    >
+                      Wish list
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

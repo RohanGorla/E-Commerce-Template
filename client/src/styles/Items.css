@@ -4,9 +4,10 @@
 
 .Items_Main {
     max-width: 1500px;
-    margin: 0 auto;
     max-height: 100vh;
     overflow-y: scroll;
+    margin: 0 auto;
+    padding-top: 8em;
 }
 
 .Items_Wishlist_Selector {
@@ -107,12 +108,73 @@
     color: red;
 }
 
-.Items {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+.Items_Container {
+    display: flex;
 }
 
-.Items_Buttons {
+.Items_Filters {
+    width: 20%;
+}
+
+.Items_Filter_Company {
+    overflow-y: scroll;
+    transition: all .3s ease-in-out;
+    padding: 0em 1em;
+}
+
+.Items_Filter_Company--Inactive {
+    background-color: #242424;
+    max-height: 0px;
+}
+
+.Items_Filter_Company--Active {
+    background-color: #242424;
+    max-height: 400px;
+    /* transform: scaleY(0); */
+    /* transform: rotateX(90deg); */
+    /* transform-origin: 0% 0%; */
+}
+
+.Items_Filter_Company_Name_Container {
+    text-align: center;
+    padding: .5em 0em;
+    margin: .3em 0em;
+    background-color: rgb(24, 23, 23);
+}
+
+.Items_Filter_Company_Name {
+
+}
+
+.Items {
+    width: 75%;
+    /* margin-top: 1em; */
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
+}
+
+.Item_Container {
+    display: flex;
+    background-color: #242424;
+    padding: 2em 1em;
+    margin-bottom: 1em;
+}
+
+.Item_Image {
+    width: 30%;
+    margin-right: 1.5em;
+}
+
+.Item_Image img {
+    max-width: 100%;
+    height: 200px;
+}
+
+.Item_Details {
+    width: 60%;
+}
+
+.Item_Buttons {
     margin-top: 1em;
 }
 
