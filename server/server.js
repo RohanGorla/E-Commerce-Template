@@ -57,15 +57,45 @@ app.get("/", (req, res) => {
 });
 
 app.post("/addUser", async (req, res) => {
-  let hash = await bcrypt.hash(req.body.password, 10);
-  let token = await bcrypt.hash(req.body.mail, 10);
-  let values = [[req.body.first, req.body.last, req.body.mail, hash, token]];
+  let firstname = req.body.first;
+  let lastname = req.body.last;
+  let mail = req.body.mail;
+  let password = req.body.password;
+  let exists = false;
   db.query(
-    "insert into userinfo (firstname, lastname, mailid, password, token) values ?",
-    [values],
-    (err, data) => {
-      if (err) return res.send(err);
-      res.send({ access: true, token: token });
+    "select * from userinfo where mailid = ?",
+    [mail],
+    async (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg: "Some error has occurred!",
+        });
+      if (data.length) {
+        exists = true;
+      }
+      if (exists) {
+        res.send({
+          access: false,
+          errorMsg: "This email is already linked to an existing account!",
+        });
+      } else {
+        let hash = await bcrypt.hash(password, 10);
+        let token = await bcrypt.hash(mail, 10);
+        let values = [[firstname, lastname, mail, hash, token]];
+        db.query(
+          "insert into userinfo (firstname, lastname, mailid, password, token) values ?",
+          [values],
+          (err, data) => {
+            if (err)
+              return res.send({
+                access: false,
+                errorMsg: "Someth error has occurred!",
+              });
+            res.send({ access: true, token: token });
+          }
+        );
+      }
     }
   );
 });
@@ -82,7 +112,11 @@ app.post("/checkUser", async (req, res) => {
     "select * from userinfo where mailid = ?",
     [mailId],
     async (err, data) => {
-      if (err) return res.send({ access: false, errorMsg: "Some error has occurred!" });
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg: "Some error has occurred!",
+        });
       if (data.length) {
         exists = true;
         actualPassword = data[0].password;
@@ -98,7 +132,11 @@ app.post("/checkUser", async (req, res) => {
             "update userinfo set ? where mailId = ?",
             [{ token: token }, mailId],
             (err, data) => {
-              if (err) return res.send({ access: false, errorMsg: "Some error has occurred!" });
+              if (err)
+                return res.send({
+                  access: false,
+                  errorMsg: "Some error has occurred!",
+                });
               console.log(data);
               res.send({
                 access: true,
