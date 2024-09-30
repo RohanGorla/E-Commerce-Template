@@ -82,7 +82,7 @@ app.post("/checkUser", async (req, res) => {
     "select * from userinfo where mailid = ?",
     [mailId],
     async (err, data) => {
-      if (err) return res.send(err);
+      if (err) return res.send({ access: false, errorMsg: "Some error has occurred!" });
       if (data.length) {
         exists = true;
         actualPassword = data[0].password;
@@ -98,7 +98,7 @@ app.post("/checkUser", async (req, res) => {
             "update userinfo set ? where mailId = ?",
             [{ token: token }, mailId],
             (err, data) => {
-              if (err) return res.send(err);
+              if (err) return res.send({ access: false, errorMsg: "Some error has occurred!" });
               console.log(data);
               res.send({
                 access: true,
@@ -110,8 +110,10 @@ app.post("/checkUser", async (req, res) => {
             }
           );
         } else {
-          res.send({ access: false });
+          res.send({ access: false, errorMsg: "Password is incorrect!" });
         }
+      } else {
+        res.send({ access: false, errorMsg: "User doesnot exist!" });
       }
     }
   );
@@ -525,6 +527,18 @@ app.get("/getcatandcom", async (req, res) => {
       res.send({ cat: catData, com: comData });
     });
   });
+});
+
+app.post("/getcompany", (req, res) => {
+  const category = req.body.category;
+  db.query(
+    "select distinct company from products where category = ?",
+    category,
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send(data);
+    }
+  );
 });
 
 app.get("/getallcategories", async (req, res) => {

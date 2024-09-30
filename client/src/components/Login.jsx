@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
@@ -31,6 +34,8 @@ function Login() {
           localStorage.setItem("token", response.data.token);
           navigate("/account");
         } else {
+          setError(true);
+          setErrorMsg(response.data.errorMsg);
           console.log("false");
         }
       })
@@ -41,49 +46,81 @@ function Login() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "3em",
-        width: "60%",
-        margin: "0 auto",
-      }}
+      className="Login_Container"
+      // style={{
+      //   display: "flex",
+      //   justifyContent: "center",
+      //   gap: "3em",
+      //   width: "60%",
+      //   margin: "0 auto",
+      // }}
     >
-      <div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>Email</label>
-          <input
-            type="mail"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-          ></input>
+      <div className="Login_Main">
+        <div
+          className={
+            error
+              ? "Login_ErrorMsgBox--visible"
+              : "Login_ErrorMsgBox--invisible"
+          }
+        >
+          <p className="Login_ErrorMsgHeading">Error!</p>
+          <p className="Login_ErrorMsg">{errorMsg}</p>
         </div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>Password</label>
-          <input
-            type="password"
-            onChange={(e) => {
-              setPass(e.target.value);
-            }}
-            value={pass}
-          ></input>
+        <div className="Login_Notes">
+          <p>
+            Log into your account and enjoy shopping for your favourite product!
+          </p>
         </div>
-        <div style={{ margin: "1em 0" }}>
-          <button
-            style={{ padding: ".3em .4em" }}
-            onClick={email && pass ? checkUser : null}
-          >
-            Log in
-          </button>
-          <button
-            onClick={() => {
-              navigate("/account/register");
-            }}
-          >
-            Register
-          </button>
+        <form className="Login_Form">
+          <div className="Login_Email">
+            <label>Email</label>
+            <input
+              className="Login_Email--Input"
+              type="mail"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
+            ></input>
+          </div>
+          <div className="Login_Password">
+            <label>Password</label>
+            <input
+              className="Login_Password--Input"
+              type="password"
+              onChange={(e) => {
+                setPass(e.target.value);
+              }}
+              value={pass}
+            ></input>
+          </div>
+        </form>
+        <div className="Login_Buttons" style={{ margin: "1em 0" }}>
+          <div className="Login_Buttons--Login">
+            <button
+              // style={{ padding: ".3em .4em" }}
+              onClick={
+                email && pass
+                  ? checkUser
+                  : () => {
+                      setError(true);
+                      setErrorMsg("Email or Password cannot be empty!");
+                    }
+              }
+            >
+              Log in
+            </button>
+          </div>
+          <div className="Login_Buttons--Register">
+            <p>Don't have an account?</p>
+            <button
+              onClick={() => {
+                navigate("/account/register");
+              }}
+            >
+              Create new acoount
+            </button>
+          </div>
         </div>
       </div>
     </div>
