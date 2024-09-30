@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/Register.css";
 
 function Register() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
-  async function addUser() {
+  async function addUser(e) {
+    e.preventDefault();
     await axios
       .post(`${import.meta.env.VITE_BASE_URL}/addUser`, {
         first: first,
@@ -33,6 +37,9 @@ function Register() {
             })
           );
           navigate("/account");
+        } else {
+          setError(true);
+          setErrorMsg(response.data.errorMsg);
         }
       })
       .catch((err) => {
@@ -41,19 +48,25 @@ function Register() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "3em",
-        width: "60%",
-        margin: "0 auto",
-      }}
-    >
-      <div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>First name</label>
+    <div className="Register_Main">
+      <div
+        className={
+          error
+            ? "Register_ErrorMsgBox--visible"
+            : "Register_ErrorMsgBox--invisible"
+        }
+      >
+        <p className="Register_ErrorMsgHeading">Error!</p>
+        <p className="Register_ErrorMsg">{errorMsg}</p>
+      </div>
+      <div className="Register_Notes">
+        <h2>Create Account!</h2>
+      </div>
+      <form className="Register_Form" onSubmit={addUser}>
+        <div className="Register_Firstname">
+          <label>First name</label>
           <input
+            className="Register_Firstname--Input"
             type="text"
             onChange={(e) => {
               setFirst(e.target.value);
@@ -61,9 +74,10 @@ function Register() {
             value={first}
           ></input>
         </div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>Last name</label>
+        <div className="Register_Lastname">
+          <label>Last name</label>
           <input
+            className="Register_Lastname--Input"
             type="text"
             onChange={(e) => {
               setLast(e.target.value);
@@ -71,35 +85,38 @@ function Register() {
             value={last}
           ></input>
         </div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>Email</label>
+        <div className="Register_Email">
+          <label>Email</label>
           <input
-            type="mail"
+            className="Register_Email--Input"
+            type="email"
             onChange={(e) => {
               setMail(e.target.value);
             }}
             value={mail}
           ></input>
         </div>
-        <div style={{ margin: "1em 0" }}>
-          <label style={{ marginRight: ".4em" }}>Password</label>
+        <div className="Register_Password">
+          <label>Password</label>
           <input
+            className="Register_Password--Input"
             type="password"
+            required
             onChange={(e) => {
               setPassword(e.target.value);
             }}
             value={password}
           ></input>
         </div>
-
-        <div style={{ margin: "1em 0" }}>
-          <button
-            style={{ padding: ".3em .4em" }}
-            onClick={mail && password ? addUser : null}
-          >
-            Sign up
-          </button>
+        <div className="Register_Signup">
+          <input type="submit" value="Sign up"></input>
         </div>
+      </form>
+      {/* <div>
+        <button onClick={mail && password ? addUser : null}>Sign up</button>
+      </div> */}
+      <div className="Register_Login">
+        <p>Already have an account?</p>
         <button
           onClick={() => {
             navigate("/account/login");

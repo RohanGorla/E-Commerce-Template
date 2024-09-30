@@ -45,16 +45,7 @@ function Login() {
   }
 
   return (
-    <div
-      className="Login_Container"
-      // style={{
-      //   display: "flex",
-      //   justifyContent: "center",
-      //   gap: "3em",
-      //   width: "60%",
-      //   margin: "0 auto",
-      // }}
-    >
+    <div className="Login_Container">
       <div className="Login_Main">
         <div
           className={
@@ -98,7 +89,6 @@ function Login() {
         <div className="Login_Buttons" style={{ margin: "1em 0" }}>
           <div className="Login_Buttons--Login">
             <button
-              // style={{ padding: ".3em .4em" }}
               onClick={
                 email && pass
                   ? checkUser
