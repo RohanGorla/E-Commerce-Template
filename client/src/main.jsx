@@ -16,7 +16,9 @@ import Wishlist from "./components/Wishlist.jsx";
 import Cart from "./components/Cart.jsx";
 import Checkout from "./components/Checkout.jsx";
 import Account from "./components/Account.jsx";
+import Registerbase from "./components/Registerbase.jsx";
 import Register from "./components/Register.jsx";
+import Registerotp from "./components/Registerotp.jsx";
 import Login from "./components/Login.jsx";
 import Credentials from "./components/Credentials.jsx";
 import Editname from "./components/Editname.jsx";
@@ -44,7 +46,10 @@ const router = createBrowserRouter(
         <Route path="cart" element={<Cart />} />
         <Route path="account">
           <Route path="" element={<Account />} />
-          <Route path="register" element={<Register />} />
+          <Route path="register" element={<Registerbase />}>
+            <Route path="" element={<Register />} />
+            <Route path="registerotp" element={<Registerotp />} />
+          </Route>
           <Route path="login" element={<Login />} />
           <Route path="orders" element={<Orders />} />
           <Route path="wishlist" element={<Wishlist />} />

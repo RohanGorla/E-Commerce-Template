@@ -102,3 +102,29 @@
     border-style: none;
     border-radius: 4px;
 }
+
+.Register_Input {
+    margin-bottom: 1em;
+}
+
+.Registerotp_Input {
+    display: block;
+    width: 100px;
+    font-family: var(--Secondary_Font);
+    font-size: var(--Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}
+
+.Register_Savechanges_Btn {
+    font-size: var(--Secondary_Font);
+    font-size: var(--Button_Fontsize);
+    font-weight: 500;
+    padding: .5em 1.7em;
+    background-color: gold;
+    border-style: none;
+    border-radius: 4px;
+}

@@ -1,50 +1,30 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import "../styles/Register.css";
 
 function Register() {
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
+  const context = useOutletContext();
   const navigate = useNavigate();
 
   async function addUser(e) {
     e.preventDefault();
-    await axios
-      .post(`${import.meta.env.VITE_BASE_URL}/addUser`, {
-        first: first,
-        last: last,
-        mail: mail,
-        password: password,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.access) {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("mailId", mail);
-          localStorage.setItem(
-            "userInfo",
-            JSON.stringify({
-              firstname: first,
-              lastname: last,
-              mailId: mail,
-              token: response.data.token,
-            })
-          );
-          navigate("/account");
-        } else {
-          setError(true);
-          setErrorMsg(response.data.errorMsg);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    let otpResponse = await axios.post(
+      "http://localhost:3000/getemailchangeotp",
+      {
+        mail: context.mail,
+      }
+    );
+    console.log(otpResponse);
+    if (otpResponse.data.access) {
+      context.setOtp(otpResponse.data.otp);
+      navigate("registerotp");
+    } else {
+      setError(true);
+      setErrorMsg(otpResponse.data.error);
+    }
   }
 
   return (
@@ -69,9 +49,9 @@ function Register() {
             className="Register_Firstname--Input"
             type="text"
             onChange={(e) => {
-              setFirst(e.target.value);
+              context.setFirst(e.target.value);
             }}
-            value={first}
+            value={context.first}
           ></input>
         </div>
         <div className="Register_Lastname">
@@ -80,9 +60,9 @@ function Register() {
             className="Register_Lastname--Input"
             type="text"
             onChange={(e) => {
-              setLast(e.target.value);
+              context.setLast(e.target.value);
             }}
-            value={last}
+            value={context.last}
           ></input>
         </div>
         <div className="Register_Email">
@@ -91,9 +71,9 @@ function Register() {
             className="Register_Email--Input"
             type="email"
             onChange={(e) => {
-              setMail(e.target.value);
+              context.setMail(e.target.value);
             }}
-            value={mail}
+            value={context.mail}
           ></input>
         </div>
         <div className="Register_Password">
@@ -103,9 +83,9 @@ function Register() {
             type="password"
             required
             onChange={(e) => {
-              setPassword(e.target.value);
+              context.setPassword(e.target.value);
             }}
-            value={password}
+            value={context.password}
           ></input>
         </div>
         <div className="Register_Signup">
