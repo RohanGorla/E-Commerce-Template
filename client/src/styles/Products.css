@@ -1,11 +1,13 @@
-
 :root {
-    --Title: 30px;
-    --Price: 16px;
+    --Title: 25px;
+    --Disc: 15px;
+    --Category: 15px;
     --Final_Heading: 22px;
     --Mrp: 15px;
-    --Final: 20px;
-    --About_Title: 22px;
+    --Final: 23px;
+    --About_Title: 28px;
+    --Address: 19px;
+    --Button: 16px;
     --About_Info: 17px;
     --Font_Main: "Inter", sans-serif;
     --Font_Side: "Roboto", sans-serif;
@@ -24,6 +26,7 @@
 }
 
 .Product_Image {
+    width: 700px;
     margin-top: 4em;
 }
 
@@ -36,6 +39,15 @@
 .More_Image_Box {
     width: 80px;
     margin: 0 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.More_Image_Box--Active {
+    padding: .2em;
+    border: 2px solid orangered;
+    border-radius: 5px;
 }
 
 .More_Image_Box img {
@@ -50,42 +62,34 @@
     font-size: var(--Title);
     font-family: var(--Font_Main);
     margin: .3em 0;
-    font-weight: 600;
+    line-height: 1.3;
+    /* font-weight: 500; */
 }
 
 .Product_Category {
+    font-size: var(--Category);
     font-family: var(--Font_Main);
     margin: .5em 0 .8em 0;
 }
 
-.Final_Price_Heading {
-    font-family: var(--Font_Main);
-    font-size: var(--Final_Heading);
+.Product_Price {
+    font-size: var(--Final);
+    font-family: var(--Font_Side);
     margin-bottom: 1em;
 }
 
 .Product_Discount {
-    font-size: var(--Price);
-    font-family: var(--Font_Side);
-    margin: .3em 0;
-    font-weight: 200;
-}
-
-.Product_Final {
-    font-size: var(--Final);
-    font-family: var(--Font_Side);
-    margin-left: .5em;
+    font-size: var(--Disc);
     font-weight: 400;
 }
 
-.Product_Price {
+.Product_MRP {
     font-size: var(--Mrp);
     font-family: var(--Font_Side);
-    margin: .3em 0;
     font-weight: 300;
 }
 
-.MRP {
+.Product_MRP_Strike {
     text-decoration: line-through;
 }
 
@@ -94,16 +98,27 @@
 }
 
 .Delivery_Address p {
+    font-size: var(--Address);
+    font-family: var(--Font_Side);
     font-weight: 300;
-    font-family: var(--Font_Main);
 }
 
 .Products_Buttons {
-    margin-bottom: 1em;
+    margin: 1em 0;
+}
+
+.Products_Buttons button {
+    font-size: var(--Button);
+    font-family: var(--Font_Side);
+    font-weight: 500;
+    background-color: goldenrod;
+    border-style: none;
+    padding: .7em 1.5em;
+    border-radius: 7px;
+    cursor: pointer;
 }
 
 .Buy_Button {
-    font-family: var(--Font_Side);
     margin: 0 .5em 0 0;
 }
 

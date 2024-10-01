@@ -12,6 +12,24 @@ function Product() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   console.log(userInfo);
   const { product } = useParams();
+  const imageUrls = [
+    {
+      src: "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg",
+    },
+    {
+      src: "https://cdn.thewirecutter.com/wp-content/media/2023/06/bestlaptops-2048px-9765.jpg?auto=webp&quality=75&width=1024",
+    },
+    {
+      src: "https://www.itaf.eu/wp-content/uploads/2021/01/Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg",
+    },
+    {
+      src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlygWcz51gyDexlstejSgZZ2LSxqF4rBz3wQ&s",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D",
+    },
+  ];
+  const [currentUrl, setCurrentUrl] = useState(imageUrls[0].src);
   console.log(product);
 
   async function addToCart() {
@@ -52,7 +70,35 @@ function Product() {
         id: product,
       });
       console.log(response);
-      setProductData(response.data[0]);
+      let data = response.data[0];
+      let mrp = data.price;
+      let offer_price = (
+        data.price -
+        data.price * (data.discount / 100)
+      ).toFixed(2);
+      let mrp_string = mrp.toString();
+      let offer_price_string = offer_price.toString().split(".")[0];
+      let offer_price_decimal = offer_price.toString().split(".")[1];
+      let mrp_array = mrp_string.split("").reverse();
+      let offer_price_array = offer_price_string.split("").reverse();
+      let mrp_iterator = Math.floor(mrp_array.length / 2);
+      let offer_price_iterator = Math.floor(offer_price_array.length / 2);
+      let k = 3;
+      for (let j = 0; j < mrp_iterator - 1; j++) {
+        mrp_array.splice(k, 0, ",");
+        k += 3;
+      }
+      k = 3;
+      for (let j = 0; j < offer_price_iterator - 1; j++) {
+        offer_price_array.splice(k, 0, ",");
+        k += 3;
+      }
+      let mrp_actual = mrp_array.reverse().join("");
+      let offer_price_actual =
+        offer_price_array.reverse().join("") + "." + offer_price_decimal;
+      data.mrp = mrp_actual;
+      data.actualPrice = offer_price_actual;
+      setProductData(data);
     }
     async function getReviews() {
       let response = await axios.post("http://localhost:3000/getreviews", {
@@ -71,22 +117,26 @@ function Product() {
       <div className="Product_Main">
         <div className="Product_Image">
           <img
-            src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-            style={{ width: "700px" }}
+            src={currentUrl}
+            style={{ width: "100%", height: "400px" }}
           ></img>
           <div className="More_Product_Images">
-            <div className="More_Image_Box">
-              <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/bestlaptops-2048px-9765.jpg?auto=webp&quality=75&width=1024"></img>
-            </div>
-            <div className="More_Image_Box">
-              <img src="https://www.itaf.eu/wp-content/uploads/2021/01/Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg"></img>
-            </div>
-            <div className="More_Image_Box">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlygWcz51gyDexlstejSgZZ2LSxqF4rBz3wQ&s"></img>
-            </div>
-            <div className="More_Image_Box">
-              <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D"></img>
-            </div>
+            {imageUrls.map((url) => {
+              return (
+                <div
+                  className={
+                    url.src == currentUrl
+                      ? "More_Image_Box More_Image_Box--Active"
+                      : "More_Image_Box"
+                  }
+                  onClick={() => {
+                    setCurrentUrl(url.src);
+                  }}
+                >
+                  <img src={url.src} />
+                </div>
+              );
+            })}
           </div>
           {/* <div className="Product_Review">
             <div className="Write_Review">
@@ -106,25 +156,16 @@ function Product() {
         </div>
         <div className="Product_Details">
           <p className="Product_Title">{productData?.title}</p>
-          <p className="Product_Category">Category - {productData.category}</p>
-          <div
-            style={{
-              height: "1px",
-              backgroundColor: "white",
-              marginBottom: "1.5em",
-            }}
-          ></div>
-          <p className="Final_Price_Heading">Final price:</p>
-          <span className="Product_Discount">-{productData.discount}% </span>
-          <span className="Product_Final">
-            ₹
-            {(
-              productData.price -
-              productData.price * (productData.discount / 100)
-            ).toFixed(2)}
-          </span>
+          <p className="Product_Category">
+            {productData?.category} - {productData?.company}
+          </p>
           <p className="Product_Price">
-            M.R.P: <span className="MRP">₹{productData?.price}</span>
+            <span className="Product_Discount">-{productData?.discount}%</span>{" "}
+            ₹{productData?.actualPrice}
+          </p>
+          <p className="Product_MRP">
+            M.R.P:{" "}
+            <span className="Product_MRP_Strike">₹{productData?.mrp}</span>
           </p>
           <div className="Delivery_Address">
             {address ? (
@@ -142,15 +183,6 @@ function Product() {
           </div>
           <div className="Products_Buttons">
             <button
-              style={{
-                backgroundColor: "gold",
-                borderStyle: "none",
-                padding: "10px 15px",
-                borderRadius: "10px",
-                fontSize: "20px",
-                fontWeight: "700",
-                cursor: "pointer",
-              }}
               className="Buy_Button"
               onClick={() => {
                 window.open(`${window.location.origin}/buy/${product}`);
@@ -159,16 +191,7 @@ function Product() {
               Buy now
             </button>
             <button
-              style={{
-                backgroundColor: "gold",
-                borderStyle: "none",
-                padding: "10px 15px",
-                borderRadius: "10px",
-                fontSize: "20px",
-                fontWeight: "700",
-                cursor: "pointer",
-              }}
-              className="Buy_Button"
+              className="Addtocart_Button"
               onClick={() => {
                 // window.open(`${window.location.origin}/buy/${product}`);
                 addToCart();
