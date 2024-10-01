@@ -31,12 +31,13 @@ function Addaddress() {
   }
 
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <div style={{ margin: "20px 0" }}>
+    <div className="Addaddress_Main">
+      <div className="Addaddress_Heading">
+        <h2>Add address</h2>
+      </div>
+      <div className="Addaddress_Component Addaddress_Name">
+        <label>Name on the address</label>
         <input
-          style={{ padding: "8px 10px 2px 1px" }}
           type="text"
           placeholder="Full name"
           value={fullName}
@@ -47,9 +48,9 @@ function Addaddress() {
           // disabled={disable}
         ></input>
       </div>
-      <div style={{ margin: "20px 0" }}>
+      <div className="Addaddress_Component Addaddress_House">
+        <label>House/Flat/Door.No</label>
         <input
-          style={{ padding: "8px 10px 2px 1px" }}
           type="text"
           placeholder="House/Flat/Door"
           value={house}
@@ -59,9 +60,9 @@ function Addaddress() {
           }}
         ></input>
       </div>
-      <div style={{ margin: "20px 0" }}>
+      <div className="Addaddress_Component Addaddress_Street">
+        <label>Street</label>
         <input
-          style={{ padding: "8px 10px 2px 1px" }}
           type="text"
           placeholder="Street/Colony"
           value={street}
@@ -70,9 +71,9 @@ function Addaddress() {
           }}
         ></input>
       </div>
-      <div style={{ margin: "20px 0" }}>
+      <div className="Addaddress_Component Addaddress_Landmark">
+        <label>Landmark</label>
         <input
-          style={{ padding: "8px 10px 2px 1px" }}
           type="text"
           placeholder="Landmark/Nearby place"
           value={landmark}
@@ -81,9 +82,9 @@ function Addaddress() {
           }}
         ></input>
       </div>
-      <div style={{ margin: "20px 0" }}>
+      <div className="Addaddress_Component Addaddress_Country">
+        <label>Country</label>
         <input
-          style={{ padding: "8px 10px 2px 1px" }}
           type="text"
           placeholder="Country"
           value={country}
@@ -92,9 +93,9 @@ function Addaddress() {
           }}
         ></input>
       </div>
-      <div style={{ margin: "20px 0" }}>
+      <div className="Addaddress_Component Addaddress_State">
+        <label>State</label>
         <input
-          style={{ padding: "8px 10px 2px 1px" }}
           type="text"
           placeholder="State"
           value={state}
@@ -103,9 +104,9 @@ function Addaddress() {
           }}
         ></input>
       </div>
-      <div style={{ margin: "20px 0" }}>
+      <div className="Addaddress_Component Addaddress_City">
+        <label>City</label>
         <input
-          style={{ padding: "8px 10px 2px 1px" }}
           type="text"
           placeholder="City"
           value={city}
@@ -114,12 +115,9 @@ function Addaddress() {
           }}
         ></input>
       </div>
-      <button
-        style={{ padding: "10px 15px", borderRadius: "10px" }}
-        onClick={addAddress}
-      >
-        Add address
-      </button>
+      <div className="Addaddress_Component Addaddress_Button">
+        <button onClick={addAddress}>Add address</button>
+      </div>
     </div>
   );
 }
