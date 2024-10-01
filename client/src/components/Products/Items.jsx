@@ -13,10 +13,13 @@ function Items() {
   const [wishProduct, setWishProduct] = useState({});
   const [selectedWishlist, setSelectedWistlist] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
+  const [lowerPrice, setLowerPrice] = useState("");
+  const [upperPrice, setUpperPrice] = useState("");
   const [allCat, setAllCat] = useState([]);
   const [allCom, setAllCom] = useState([]);
   const [showSelectlist, setShowSelectlist] = useState(false);
-  const [showCompany, setShowCompany] = useState(true);
+  const [showCompany, setShowCompany] = useState(false);
+  const [showPrice, setShowPrice] = useState(false);
   const mailId = localStorage.getItem("mailId");
   console.log("products -> ", products);
 
@@ -47,23 +50,56 @@ function Items() {
   }, []);
 
   useEffect(() => {
-    async function getCatAndCom() {
-      let response = await axios.get("http://localhost:3000/getcatandcom");
+    async function getCompany() {
+      let response = await axios.post("http://localhost:3000/getcompany", {
+        category: item,
+      });
       console.log(response);
-      setAllCat(response.data.cat);
-      setAllCom(response.data.com);
+      setAllCom(response.data);
     }
-    getCatAndCom();
+    getCompany();
   }, []);
 
   useEffect(() => {
     let newData = actualProducts.filter((product) => {
-      if (product.company == selectedCompany) {
-        return product;
+      if (selectedCompany) {
+        if (lowerPrice || upperPrice) {
+          let price = product.price - product.price * (product.discount / 100);
+          if (upperPrice == 0) {
+            if (lowerPrice <= price && product.company == selectedCompany) {
+              return product;
+            }
+          } else {
+            if (
+              lowerPrice <= price &&
+              upperPrice >= price &&
+              product.company == selectedCompany
+            ) {
+              return product;
+            }
+          }
+        } else {
+          if (product.company == selectedCompany) {
+            return product;
+          }
+        }
+      } else {
+        if (lowerPrice || upperPrice) {
+          let price = product.price - product.price * (product.discount / 100);
+          if (upperPrice == 0) {
+            if (lowerPrice <= price) {
+              return product;
+            }
+          } else {
+            if (lowerPrice <= price && upperPrice >= price) {
+              return product;
+            }
+          }
+        }
       }
     });
     setProducts(newData);
-  }, [selectedCompany]);
+  }, [lowerPrice, upperPrice, selectedCompany]);
 
   async function addToCart(id, title, price, discount) {
     console.log(id, title, price, discount);
@@ -77,24 +113,10 @@ function Items() {
         mailId: mail,
       });
       console.log(response);
-      // for (let i = 0; i < products.length; i++) {
-      //   if (products[i].id == id) {
-      //     console.log(products[i].id);
-      //     let product = {
-      //       title: products[i].title,
-      //       description: products[i].description,
-      //       category: products[i].category,
-      //     };
-      //     setCart((prev) => {
-      //       return [...prev, product];
-      //     });
-      //   }
-      // }
     }
   }
 
   async function addToWishlist(product, list) {
-    // console.log(product);
     const mail = localStorage.getItem("mailId");
     if (mail) {
       const response = await axios.post("http://localhost:3000/addtowish", {
@@ -156,7 +178,7 @@ function Items() {
         </div>
       </div>
       {/* add a category button to go back to selecting categories if needed. */}
-      <h1>Products List</h1>
+      {/* <h1>Products List</h1>
       <button
         style={{ padding: ".2em .3em", margin: ".5em 0", cursor: "pointer" }}
         onClick={() => {
@@ -164,54 +186,119 @@ function Items() {
         }}
       >
         Category
-      </button>
-      <div className="Items_Container">
+      </button> */}
+      {/* <div className="Items_Container"> */}
+      <div className="Items_Filters_Container">
         <div className="Items_Filters">
-          {/* <div
-            className={
-              showCompany
-                ? "Items_Filter_Company Items_Filter_Company--Active"
-                : "Items_Filter_Company Items_Filter_Company--Inactive"
-            }
-          >
-            {allCat.map((cat) => {
-              return (
-                <div className="Items_Filter_Company_Name_Container">
-                  <p className="Items_Filter_Company_Name">{cat.category}</p>
-                </div>
-              );
-            })}
-          </div> */}
-          <div
-            className={
-              showCompany
-                ? "Items_Filter_Company Items_Filter_Company--Active"
-                : "Items_Filter_Company Items_Filter_Company--Inactive"
-            }
-          >
-            {allCom.map((com, index) => {
-              return (
-                <div
-                  className="Items_Filter_Company_Name_Container"
-                  onClick={() => {
-                    setSelectedCompany(com.company);
-                  }}
-                  key={index}
-                >
-                  <p className="Items_Filter_Company_Name">{com.company}</p>
-                </div>
-              );
-            })}
+          <div className="Items_Filter_Container">
+            <div
+              className="Items_Filters_Label"
+              onClick={() => {
+                setShowCompany(!showCompany);
+              }}
+            >
+              <p className="Items_Filters_Label--Name">Select Category</p>
+            </div>
+            <div
+              className={
+                showCompany
+                  ? "Items_Filter_Company Items_Filter_Company--Active"
+                  : "Items_Filter_Company Items_Filter_Company--Inactive"
+              }
+            >
+              {allCom.map((com, index) => {
+                return (
+                  <div
+                    className="Items_Filter_Company_Name_Container"
+                    onClick={() => {
+                      setSelectedCompany(com.company);
+                    }}
+                    key={index}
+                  >
+                    <p className="Items_Filter_Company_Name">{com.company}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <button
-            onClick={() => {
-              setShowCompany(!showCompany);
-            }}
-          >
-            collapse
-          </button>
+          <div className="Items_Filter_Container">
+            <div
+              className="Items_Filters_Label"
+              onClick={() => {
+                setShowPrice(!showPrice);
+              }}
+            >
+              <p className="Items_Filters_Label--Name">Select Price</p>
+            </div>
+            <div
+              className={
+                showPrice
+                  ? "Items_Filter_Price Items_Filter_Price--Active"
+                  : "Items_Filter_Price Items_Filter_Price--Inactive"
+              }
+            >
+              <div
+                className="Items_Filter_Price_Container"
+                onClick={() => {
+                  setLowerPrice(0);
+                  setUpperPrice(15000);
+                }}
+              >
+                <p className="Items_Filter_Price">0 to 15,000</p>
+              </div>
+              <div
+                className="Items_Filter_Price_Container"
+                onClick={() => {
+                  setLowerPrice(15001);
+                  setUpperPrice(30000);
+                }}
+              >
+                <p className="Items_Filter_Price">15,001 to 30,000</p>
+              </div>
+              <div
+                className="Items_Filter_Price_Container"
+                onClick={() => {
+                  setLowerPrice(30000);
+                  setUpperPrice(45000);
+                }}
+              >
+                <p className="Items_Filter_Price">30,001 to 45,000</p>
+              </div>
+              <div
+                className="Items_Filter_Price_Container"
+                onClick={() => {
+                  setLowerPrice(45000);
+                  setUpperPrice(60000);
+                }}
+              >
+                <p className="Items_Filter_Price">45,001 to 60,000</p>
+              </div>
+              <div
+                className="Items_Filter_Price_Container"
+                onClick={() => {
+                  setLowerPrice(60000);
+                  setUpperPrice(75000);
+                }}
+              >
+                <p className="Items_Filter_Price">60,001 to 75,000</p>
+              </div>
+              <div
+                className="Items_Filter_Price_Container"
+                onClick={() => {
+                  setLowerPrice(75000);
+                  setUpperPrice(0);
+                }}
+              >
+                <p className="Items_Filter_Price">75,001 and above</p>
+              </div>
+              {/* </div> */}
+            </div>
+          </div>
         </div>
-        <div className="Items">
+        {/* <button>collapse</button> */}
+      </div>
+      <div className="Items_List_Container">
+        <div className="Items_List">
           {products.map((product, index) => {
             let mrp = product.price;
             let offer_price = (
@@ -294,6 +381,7 @@ function Items() {
           })}
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 }

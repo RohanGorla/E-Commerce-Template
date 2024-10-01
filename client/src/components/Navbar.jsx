@@ -4,7 +4,6 @@ import "../styles/Navbar.css";
 
 function Navbar() {
   return (
-    <>
       <div className="navbar">
         <ul
           className="nav-items"
@@ -13,7 +12,7 @@ function Navbar() {
             gap: "3em",
             listStyle: "none",
             justifyContent: "center",
-            padding: "2em 0",
+            // padding: "2em 0",
           }}
         >
           <li className="nav-item">
@@ -90,7 +89,6 @@ function Navbar() {
           </li> */}
         </ul>
       </div>
-    </>
   );
 }
 
