@@ -6,11 +6,11 @@
     --Mrp: 15px;
     --Final: 23px;
     --About_Title: 28px;
-    --Address: 19px;
+    --Address: 15px;
     --Button: 16px;
     --About_Info: 17px;
-    --Font_Main: "Inter", sans-serif;
-    --Font_Side: "Roboto", sans-serif;
+    --Font_Main: "Roboto", sans-serif;
+    --Font_Side: "Inter", sans-serif;
 }
 
 .Product_Container {
@@ -26,8 +26,25 @@
 }
 
 .Product_Image {
-    width: 700px;
+    /* width: 700px; */
     margin-top: 4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Product_Main_Image {
+    width: 500px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Product_Main_Image img {
+    display: block;
+    width: 100%;
+    max-height: 100%;
 }
 
 .More_Product_Images {
@@ -38,20 +55,22 @@
 
 .More_Image_Box {
     width: 80px;
+    height: 60px;
     margin: 0 1em;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .More_Image_Box--Active {
-    padding: .2em;
+    padding: .3em;
     border: 2px solid orangered;
     border-radius: 5px;
 }
 
 .More_Image_Box img {
-    max-width: 100%;
+    max-width: 90%;
 }
 
 .Product_Details {
@@ -75,7 +94,7 @@
 .Product_Price {
     font-size: var(--Final);
     font-family: var(--Font_Side);
-    margin-bottom: 1em;
+    margin-bottom: .3em;
 }
 
 .Product_Discount {

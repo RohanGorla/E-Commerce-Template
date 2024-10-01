@@ -116,10 +116,11 @@ function Product() {
     <div className="Product_Container">
       <div className="Product_Main">
         <div className="Product_Image">
-          <img
-            src={currentUrl}
-            style={{ width: "100%", height: "400px" }}
-          ></img>
+          <div className="Product_Main_Image">
+            <img
+              src={currentUrl}
+            ></img>
+          </div>
           <div className="More_Product_Images">
             {imageUrls.map((url) => {
               return (
@@ -177,7 +178,7 @@ function Product() {
               </>
             ) : (
               <>
-                <p>Select address to where the product should be shipped!</p>
+                <p>No delivery address selected!</p>
               </>
             )}
           </div>
