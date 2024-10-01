@@ -339,18 +339,22 @@ function Items() {
                   ></img>
                 </div>
                 <div className="Item_Details">
-                  <h2 className="Item_Name">{product.title}</h2>
+                  <p className="Item_Name">{product.title}</p>
                   <p className="Item_Category">
                     {product.category} - {product.company}
                   </p>
                   <p className="Item_Price">
                     <span className="Item_Discount">-{product.discount}%</span>{" "}
-                    {offer_price_actual}
+                    ₹{offer_price_actual}
                   </p>
-                  <p className="Item_MRP">{mrp_actual}</p>
+                  <p className="Item_MRP">
+                    M.R.P:{" "}
+                    <span className="Item_MRP_Strike">₹{mrp_actual}</span>
+                  </p>
                   <div className="Item_Buttons">
                     <button
-                      style={{ margin: "0 1em 0 0", cursor: "pointer" }}
+                      // style={{ margin: "0 1em 0 0", cursor: "pointer" }}
+                      className="Item_Addtocart_Btn"
                       onClick={() => {
                         // send all data about product needed for the cart along with user mail id.
                         addToCart(
@@ -364,7 +368,8 @@ function Items() {
                       Add to cart
                     </button>
                     <button
-                      style={{ cursor: "pointer" }}
+                      // style={{ cursor: "pointer" }}
+                      className="Item_Wishlist_Btn"
                       onClick={() => {
                         // send all data about product needed for the cart along with user mail id.
                         // addToWishlist(product);

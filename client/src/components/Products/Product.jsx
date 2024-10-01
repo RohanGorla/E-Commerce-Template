@@ -127,10 +127,18 @@ function Product() {
             M.R.P: <span className="MRP">₹{productData?.price}</span>
           </p>
           <div className="Delivery_Address">
-            <p>
-              Delivering to {address.username} - {address.street}
-            </p>
-            <p>{address.city}</p>
+            {address ? (
+              <>
+                <p>
+                  Delivering to {address?.username} - {address?.street}
+                </p>
+                <p>{address?.city}</p>
+              </>
+            ) : (
+              <>
+                <p>Select address to where the product should be shipped!</p>
+              </>
+            )}
           </div>
           <div className="Products_Buttons">
             <button
