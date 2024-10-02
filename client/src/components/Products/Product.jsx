@@ -4,17 +4,14 @@ import axios from "axios";
 import "../../styles/Products.css";
 
 function Product() {
+  const { product } = useParams();
   const [productData, setProductData] = useState({});
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [showReview, setShowReview] = useState(false);
+  const [showReview, setShowReview] = useState(true);
   const [hasReview, setHasReview] = useState(false);
   const address = JSON.parse(localStorage.getItem("address"));
-  console.log(address);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  console.log(userInfo);
-  console.log(reviews);
-  const { product } = useParams();
   const imageUrls = [
     {
       src: "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg",
@@ -33,7 +30,6 @@ function Product() {
     },
   ];
   const [currentUrl, setCurrentUrl] = useState(imageUrls[0].src);
-  console.log(product);
 
   async function addToCart() {
     const mail = localStorage.getItem("mailId");
@@ -65,7 +61,6 @@ function Product() {
           setReviews(response.data.data);
           setHasReview(true);
         }
-        setShowReview(false);
       } else {
         let response = await axios.post("http://localhost:3000/addreview", {
           id: product,
@@ -78,8 +73,8 @@ function Product() {
           setReviews(response.data.data);
           setHasReview(true);
         }
-        setShowReview(false);
       }
+      setShowReview(true);
     }
   }
 
@@ -125,9 +120,16 @@ function Product() {
         id: product,
       });
       if (response.data.code) {
-        setReviews(response.data.data);
+        let otherUserReviews = response.data.data.filter((review) => {
+          if (review.mailid !== mail) {
+            console.log("inside -> ", review);
+            return review;
+          }
+        });
+        setReviews(otherUserReviews);
         let currentUserReview = response.data.data.filter((review) => {
-          if (review.mailid == mail) {
+          if (review.mailid === mail) {
+            console.log("inside 2 -> ", review);
             return review;
           }
         });
@@ -259,35 +261,57 @@ function Product() {
         </div>
       </div>
       <div className="Product_Review">
-        <h3>Product Reviews</h3>
-        <div
-          className={
-            showReview
-              ? "Write_Review_Button Write_Review_Button--Inactive"
-              : "Write_Review_Button"
-          }
-        >
-          <button
-            onClick={() => {
-              setShowReview(true);
-            }}
+        <div className="Product_Review_Main_Heading_Container">
+          <h3 className="Product_Review_Main_Heading">Product Reviews</h3>
+        </div>
+        <div className="Your_Review_Container">
+          <p
+            className={
+              hasReview ? "Your_Review--Note--Inactive" : "Your_Review--Note"
+            }
           >
-            {hasReview ? "Edit review" : "Add review"}
-          </button>
+            Add your review about this product.
+          </p>
+          <div
+            className={
+              showReview && hasReview ? "Your_Review" : "Your_Review--Inactive"
+            }
+          >
+            {/* <p className="Review--Heading">Your review</p> */}
+            <p className="Reviewer_Name">
+              {userInfo.firstname} {userInfo.lastname}
+            </p>
+            <p className="Actual_Review">{review}</p>
+          </div>
+          <div
+            className={
+              showReview
+                ? "Write_Review_Button"
+                : "Write_Review_Button Write_Review_Button--Inactive"
+            }
+          >
+            <button
+              onClick={() => {
+                setShowReview(false);
+              }}
+            >
+              {hasReview ? "Edit review" : "Add review"}
+            </button>
+          </div>
         </div>
         <div
           className={
-            showReview ? "Write_Review" : "Write_Review Write_Review--Inactive"
+            showReview ? "Write_Review Write_Review--Inactive" : "Write_Review"
           }
         >
-          <p>
+          <p className="Reviewing_As--Name">
             Reviewing as {userInfo.firstname} {userInfo.lastname}
           </p>
           <textarea
             placeholder="Write your review..."
             rows={5}
             cols={100}
-            id="Review_Input"
+            className="Reviewing_As--Input"
             value={review}
             onChange={(e) => {
               setReview(e.target.value);
@@ -299,7 +323,7 @@ function Product() {
           <div className="Review_Cancel_Btn">
             <button
               onClick={() => {
-                setShowReview(false);
+                setShowReview(true);
               }}
             >
               Cancel
@@ -307,22 +331,22 @@ function Product() {
           </div>
         </div>
         <div className="Reviews">
-          {reviews.length ? (
-            reviews?.map((review) => {
-              return (
-                <div key={review.id} className="Individual_Review">
-                  <h4>{review.username}</h4>
-                  <p>{review.review}</p>
-                </div>
-              );
-            })
-          ) : (
-            <div>
+          {reviews.length == 0 && !hasReview ? (
+            <div className="No_Reviews">
               <p>
                 This porduct has no user reviews. Be the first person to review
                 this product!
               </p>
             </div>
+          ) : (
+            reviews.map((review) => {
+              return (
+                <div key={review.id} className="Individual_Review">
+                  <p className="Reviewer_Name">{review.username}</p>
+                  <p className="Actual_Review">{review.review}</p>
+                </div>
+              );
+            })
           )}
         </div>
       </div>

@@ -156,10 +156,61 @@
 
 .Product_Review {
     font-family: var(--Font_Main);
-    background-color: rgb(177, 103, 103);
+    /* background-color: rgb(177, 103, 103); */
+    padding: 1em;
 }
 
-#Review_Input {
+.Write_Review--Inactive,
+.Write_Review_Button--Inactive,
+.Your_Review--Inactive,
+.Your_Review--Note--Inactive {
+    display: none;
+}
+
+.Product_Review_Main_Heading_Container {
+    margin-bottom: .7em;
+    padding-left: .5em;
+    padding-bottom: .5em;
+    /* border-bottom: 1px solid white; */
+}
+
+.Product_Review_Main_Heading {
+    font-size: var(--About_Title);
+}
+
+.Your_Review_Container {
+    background-color: rgb(44, 44, 44);
+    padding: 1em .5em;
+    max-width: 600px;
+    border-style: none;
+    border-radius: 7px;
+    border: 1px white solid
+}
+
+.Reviewer_Name {
+    font-size: 18px;
+    margin-bottom: .2em;
+}
+
+.Actual_Review {
+    font-size: 16px;
+}
+
+.Write_Review_Button {
+    margin-top: .8em;
+}
+
+.Write_Review_Button button {
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Reviewing_As--Input {
     display: block;
     resize: vertical;
 }
@@ -168,15 +219,10 @@
     margin-top: 1em;
 }
 
-.Write_Review--Inactive,
-.Write_Review_Button--Inactive {
-    display: none;
-}
-
 .Individual_Review {
     margin: 1em 0;
 }
 
-.Individual_Review h4 {
+.Individual_Review p {
     margin-bottom: .3em;
 }
