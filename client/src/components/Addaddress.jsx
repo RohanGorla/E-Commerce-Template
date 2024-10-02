@@ -11,11 +11,13 @@ function Addaddress() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   // const [disable, setDisable] = useState(true);
   const navigate = useNavigate();
 
   async function addAddress() {
-    const mail = localStorage.getItem("mailId");
+    // const mail = localStorage.getItem("mailId");
+    const mail = userInfo.mailId;
     let response = await axios.post("http://localhost:3000/addaddress", {
       mail: mail,
       name: fullName,

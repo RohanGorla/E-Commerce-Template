@@ -30,8 +30,8 @@ function Login() {
               token: response.data.token,
             })
           );
-          localStorage.setItem("mailId", email);
-          localStorage.setItem("token", response.data.token);
+          // localStorage.setItem("mailId", email);
+          // localStorage.setItem("token", response.data.token);
           navigate("/account");
         } else {
           setError(true);

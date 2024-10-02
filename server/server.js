@@ -1,7 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
-import express from "express";
+import express, { query } from "express";
 import cors from "cors";
 import mysql from "mysql2";
 import nodemailer from "nodemailer";
@@ -465,13 +465,22 @@ app.put("/editusername", (req, res) => {
   const first = req.body.firstname;
   const last = req.body.lastname;
   const mail = req.body.usermail;
+  const fullname = first + " " + last;
   db.query(
-    "update userinfo set ? where mailId = ?",
+    "update userinfo set ? where mailid = ?",
     [{ firstname: first, lastname: last }, mail],
     (err, data) => {
       if (err)
         return res.send({ access: false, error: "Some error occurred!" });
-      res.send({ access: true });
+      db.query(
+        "update reviews set ? where mailid = ?",
+        [{ username: fullname }, mail],
+        (err, data) => {
+          if (err)
+            return res.send({ access: false, error: "Some error occurred!" });
+          res.send({ access: true });
+        }
+      );
     }
   );
 });

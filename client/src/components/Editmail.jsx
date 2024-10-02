@@ -60,7 +60,7 @@ function Editmail() {
             ></input>
           </div>
           <div>
-            <input className="Savechanges_Btn" type="submit"></input>
+            <input className="Savechanges_Btn" type="submit" value="Save"></input>
           </div>
         </form>
       </div>

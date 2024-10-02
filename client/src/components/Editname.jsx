@@ -7,6 +7,7 @@ function Editname() {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const usermail = userInfo.mailId;
+  const username = userInfo.firstname + " " + userInfo.lastname;
   console.log(usermail);
   const [newFirst, setNewFirst] = useState(userInfo.firstname);
   const [newLast, setNewLast] = useState(userInfo.lastname);

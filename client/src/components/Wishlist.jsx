@@ -9,7 +9,9 @@ function Wishlist() {
   const [selectedWishlist, setSelectedWistlist] = useState("");
   const [addListShow, setAddListShow] = useState(false);
   const [newlist, setNewlist] = useState("");
-  const mailId = localStorage.getItem("mailId");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo.mailId;
+  // const mailId = localStorage.getItem("mailId");
   // console.log(selectedWishlist);
 
   async function getWishlists() {

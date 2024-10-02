@@ -4,11 +4,13 @@ import axios from "axios";
 
 function Address() {
   const [address, setAddress] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
   useEffect(() => {
     async function getAddress() {
-      const mail = localStorage.getItem("mailId");
+      // const mail = localStorage.getItem("mailId");
+      const mail = userInfo.mailId;
       let response = await axios.post("http://localhost:3000/getaddress", {
         mail: mail,
       });

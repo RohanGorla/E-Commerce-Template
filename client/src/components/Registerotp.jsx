@@ -22,8 +22,8 @@ function Registerotp() {
         .then((response) => {
           console.log(response);
           if (response.data.access) {
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("mailId", context.mail);
+            // localStorage.setItem("token", response.data.token);
+            // localStorage.setItem("mailId", context.mail);
             localStorage.setItem(
               "userInfo",
               JSON.stringify({

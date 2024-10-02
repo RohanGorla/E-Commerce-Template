@@ -5,10 +5,12 @@ import axios from "axios";
 
 function Cart() {
   const [cart, setCart] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   async function getFromCart() {
     console.log("cart");
-    const mailId = localStorage.getItem("mailId");
+    // const mailId = localStorage.getItem("mailId");
+    const mailId = userInfo.mailId;
     if (mailId) {
       const response = await axios.post("http://localhost:3000/getcartitems", {
         mailId: mailId,

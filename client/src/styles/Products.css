@@ -19,6 +19,8 @@
     /* background-color: rgb(35, 34, 34); */
     font-optical-sizing: auto;
     font-style: normal;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .Product_Main {
@@ -154,6 +156,7 @@
 
 .Product_Review {
     font-family: var(--Font_Main);
+    background-color: rgb(177, 103, 103);
 }
 
 #Review_Input {
@@ -163,6 +166,11 @@
 
 .Reviews {
     margin-top: 1em;
+}
+
+.Write_Review--Inactive,
+.Write_Review_Button--Inactive {
+    display: none;
 }
 
 .Individual_Review {

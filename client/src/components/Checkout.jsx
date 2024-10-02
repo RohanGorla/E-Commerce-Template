@@ -6,9 +6,10 @@ function Checkout() {
   const [data, setData] = useState([]);
   const [ordered, setOrdered] = useState(false);
   const [address, setAddress] = useState({});
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   async function placeOrder() {
-    const mail = localStorage.getItem("mailId");
+    const mail = userInfo.mailId;
     let orders = await axios.post("http://localhost:3000/placeorder", {
       mail: mail,
     });
@@ -20,8 +21,8 @@ function Checkout() {
   }
 
   useEffect(() => {
-    const mailId = localStorage.getItem("mailId");
-    const token = localStorage.getItem("token");
+    const mailId = userInfo.mailId;
+    const token = userInfo.token;
     const address = JSON.parse(localStorage.getItem("address"));
     setAddress(address);
     async function checkAuthorized() {

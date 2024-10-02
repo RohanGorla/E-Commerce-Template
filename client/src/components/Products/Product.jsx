@@ -7,10 +7,13 @@ function Product() {
   const [productData, setProductData] = useState({});
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [showReview, setShowReview] = useState(false);
+  const [hasReview, setHasReview] = useState(false);
   const address = JSON.parse(localStorage.getItem("address"));
   console.log(address);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   console.log(userInfo);
+  console.log(reviews);
   const { product } = useParams();
   const imageUrls = [
     {
@@ -47,20 +50,36 @@ function Product() {
   }
 
   async function addReview() {
-    const mailId = localStorage.getItem("mailId");
+    // const mailId = localStorage.getItem("mailId");
     const username = userInfo.firstname + " " + userInfo.lastname;
-    if (review) {
-      let response = await axios.post("http://localhost:3000/addreview", {
-        id: product,
-        mail: mailId,
-        user: username,
-        review: review,
-      });
-      console.log(response);
-      if (response.data.code) {
-        setReviews(response.data.data);
+    if (review.length) {
+      if (hasReview) {
+        let response = await axios.put("http://localhost:3000/editreview", {
+          id: product,
+          mail: userInfo.mailId,
+          user: username,
+          review: review,
+        });
+        console.log(response);
+        if (response.data.code) {
+          setReviews(response.data.data);
+          setHasReview(true);
+        }
+        setShowReview(false);
+      } else {
+        let response = await axios.post("http://localhost:3000/addreview", {
+          id: product,
+          mail: userInfo.mailId,
+          user: username,
+          review: review,
+        });
+        console.log(response);
+        if (response.data.code) {
+          setReviews(response.data.data);
+          setHasReview(true);
+        }
+        setShowReview(false);
       }
-      setReview("");
     }
   }
 
@@ -101,11 +120,21 @@ function Product() {
       setProductData(data);
     }
     async function getReviews() {
+      const mail = userInfo.mailId;
       let response = await axios.post("http://localhost:3000/getreviews", {
         id: product,
       });
       if (response.data.code) {
         setReviews(response.data.data);
+        let currentUserReview = response.data.data.filter((review) => {
+          if (review.mailid == mail) {
+            return review;
+          }
+        });
+        if (currentUserReview.length) {
+          setHasReview(true);
+          setReview(currentUserReview[0].review);
+        }
       }
     }
     getProduct();
@@ -117,9 +146,7 @@ function Product() {
       <div className="Product_Main">
         <div className="Product_Image">
           <div className="Product_Main_Image">
-            <img
-              src={currentUrl}
-            ></img>
+            <img src={currentUrl}></img>
           </div>
           <div className="More_Product_Images">
             {imageUrls.map((url) => {
@@ -232,8 +259,27 @@ function Product() {
         </div>
       </div>
       <div className="Product_Review">
-        <div className="Write_Review">
-          <h3>Product Reviews</h3>
+        <h3>Product Reviews</h3>
+        <div
+          className={
+            showReview
+              ? "Write_Review_Button Write_Review_Button--Inactive"
+              : "Write_Review_Button"
+          }
+        >
+          <button
+            onClick={() => {
+              setShowReview(true);
+            }}
+          >
+            {hasReview ? "Edit review" : "Add review"}
+          </button>
+        </div>
+        <div
+          className={
+            showReview ? "Write_Review" : "Write_Review Write_Review--Inactive"
+          }
+        >
           <p>
             Reviewing as {userInfo.firstname} {userInfo.lastname}
           </p>
@@ -250,16 +296,34 @@ function Product() {
           <div className="Review_Submit_Btn">
             <button onClick={addReview}>Submit</button>
           </div>
+          <div className="Review_Cancel_Btn">
+            <button
+              onClick={() => {
+                setShowReview(false);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
         <div className="Reviews">
-          {reviews?.map((review) => {
-            return (
-              <div key={review.id} className="Individual_Review">
-                <h4>{review.username}</h4>
-                <p>{review.review}</p>
-              </div>
-            );
-          })}
+          {reviews.length ? (
+            reviews?.map((review) => {
+              return (
+                <div key={review.id} className="Individual_Review">
+                  <h4>{review.username}</h4>
+                  <p>{review.review}</p>
+                </div>
+              );
+            })
+          ) : (
+            <div>
+              <p>
+                This porduct has no user reviews. Be the first person to review
+                this product!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
