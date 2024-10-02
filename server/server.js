@@ -100,6 +100,8 @@ app.post("/addUser", async (req, res) => {
   );
 });
 
+// In Login page
+
 app.post("/checkUser", async (req, res) => {
   let mailId = req.body.mail;
   let password = req.body.password;
@@ -157,6 +159,8 @@ app.post("/checkUser", async (req, res) => {
   );
 });
 
+// In Account page
+
 app.post("/authenticateuser", async (req, res) => {
   const mailId = req.body.mail;
   const token = req.body.token;
@@ -174,6 +178,8 @@ app.post("/authenticateuser", async (req, res) => {
     }
   );
 });
+
+// In Checkout page
 
 app.post("/checkauthorized", async (req, res) => {
   const mail = req.body.mail;
@@ -453,6 +459,8 @@ app.post("/addreview", (req, res) => {
   );
 });
 
+app.put("/editreview", (req, res) => {});
+
 app.put("/editusername", (req, res) => {
   const first = req.body.firstname;
   const last = req.body.lastname;
@@ -507,16 +515,81 @@ app.post("/getemailchangeotp", (req, res) => {
   );
 });
 
-app.put("/editusermail", (req, res) => {
+app.put("/editusermail", async (req, res) => {
   const newmail = req.body.newmail;
+  const oldmail = req.body.oldmail;
   const token = req.body.token;
+  const newToken = await bcrypt.hash(newmail, 10);
   db.query(
-    "update userinfo set ? where token = ?",
-    [{ mailid: newmail }, token],
+    "update userinfo set ? where mailid = ?",
+    [{ mailid: newmail, token: newToken }, oldmail],
     (err, data) => {
       if (err)
         return res.send({ access: false, error: "Some error occurred!" });
-      res.send({ access: true });
+      db.query(
+        "update wishlists set ? where mailid = ?",
+        [{ mailid: newmail }, oldmail],
+        (err, data) => {
+          if (err)
+            return res.send({ access: false, error: "Some error occurred!" });
+          db.query(
+            "update wishlistitems set ? where mailid = ?",
+            [{ mailid: newmail }, oldmail],
+            (err, data) => {
+              if (err)
+                return res.send({
+                  access: false,
+                  error: "Some error occurred!",
+                });
+              db.query(
+                "update cart set ? where mailid = ?",
+                [{ mailid: newmail }, oldmail],
+                (err, data) => {
+                  if (err)
+                    return res.send({
+                      access: false,
+                      error: "Some error occurred!",
+                    });
+                  db.query(
+                    "update orders set ? where mailid = ?",
+                    [{ mailid: newmail }, oldmail],
+                    (err, data) => {
+                      if (err)
+                        return res.send({
+                          access: false,
+                          error: "Some error occurred!",
+                        });
+                      db.query(
+                        "update reviews set ? where mailid = ?",
+                        [{ mailid: newmail }, oldmail],
+                        (err, data) => {
+                          if (err)
+                            res.send({
+                              access: false,
+                              error: "Some error occurred!",
+                            });
+                          db.query(
+                            "update address set ? where usermail = ?",
+                            [{ usermail: newmail }, oldmail],
+                            (err, data) => {
+                              if (err)
+                                res.send({
+                                  access: false,
+                                  error: "Some error occurred!",
+                                });
+                              res.send({ access: true, token: newToken });
+                            }
+                          );
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          );
+        }
+      );
     }
   );
 });

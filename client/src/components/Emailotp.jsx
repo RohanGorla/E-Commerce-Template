@@ -20,7 +20,11 @@ function Emailotp() {
       if (response.data.access) {
         localStorage.setItem(
           "userInfo",
-          JSON.stringify({ ...userInfo, mailId: context.newMail })
+          JSON.stringify({
+            ...userInfo,
+            mailId: context.newMail,
+            token: response.data.token,
+          })
         );
         let address = JSON.parse(localStorage.getItem("address"));
         if (address) {
