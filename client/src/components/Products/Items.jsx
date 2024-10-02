@@ -20,7 +20,9 @@ function Items() {
   const [showSelectlist, setShowSelectlist] = useState(false);
   const [showCompany, setShowCompany] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
-  const mailId = localStorage.getItem("mailId");
+  // const mailId = localStorage.getItem("mailId");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo.mailId;
   console.log("products -> ", products);
 
   useEffect(() => {
@@ -103,26 +105,24 @@ function Items() {
 
   async function addToCart(id, title, price, discount) {
     console.log(id, title, price, discount);
-    const mail = localStorage.getItem("mailId");
-    if (mail) {
+    if (mailId) {
       const response = await axios.post("http://localhost:3000/addtocart", {
         id: id,
         title: title,
         price: price,
         discount: discount,
-        mailId: mail,
+        mailId: mailId,
       });
       console.log(response);
     }
   }
 
   async function addToWishlist(product, list) {
-    const mail = localStorage.getItem("mailId");
-    if (mail) {
+    if (mailId) {
       const response = await axios.post("http://localhost:3000/addtowish", {
         id: product.id,
         title: product.title,
-        mailId: mail,
+        mailId: mailId,
         price: product.price,
         discount: product.discount,
         wishlist: list,
