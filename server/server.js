@@ -110,6 +110,7 @@ app.post("/checkUser", async (req, res) => {
   let firstname;
   let lastname;
   let id;
+  let baseAddress;
   db.query(
     "select * from userinfo where mailid = ?",
     [mailId],
@@ -125,6 +126,7 @@ app.post("/checkUser", async (req, res) => {
         firstname = data[0].firstname;
         lastname = data[0].lastname;
         id = data[0].id;
+        baseAddress = data[0].base_address;
       }
       if (exists) {
         let correct = await bcrypt.compare(password, actualPassword);
@@ -140,13 +142,26 @@ app.post("/checkUser", async (req, res) => {
                   errorMsg: "Some error has occurred!",
                 });
               console.log(data);
-              res.send({
-                access: true,
-                token: token,
-                firstname: firstname,
-                lastname: lastname,
-                userId: id,
-              });
+              db.query(
+                "select * from address where addressname = ?",
+                [baseAddress],
+                (err, add) => {
+                  if (err)
+                    return res.send({
+                      access: false,
+                      errorMsg: "Some error has occurred",
+                    });
+                  res.send({
+                    access: true,
+                    token: token,
+                    firstname: firstname,
+                    lastname: lastname,
+                    userId: id,
+                    base_address: baseAddress,
+                    baseAdd: add,
+                  });
+                }
+              );
             }
           );
         } else {
@@ -401,6 +416,24 @@ app.post("/addaddress", (req, res) => {
     (err, data) => {
       if (err) return res.send(err);
       res.send(data);
+    }
+  );
+});
+
+app.put("/updatebaseaddress", (req, res) => {
+  let address = req.body.address;
+  let mail = req.body.mailId;
+  let baseAddressName = address.addressname;
+  db.query(
+    "update userInfo set ? where mailid = ?",
+    [{ base_address: baseAddressName }, mail],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg: "Some error has occurred!",
+        });
+      res.send({ access: true });
     }
   );
 });

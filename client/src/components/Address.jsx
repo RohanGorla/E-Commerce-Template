@@ -7,6 +7,21 @@ function Address() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
+  async function changeBaseAddress(current) {
+    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
+      address: current,
+      mailId: userInfo.mailId,
+    });
+    console.log(response);
+    if (response.data.access) {
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: current.addressname })
+      );
+    }
+  }
+
   useEffect(() => {
     async function getAddress() {
       // const mail = localStorage.getItem("mailId");
@@ -60,6 +75,7 @@ function Address() {
             onClick={() => {
               const currentAddress = address;
               console.log(currentAddress);
+              changeBaseAddress(currentAddress);
               localStorage.setItem("address", JSON.stringify(currentAddress));
             }}
           >

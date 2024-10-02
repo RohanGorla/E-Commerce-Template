@@ -28,8 +28,15 @@ function Login() {
               lastname: response.data.lastname,
               mailId: email,
               token: response.data.token,
+              base_address: response.data.base_address,
             })
           );
+          if (response.data.baseAdd.length) {
+            localStorage.setItem(
+              "address",
+              JSON.stringify(response.data.baseAdd[0])
+            );
+          }
           // localStorage.setItem("mailId", email);
           // localStorage.setItem("token", response.data.token);
           navigate("/account");
