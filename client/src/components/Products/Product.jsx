@@ -48,17 +48,17 @@ function Product() {
   async function addReview() {
     // const mailId = localStorage.getItem("mailId");
     const username = userInfo.firstname + " " + userInfo.lastname;
+    const mail = userInfo.mailId;
     if (review.length) {
       if (hasReview) {
         let response = await axios.put("http://localhost:3000/editreview", {
           id: product,
           mail: userInfo.mailId,
-          user: username,
           review: review,
         });
         console.log(response);
         if (response.data.code) {
-          setReviews(response.data.data);
+          // setReviews(response.data.data);
           setHasReview(true);
         }
       } else {
@@ -70,11 +70,40 @@ function Product() {
         });
         console.log(response);
         if (response.data.code) {
-          setReviews(response.data.data);
+          // setReviews(response.data.data);
+          let otherUserReviews = response.data.data.filter((review) => {
+            if (review.mailid !== mail) {
+              console.log("inside -> ", review);
+              return review;
+            }
+          });
+          setReviews(otherUserReviews);
+          let currentUserReview = response.data.data.filter((review) => {
+            if (review.mailid === mail) {
+              console.log("inside 2 -> ", review);
+              return review;
+            }
+          });
+          if (currentUserReview.length) {
+            setHasReview(true);
+            setReview(currentUserReview[0].review);
+          }
           setHasReview(true);
         }
       }
       setShowReview(true);
+    }
+  }
+
+  async function deleteReview() {
+    let response = await axios.delete("http://localhost:3000/deletereview", {
+      data: { id: product, mail: userInfo.mailId },
+    });
+    console.log(response);
+    if (response.data.code) {
+      setShowReview(true);
+      setReview("");
+      setHasReview(false);
     }
   }
 
@@ -151,9 +180,10 @@ function Product() {
             <img src={currentUrl}></img>
           </div>
           <div className="More_Product_Images">
-            {imageUrls.map((url) => {
+            {imageUrls.map((url, index) => {
               return (
                 <div
+                  key={index}
                   className={
                     url.src == currentUrl
                       ? "More_Image_Box More_Image_Box--Active"
@@ -264,7 +294,13 @@ function Product() {
         <div className="Product_Review_Main_Heading_Container">
           <h3 className="Product_Review_Main_Heading">Product Reviews</h3>
         </div>
-        <div className="Your_Review_Container">
+        <div
+          className={
+            showReview
+              ? "Your_Review_Container"
+              : "Your_Review_Container--Inactive"
+          }
+        >
           <p
             className={
               hasReview ? "Your_Review--Note--Inactive" : "Your_Review--Note"
@@ -310,24 +346,35 @@ function Product() {
           <textarea
             placeholder="Write your review..."
             rows={5}
-            cols={100}
+            // cols={50}
             className="Reviewing_As--Input"
             value={review}
             onChange={(e) => {
               setReview(e.target.value);
             }}
           ></textarea>
-          <div className="Review_Submit_Btn">
-            <button onClick={addReview}>Submit</button>
-          </div>
-          <div className="Review_Cancel_Btn">
-            <button
-              onClick={() => {
-                setShowReview(true);
-              }}
-            >
-              Cancel
-            </button>
+          <div className="Write_Review_Buttons">
+            <div>
+              <button className="Write_Review_Submit_Btn" onClick={addReview}>
+                Submit
+              </button>
+              <button
+                className="Write_Review_Cancel_Btn"
+                onClick={() => {
+                  setShowReview(true);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+            <div>
+              <button
+                className="Write_Review_Delete_Btn"
+                onClick={deleteReview}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
         <div className="Reviews">

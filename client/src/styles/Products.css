@@ -163,7 +163,8 @@
 .Write_Review--Inactive,
 .Write_Review_Button--Inactive,
 .Your_Review--Inactive,
-.Your_Review--Note--Inactive {
+.Your_Review--Note--Inactive,
+.Your_Review_Container--Inactive {
     display: none;
 }
 
@@ -185,6 +186,10 @@
     border-style: none;
     border-radius: 7px;
     border: 1px white solid
+}
+
+.Your_Review--Note {
+    font-size: 16px;
 }
 
 .Reviewer_Name {
@@ -210,9 +215,65 @@
     cursor: pointer;
 }
 
+.Write_Review {
+    background-color: rgb(44, 44, 44);
+    padding: 1em .5em;
+    max-width: 700px;
+    border-radius: 7px;
+}
+
+.Reviewing_As--Name {
+    font-size: 18px;
+    margin-bottom: .5em;
+}
+
 .Reviewing_As--Input {
     display: block;
     resize: vertical;
+    width: 600px;
+    font-size: 15px;
+    padding: .3em .3em .2em .5em;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.Write_Review_Buttons {
+    margin-top: 1em;
+    width: 600px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Write_Review_Submit_Btn {
+    background-color: goldenrod;
+    color: black;
+    font-size: 14px;
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.Write_Review_Cancel_Btn {
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Write_Review_Delete_Btn {
+    background-color: rgb(190, 4, 4);
+    color: white;
+    font-size: 14px;
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .Reviews {

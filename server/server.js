@@ -492,7 +492,33 @@ app.post("/addreview", (req, res) => {
   );
 });
 
-app.put("/editreview", (req, res) => {});
+app.put("/editreview", (req, res) => {
+  let newReview = req.body.review;
+  let mailId = req.body.mail;
+  let productId = req.body.id;
+  db.query(
+    "update reviews set ? where productid = ? and mailid = ?",
+    [{ review: newReview }, productId, mailId],
+    (err, data) => {
+      if (err)
+        return res.send({ code: false, errorMsg: "Some error has occurred!" });
+      res.send({ code: true });
+    }
+  );
+});
+
+app.delete("/deletereview", (req, res) => {
+  let productId = req.body.id;
+  let mailId = req.body.mail;
+  db.query(
+    "delete from reviews where productid = ? and mailid = ?",
+    [productId, mailId],
+    (err, data) => {
+      if (err) return res.send({ code: false });
+      res.send({ code: true });
+    }
+  );
+});
 
 app.put("/editusername", (req, res) => {
   const first = req.body.firstname;
