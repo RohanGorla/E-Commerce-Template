@@ -154,10 +154,19 @@
     margin: 1em 0;
 }
 
-.Product_Review {
+.Product_Review_Main_Container {
     font-family: var(--Font_Main);
     /* background-color: rgb(177, 103, 103); */
     padding: 1em;
+    display: flex;
+}
+
+.Product_Review_Main_Heading_Container {
+    font-family: var(--Font_Main);
+    margin-bottom: .7em;
+    padding-left: .5em;
+    padding-bottom: .5em;
+    /* border-bottom: 1px solid white; */
 }
 
 .Write_Review--Inactive,
@@ -168,11 +177,24 @@
     display: none;
 }
 
-.Product_Review_Main_Heading_Container {
-    margin-bottom: .7em;
-    padding-left: .5em;
-    padding-bottom: .5em;
-    /* border-bottom: 1px solid white; */
+.Product_Rating_Container {
+    width: 20%;
+}
+
+.Product_Rating_Star_Container--Box {
+    width: fit-content;
+}
+
+.Actual_Star_Rating + .Actual_Star_Rating {
+    margin-left: .3em;
+}
+
+.Actual_Star_Rating {
+    cursor: pointer;
+}
+
+.Product_User_Reviews_Container {
+    width: 80%;
 }
 
 .Product_Review_Main_Heading {
@@ -182,10 +204,10 @@
 .Your_Review_Container {
     background-color: rgb(44, 44, 44);
     padding: 1em .5em;
-    max-width: 600px;
+    max-width: 700px;
     border-style: none;
     border-radius: 7px;
-    border: 1px white solid
+    border: 1px white solid;
 }
 
 .Your_Review--Note {
@@ -194,7 +216,7 @@
 
 .Reviewer_Name {
     font-size: 18px;
-    margin-bottom: .2em;
+    margin-bottom: .5em;
 }
 
 .Actual_Review {
@@ -227,10 +249,26 @@
     margin-bottom: .5em;
 }
 
+.Give_Rating_Star_Container {
+    margin-bottom: .7em;
+}
+
+.Give_Rating_Star_Container--Box {
+    width: fit-content;
+}
+
+.Give_Star_Rating + .Give_Star_Rating {
+    margin-left: .3em;
+}
+
+.Give_Star_Rating {
+    cursor: pointer;
+}
+
 .Reviewing_As--Input {
     display: block;
     resize: vertical;
-    width: 600px;
+    width: 90%;
     font-size: 15px;
     padding: .3em .3em .2em .5em;
     border-radius: 5px;
@@ -239,7 +277,7 @@
 
 .Write_Review_Buttons {
     margin-top: 1em;
-    width: 600px;
+    width: 90%;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -278,6 +316,12 @@
 
 .Reviews {
     margin-top: 1em;
+    padding: .7em .5em;
+    max-width: 700px;
+    background-color: rgb(44, 44, 44);
+    border-style: none;
+    border-radius: 7px;
+    border: 1px white solid
 }
 
 .Individual_Review {

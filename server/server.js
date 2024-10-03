@@ -472,9 +472,15 @@ app.post("/getreviews", (req, res) => {
 });
 
 app.post("/addreview", (req, res) => {
-  let values = [req.body.id, req.body.mail, req.body.user, req.body.review];
+  let values = [
+    req.body.id,
+    req.body.mail,
+    req.body.user,
+    req.body.review,
+    req.body.rating,
+  ];
   db.query(
-    "insert into reviews (productid, mailid, username, review) values (?)",
+    "insert into reviews (productid, mailid, username, review, rating) values (?)",
     [values],
     (err, data) => {
       if (err) return res.send(err);
@@ -496,9 +502,10 @@ app.put("/editreview", (req, res) => {
   let newReview = req.body.review;
   let mailId = req.body.mail;
   let productId = req.body.id;
+  let rating = req.body.rating;
   db.query(
     "update reviews set ? where productid = ? and mailid = ?",
-    [{ review: newReview }, productId, mailId],
+    [{ review: newReview, rating: rating }, productId, mailId],
     (err, data) => {
       if (err)
         return res.send({ code: false, errorMsg: "Some error has occurred!" });
