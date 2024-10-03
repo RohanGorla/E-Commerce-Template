@@ -509,7 +509,15 @@ app.put("/editreview", (req, res) => {
     (err, data) => {
       if (err)
         return res.send({ code: false, errorMsg: "Some error has occurred!" });
-      res.send({ code: true });
+    }
+  );
+  db.query(
+    "select * from reviews where productid = ? and mailid = ?",
+    [productId, mailId],
+    (err, data) => {
+      if (err) return res.send(err);
+      console.log(data);
+      res.send({ data: data, code: true });
     }
   );
 });

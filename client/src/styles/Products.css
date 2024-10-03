@@ -216,7 +216,15 @@
 
 .Reviewer_Name {
     font-size: 18px;
+    margin-bottom: .2em;
+}
+
+.Your_Rating {
     margin-bottom: .5em;
+}
+
+.Your_Rating--Star + .Your_Rating--Star {
+    margin-left: .3em;
 }
 
 .Actual_Review {
@@ -325,7 +333,23 @@
 }
 
 .Individual_Review {
-    margin: 1em 0;
+    margin-top: .5em;
+}
+
+.Individual_Review + .Individual_Review {
+    margin-top: 1.5em;
+}
+
+.Individual_Rating_Container {
+    margin: .2em 0em;
+}
+
+.Individual_Rating_Container--Box {
+    width: fit-content;
+}
+
+.Individual_Rating_Star + .Individual_Rating_Star {
+    margin-left: .3em;
 }
 
 .Individual_Review p {

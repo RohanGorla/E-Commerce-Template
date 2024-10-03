@@ -8,6 +8,7 @@ function Product() {
   const { product } = useParams();
   const [productData, setProductData] = useState({});
   const [review, setReview] = useState("");
+  const [yourReview, setYourReview] = useState({});
   const [reviews, setReviews] = useState([]);
   const [showReview, setShowReview] = useState(true);
   const [hasReview, setHasReview] = useState(false);
@@ -65,6 +66,7 @@ function Product() {
         if (response.data.code) {
           // setReviews(response.data.data);
           setHasReview(true);
+          setYourReview(response.data.data[0]);
         }
       } else {
         let response = await axios.post("http://localhost:3000/addreview", {
@@ -172,6 +174,7 @@ function Product() {
         if (currentUserReview.length) {
           setHasReview(true);
           setReview(currentUserReview[0].review);
+          setYourReview(currentUserReview[0]);
           setStarSetIndex(currentUserReview[0].rating - 1);
         }
       }
@@ -361,6 +364,21 @@ function Product() {
               <p className="Reviewer_Name">
                 {userInfo.firstname} {userInfo.lastname}
               </p>
+              <div className="Your_Rating">
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => {
+                    return (
+                      <FaStar
+                        key={index}
+                        className="Your_Rating--Star"
+                        color={
+                          index <= yourReview.rating - 1 ? "orange" : "white"
+                        }
+                      />
+                    );
+                  })}
+              </div>
               <p className="Actual_Review">{review}</p>
             </div>
             <div
@@ -467,6 +485,25 @@ function Product() {
                 return (
                   <div key={review.id} className="Individual_Review">
                     <p className="Reviewer_Name">{review.username}</p>
+                    <div className="Individual_Rating_Container">
+                      <div className="Individual_Rating_Container--Box">
+                        {Array(5)
+                          .fill(0)
+                          .map((_, index) => {
+                            return (
+                              <FaStar
+                                key={index}
+                                className="Individual_Rating_Star"
+                                color={
+                                  index <= review.rating - 1
+                                    ? "orange"
+                                    : "white"
+                                }
+                              />
+                            );
+                          })}
+                      </div>
+                    </div>
                     <p className="Actual_Review">{review.review}</p>
                   </div>
                 );
