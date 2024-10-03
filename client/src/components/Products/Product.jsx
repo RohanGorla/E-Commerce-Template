@@ -14,7 +14,9 @@ function Product() {
   const [hasReview, setHasReview] = useState(false);
   const [starHoverIndex, setStarHoverIndex] = useState(-1);
   const [starSetIndex, setStarSetIndex] = useState(-1);
-  const [actualStarIndex, setActualStarIndex] = useState(-1);
+  const [averageStarRating, setAverageStarRating] = useState(-1);
+  const [actualRating, setActualRating] = useState(0);
+  const [ratings, setRatings] = useState(0);
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const imageUrls = [
@@ -50,55 +52,93 @@ function Product() {
     }
   }
 
+  function getTotalRatings(value) {
+    let ratingsNumber = 0;
+    if (reviews.length) {
+      reviews.forEach((review) => {
+        if (review.rating == value) {
+          ratingsNumber += 1;
+        }
+      });
+    }
+    if (yourReview) {
+      if (yourReview.rating == value) {
+        ratingsNumber += 1;
+      }
+    }
+    return ratingsNumber;
+  }
+
+  async function repeater(response) {
+    const mail = userInfo.mailId;
+    if (response.data.code) {
+      let totalRating = 0;
+      let totalRatings = 0;
+      let otherUserReviews = response.data.data.filter((review) => {
+        if (review.mailid !== mail) {
+          totalRating += review.rating;
+          if (review.rating) {
+            totalRatings += 1;
+          }
+          return review;
+        }
+      });
+      setReviews(otherUserReviews);
+      let currentUserReview = response.data.data.filter((review) => {
+        if (review.mailid === mail) {
+          totalRating += review.rating;
+          if (review.rating) {
+            totalRatings += 1;
+          }
+          return review;
+        }
+      });
+      setRatings(totalRatings);
+      if (currentUserReview.length) {
+        setHasReview(true);
+        setReview(currentUserReview[0].review);
+        setYourReview(currentUserReview[0]);
+        setStarSetIndex(currentUserReview[0].rating - 1);
+      } else {
+        setHasReview(false);
+        setReview("");
+        setYourReview({});
+        setStarSetIndex(-1);
+      }
+      if (response.data.data.length != 0) {
+        let actualProductRating = totalRating / totalRatings;
+        setActualRating(actualProductRating.toFixed(1));
+        let averageRatingRounded = Math.round(actualProductRating) - 1;
+        setAverageStarRating(averageRatingRounded);
+      } else {
+        setActualRating(0);
+        setAverageStarRating(-1);
+      }
+    }
+  }
+
   async function addReview() {
-    // const mailId = localStorage.getItem("mailId");
     const username = userInfo.firstname + " " + userInfo.lastname;
     const mail = userInfo.mailId;
-    if (review.length) {
+    if (review.length || starSetIndex >= 0) {
       if (hasReview) {
         let response = await axios.put("http://localhost:3000/editreview", {
           id: product,
-          mail: userInfo.mailId,
+          mail: mail,
           review: review,
           rating: starSetIndex + 1,
         });
         console.log(response);
-        if (response.data.code) {
-          // setReviews(response.data.data);
-          setHasReview(true);
-          setYourReview(response.data.data[0]);
-        }
+        repeater(response);
       } else {
         let response = await axios.post("http://localhost:3000/addreview", {
           id: product,
-          mail: userInfo.mailId,
+          mail: mail,
           user: username,
           review: review,
           rating: starSetIndex + 1,
         });
-        console.log(response);
-        if (response.data.code) {
-          // setReviews(response.data.data);
-          let otherUserReviews = response.data.data.filter((review) => {
-            if (review.mailid !== mail) {
-              console.log("inside -> ", review);
-              return review;
-            }
-          });
-          setReviews(otherUserReviews);
-          let currentUserReview = response.data.data.filter((review) => {
-            if (review.mailid === mail) {
-              console.log("inside 2 -> ", review);
-              return review;
-            }
-          });
-          if (currentUserReview.length) {
-            setHasReview(true);
-            setReview(currentUserReview[0].review);
-            setStarSetIndex(currentUserReview[0].rating - 1);
-          }
-          setHasReview(true);
-        }
+        repeater(response);
       }
       setShowReview(true);
     }
@@ -109,11 +149,8 @@ function Product() {
       data: { id: product, mail: userInfo.mailId },
     });
     console.log(response);
-    if (response.data.code) {
-      setShowReview(true);
-      setReview("");
-      setHasReview(false);
-    }
+    repeater(response);
+    setShowReview(true);
   }
 
   useEffect(() => {
@@ -157,27 +194,7 @@ function Product() {
       let response = await axios.post("http://localhost:3000/getreviews", {
         id: product,
       });
-      if (response.data.code) {
-        let otherUserReviews = response.data.data.filter((review) => {
-          if (review.mailid !== mail) {
-            console.log("inside -> ", review);
-            return review;
-          }
-        });
-        setReviews(otherUserReviews);
-        let currentUserReview = response.data.data.filter((review) => {
-          if (review.mailid === mail) {
-            console.log("inside 2 -> ", review);
-            return review;
-          }
-        });
-        if (currentUserReview.length) {
-          setHasReview(true);
-          setReview(currentUserReview[0].review);
-          setYourReview(currentUserReview[0]);
-          setStarSetIndex(currentUserReview[0].rating - 1);
-        }
-      }
+      repeater(response);
     }
     getProduct();
     getReviews();
@@ -230,6 +247,29 @@ function Product() {
           <p className="Product_Category">
             {productData?.category} - {productData?.company}
           </p>
+          <div className="Product_Rating_Top_Star_Container">
+            <span className="Product_Rating_Top">{actualRating}</span>
+            <div
+              className="Product_Rating_Top_Star_Container--Box"
+              onMouseLeave={() => {
+                setStarHoverIndex(-1);
+              }}
+            >
+              {Array(5)
+                .fill(0)
+                .map((_, index) => {
+                  return (
+                    <FaStar
+                      className="Actual_Top_Star_Rating"
+                      key={index}
+                      size={20}
+                      color={index <= averageStarRating ? "orange" : "white"}
+                    />
+                  );
+                })}
+            </div>
+            <span className="Product_Rating_Top">{ratings} ratings</span>
+          </div>
           <p className="Product_Price">
             <span className="Product_Discount">-{productData?.discount}%</span>{" "}
             ₹{productData?.actualPrice}
@@ -242,7 +282,7 @@ function Product() {
             {address ? (
               <>
                 <p>
-                  Delivering to {address?.username} - {address?.street}
+                  Delivering to {address?.addressname} - {address?.street}
                 </p>
                 <p>{address?.city}</p>
               </>
@@ -305,9 +345,11 @@ function Product() {
         <h3 className="Product_Review_Main_Heading">Product Reviews</h3>
       </div>
       <div className="Product_Review_Main_Container">
+        {/* Product Rating Container */}
         <div className="Product_Rating_Container">
+          {/* Product Average Star Rating Container */}
           <div className="Product_Rating_Star_Container">
-            {/* <div
+            <div
               className="Product_Rating_Star_Container--Box"
               onMouseLeave={() => {
                 setStarHoverIndex(-1);
@@ -321,24 +363,58 @@ function Product() {
                       className="Actual_Star_Rating"
                       key={index}
                       size={20}
-                      color={
-                        index <= starHoverIndex || index <= actualStarIndex
-                          ? "orange"
-                          : "white"
-                      }
-                      onMouseOver={() => {
-                        setStarHoverIndex(index);
-                      }}
-                      onClick={() => {
-                        setActualStarIndex(index);
-                      }}
+                      color={index <= averageStarRating ? "orange" : "white"}
                     />
                   );
                 })}
-            </div> */}
+            </div>
+            <p className="Product_Rating_Actual_Rating">
+              {actualRating} out of 5
+            </p>
+          </div>
+          {/* Number Of Ratings */}
+          <p className="Product_Rating_Total_Ratings">{ratings} ratings.</p>
+          {/* Rating Distribution */}
+          <div className="Product_Rating_Distribution_Container">
+            {Array(5)
+              .fill(0)
+              .map((_, index) => {
+                let ratingsCount = getTotalRatings(5 - index);
+                console.log("ratings count ->", ratingsCount);
+                let ratingsPercentage = 0;
+                if (ratings != 0) {
+                  ratingsPercentage = Math.floor(
+                    (ratingsCount / ratings) * 100
+                  );
+                }
+                console.log(ratingsPercentage);
+                return (
+                  <div
+                    key={index}
+                    className="Product_Rating_Distribution_Star_Container"
+                  >
+                    <div>
+                      {Array(5 - index)
+                        .fill(0)
+                        .map((_, index) => {
+                          return (
+                            <FaStar
+                              key={index}
+                              className="Actual_Star_Rating"
+                              color="orange"
+                            />
+                          );
+                        })}
+                    </div>
+                    <p>{ratingsPercentage}%</p>
+                  </div>
+                );
+              })}
           </div>
         </div>
+        {/* Product Review Container */}
         <div className="Product_User_Reviews_Container">
+          {/* Your Own Review Container */}
           <div
             className={
               showReview
@@ -346,6 +422,7 @@ function Product() {
                 : "Your_Review_Container--Inactive"
             }
           >
+            {/* If You Donot Have Own Review */}
             <p
               className={
                 hasReview ? "Your_Review--Note--Inactive" : "Your_Review--Note"
@@ -353,6 +430,7 @@ function Product() {
             >
               Add your review about this product.
             </p>
+            {/* If You Have Own Review */}
             <div
               className={
                 showReview && hasReview
@@ -381,6 +459,7 @@ function Product() {
               </div>
               <p className="Actual_Review">{review}</p>
             </div>
+            {/* Add/Edit Your Own Review Buttons Container */}
             <div
               className={
                 showReview
@@ -397,6 +476,7 @@ function Product() {
               </button>
             </div>
           </div>
+          {/* Write or Edit Your On Review Container */}
           <div
             className={
               showReview
@@ -407,6 +487,7 @@ function Product() {
             <p className="Reviewing_As--Name">
               Reviewing as {userInfo.firstname} {userInfo.lastname}
             </p>
+            {/* Give Your Star Rating Container */}
             <div className="Give_Rating_Star_Container">
               <div
                 className="Give_Rating_Star_Container--Box"
@@ -438,6 +519,7 @@ function Product() {
                   })}
               </div>
             </div>
+            {/* Give Your Review Textarea */}
             <textarea
               placeholder="Write your review..."
               rows={5}
@@ -448,8 +530,9 @@ function Product() {
                 setReview(e.target.value);
               }}
             ></textarea>
+            {/* Add-Edit-Delete Your Review Buttons */}
             <div className="Write_Review_Buttons">
-              <div>
+              <div className="Write_Review_Submit-Cancel_Btn_Container">
                 <button className="Write_Review_Submit_Btn" onClick={addReview}>
                   Submit
                 </button>
@@ -462,7 +545,13 @@ function Product() {
                   Cancel
                 </button>
               </div>
-              <div>
+              <div
+                className={
+                  hasReview
+                    ? "Write_Review_Delete_Btn_Container"
+                    : "Write_Review_Delete_Btn_Container Write_Review_Delete_Btn_Container--Inactive"
+                }
+              >
                 <button
                   className="Write_Review_Delete_Btn"
                   onClick={deleteReview}
@@ -472,12 +561,14 @@ function Product() {
               </div>
             </div>
           </div>
+          {/* Other People Reviews Container */}
           <div className="Reviews">
-            {reviews.length == 0 && !hasReview ? (
+            {reviews.length == 0 ? (
               <div className="No_Reviews">
                 <p>
-                  This porduct has no user reviews. Be the first person to
-                  review this product!
+                  {hasReview
+                    ? "Your's is the first review on this product!"
+                    : "This porduct has no user reviews. Be the first person to review this product!"}
                 </p>
               </div>
             ) : (

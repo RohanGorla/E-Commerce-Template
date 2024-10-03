@@ -93,6 +93,21 @@
     margin: .5em 0 .8em 0;
 }
 
+.Product_Rating_Top_Star_Container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.Product_Rating_Top {
+    font-family: var(--Font_Main);
+}
+
+.Product_Rating_Top_Star_Container--Box {
+    margin-left: .5em;
+    margin-right: 1em;
+}
+
 .Product_Price {
     font-size: var(--Final);
     font-family: var(--Font_Side);
@@ -173,12 +188,18 @@
 .Write_Review_Button--Inactive,
 .Your_Review--Inactive,
 .Your_Review--Note--Inactive,
-.Your_Review_Container--Inactive {
+.Your_Review_Container--Inactive,
+.Write_Review_Delete_Btn_Container--Inactive {
     display: none;
 }
 
 .Product_Rating_Container {
-    width: 20%;
+    width: 30%;
+}
+
+.Product_Rating_Star_Container {
+    display: flex;
+    align-items: center;
 }
 
 .Product_Rating_Star_Container--Box {
@@ -189,12 +210,33 @@
     margin-left: .3em;
 }
 
-.Actual_Star_Rating {
-    cursor: pointer;
+.Product_Rating_Actual_Rating {
+    margin-top: .3em;
+    margin-left: 1em;
+}
+
+.Product_Rating_Total_Ratings {
+    margin: .5em 0 1em 0;
+}
+
+.Product_Rating_Distribution_Star_Container {
+    background-color: rgb(44, 44, 44);
+    max-width: 200px;
+    padding: .3em .5em;
+    border-style: none;
+    border: 1px solid white;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Product_Rating_Distribution_Star_Container + 
+.Product_Rating_Distribution_Star_Container {
+    margin-top: .5em;   
 }
 
 .Product_User_Reviews_Container {
-    width: 80%;
+    width: 70%;
 }
 
 .Product_Review_Main_Heading {

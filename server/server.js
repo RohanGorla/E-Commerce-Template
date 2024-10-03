@@ -484,7 +484,6 @@ app.post("/addreview", (req, res) => {
     [values],
     (err, data) => {
       if (err) return res.send(err);
-      console.log(data);
     }
   );
   db.query(
@@ -492,7 +491,6 @@ app.post("/addreview", (req, res) => {
     req.body.id,
     (err, data) => {
       if (err) return res.send(err);
-      console.log(data);
       res.send({ data: data, code: true });
     }
   );
@@ -512,11 +510,10 @@ app.put("/editreview", (req, res) => {
     }
   );
   db.query(
-    "select * from reviews where productid = ? and mailid = ?",
-    [productId, mailId],
+    "select * from reviews where productid = ?",
+    [productId],
     (err, data) => {
       if (err) return res.send(err);
-      console.log(data);
       res.send({ data: data, code: true });
     }
   );
@@ -530,7 +527,14 @@ app.delete("/deletereview", (req, res) => {
     [productId, mailId],
     (err, data) => {
       if (err) return res.send({ code: false });
-      res.send({ code: true });
+    }
+  );
+  db.query(
+    "select * from reviews where productid = ?",
+    [productId],
+    (err, data) => {
+      if (err) return res.send(err);
+      res.send({ data: data, code: true });
     }
   );
 });
