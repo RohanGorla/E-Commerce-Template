@@ -13,14 +13,17 @@
     --Font_Side: "Inter", sans-serif;
 }
 
+.Product_Main_Container {
+    height: 100%;
+    overflow-y: scroll;
+}
+
 .Product_Container {
     max-width: 1300px;
     margin: 0 auto;
     /* background-color: rgb(35, 34, 34); */
     font-optical-sizing: auto;
     font-style: normal;
-    height: 100%;
-    overflow-y: scroll;
 }
 
 .Product_Main {

@@ -201,32 +201,33 @@ function Product() {
   }, []);
 
   return (
-    <div className="Product_Container">
-      <div className="Product_Main">
-        <div className="Product_Image">
-          <div className="Product_Main_Image">
-            <img src={currentUrl}></img>
-          </div>
-          <div className="More_Product_Images">
-            {imageUrls.map((url, index) => {
-              return (
-                <div
-                  key={index}
-                  className={
-                    url.src == currentUrl
-                      ? "More_Image_Box More_Image_Box--Active"
-                      : "More_Image_Box"
-                  }
-                  onClick={() => {
-                    setCurrentUrl(url.src);
-                  }}
-                >
-                  <img src={url.src} />
-                </div>
-              );
-            })}
-          </div>
-          {/* <div className="Product_Review">
+    <div className="Product_Main_Container">
+      <div className="Product_Container">
+        <div className="Product_Main">
+          <div className="Product_Image">
+            <div className="Product_Main_Image">
+              <img src={currentUrl}></img>
+            </div>
+            <div className="More_Product_Images">
+              {imageUrls.map((url, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={
+                      url.src == currentUrl
+                        ? "More_Image_Box More_Image_Box--Active"
+                        : "More_Image_Box"
+                    }
+                    onClick={() => {
+                      setCurrentUrl(url.src);
+                    }}
+                  >
+                    <img src={url.src} />
+                  </div>
+                );
+              })}
+            </div>
+            {/* <div className="Product_Review">
             <div className="Write_Review">
               <h3>Product Reviews</h3>
               <p>
@@ -241,256 +242,16 @@ function Product() {
             </div>
             <div className="Reviews"></div>
           </div> */}
-        </div>
-        <div className="Product_Details">
-          <p className="Product_Title">{productData?.title}</p>
-          <p className="Product_Category">
-            {productData?.category} - {productData?.company}
-          </p>
-          <div className="Product_Rating_Top_Star_Container">
-            <span className="Product_Rating_Top">{actualRating}</span>
-            <div
-              className="Product_Rating_Top_Star_Container--Box"
-              onMouseLeave={() => {
-                setStarHoverIndex(-1);
-              }}
-            >
-              {Array(5)
-                .fill(0)
-                .map((_, index) => {
-                  return (
-                    <FaStar
-                      className="Actual_Top_Star_Rating"
-                      key={index}
-                      size={20}
-                      color={index <= averageStarRating ? "orange" : "white"}
-                    />
-                  );
-                })}
-            </div>
-            <span className="Product_Rating_Top">{ratings} ratings</span>
           </div>
-          <p className="Product_Price">
-            <span className="Product_Discount">-{productData?.discount}%</span>{" "}
-            ₹{productData?.actualPrice}
-          </p>
-          <p className="Product_MRP">
-            M.R.P:{" "}
-            <span className="Product_MRP_Strike">₹{productData?.mrp}</span>
-          </p>
-          <div className="Delivery_Address">
-            {address ? (
-              <>
-                <p>
-                  Delivering to {address?.addressname} - {address?.street}
-                </p>
-                <p>{address?.city}</p>
-              </>
-            ) : (
-              <>
-                <p>No delivery address selected!</p>
-              </>
-            )}
-          </div>
-          <div className="Products_Buttons">
-            <button
-              className="Buy_Button"
-              onClick={() => {
-                window.open(`${window.location.origin}/buy/${product}`);
-              }}
-            >
-              Buy now
-            </button>
-            <button
-              className="Addtocart_Button"
-              onClick={() => {
-                // window.open(`${window.location.origin}/buy/${product}`);
-                addToCart();
-              }}
-            >
-              Add to cart
-            </button>
-          </div>
-          <div className="About_Product">
-            <h4>About the product</h4>
-            <p>
-              Introducing our latest electronic product, the ProSound Wireless
-              Earbuds—your perfect companion for an immersive audio experience.
-              With sleek design and cutting-edge technology, these earbuds
-              deliver crystal-clear sound and deep bass, ensuring you never miss
-              a beat.
+          <div className="Product_Details">
+            <p className="Product_Title">{productData?.title}</p>
+            <p className="Product_Category">
+              {productData?.category} - {productData?.company}
             </p>
-            <p>
-              When you purchase the ProSound Wireless Earbuds, you'll receive
-              everything you need to get started. Inside the box, you'll find
-              the earbuds themselves, along with a compact charging case that
-              provides up to 20 hours of additional playtime.
-            </p>
-            <p>
-              We've also added a few extras to enhance your experience with the
-              ProSound Wireless Earbuds. Included in the package is a quick
-              start guide to help you set up your earbuds in minutes, along with
-              a warranty card that provides coverage for any manufacturing
-              defects for up to one year.
-            </p>
-            <p>
-              Lastly, the ProSound Wireless Earbuds come with access to our
-              dedicated customer support team, available 24/7 to assist you with
-              any questions or issues.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="Product_Review_Main_Heading_Container">
-        <h3 className="Product_Review_Main_Heading">Product Reviews</h3>
-      </div>
-      <div className="Product_Review_Main_Container">
-        {/* Product Rating Container */}
-        <div className="Product_Rating_Container">
-          {/* Product Average Star Rating Container */}
-          <div className="Product_Rating_Star_Container">
-            <div
-              className="Product_Rating_Star_Container--Box"
-              onMouseLeave={() => {
-                setStarHoverIndex(-1);
-              }}
-            >
-              {Array(5)
-                .fill(0)
-                .map((_, index) => {
-                  return (
-                    <FaStar
-                      className="Actual_Star_Rating"
-                      key={index}
-                      size={20}
-                      color={index <= averageStarRating ? "orange" : "white"}
-                    />
-                  );
-                })}
-            </div>
-            <p className="Product_Rating_Actual_Rating">
-              {actualRating} out of 5
-            </p>
-          </div>
-          {/* Number Of Ratings */}
-          <p className="Product_Rating_Total_Ratings">{ratings} ratings.</p>
-          {/* Rating Distribution */}
-          <div className="Product_Rating_Distribution_Container">
-            {Array(5)
-              .fill(0)
-              .map((_, index) => {
-                let ratingsCount = getTotalRatings(5 - index);
-                console.log("ratings count ->", ratingsCount);
-                let ratingsPercentage = 0;
-                if (ratings != 0) {
-                  ratingsPercentage = Math.floor(
-                    (ratingsCount / ratings) * 100
-                  );
-                }
-                console.log(ratingsPercentage);
-                return (
-                  <div
-                    key={index}
-                    className="Product_Rating_Distribution_Star_Container"
-                  >
-                    <div>
-                      {Array(5 - index)
-                        .fill(0)
-                        .map((_, index) => {
-                          return (
-                            <FaStar
-                              key={index}
-                              className="Actual_Star_Rating"
-                              color="orange"
-                            />
-                          );
-                        })}
-                    </div>
-                    <p>{ratingsPercentage}%</p>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-        {/* Product Review Container */}
-        <div className="Product_User_Reviews_Container">
-          {/* Your Own Review Container */}
-          <div
-            className={
-              showReview
-                ? "Your_Review_Container"
-                : "Your_Review_Container--Inactive"
-            }
-          >
-            {/* If You Donot Have Own Review */}
-            <p
-              className={
-                hasReview ? "Your_Review--Note--Inactive" : "Your_Review--Note"
-              }
-            >
-              Add your review about this product.
-            </p>
-            {/* If You Have Own Review */}
-            <div
-              className={
-                showReview && hasReview
-                  ? "Your_Review"
-                  : "Your_Review--Inactive"
-              }
-            >
-              {/* <p className="Review--Heading">Your review</p> */}
-              <p className="Reviewer_Name">
-                {userInfo.firstname} {userInfo.lastname}
-              </p>
-              <div className="Your_Rating">
-                {Array(5)
-                  .fill(0)
-                  .map((_, index) => {
-                    return (
-                      <FaStar
-                        key={index}
-                        className="Your_Rating--Star"
-                        color={
-                          index <= yourReview.rating - 1 ? "orange" : "white"
-                        }
-                      />
-                    );
-                  })}
-              </div>
-              <p className="Actual_Review">{review}</p>
-            </div>
-            {/* Add/Edit Your Own Review Buttons Container */}
-            <div
-              className={
-                showReview
-                  ? "Write_Review_Button"
-                  : "Write_Review_Button Write_Review_Button--Inactive"
-              }
-            >
-              <button
-                onClick={() => {
-                  setShowReview(false);
-                }}
-              >
-                {hasReview ? "Edit review" : "Add review"}
-              </button>
-            </div>
-          </div>
-          {/* Write or Edit Your On Review Container */}
-          <div
-            className={
-              showReview
-                ? "Write_Review Write_Review--Inactive"
-                : "Write_Review"
-            }
-          >
-            <p className="Reviewing_As--Name">
-              Reviewing as {userInfo.firstname} {userInfo.lastname}
-            </p>
-            {/* Give Your Star Rating Container */}
-            <div className="Give_Rating_Star_Container">
+            <div className="Product_Rating_Top_Star_Container">
+              <span className="Product_Rating_Top">{actualRating}</span>
               <div
-                className="Give_Rating_Star_Container--Box"
+                className="Product_Rating_Top_Star_Container--Box"
                 onMouseLeave={() => {
                   setStarHoverIndex(-1);
                 }}
@@ -500,106 +261,354 @@ function Product() {
                   .map((_, index) => {
                     return (
                       <FaStar
-                        className="Give_Star_Rating"
+                        className="Actual_Top_Star_Rating"
                         key={index}
                         size={20}
-                        color={
-                          index <= starHoverIndex || index <= starSetIndex
-                            ? "orange"
-                            : "white"
-                        }
-                        onMouseOver={() => {
-                          setStarHoverIndex(index);
-                        }}
-                        onClick={() => {
-                          setStarSetIndex(index);
-                        }}
+                        color={index <= averageStarRating ? "orange" : "white"}
                       />
                     );
                   })}
               </div>
+              <span className="Product_Rating_Top">{ratings} ratings</span>
             </div>
-            {/* Give Your Review Textarea */}
-            <textarea
-              placeholder="Write your review..."
-              rows={5}
-              // cols={50}
-              className="Reviewing_As--Input"
-              value={review}
-              onChange={(e) => {
-                setReview(e.target.value);
-              }}
-            ></textarea>
-            {/* Add-Edit-Delete Your Review Buttons */}
-            <div className="Write_Review_Buttons">
-              <div className="Write_Review_Submit-Cancel_Btn_Container">
-                <button className="Write_Review_Submit_Btn" onClick={addReview}>
-                  Submit
-                </button>
-                <button
-                  className="Write_Review_Cancel_Btn"
-                  onClick={() => {
-                    setShowReview(true);
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-              <div
-                className={
-                  hasReview
-                    ? "Write_Review_Delete_Btn_Container"
-                    : "Write_Review_Delete_Btn_Container Write_Review_Delete_Btn_Container--Inactive"
-                }
+            <p className="Product_Price">
+              <span className="Product_Discount">
+                -{productData?.discount}%
+              </span>{" "}
+              ₹{productData?.actualPrice}
+            </p>
+            <p className="Product_MRP">
+              M.R.P:{" "}
+              <span className="Product_MRP_Strike">₹{productData?.mrp}</span>
+            </p>
+            <div className="Delivery_Address">
+              {address ? (
+                <>
+                  <p>
+                    Delivering to {address?.addressname} - {address?.street}
+                  </p>
+                  <p>{address?.city}</p>
+                </>
+              ) : (
+                <>
+                  <p>No delivery address selected!</p>
+                </>
+              )}
+            </div>
+            <div className="Products_Buttons">
+              <button
+                className="Buy_Button"
+                onClick={() => {
+                  window.open(`${window.location.origin}/buy/${product}`);
+                }}
               >
-                <button
-                  className="Write_Review_Delete_Btn"
-                  onClick={deleteReview}
-                >
-                  Delete
-                </button>
-              </div>
+                Buy now
+              </button>
+              <button
+                className="Addtocart_Button"
+                onClick={() => {
+                  // window.open(`${window.location.origin}/buy/${product}`);
+                  addToCart();
+                }}
+              >
+                Add to cart
+              </button>
+            </div>
+            <div className="About_Product">
+              <h4>About the product</h4>
+              <p>
+                Introducing our latest electronic product, the ProSound Wireless
+                Earbuds—your perfect companion for an immersive audio
+                experience. With sleek design and cutting-edge technology, these
+                earbuds deliver crystal-clear sound and deep bass, ensuring you
+                never miss a beat.
+              </p>
+              <p>
+                When you purchase the ProSound Wireless Earbuds, you'll receive
+                everything you need to get started. Inside the box, you'll find
+                the earbuds themselves, along with a compact charging case that
+                provides up to 20 hours of additional playtime.
+              </p>
+              <p>
+                We've also added a few extras to enhance your experience with
+                the ProSound Wireless Earbuds. Included in the package is a
+                quick start guide to help you set up your earbuds in minutes,
+                along with a warranty card that provides coverage for any
+                manufacturing defects for up to one year.
+              </p>
+              <p>
+                Lastly, the ProSound Wireless Earbuds come with access to our
+                dedicated customer support team, available 24/7 to assist you
+                with any questions or issues.
+              </p>
             </div>
           </div>
-          {/* Other People Reviews Container */}
-          <div className="Reviews">
-            {reviews.length == 0 ? (
-              <div className="No_Reviews">
-                <p>
-                  {hasReview
-                    ? "Your's is the first review on this product!"
-                    : "This porduct has no user reviews. Be the first person to review this product!"}
-                </p>
+        </div>
+        <div className="Product_Review_Main_Heading_Container">
+          <h3 className="Product_Review_Main_Heading">Product Reviews</h3>
+        </div>
+        <div className="Product_Review_Main_Container">
+          {/* Product Rating Container */}
+          <div className="Product_Rating_Container">
+            {/* Product Average Star Rating Container */}
+            <div className="Product_Rating_Star_Container">
+              <div
+                className="Product_Rating_Star_Container--Box"
+                onMouseLeave={() => {
+                  setStarHoverIndex(-1);
+                }}
+              >
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => {
+                    return (
+                      <FaStar
+                        className="Actual_Star_Rating"
+                        key={index}
+                        size={20}
+                        color={index <= averageStarRating ? "orange" : "white"}
+                      />
+                    );
+                  })}
               </div>
-            ) : (
-              reviews.map((review) => {
-                return (
-                  <div key={review.id} className="Individual_Review">
-                    <p className="Reviewer_Name">{review.username}</p>
-                    <div className="Individual_Rating_Container">
-                      <div className="Individual_Rating_Container--Box">
-                        {Array(5)
+              <p className="Product_Rating_Actual_Rating">
+                {actualRating} out of 5
+              </p>
+            </div>
+            {/* Number Of Ratings */}
+            <p className="Product_Rating_Total_Ratings">{ratings} ratings.</p>
+            {/* Rating Distribution */}
+            <div className="Product_Rating_Distribution_Container">
+              {Array(5)
+                .fill(0)
+                .map((_, index) => {
+                  let ratingsCount = getTotalRatings(5 - index);
+                  console.log("ratings count ->", ratingsCount);
+                  let ratingsPercentage = 0;
+                  if (ratings != 0) {
+                    ratingsPercentage = Math.floor(
+                      (ratingsCount / ratings) * 100
+                    );
+                  }
+                  console.log(ratingsPercentage);
+                  return (
+                    <div
+                      key={index}
+                      className="Product_Rating_Distribution_Star_Container"
+                    >
+                      <div>
+                        {Array(5 - index)
                           .fill(0)
                           .map((_, index) => {
                             return (
                               <FaStar
                                 key={index}
-                                className="Individual_Rating_Star"
-                                color={
-                                  index <= review.rating - 1
-                                    ? "orange"
-                                    : "white"
-                                }
+                                className="Actual_Star_Rating"
+                                color="orange"
                               />
                             );
                           })}
                       </div>
+                      <p>{ratingsPercentage}%</p>
                     </div>
-                    <p className="Actual_Review">{review.review}</p>
-                  </div>
-                );
-              })
-            )}
+                  );
+                })}
+            </div>
+          </div>
+          {/* Product Review Container */}
+          <div className="Product_User_Reviews_Container">
+            {/* Your Own Review Container */}
+            <div
+              className={
+                showReview
+                  ? "Your_Review_Container"
+                  : "Your_Review_Container--Inactive"
+              }
+            >
+              {/* If You Donot Have Own Review */}
+              <p
+                className={
+                  hasReview
+                    ? "Your_Review--Note--Inactive"
+                    : "Your_Review--Note"
+                }
+              >
+                Add your review about this product.
+              </p>
+              {/* If You Have Own Review */}
+              <div
+                className={
+                  showReview && hasReview
+                    ? "Your_Review"
+                    : "Your_Review--Inactive"
+                }
+              >
+                {/* <p className="Review--Heading">Your review</p> */}
+                <p className="Reviewer_Name">
+                  {userInfo.firstname} {userInfo.lastname}
+                </p>
+                <div className="Your_Rating">
+                  {Array(5)
+                    .fill(0)
+                    .map((_, index) => {
+                      return (
+                        <FaStar
+                          key={index}
+                          className="Your_Rating--Star"
+                          color={
+                            index <= yourReview.rating - 1 ? "orange" : "white"
+                          }
+                        />
+                      );
+                    })}
+                </div>
+                <p className="Actual_Review">{review}</p>
+              </div>
+              {/* Add/Edit Your Own Review Buttons Container */}
+              <div
+                className={
+                  showReview
+                    ? "Write_Review_Button"
+                    : "Write_Review_Button Write_Review_Button--Inactive"
+                }
+              >
+                <button
+                  onClick={() => {
+                    setShowReview(false);
+                  }}
+                >
+                  {hasReview ? "Edit review" : "Add review"}
+                </button>
+              </div>
+            </div>
+            {/* Write or Edit Your On Review Container */}
+            <div
+              className={
+                showReview
+                  ? "Write_Review Write_Review--Inactive"
+                  : "Write_Review"
+              }
+            >
+              <p className="Reviewing_As--Name">
+                Reviewing as {userInfo.firstname} {userInfo.lastname}
+              </p>
+              {/* Give Your Star Rating Container */}
+              <div className="Give_Rating_Star_Container">
+                <div
+                  className="Give_Rating_Star_Container--Box"
+                  onMouseLeave={() => {
+                    setStarHoverIndex(-1);
+                  }}
+                >
+                  {Array(5)
+                    .fill(0)
+                    .map((_, index) => {
+                      return (
+                        <FaStar
+                          className="Give_Star_Rating"
+                          key={index}
+                          size={20}
+                          color={
+                            index <= starHoverIndex || index <= starSetIndex
+                              ? "orange"
+                              : "white"
+                          }
+                          onMouseOver={() => {
+                            setStarHoverIndex(index);
+                          }}
+                          onClick={() => {
+                            setStarSetIndex(index);
+                          }}
+                        />
+                      );
+                    })}
+                </div>
+              </div>
+              {/* Give Your Review Textarea */}
+              <textarea
+                placeholder="Write your review..."
+                rows={5}
+                // cols={50}
+                className="Reviewing_As--Input"
+                value={review}
+                onChange={(e) => {
+                  setReview(e.target.value);
+                }}
+              ></textarea>
+              {/* Add-Edit-Delete Your Review Buttons */}
+              <div className="Write_Review_Buttons">
+                <div className="Write_Review_Submit-Cancel_Btn_Container">
+                  <button
+                    className="Write_Review_Submit_Btn"
+                    onClick={addReview}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    className="Write_Review_Cancel_Btn"
+                    onClick={() => {
+                      setShowReview(true);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div
+                  className={
+                    hasReview
+                      ? "Write_Review_Delete_Btn_Container"
+                      : "Write_Review_Delete_Btn_Container Write_Review_Delete_Btn_Container--Inactive"
+                  }
+                >
+                  <button
+                    className="Write_Review_Delete_Btn"
+                    onClick={deleteReview}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* Other People Reviews Container */}
+            <div className="Reviews">
+              {reviews.length == 0 ? (
+                <div className="No_Reviews">
+                  <p>
+                    {hasReview
+                      ? "Your's is the first review on this product!"
+                      : "This porduct has no user reviews. Be the first person to review this product!"}
+                  </p>
+                </div>
+              ) : (
+                reviews.map((review) => {
+                  return (
+                    <div key={review.id} className="Individual_Review">
+                      <p className="Reviewer_Name">{review.username}</p>
+                      <div className="Individual_Rating_Container">
+                        <div className="Individual_Rating_Container--Box">
+                          {Array(5)
+                            .fill(0)
+                            .map((_, index) => {
+                              return (
+                                <FaStar
+                                  key={index}
+                                  className="Individual_Rating_Star"
+                                  color={
+                                    index <= review.rating - 1
+                                      ? "orange"
+                                      : "white"
+                                  }
+                                />
+                              );
+                            })}
+                        </div>
+                      </div>
+                      <p className="Actual_Review">{review.review}</p>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           </div>
         </div>
       </div>
