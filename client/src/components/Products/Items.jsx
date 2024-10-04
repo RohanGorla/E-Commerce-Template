@@ -140,7 +140,7 @@ function Items() {
   function getProductRatingData(id) {
     let totalRating = 0;
     let totalRatings = 0;
-    let averageRatingRounded = 0;
+    let averageRatingRounded = -1;
     let actualProductRating = 0;
     if (reviews.length) {
       reviews.forEach((review) => {
