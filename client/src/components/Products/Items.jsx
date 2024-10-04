@@ -411,7 +411,7 @@ function Items() {
                         })}
                     </div>
                     <span className="Product_Rating_Top">
-                      {data.ratings} ratings
+                      {data.ratings} {data.ratings == 1 ? "rating" : "ratings"}
                     </span>
                   </div>
                   <p className="Item_Price">

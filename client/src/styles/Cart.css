@@ -121,6 +121,27 @@
     text-overflow: ellipsis;
 }
 
+.Cart_Items_Details--Rating {
+    display: flex;
+    align-items: center;
+    margin: .3em 0em .7em 0em;
+}
+
+.Cart_Items_Rating--Average_Rating,
+.Cart_Items_Rating--Total_Ratings {
+    font-size: var(--Cart_Item_Rating);
+    font-family: var(--Cart_Secondary_Font);
+}
+
+.Cart_Items_Rating--Star_Container {
+    margin: 0em 1em 0em .5em;
+}
+
+.Cart_Items_Rating--Star +
+.Cart_Items_Rating--Star {
+    margin-left: .2em;
+}
+
 .Cart_Items_Details--Price {
     font-family: var(--Cart_Secondary_Font);
     font-size: var(--Cart_Item_Price_FS);

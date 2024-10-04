@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 import "../styles/Cart.css";
 import axios from "axios";
 
 function Cart() {
   const [cart, setCart] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
@@ -15,7 +17,20 @@ function Cart() {
         mailId: mailId,
       });
       const data = response.data;
-      setCart(data);
+      let cartProductIds = [];
+      data?.map((product) => {
+        cartProductIds.push(product.productid);
+      });
+      async function getCartProductReviews() {
+        let response = await axios.post("http://localhost:3000/getallreviews", {
+          id: cartProductIds,
+        });
+        if (response.data.access) {
+          setReviews(response.data.data);
+        }
+        setCart(data);
+      }
+      getCartProductReviews();
     }
   }
 
@@ -36,8 +51,33 @@ function Cart() {
       k += 3;
     }
     let finalAmount = amountArray.reverse().join("");
-    console.log(finalAmount);
     return finalAmount;
+  }
+
+  function getProductRatingData(id) {
+    let totalRating = 0;
+    let totalRatings = 0;
+    let averageRatingRounded = -1;
+    let actualProductRating = 0;
+    if (reviews.length) {
+      reviews.forEach((review) => {
+        if (review.productid == id) {
+          totalRating += review.rating;
+          if (review.rating) {
+            totalRatings += 1;
+          }
+        }
+      });
+      if (totalRatings) {
+        actualProductRating = totalRating / totalRatings;
+        averageRatingRounded = Math.round(actualProductRating) - 1;
+      }
+    }
+    return {
+      ratings: totalRatings,
+      averageStarRating: averageRatingRounded,
+      actualRating: actualProductRating.toFixed(1),
+    };
   }
 
   useEffect(() => {
@@ -77,6 +117,7 @@ function Cart() {
                   let priceDecimal = price.split(".")[1].toString();
                   let convertedPrice =
                     currencyConvert(priceInt) + "." + priceDecimal;
+                  let productRatingData = getProductRatingData(item.productid);
                   return (
                     <div key={index} className="Cart_Items_Display">
                       <div className="Cart_Items_Display--Image">
@@ -86,6 +127,41 @@ function Cart() {
                         <p className="Cart_Items_Details--Title">
                           {item.title}
                         </p>
+                        <div className="Cart_Items_Details--Rating">
+                          <span className="Cart_Items_Rating--Average_Rating">
+                            {productRatingData.actualRating}
+                          </span>
+                          <div
+                            className="Cart_Items_Rating--Star_Container"
+                            onMouseLeave={() => {
+                              setStarHoverIndex(-1);
+                            }}
+                          >
+                            {Array(5)
+                              .fill(0)
+                              .map((_, index) => {
+                                return (
+                                  <FaStar
+                                    className="Cart_Items_Rating--Star"
+                                    key={index}
+                                    size={15}
+                                    color={
+                                      index <=
+                                      productRatingData.averageStarRating
+                                        ? "orange"
+                                        : "white"
+                                    }
+                                  />
+                                );
+                              })}
+                          </div>
+                          <span className="Cart_Items_Rating--Total_Ratings">
+                            {productRatingData.ratings}{" "}
+                            {productRatingData.ratings == 1
+                              ? "rating"
+                              : "ratings"}
+                          </span>
+                        </div>
                         <p className="Cart_Items_Details--Price">
                           <span className="Cart_Items_Details--Discount">
                             -{item.discount}%
