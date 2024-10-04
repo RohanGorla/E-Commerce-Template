@@ -6,7 +6,10 @@ import axios from "axios";
 
 function Cart() {
   const [cart, setCart] = useState([]);
+  console.log(cart);
   const [reviews, setReviews] = useState([]);
+  const [count, setCount] = useState(-1);
+  const [selectedItem, setSelectedItem] = useState(-1);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
@@ -171,7 +174,7 @@ function Cart() {
                         </p>
                         <div className="Cart_Items_Details--Buttons">
                           <button
-                            className="Cart_Items_Details--Buttons--Buynow"
+                            className="Cart_Items_Buttons--Buynow"
                             onClick={() => {
                               window.open(
                                 `${window.location.origin}/buy/${item.productid}`
@@ -181,13 +184,86 @@ function Cart() {
                             Buy now
                           </button>
                           <button
-                            className="Cart_Items_Details--Buttons--Remove"
+                            className="Cart_Items_Buttons--Remove"
                             onClick={() => {
                               removeFromCart(item.id);
                             }}
                           >
                             Remove from cart
                           </button>
+                          <div className="Cart_Items_Buttons--Counter">
+                            <button
+                              className="Cart_Items_Counter--Decrement"
+                              onClick={() => {
+                                setSelectedItem(item.productid);
+                                let newCount = item.count - 1;
+                                setCount(newCount);
+                                setCart((prev) => {
+                                  let prevValues = prev;
+                                  prevValues.map((current) => {
+                                    if (item.productid == current.productid) {
+                                      // console.log("Before -> ", current.count);
+                                      current.count = newCount;
+                                      // console.log("After -> ", current.count);
+                                    }
+                                  });
+                                  // console.log(prevValues);
+                                  return prevValues;
+                                });
+                              }}
+                            >
+                              -
+                            </button>
+                            <input
+                              className="Cart_Items_Counter--Input"
+                              type="input"
+                              value={
+                                selectedItem == item.productid
+                                  ? count
+                                  : item.count
+                              }
+                              // value={item.count}
+                              onClick={() => {
+                                setSelectedItem(item.productid);
+                                setCount(item.count);
+                              }}
+                              onChange={(e) => {
+                                setCount(e.target.value);
+                                setCart((prev) => {
+                                  let prevValues = prev;
+                                  prevValues.map((current) => {
+                                    if (item.productid == current.productid) {
+                                      current.count = Number(e.target.value);
+                                    }
+                                  });
+                                  // console.log(prevValues);
+                                  return prevValues;
+                                });
+                              }}
+                            ></input>
+                            <button
+                              className="Cart_Items_Counter--Increment"
+                              onClick={() => {
+                                setSelectedItem(item.productid);
+                                let newCount = item.count + 1;
+                                setCount(newCount);
+                                setCart((prev) => {
+                                  let prevValues = prev;
+                                  prevValues.map((current) => {
+                                    if (item.productid == current.productid) {
+                                      // console.log("Before -> ", current.count);
+                                      current.count = newCount;
+                                      // console.log("After -> ", current.count);
+                                    }
+                                  });
+                                  // console.log(prevValues);
+                                  return prevValues;
+                                });
+                              }}
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
