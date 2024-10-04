@@ -3,6 +3,7 @@
     --Cart_Secondary_Font: "Inter", sans-serif;
     --Cart_Main--Header_Title: 22px;
     --Cart_Item_Title_FS: 22px;
+    --Cart_Item_Rating: 16px;
     --Cart_Item_Price_FS: 20px;
     --Cart_Item_Discount_FS: 16px;
     --Cart_Item_Mrp_FS: 16px;
@@ -143,7 +144,7 @@
 }
 
 .Cart_Items_Details--Price {
-    font-family: var(--Cart_Secondary_Font);
+    font-family: var(--Cart_Main_Font);
     font-size: var(--Cart_Item_Price_FS);
     margin-top: .5em;
     margin-bottom: .2em;
@@ -155,7 +156,7 @@
 }
 
 .Cart_Items_Details--Mrp {
-    font-family: var(--Cart_Secondary_Font);
+    font-family: var(--Cart_Main_Font);
     font-size: var(--Cart_Item_Mrp_FS);
 }
 

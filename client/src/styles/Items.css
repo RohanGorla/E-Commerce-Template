@@ -317,6 +317,11 @@
     margin-right: 1em;
 }
 
+.Actual_Top_Star_Rating +
+.Actual_Top_Star_Rating {
+    margin-left: .2em;
+}
+
 .Item_Price {
     font-size: var(--Prdct_Pric_Fs);
     font-family: var(--Prdct_Second_Ff);
