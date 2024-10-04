@@ -6,7 +6,6 @@ import axios from "axios";
 
 function Cart() {
   const [cart, setCart] = useState([]);
-  console.log(cart);
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(-1);
   const [selectedItem, setSelectedItem] = useState(-1);
@@ -173,24 +172,6 @@ function Cart() {
                           </span>
                         </p>
                         <div className="Cart_Items_Details--Buttons">
-                          <button
-                            className="Cart_Items_Buttons--Buynow"
-                            onClick={() => {
-                              window.open(
-                                `${window.location.origin}/buy/${item.productid}`
-                              );
-                            }}
-                          >
-                            Buy now
-                          </button>
-                          <button
-                            className="Cart_Items_Buttons--Remove"
-                            onClick={() => {
-                              removeFromCart(item.id);
-                            }}
-                          >
-                            Remove from cart
-                          </button>
                           <div className="Cart_Items_Buttons--Counter">
                             <button
                               className="Cart_Items_Counter--Decrement"
@@ -264,6 +245,24 @@ function Cart() {
                               +
                             </button>
                           </div>
+                          <button
+                            className="Cart_Items_Buttons--Buynow"
+                            onClick={() => {
+                              window.open(
+                                `${window.location.origin}/buy/${item.productid}`
+                              );
+                            }}
+                          >
+                            Buy now
+                          </button>
+                          <button
+                            className="Cart_Items_Buttons--Remove"
+                            onClick={() => {
+                              removeFromCart(item.id);
+                            }}
+                          >
+                            Remove from cart
+                          </button>
                         </div>
                       </div>
                     </div>

@@ -8,6 +8,7 @@
     --Cart_Item_Discount_FS: 16px;
     --Cart_Item_Mrp_FS: 16px;
     --Cart_Item_Buttons_FS: 16px;
+    --Cart_Items_Counter: 18px;
     --Cart_Empty--Heading_FS: 26px;
     --Cart_Empty--Note_FS: 18px;
     --Cart_Login_Redirect--Note_FS: 18px;
@@ -195,6 +196,40 @@
     background-color: rgb(202, 3, 3);
     color: white;
     cursor: pointer;
+}
+
+.Cart_Items_Buttons--Counter {
+    margin-right: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.Cart_Items_Counter--Decrement,
+.Cart_Items_Counter--Increment {
+    background-color: rgb(189, 188, 188);
+    font-size: var(--Cart_Items_Counter);
+    font-family: var(--Cart_Main_Font);
+    padding: .1em;
+    border-style: none;
+    width: 25px;
+    height: 25px;
+}
+
+.Cart_Items_Counter--Decrement {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+.Cart_Items_Counter--Increment {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.Cart_Items_Counter--Input {
+    text-align: center;
+    height: 25px;
+    width: 30px;
+    padding: .1em;
 }
 
 /* Cart Is Empty */
