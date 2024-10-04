@@ -50,18 +50,20 @@ function Cart() {
         {userInfo ? (
           cart.length ? (
             <div className="Cart_Main">
-              <div className="Cart_Main--Header">
-                <div className="Cart_Main--Header_Title">
-                  <h2>Your Cart Items</h2>
-                </div>
-                <div className="Cart_Main--Header_Checkout_Button">
-                  <button
-                    onClick={() => {
-                      navigate("/checkout");
-                    }}
-                  >
-                    Checkout
-                  </button>
+              <div className="Cart_Main--Header_Container">
+                <div className="Cart_Main--Header">
+                  <div className="Cart_Main--Header_Title">
+                    <h2>Your Cart Items</h2>
+                  </div>
+                  <div className="Cart_Main--Header_Checkout_Button">
+                    <button
+                      onClick={() => {
+                        navigate("/checkout");
+                      }}
+                    >
+                      Checkout
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="Cart_Main--Items_Display">
