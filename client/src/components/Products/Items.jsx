@@ -387,12 +387,7 @@ function Items() {
                   </p>
                   <div className="Item_Rating_Top_Star_Container">
                     <span className="Item_Rating_Top">{data.actualRating}</span>
-                    <div
-                      className="Item_Rating_Top_Star_Container--Box"
-                      onMouseLeave={() => {
-                        setStarHoverIndex(-1);
-                      }}
-                    >
+                    <div className="Item_Rating_Top_Star_Container--Box">
                       {Array(5)
                         .fill(0)
                         .map((_, index) => {

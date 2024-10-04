@@ -131,12 +131,7 @@ function Cart() {
                           <span className="Cart_Items_Rating--Average_Rating">
                             {productRatingData.actualRating}
                           </span>
-                          <div
-                            className="Cart_Items_Rating--Star_Container"
-                            onMouseLeave={() => {
-                              setStarHoverIndex(-1);
-                            }}
-                          >
+                          <div className="Cart_Items_Rating--Star_Container">
                             {Array(5)
                               .fill(0)
                               .map((_, index) => {
