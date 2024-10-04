@@ -83,7 +83,22 @@ function Cart() {
                 </div>
               </div>
             ) : (
-              <h2>Cart is empty</h2>
+              <div className="Cart_Empty">
+                <h3 className="Cart_Empty--Heading">Cart empty!</h3>
+                <p className="Cart_Empty--Note">
+                  Your cart is empty. Shop for products and add them to cart to
+                  show them here.
+                </p>
+                <div className="Cart_Empty--Button">
+                  <button
+                    onClick={() => {
+                      navigate("/products");
+                    }}
+                  >
+                    Go shopping
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         ) : (

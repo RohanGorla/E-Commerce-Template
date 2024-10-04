@@ -1,6 +1,8 @@
 :root {
     --Cart_Main_Font: "Roboto", sans-serif;
     --Cart_Secondary_Font: "Inter", sans-serif;
+    --Cart_Empty--Heading_FS: 26px;
+    --Cart_Empty--Note_FS: 18px;
     --Cart_Login_Redirect--Note_FS: 18px;
     --Cart_Login_Redirect--Button_FS: 16px;
 }
@@ -15,6 +17,50 @@
     max-width: 1500px;
     margin: 0 auto;
 }
+
+/* Cart Is Empty */
+
+.Cart_Empty {
+    background-color: rgb(66, 66, 66);
+    width: 700px;
+    margin: 0 auto;
+    margin-top: 3em;
+    padding: 3em 2em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Cart_Empty--Heading {
+    font-family: var(--Cart_Main_Font);
+    font-size: var(--Cart_Empty--Heading_FS);
+    margin-bottom: .2em;
+}
+
+.Cart_Empty--Note {
+    font-family: var(--Cart_Secondary_Font);
+    font-size: var(--Cart_Empty--Note_FS);
+    margin-bottom: 1em;
+}
+
+.Cart_Empty--Button button {
+    font-family: var(--Cart_Main_Font);
+    font-size: var(--Cart_Login_Redirect--Button_FS);
+    padding: .6em 1.5em;
+    border-style: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    /* transition: all .1s ease-in-out; */
+    &:hover {
+        background-color: goldenrod;
+        color: black;
+        font-weight: 500;
+    }
+}
+
+/* Login To Add Items To Cart */
 
 .Cart_Login_Redirect {
     width: 600px;
