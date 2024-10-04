@@ -74,6 +74,8 @@ function Product() {
     if (response.data.code) {
       let totalRating = 0;
       let totalRatings = 0;
+      let actualProductRating = 0;
+      let averageRatingRounded = 0;
       let otherUserReviews = response.data.data.filter((review) => {
         if (review.mailid !== mail) {
           totalRating += review.rating;
@@ -106,9 +108,11 @@ function Product() {
         setStarSetIndex(-1);
       }
       if (response.data.data.length != 0) {
-        let actualProductRating = totalRating / totalRatings;
+        if (totalRatings) {
+          actualProductRating = totalRating / totalRatings;
+        }
         setActualRating(actualProductRating.toFixed(1));
-        let averageRatingRounded = Math.round(actualProductRating) - 1;
+        averageRatingRounded = Math.round(actualProductRating) - 1;
         setAverageStarRating(averageRatingRounded);
       } else {
         setActualRating(0);
@@ -190,7 +194,6 @@ function Product() {
       setProductData(data);
     }
     async function getReviews() {
-      const mail = userInfo.mailId;
       let response = await axios.post("http://localhost:3000/getreviews", {
         id: product,
       });

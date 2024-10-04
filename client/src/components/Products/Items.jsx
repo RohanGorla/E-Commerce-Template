@@ -1,12 +1,12 @@
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
 import "../../styles/Items.css";
 
 function Items() {
   const navigate = useNavigate();
   const { item } = useParams();
-  console.log(item);
   const [products, setProducts] = useState([]);
   const [actualProducts, setActualProducts] = useState([]);
   const [wishlists, setWishlists] = useState([]);
@@ -20,10 +20,9 @@ function Items() {
   const [showSelectlist, setShowSelectlist] = useState(false);
   const [showCompany, setShowCompany] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
-  // const mailId = localStorage.getItem("mailId");
+  const [reviews, setReviews] = useState([]);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo.mailId;
-  console.log("products -> ", products);
 
   useEffect(() => {
     async function getProducts() {
@@ -31,9 +30,21 @@ function Items() {
         category: item,
       });
       const data = response.data;
-      console.log(data);
-      setProducts(data);
-      setActualProducts(data);
+      let productsId = [];
+      data.map((product) => {
+        productsId.push(product.id);
+      });
+      async function getReviews() {
+        let response = await axios.post("http://localhost:3000/getallreviews", {
+          id: productsId,
+        });
+        if (response.data.access) {
+          setReviews(response.data.data);
+        }
+        setProducts(data);
+        setActualProducts(data);
+      }
+      getReviews();
     }
     async function getWishlists() {
       if (mailId) {
@@ -43,22 +54,17 @@ function Items() {
             mailId: mailId,
           }
         );
-        console.log(response.data);
         setWishlists(response.data);
       }
     }
-    getProducts();
-    getWishlists();
-  }, []);
-
-  useEffect(() => {
     async function getCompany() {
       let response = await axios.post("http://localhost:3000/getcompany", {
         category: item,
       });
-      console.log(response);
       setAllCom(response.data);
     }
+    getProducts();
+    getWishlists();
     getCompany();
   }, []);
 
@@ -129,6 +135,40 @@ function Items() {
       });
       console.log(response);
     }
+  }
+
+  function getProductRatingData(id) {
+    let totalRating = 0;
+    let totalRatings = 0;
+    let averageRatingRounded = 0;
+    let actualProductRating = 0;
+    if (reviews.length) {
+      reviews.forEach((review) => {
+        if (review.productid == id) {
+          console.log(
+            `product id ${id} equal -> ${review.productid} -> ${review.rating}`
+          );
+          totalRating += review.rating;
+          if (review.rating) {
+            totalRatings += 1;
+          }
+        } else {
+          console.log("else");
+          console.log(
+            `product id ${id} inequal -> ${review.productid} -> ${review.rating}`
+          );
+        }
+      });
+      if (totalRatings) {
+        actualProductRating = totalRating / totalRatings;
+        averageRatingRounded = Math.round(actualProductRating) - 1;
+      }
+    }
+    return {
+      ratings: totalRatings,
+      averageStarRating: averageRatingRounded,
+      actualRating: actualProductRating.toFixed(1),
+    };
   }
 
   return (
@@ -325,7 +365,7 @@ function Items() {
             let mrp_actual = mrp_array.reverse().join("");
             let offer_price_actual =
               offer_price_array.reverse().join("") + "." + offer_price_decimal;
-            console.log(offer_price_actual);
+            let data = getProductRatingData(product.id);
             return (
               <div key={index} className="Item_Container">
                 <div className="Item_Image">
@@ -343,6 +383,37 @@ function Items() {
                   <p className="Item_Category">
                     {product.category} - {product.company}
                   </p>
+                  <div className="Item_Rating_Top_Star_Container">
+                    <span className="Item_Rating_Top">
+                      {data.actualRating}
+                    </span>
+                    <div
+                      className="Item_Rating_Top_Star_Container--Box"
+                      onMouseLeave={() => {
+                        setStarHoverIndex(-1);
+                      }}
+                    >
+                      {Array(5)
+                        .fill(0)
+                        .map((_, index) => {
+                          return (
+                            <FaStar
+                              className="Actual_Top_Star_Rating"
+                              key={index}
+                              size={15}
+                              color={
+                                index <= data.averageStarRating
+                                  ? "orange"
+                                  : "white"
+                              }
+                            />
+                          );
+                        })}
+                    </div>
+                    <span className="Product_Rating_Top">
+                      {data.ratings} ratings
+                    </span>
+                  </div>
                   <p className="Item_Price">
                     <span className="Item_Discount">-{product.discount}%</span>{" "}
                     ₹{offer_price_actual}

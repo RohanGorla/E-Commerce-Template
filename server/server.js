@@ -448,6 +448,7 @@ app.post("/getproduct", (req, res) => {
 
 app.post("/getproducts", (req, res) => {
   const category = req.body.category;
+  let products;
   db.query(
     "select * from products where category = ?",
     category,
@@ -456,6 +457,8 @@ app.post("/getproducts", (req, res) => {
         console.log(err);
         return res.send(err);
       }
+      products = data;
+      products.forEach((product) => {});
       console.log("select * from products data ->", data);
       res.send(data);
     }
@@ -468,6 +471,16 @@ app.post("/getreviews", (req, res) => {
     if (err) return res.send(err);
     console.log(data);
     res.send({ data, code: true });
+  });
+});
+
+app.post("/getallreviews", (req, res) => {
+  const ids = req.body.id;
+  console.log(ids);
+  db.query("select * from reviews where productid in (?)", [ids], (err, data) => {
+    if (err) return res.send({ access: false });
+    console.log(data);
+    res.send({ access: true, data: data });
   });
 });
 
