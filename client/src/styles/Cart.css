@@ -1,15 +1,48 @@
-.Cart_Main {
-    max-width: 1300px;
+:root {
+    --Cart_Main_Font: "Roboto", sans-serif;
+    --Cart_Secondary_Font: "Inter", sans-serif;
+    --Cart_Login_Redirect--Note_FS: 18px;
+    --Cart_Login_Redirect--Button_FS: 16px;
+}
+
+.Cart_Main_Container {
+    height: 100%;
+    overflow-y: scroll;
+    background-color: rgb(25, 25, 25);
+}
+
+.Cart_Subcontainer {
+    max-width: 1500px;
     margin: 0 auto;
-    padding-top: 8em;
-    /* background-color: rgb(31, 30, 30); */
 }
 
-.Cart_Items_Container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+.Cart_Login_Redirect {
+    width: 600px;
+    background-color: rgb(66, 66, 66);
+    margin: 0 auto;
+    margin-top: 3em;
+    padding: 3em 2em;
+    border-style: none;
+    border-radius: 7px;
+    border: 2px solid white;
 }
 
-.Cart_Buttons {
-    margin-top: .7em;
+.Cart_Login_Redirect--Note {
+    font-family: var(--Cart_Main_Font);
+    font-size: var(--Cart_Login_Redirect--Note_FS);
+    margin-bottom: .7em;
+}
+
+.Cart_Login_Redirect--Button button {
+    font-family: var(--Cart_Main_Font);
+    font-size: var(--Cart_Login_Redirect--Button_FS);
+    padding: .6em 1.5em;
+    border-style: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    &:hover {
+        color: red;
+    }
 }

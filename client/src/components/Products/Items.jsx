@@ -22,7 +22,7 @@ function Items() {
   const [showPrice, setShowPrice] = useState(false);
   const [reviews, setReviews] = useState([]);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const mailId = userInfo.mailId;
+  const mailId = userInfo?.mailId;
 
   useEffect(() => {
     async function getProducts() {
@@ -120,6 +120,8 @@ function Items() {
         mailId: mailId,
       });
       console.log(response);
+    } else {
+      navigate("/account");
     }
   }
 
@@ -384,9 +386,7 @@ function Items() {
                     {product.category} - {product.company}
                   </p>
                   <div className="Item_Rating_Top_Star_Container">
-                    <span className="Item_Rating_Top">
-                      {data.actualRating}
-                    </span>
+                    <span className="Item_Rating_Top">{data.actualRating}</span>
                     <div
                       className="Item_Rating_Top_Star_Container--Box"
                       onMouseLeave={() => {

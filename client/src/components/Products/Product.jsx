@@ -70,7 +70,7 @@ function Product() {
   }
 
   async function repeater(response) {
-    const mail = userInfo.mailId;
+    const mail = userInfo?.mailId;
     if (response.data.code) {
       let totalRating = 0;
       let totalRatings = 0;
@@ -448,7 +448,7 @@ function Product() {
               >
                 {/* <p className="Review--Heading">Your review</p> */}
                 <p className="Reviewer_Name">
-                  {userInfo.firstname} {userInfo.lastname}
+                  {userInfo?.firstname} {userInfo?.lastname}
                 </p>
                 <div className="Your_Rating">
                   {Array(5)
@@ -493,7 +493,7 @@ function Product() {
               }
             >
               <p className="Reviewing_As--Name">
-                Reviewing as {userInfo.firstname} {userInfo.lastname}
+                Reviewing as {userInfo?.firstname} {userInfo?.lastname}
               </p>
               {/* Give Your Star Rating Container */}
               <div className="Give_Rating_Star_Container">
