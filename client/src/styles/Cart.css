@@ -1,6 +1,12 @@
 :root {
     --Cart_Main_Font: "Roboto", sans-serif;
     --Cart_Secondary_Font: "Inter", sans-serif;
+    --Cart_Main--Header_Title: 22px;
+    --Cart_Item_Title_FS: 22px;
+    --Cart_Item_Price_FS: 20px;
+    --Cart_Item_Discount_FS: 16px;
+    --Cart_Item_Mrp_FS: 16px;
+    --Cart_Item_Buttons_FS: 16px;
     --Cart_Empty--Heading_FS: 26px;
     --Cart_Empty--Note_FS: 18px;
     --Cart_Login_Redirect--Note_FS: 18px;
@@ -11,11 +17,151 @@
     height: 100%;
     overflow-y: scroll;
     background-color: rgb(25, 25, 25);
+    background-color: rgb(66, 66, 66);
 }
 
 .Cart_Subcontainer {
     max-width: 1500px;
     margin: 0 auto;
+}
+
+/* Cart Main--Header */
+
+.Cart_Main--Header {
+    background-color: rgb(66, 66, 66);
+    background-color: rgb(25, 25, 25);
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2em 0em 1em 0em;
+    padding: 2em 1em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px white solid;
+}
+
+.Cart_Main--Header_Title {
+    font-family: var(--Cart_Main_Font);
+    font-size: var(--Cart_Main--Header_Title);
+}
+
+.Cart_Main--Header_Checkout_Button button {
+    font-family: var(--Cart_Main_Font);
+    font-size: var(--Cart_Login_Redirect--Button_FS);
+    padding: .6em 1.5em;
+    border-style: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    /* transition: all .1s ease-in-out; */
+    &:hover {
+        background-color: goldenrod;
+        color: black;
+        font-weight: 500;
+    }
+}
+
+/* Cart Main Item Display */
+
+.Cart_Main--Items_Display {
+    /* background-color: rgb(66, 66, 66); */
+    /* padding: 1em; */
+}
+
+.Cart_Items_Display {
+    background-color: rgb(66, 66, 66);
+    background-color: rgb(25, 25, 25);
+    display: flex;
+    height: 300px;
+    padding: 2em 1em;
+    margin: 1em 0em;
+    border-style: none;
+    border: 2px solid white;
+    border-radius: 8px;
+}
+
+.Cart_Items_Display--Image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    margin: 0em 3em 0em 2em;
+}
+
+.Cart_Items_Display--Image img {
+    width: 100%;
+}
+
+.Cart_Items_Display--Details {
+    width: 50%;
+    position: relative;
+}
+
+.Cart_Items_Details--Title {
+    font-family: var(--Cart_Main_Font);
+    font-size: var(--Cart_Item_Title_FS);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Cart_Items_Details--Price {
+    font-family: var(--Cart_Secondary_Font);
+    font-size: var(--Cart_Item_Price_FS);
+    margin-top: .5em;
+    margin-bottom: .2em;
+}
+
+.Cart_Items_Details--Discount {
+    font-family: var(--Cart_Secondary_Font);
+    font-size: var(--Cart_Item_Discount_FS);
+}
+
+.Cart_Items_Details--Mrp {
+    font-family: var(--Cart_Secondary_Font);
+    font-size: var(--Cart_Item_Mrp_FS);
+}
+
+.Cart_Items_Details--Mrp--Strike {
+    text-decoration: line-through;
+}
+
+.Cart_Items_Details--Buttons {
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+}
+
+.Cart_Items_Details--Buttons--Remove {
+    font-family: var(--Cart_Secondary_Font);
+    font-size: var(--Cart_Item_Buttons_FS);
+    margin-left: 1em;
+    font-weight: 500;
+    padding: .5em 1.2em;
+    border-style: none;
+    border-radius: 5px;
+    background-color: rgb(202, 3, 3);
+    color: white;
+}
+
+.Cart_Items_Details--Buttons--Buynow {
+    font-family: var(--Cart_Secondary_Font);
+    font-size: var(--Cart_Item_Buttons_FS);
+    font-weight: 500;
+    padding: .5em 1.2em;
+    border-style: none;
+    border-radius: 5px;
+    background-color: goldenrod;
+    color: black;
 }
 
 /* Cart Is Empty */
