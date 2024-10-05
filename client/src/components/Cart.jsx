@@ -36,6 +36,21 @@ function Cart() {
     }
   }
 
+  async function updateCart() {
+    let mailId = userInfo?.mailId;
+    let response = await axios.put(
+      "http://localhost:3000/updatecartitemcount",
+      {
+        cartData: cart,
+        mail: mailId,
+      }
+    );
+    console.log(response);
+    if (response.data.access) {
+      navigate("/checkout");
+    }
+  }
+
   async function removeFromCart(id) {
     let response = await axios.delete("http://localhost:3000/removecartitem", {
       data: { id },
@@ -98,13 +113,7 @@ function Cart() {
                     <h2>Your Cart Items</h2>
                   </div>
                   <div className="Cart_Main--Header_Checkout_Button">
-                    <button
-                      onClick={() => {
-                        navigate("/checkout");
-                      }}
-                    >
-                      Checkout
-                    </button>
+                    <button onClick={updateCart}>Checkout</button>
                   </div>
                 </div>
               </div>
@@ -245,7 +254,7 @@ function Cart() {
                               +
                             </button>
                           </div>
-                          <button
+                          {/* <button
                             className="Cart_Items_Buttons--Buynow"
                             onClick={() => {
                               window.open(
@@ -254,7 +263,7 @@ function Cart() {
                             }}
                           >
                             Buy now
-                          </button>
+                          </button> */}
                           <button
                             className="Cart_Items_Buttons--Remove"
                             onClick={() => {
