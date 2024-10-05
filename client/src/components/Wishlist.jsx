@@ -72,6 +72,8 @@ function Wishlist() {
           );
           setWishlists(response.data);
           setAddListShow(false);
+          setError(false);
+          setErrorMsg("");
         }
       } else {
         setError(true);
@@ -176,27 +178,42 @@ function Wishlist() {
       </div>
       <div className="Wish_Subcontainer">
         {/* All Wishlists Dislay */}
-        <div className="">
-          <div className="">
-            <h2 className="">YOUR LISTS</h2>
-          </div>
-          {wishlists.map((list, index) => {
-            return (
-              <div
-                className=""
-                key={index}
-                onClick={() => {
-                  setSelectedWistlist(list.wishlistname);
-                }}
-              >
-                <p className="">{list.wishlistname}</p>
+        <div className="Wish_Lists_Container">
+          <div className="Wish_Lists_Subcontainer">
+            <div className="Wish_Lists_Innercontainer">
+              {/* Wish Lists Header */}
+              <div className="Wish_Lists--Header">
+                <h2>Your Wishlists</h2>
               </div>
-            );
-          })}
+              {wishlists.length ? (
+                /* Show All Of User's Wishlists */
+                <div className="Wish_Lists--Main">
+                  {wishlists.map((list, index) => {
+                    return (
+                      <div
+                        className="Wish_Lists--List"
+                        key={index}
+                        onClick={() => {
+                          setSelectedWistlist(list.wishlistname);
+                        }}
+                      >
+                        <p>{list.wishlistname}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                /* If There Are No Wishlists */
+                <div className="Wish_Lists--Empty"></div>
+              )}
+            </div>
+          </div>
         </div>
-        {wishlist.length ? (
-          <div className="">
-            <div className="">
+        {/* All Wishitems Display */}
+        <div className="Wish_Items_Container">
+          <div className="Wish_Items_Subcontainer">
+            {/* Wish Items Header */}
+            <div className="Wish_Items--Header">
               <h2 className="">{selectedWishlist}</h2>
               <p
                 className=""
@@ -207,71 +224,75 @@ function Wishlist() {
                 Create list
               </p>
             </div>
-            {wishlist.map((item, index) => {
-              return (
-                <div key={index} className="">
-                  <div className="">
-                    <div className="">
-                      <img
-                        src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-                        style={{ width: "200px" }}
-                      ></img>
-                    </div>
-                    <div>
-                      <h2>{item.title}</h2>
-                      <div>
-                        <p>₹</p>
-                        <p>
-                          {(
-                            item.price -
-                            item.price * (item.discount / 100)
-                          ).toFixed(2)}
-                        </p>
+            {wishlist.length ? (
+              <div className="Wish_Items--Main">
+                {wishlist.map((item, index) => {
+                  return (
+                    <div key={index} className="">
+                      <div className="">
+                        <div className="">
+                          <img
+                            src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                            style={{ width: "200px" }}
+                          ></img>
+                        </div>
+                        <div>
+                          <h2>{item.title}</h2>
+                          <div>
+                            <p>₹</p>
+                            <p>
+                              {(
+                                item.price -
+                                item.price * (item.discount / 100)
+                              ).toFixed(2)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="Wishlist_Buttons">
+                        <button
+                          onClick={() => {
+                            addToCart(item);
+                          }}
+                        >
+                          Add to cart
+                        </button>
+                        <button
+                          onClick={() => {
+                            removeFromWish(item.id);
+                          }}
+                        >
+                          Remove
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  <div className="Wishlist_Buttons">
-                    <button
-                      onClick={() => {
-                        addToCart(item);
-                      }}
-                    >
-                      Add to cart
-                    </button>
-                    <button
-                      onClick={() => {
-                        removeFromWish(item.id);
-                      }}
-                    >
-                      Remove
-                    </button>
-                  </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="Wish_Items--Empty">
+                <div className="">
+                  <h2 className="">{selectedWishlist}</h2>
+                  <p
+                    className=""
+                    onClick={() => {
+                      setAddListShow(true);
+                    }}
+                  >
+                    Create list
+                  </p>
                 </div>
-              );
-            })}
+                <div className="">
+                  <h1>No items present!</h1>
+                  <p>
+                    No items to show. Add new items into wishlist or select
+                    another wishlist.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="">
-            <div className="">
-              <h2 className="">{selectedWishlist}</h2>
-              <p
-                className=""
-                onClick={() => {
-                  setAddListShow(true);
-                }}
-              >
-                Create list
-              </p>
-            </div>
-            <div className="">
-              <h1>No items present!</h1>
-              <p>
-                No items to show. Add new items into wishlist or select another
-                wishlist.
-              </p>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
