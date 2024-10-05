@@ -211,7 +211,11 @@ function Wishlist() {
                   {wishlists.map((list, index) => {
                     return (
                       <div
-                        className="Wish_Lists--List"
+                        className={
+                          selectedWishlist == list.wishlistname
+                            ? "Wish_Lists--List Wish_Lists--List--Selected"
+                            : "Wish_Lists--List"
+                        }
                         key={index}
                         onClick={() => {
                           setSelectedWistlist(list.wishlistname);
@@ -221,6 +225,101 @@ function Wishlist() {
                       </div>
                     );
                   })}
+                  <div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                    <div className="Wish_Lists--List">
+                      <p>list name</p>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 /* If There Are No Wishlists */

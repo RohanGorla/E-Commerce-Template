@@ -1,3 +1,20 @@
+:root {
+    --Wish_Main_Font: "Inter", sans-serif;
+    --Wish_Secondary_Font: "Roboto", sans-serif;
+    --Wish_AddNewList--Header_Heading: 20px;
+    --Wish_AddNewList--Header_Note: 16px;
+    --Wish_AddNewList_Input--Label: 18px;
+    --Wish_AddNewList_Input: 16px;
+    --Wish_Lists_Header: 22px;
+    --Wish_Lists--Header_Button: 14px;
+    --Wish_Lists--List_Name: 18px;
+    --Wish_Item_Name: 18px;
+    --Wish_Item_Price: 22px;
+    --Wish_Item_Discount: 15px;
+    --Wish_Item_Mrp: 14px;
+    --Wish_Item--Buttons: 15px;
+}
+
 .Wish_Container {
     background-color: rgb(64, 64, 64);
     height: 100%;
@@ -95,7 +112,7 @@
 .Wish_AddNewList--Input input {
     font-size: var(--Wish_AddNewList_Input);
     font-family: var(--Wish_Secondary_Font);
-    padding: .2em .2em .1em .2em;
+    padding: .3em .2em .2em .4em;
     margin-bottom: 1em;
     border-style: none;
 }
@@ -178,6 +195,9 @@
     border-style: none;
     border-radius: 4px;
     cursor: pointer;
+    &:hover {
+        transform: scaleX(1.05) scaleY(1.07);
+    }
 }
 
 .Wish_Lists--Main {
@@ -190,6 +210,20 @@
     margin-top: 1em;
     border-style: none;
     border-radius: 8px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(10, 10, 10);
+        transform: scaleX(1.012) scaleY(1.1);
+    }
+}
+
+.Wish_Lists--List--Selected {
+    background-color: rgb(4, 4, 4);
+    border: 2px white solid;
+    color: red;
+    &:hover {
+        transform: scaleX(1) scaleY(1);
+    }
 }
 
 .Wish_Lists--List p {
@@ -298,20 +332,6 @@
     text-decoration: line-through;
 }
 
-:root {
-    --Wish_Main_Font: "Inter", sans-serif;
-    --Wish_Secondary_Font: "Roboto", sans-serif;
-    --Wish_AddNewList--Header_Heading: 18px;
-    --Wish_Lists_Header: 22px;
-    --Wish_Lists--Header_Button: 14px;
-    --Wish_Lists--List_Name: 18px;
-    --Wish_Item_Name: 18px;
-    --Wish_Item_Price: 22px;
-    --Wish_Item_Discount: 15px;
-    --Wish_Item_Mrp: 14px;
-    --Wish_Item--Buttons: 15px;
-}
-
 .Wish_Item--Buttons {
     position: absolute;
     bottom: 0px;
@@ -326,6 +346,9 @@
     border-style: none;
     border-radius: 4px;
     cursor: pointer;
+    &:hover {
+        transform: scaleX(1.05) scaleY(1.07);
+    }
 }
 
 .Wish_Item_Buttons--Add {
