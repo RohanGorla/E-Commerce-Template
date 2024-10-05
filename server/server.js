@@ -229,33 +229,58 @@ app.post("/addtocart", (req, res) => {
   const discount = req.body.discount;
   const mailId = req.body.mailId;
   let itemCount = 0;
-  db.query("select count from cart where productid = ?", id, (err, data) => {
-    if (err) return res.send(err);
-    if (data.length) {
-      itemCount = data[0].count;
-      db.query(
-        "update cart set ? where productid = ?",
-        [{ count: itemCount + 1 }, id],
-        (err, data) => {
-          if (err) return res.send(err);
-          res.send(data);
-        }
-      );
-    } else {
-      const values = [mailId, id, title, price, discount, itemCount + 1];
-      db.query(
-        "insert into cart (mailid, productid, title, price, discount, count) values (?)",
-        [values],
-        (err, data) => {
-          if (err) {
-            console.log(err);
-            return res.send(err);
+  db.query(
+    "select count from cart where productid = ? and mailid = ?",
+    [id, mailId],
+    (err, data) => {
+      if (err) return res.send(err);
+      if (data.length) {
+        itemCount = data[0].count;
+        db.query(
+          "update cart set ? where productid = ? and mailid = ?",
+          [{ count: itemCount + 1 }, id, mailId],
+          (err, data) => {
+            if (err) return res.send(err);
+            res.send(data);
           }
-          console.log(data);
-          res.send(data);
-        }
-      );
+        );
+      } else {
+        const values = [mailId, id, title, price, discount, itemCount + 1];
+        db.query(
+          "insert into cart (mailid, productid, title, price, discount, count) values (?)",
+          [values],
+          (err, data) => {
+            if (err) {
+              console.log(err);
+              return res.send(err);
+            }
+            console.log(data);
+            res.send(data);
+          }
+        );
+      }
     }
+  );
+});
+
+app.put("/updatecartitemcount", (req, res) => {
+  let cartData = req.body.cartData;
+  let mail = req.body.mail;
+  db.query("select * from cart where mailid = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    let previousCart = data;
+    for (let i = 0; i < previousCart.length; i++) {
+      if (previousCart[i].count != cartData[i].count) {
+        db.query(
+          "update cart set ? where productid = ? and mailid = ?",
+          [{ count: cartData[i].count }, cartData[i].productid, mail],
+          (err, data) => {
+            if (err) return res.send({ access: false, errorMsg: err });
+          }
+        );
+      }
+    }
+    res.send({ access: true });
   });
 });
 
