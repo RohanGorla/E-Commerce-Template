@@ -1,11 +1,3 @@
-:root {
-    --Wish_Main_Font: "Inter", sans-serif;
-    --Wish_Secondary_Font: "Roboto", sans-serif;
-    --Wish_AddNewList--Header_Heading: 18px;
-    --Wish_Lists_Header: 22px;
-    --Wish_Lists--List_Name: 18px;
-}
-
 .Wish_Container {
     background-color: rgb(64, 64, 64);
     height: 100%;
@@ -111,9 +103,11 @@
 .Wish_AddNewList--Input_Buttons button {
     font-size: var(--Wish_AddNewList_Buttons);
     font-family: var(--Wish_Secondary_Font);
+    font-weight: 500;
     padding: .4em .8em;
     border-style: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .Wish_AddNewList--Buttons_Cancel {
@@ -168,9 +162,30 @@
     padding: 2em;
 }
 
+:root {
+    --Wish_Main_Font: "Inter", sans-serif;
+    --Wish_Secondary_Font: "Roboto", sans-serif;
+    --Wish_AddNewList--Header_Heading: 18px;
+    --Wish_Lists_Header: 22px;
+    --Wish_Lists--Header_Button: 14px;
+    --Wish_Lists--List_Name: 18px;
+}
+
 .Wish_Lists--Header h2 {
     font-size: var(--Wish_Lists_Header);
     font-family: var(--Wish_Main_Font);
+}
+
+.Wish_Lists--Header button {
+    background-color: goldenrod;
+    font-size: var(--Wish_Lists--Header_Button);
+    font-family: var(--Wish_Main_Font);
+    font-weight: 600;
+    padding: .6em 1em;
+    margin-top: 1em;
+    border-style: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .Wish_Lists--Main {

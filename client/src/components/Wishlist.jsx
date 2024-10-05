@@ -184,6 +184,13 @@ function Wishlist() {
               {/* Wish Lists Header */}
               <div className="Wish_Lists--Header">
                 <h2>Your Wishlists</h2>
+                <button
+                  onClick={() => {
+                    setAddListShow(true);
+                  }}
+                >
+                  Create new list
+                </button>
               </div>
               {wishlists.length ? (
                 /* Show All Of User's Wishlists */
@@ -215,14 +222,7 @@ function Wishlist() {
             {/* Wish Items Header */}
             <div className="Wish_Items--Header">
               <h2 className="">{selectedWishlist}</h2>
-              <p
-                className=""
-                onClick={() => {
-                  setAddListShow(true);
-                }}
-              >
-                Create list
-              </p>
+              <p className="">Create list</p>
             </div>
             {wishlist.length ? (
               <div className="Wish_Items--Main">
