@@ -146,7 +146,7 @@
     border-style: none;
     border-radius: 8px;
     border: 2px solid white;
-    padding-bottom: .5em;
+    padding-bottom: 1em;
 }
 
 .Wish_Lists_Innercontainer {
@@ -157,18 +157,10 @@
 .Wish_Lists--Header {
     background-color: rgb(25, 25, 25);
     position: sticky;
+    z-index: 1;
     top: 0px;
     width: 100%;
     padding: 2em;
-}
-
-:root {
-    --Wish_Main_Font: "Inter", sans-serif;
-    --Wish_Secondary_Font: "Roboto", sans-serif;
-    --Wish_AddNewList--Header_Heading: 18px;
-    --Wish_Lists_Header: 22px;
-    --Wish_Lists--Header_Button: 14px;
-    --Wish_Lists--List_Name: 18px;
 }
 
 .Wish_Lists--Header h2 {
@@ -195,7 +187,7 @@
 .Wish_Lists--List {
     background-color: rgb(25, 25, 25);
     padding: 1em;
-    margin: 1em 0;
+    margin-top: 1em;
     border-style: none;
     border-radius: 8px;
 }
@@ -208,16 +200,140 @@
 .Wish_Items_Container {
     width: 75%;
     height: 100%;
-    overflow-y: scroll;
+    padding: .5em;
 }
 
 .Wish_Items_Subcontainer {
-    width: 70%;
+    background-color: black;
+    background-color: rgb(64, 64, 64);
+    height: 100%;
+    overflow-y: scroll;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+    padding-bottom: 1em;
+}
+
+.Wish_Items_Innercontainer {
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .Wish_Items--Header {
+    background-color: rgb(25, 25, 25);
     position: sticky;
+    z-index: 1;
     top: 0px;
     width: 100%;
-    background-color: black;
+    padding: 2em;
+}
+
+.Wish_Items--Header h2 {
+    font-size: var(--Wish_Lists_Header);
+    font-family: var(--Wish_Main_Font);
+}
+
+/* .Wish_Items--Header button {
+    font-size: var(--Wish_Lists--List_Name);
+    font-family: var(--Wish_Secondary_Font);
+} */
+
+.Wish_Items--Main {
+    padding: 0 1em;
+}
+
+.Wish_Items--Item {
+    background-color: rgb(25, 25, 25);
+    padding: 1em;
+    margin-top: 1em;
+    border-style: none;
+    border-radius: 8px;
+    display: flex;
+}
+
+.Wish_Item--Image {
+    width: 18%;
+    margin-right: 2em;
+}
+
+.Wish_Item--Image img {
+    width: 100%;
+}
+
+.Wish_Item--Details {
+    width: 60%;
+    position: relative;
+}
+
+.Wish_Item_Details--Name {
+    font-family: var(--Wish_Main_Font);
+    font-size: var(--Wish_Item_Name);
+    margin-bottom: .3em;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Wish_Item_Details--Price {
+    font-family: var(--Wish_Main_Font);
+    font-size: var(--Wish_Item_Price);
+    margin-bottom: .2em;
+}
+
+.Wish_Item_Details--Discount {
+    font-family: var(--Wish_Main_Font);
+    font-size: var(--Wish_Item_Discount);
+}
+
+.Wish_Item_Details--Mrp {
+    font-family: var(--Wish_Main_Font);
+    font-size: var(--Wish_Item_Mrp);
+}
+
+.Wish_Item_Details--Mrp--Strike {
+    text-decoration: line-through;
+}
+
+:root {
+    --Wish_Main_Font: "Inter", sans-serif;
+    --Wish_Secondary_Font: "Roboto", sans-serif;
+    --Wish_AddNewList--Header_Heading: 18px;
+    --Wish_Lists_Header: 22px;
+    --Wish_Lists--Header_Button: 14px;
+    --Wish_Lists--List_Name: 18px;
+    --Wish_Item_Name: 18px;
+    --Wish_Item_Price: 22px;
+    --Wish_Item_Discount: 15px;
+    --Wish_Item_Mrp: 14px;
+    --Wish_Item--Buttons: 15px;
+}
+
+.Wish_Item--Buttons {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+
+.Wish_Item--Buttons button {
+    font-family: var(--Wish_Main_Font);
+    font-size: var(--Wish_Item--Buttons);
+    font-weight: 600;
+    padding: .5em 1.5em;
+    border-style: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.Wish_Item_Buttons--Add {
+    background-color: goldenrod;
+}
+
+.Wish_Item_Buttons--Remove {
+    background-color: red;
+    color: white;
+    margin-left: 1em;
 }

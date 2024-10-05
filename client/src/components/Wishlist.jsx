@@ -110,6 +110,19 @@ function Wishlist() {
     setWishlist(newData);
   }
 
+  function currencyConvert(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
+  }
+
   useEffect(() => {
     getWishlists();
     getFromWish();
@@ -219,78 +232,91 @@ function Wishlist() {
         {/* All Wishitems Display */}
         <div className="Wish_Items_Container">
           <div className="Wish_Items_Subcontainer">
-            {/* Wish Items Header */}
-            <div className="Wish_Items--Header">
-              <h2 className="">{selectedWishlist}</h2>
-              <p className="">Create list</p>
-            </div>
-            {wishlist.length ? (
-              <div className="Wish_Items--Main">
-                {wishlist.map((item, index) => {
-                  return (
-                    <div key={index} className="">
-                      <div className="">
-                        <div className="">
-                          <img
-                            src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-                            style={{ width: "200px" }}
-                          ></img>
+            <div className="Wish_Items_Innercontainer">
+              {/* Wish Items Header */}
+              <div className="Wish_Items--Header">
+                <h2>{selectedWishlist}</h2>
+                {/* <p>Create list</p> */}
+              </div>
+              {wishlist.length ? (
+                <div className="Wish_Items--Main">
+                  {wishlist.map((item, index) => {
+                    let convertedMrp = currencyConvert(item.price);
+                    let price = (
+                      item.price -
+                      item.price * (item.discount / 100)
+                    ).toFixed(2);
+                    let priceInt = price.split(".")[0];
+                    let priceDecimal = price.split(".")[1].toString();
+                    let convertedPrice =
+                      currencyConvert(priceInt) + "." + priceDecimal;
+                    return (
+                      <div key={index} className="Wish_Items--Item">
+                        <div className="Wish_Item--Image">
+                          <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
                         </div>
-                        <div>
-                          <h2>{item.title}</h2>
-                          <div>
-                            <p>₹</p>
-                            <p>
-                              {(
-                                item.price -
-                                item.price * (item.discount / 100)
-                              ).toFixed(2)}
-                            </p>
+                        <div className="Wish_Item--Details">
+                          <p className="Wish_Item_Details--Name">
+                            {item.title}
+                          </p>
+                          <p className="Wish_Item_Details--Price">
+                            <span className="Wish_Item_Details--Discount">
+                              -{item.discount}%
+                            </span>{" "}
+                            ₹{convertedPrice}
+                          </p>
+                          <p className="Wish_Item_Details--Mrp">
+                            M.R.P:{" "}
+                            <span className="Wish_Item_Details--Mrp--Strike">
+                              ₹{convertedMrp}
+                            </span>
+                          </p>
+                          <div className="Wish_Item--Buttons">
+                            <button
+                              className="Wish_Item_Buttons--Add"
+                              onClick={() => {
+                                addToCart(item);
+                              }}
+                            >
+                              Add to cart
+                            </button>
+                            <button
+                              className="Wish_Item_Buttons--Remove"
+                              onClick={() => {
+                                removeFromWish(item.id);
+                              }}
+                            >
+                              Remove from list
+                            </button>
                           </div>
                         </div>
                       </div>
-                      <div className="Wishlist_Buttons">
-                        <button
-                          onClick={() => {
-                            addToCart(item);
-                          }}
-                        >
-                          Add to cart
-                        </button>
-                        <button
-                          onClick={() => {
-                            removeFromWish(item.id);
-                          }}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="Wish_Items--Empty">
-                <div className="">
-                  <h2 className="">{selectedWishlist}</h2>
-                  <p
-                    className=""
-                    onClick={() => {
-                      setAddListShow(true);
-                    }}
-                  >
-                    Create list
-                  </p>
+                    );
+                  })}
                 </div>
-                <div className="">
-                  <h1>No items present!</h1>
-                  <p>
-                    No items to show. Add new items into wishlist or select
-                    another wishlist.
-                  </p>
+              ) : (
+                <div className="Wish_Items--Empty">
+                  <div className="">
+                    <h2 className="">{selectedWishlist}</h2>
+                    <p
+                      className=""
+                      onClick={() => {
+                        setAddListShow(true);
+                      }}
+                    >
+                      Create list
+                    </p>
+                  </div>
+                  <div className="">
+                    <h1>No items present!</h1>
+                    <p>
+                      No items to show. Add new items into wishlist or select
+                      another wishlist.
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
