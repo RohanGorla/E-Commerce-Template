@@ -225,6 +225,7 @@ function Wishlist() {
                       </div>
                     );
                   })}
+                  {/* Below Data Is For Testing Purpose */}
                   <div>
                     <div className="Wish_Lists--List">
                       <p>list name</p>
@@ -352,10 +353,25 @@ function Wishlist() {
                     return (
                       <div key={index} className="Wish_Items--Item">
                         <div className="Wish_Item--Image">
-                          <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                          <img
+                            src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                            onClick={() => {
+                              window.open(
+                                `${window.location.origin}/products/product/${item.productid}`
+                              );
+                            }}
+                          ></img>
                         </div>
                         <div className="Wish_Item--Details">
-                          <p className="Wish_Item_Details--Name">
+                          <p
+                            className="Wish_Item_Details--Name"
+                            onClick={() => {
+                              console.log("hello");
+                              window.open(
+                                `${window.location.origin}/products/product/${item.productid}`
+                              );
+                            }}
+                          >
                             {item.title}
                           </p>
                           <p className="Wish_Item_Details--Price">
