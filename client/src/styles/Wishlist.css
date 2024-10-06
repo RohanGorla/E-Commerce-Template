@@ -8,6 +8,7 @@
     --Wish_Lists_Header: 22px;
     --Wish_Lists--Header_Button: 14px;
     --Wish_Lists--List_Name: 18px;
+    --Wist_Items--Header_Listname: 14px;
     --Wish_Item_Name: 18px;
     --Wish_Item_Price: 22px;
     --Wish_Item_Discount: 15px;
@@ -272,6 +273,13 @@
     font-family: var(--Wish_Main_Font);
 }
 
+.Wish_Items--Header p {
+    font-size: var(--Wist_Items--Header_Listname);
+    font-family: var(--Wish_Main_Font);
+    padding: .6em 0em;
+    margin-top: 1em;
+}
+
 .Wish_Items--Main {
     padding: 0 1em;
 }
@@ -395,7 +403,7 @@
 .Wish_Items--Empty {
     background-color: rgb(25, 25, 25);
     width: 700px;
-    translate: 50%;
+    margin: 0em auto;
     margin-top: 2em;
     padding: 2em 4em;
     border-style: none;

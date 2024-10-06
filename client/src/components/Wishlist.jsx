@@ -246,10 +246,10 @@ function Wishlist() {
             <div className="Wish_Items_Innercontainer">
               {/* Wish Items Header */}
               <div className="Wish_Items--Header">
-                <h2>
-                  {selectedWishlist ? selectedWishlist : "Your Wish items"}
-                </h2>
-                {/* <p>Create list</p> */}
+                <h2>Your Wish items</h2>
+                <p>
+                  {wishlists.length ? selectedWishlist : "No wishlist selected"}
+                </p>
               </div>
               {wishlist.length ? (
                 <div className="Wish_Items--Main">
@@ -331,7 +331,7 @@ function Wishlist() {
                   </p>
                   <p className="Wish_Items--Empty_Note">
                     {wishlists.length
-                      ? "You do not have any products in this wishlist. Add products to this wishlist to show them here."
+                      ? "You do not have any products in this wishlist. Shop for more products and add them to this wishlist to show them here."
                       : "You do not have any wishlists. Create a wishlist and add your favourite items into the list to show them here."}
                   </p>
                   <div className="Wish_Items--Empty_Button">
