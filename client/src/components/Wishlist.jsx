@@ -324,7 +324,11 @@ function Wishlist() {
                 </div>
               ) : (
                 /* If There Are No Wishlists */
-                <div className="Wish_Lists--Empty"></div>
+                <div className="Wish_Lists--Empty">
+                  <p className="Wish_Lists--Empty_Heading">
+                    No wishlists found!
+                  </p>
+                </div>
               )}
             </div>
           </div>
@@ -335,7 +339,9 @@ function Wishlist() {
             <div className="Wish_Items_Innercontainer">
               {/* Wish Items Header */}
               <div className="Wish_Items--Header">
-                <h2>{selectedWishlist}</h2>
+                <h2>
+                  {selectedWishlist ? selectedWishlist : "Your Wish items"}
+                </h2>
                 {/* <p>Create list</p> */}
               </div>
               {wishlist.length ? (

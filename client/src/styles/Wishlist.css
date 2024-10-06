@@ -42,18 +42,18 @@
 .Wish_AddNewList--Tint {
     background-color: black;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    opacity: .7;
+    opacity: .8;
 }
 
 .Wish_AddNewList {
     background-color: rgb(64, 64, 64);
     position: relative;
-    z-index: 2;
+    z-index: 3;
     width: 700px;
     padding: 2em 4em;
     border-style: none;
@@ -368,6 +368,26 @@
     background-color: red;
     color: white;
     margin-left: 1em;
+}
+
+/* Wish Lists Empty Container */
+
+.Wish_Lists--Empty {
+    background-color: rgb(25, 25, 25);
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 2em;
+    padding: 2em 1em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Wish_Lists--Empty_Heading {
+    font-size: var(--Wish_Items--Empty_Heading);
+    font-family: var(--Wish_Main_Font);
+    font-weight: 700;
+    margin-bottom: .3em;
 }
 
 /* Wish Items Empty Container */
