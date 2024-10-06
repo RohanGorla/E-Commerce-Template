@@ -329,6 +329,26 @@ app.post("/addwishlist", (req, res) => {
   );
 });
 
+app.delete("/deletewishlist", (req, res) => {
+  let list = req.body.list;
+  let mail = req.body.mail;
+  db.query(
+    "delete from wishlists where wishlistname = ? and mailid = ?",
+    [list, mail],
+    (err, data) => {
+      if (err) return res.send({ access: false });
+      db.query(
+        "delete from wishlistitems where wishlistname = ? and mailid = ?",
+        [list, mail],
+        (err, data) => {
+          if (err) return res.send({ access: false });
+          res.send({ access: true });
+        }
+      );
+    }
+  );
+});
+
 app.post("/getfromwish", (req, res) => {
   const mailId = req.body.mailId;
   db.query(

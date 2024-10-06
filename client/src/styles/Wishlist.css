@@ -8,7 +8,7 @@
     --Wish_Lists_Header: 22px;
     --Wish_Lists--Header_Button: 14px;
     --Wish_Lists--List_Name: 18px;
-    --Wist_Items--Header_Listname: 14px;
+    --Wist_Items--Header_Listname: 20px;
     --Wish_Item_Name: 18px;
     --Wish_Item_Price: 22px;
     --Wish_Item_Discount: 15px;
@@ -273,11 +273,36 @@
     font-family: var(--Wish_Main_Font);
 }
 
-.Wish_Items--Header p {
+.Wish_Items--Header_Selectedlist_And_Delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.Wish_Items--Header_Selectedlist_And_Delete p {
     font-size: var(--Wist_Items--Header_Listname);
     font-family: var(--Wish_Main_Font);
-    padding: .6em 0em;
-    margin-top: 1em;
+    font-weight: 600;
+}
+
+.Wish_Items--Header_Buttons--Delete {
+    background-color: red;
+    color: white;
+    font-size: var(--Wish_Lists--Header_Button);
+    font-family: var(--Wish_Main_Font);
+    font-weight: 600;
+    padding: .6em 1em;
+    border-style: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+        transform: scaleX(1.05) scaleY(1.07);
+    }
+}
+
+.Wish_Items--Header_Buttons--Delete--Hidden {
+    visibility: hidden;
 }
 
 .Wish_Items--Main {

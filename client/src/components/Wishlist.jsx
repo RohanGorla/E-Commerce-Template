@@ -85,6 +85,17 @@ function Wishlist() {
     }
   }
 
+  async function deleteWishlist() {
+    let response = await axios.delete("http://localhost:3000/deletewishlist", {
+      data: { list: selectedWishlist, mail: mailId },
+    });
+    if (response.data.access) {
+      getWishlists();
+      getFromWish();
+    }
+    console.log(response);
+  }
+
   async function addToCart(product) {
     let response = await axios.post("http://localhost:3000/addtocart", {
       id: product.productid,
@@ -247,9 +258,23 @@ function Wishlist() {
               {/* Wish Items Header */}
               <div className="Wish_Items--Header">
                 <h2>Your Wish items</h2>
-                <p>
-                  {wishlists.length ? selectedWishlist : "No wishlist selected"}
-                </p>
+                <div className="Wish_Items--Header_Selectedlist_And_Delete">
+                  <p>
+                    {wishlists.length
+                      ? selectedWishlist
+                      : "No wishlist selected"}
+                  </p>
+                  <button
+                    className={
+                      wishlists.length
+                        ? "Wish_Items--Header_Buttons--Delete"
+                        : "Wish_Items--Header_Buttons--Delete--Hidden"
+                    }
+                    onClick={deleteWishlist}
+                  >
+                    Delete this list
+                  </button>
+                </div>
               </div>
               {wishlist.length ? (
                 <div className="Wish_Items--Main">
