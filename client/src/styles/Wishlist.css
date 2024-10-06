@@ -13,6 +13,7 @@
     --Wish_Item_Discount: 15px;
     --Wish_Item_Mrp: 14px;
     --Wish_Item--Buttons: 15px;
+    --Wish_Items--Empty_Heading: 22px;
 }
 
 .Wish_Container {
@@ -367,4 +368,45 @@
     background-color: red;
     color: white;
     margin-left: 1em;
+}
+
+/* Wish Items Empty Container */
+
+.Wish_Items--Empty {
+    background-color: rgb(25, 25, 25);
+    width: 700px;
+    translate: 50%;
+    margin-top: 2em;
+    padding: 2em 4em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Wish_Items--Empty_Heading {
+    font-size: var(--Wish_Items--Empty_Heading);
+    font-family: var(--Wish_Main_Font);
+    font-weight: 700;
+    margin-bottom: .3em;
+}
+
+.Wish_Items--Empty_Note {
+    font-family: var(--Wish_Secondary_Font);
+    font-size: var(--Wish_AddNewList--Header_Note);
+    line-height: 1.5;
+}
+
+.Wish_Items--Empty_Button button {
+    background-color: goldenrod;
+    font-size: var(--Wish_Lists--Header_Button);
+    font-family: var(--Wish_Main_Font);
+    font-weight: 600;
+    padding: .6em 1.5em;
+    margin-top: 1.8em;
+    border-style: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+        transform: scaleX(1.05) scaleY(1.07);
+    }
 }

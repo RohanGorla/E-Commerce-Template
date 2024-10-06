@@ -411,23 +411,34 @@ function Wishlist() {
                 </div>
               ) : (
                 <div className="Wish_Items--Empty">
-                  <div className="">
-                    <h2 className="">{selectedWishlist}</h2>
-                    <p
-                      className=""
-                      onClick={() => {
-                        setAddListShow(true);
-                      }}
-                    >
-                      Create list
-                    </p>
-                  </div>
-                  <div className="">
-                    <h1>No items present!</h1>
-                    <p>
-                      No items to show. Add new items into wishlist or select
-                      another wishlist.
-                    </p>
+                  <p className="Wish_Items--Empty_Heading">
+                    {wishlists.length
+                      ? "Wishlist is empty!"
+                      : "No wishlists found!"}
+                  </p>
+                  <p className="Wish_Items--Empty_Note">
+                    {wishlists.length
+                      ? "You do not have any products in this wishlist. Add products to this wishlist to show them here."
+                      : "You do not have any wishlists. Create a wishlist and add your favourite items into the list to show them here."}
+                  </p>
+                  <div className="Wish_Items--Empty_Button">
+                    {wishlists.length ? (
+                      <button
+                        onClick={() => {
+                          navigate("/products");
+                        }}
+                      >
+                        Go shopping
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setAddListShow(true);
+                        }}
+                      >
+                        Create new list
+                      </button>
+                    )}
                   </div>
                 </div>
               )}
