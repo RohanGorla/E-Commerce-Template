@@ -268,7 +268,7 @@ function Wishlist() {
                     className={
                       wishlists.length
                         ? "Wish_Items--Header_Buttons--Delete"
-                        : "Wish_Items--Header_Buttons--Delete--Hidden"
+                        : "Wish_Items--Header_Buttons--Delete Wish_Items--Header_Buttons--Delete--Hidden"
                     }
                     onClick={deleteWishlist}
                   >
