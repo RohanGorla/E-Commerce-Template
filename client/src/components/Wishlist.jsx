@@ -22,8 +22,9 @@ function Wishlist() {
         mailId: mailId,
       });
       setWishlists(response.data);
-      console.log("First list name is -> ", response.data[0].wishlistname);
-      setSelectedWistlist(response.data[0].wishlistname);
+      console.log(response.data);
+      console.log("First list name is -> ", response.data[0]?.wishlistname);
+      setSelectedWistlist(response.data[0]?.wishlistname);
     } else {
       navigate("/account");
     }
