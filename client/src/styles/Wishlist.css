@@ -10,6 +10,7 @@
     --Wish_Lists--List_Name: 18px;
     --Wist_Items--Header_Listname: 20px;
     --Wish_Item_Name: 18px;
+    --Wish_Item_Rating: 15px;
     --Wish_Item_Price: 22px;
     --Wish_Item_Discount: 15px;
     --Wish_Item_Mrp: 14px;
@@ -311,6 +312,7 @@
 
 .Wish_Items--Item {
     background-color: rgb(25, 25, 25);
+    height: 220px;
     padding: 1em;
     margin-top: 1em;
     border-style: none;
@@ -323,6 +325,8 @@
 .Wish_Item--Image {
     width: 18%;
     margin-right: 2em;
+    display: flex;
+    align-items: center;
 }
 
 .Wish_Item--Image img {
@@ -352,6 +356,26 @@
     &:hover {
         color: orangered;
     }
+}
+
+.Wish_Items_Details--Rating {
+    display: flex;
+    align-items: center;
+    margin: .3em 0em .7em 0em;
+}
+
+.Wish_Items_Rating--Average_Rating,
+.Wish_Items_Rating--Total_Ratings {
+    font-size: var(--Wish_Item_Rating);
+    font-family: var(--Wish_Secondary_Font);
+}
+
+.Wish_Items_Rating--Star_Container {
+    margin: 0em 1em 0em .5em;
+}
+
+.Wish_Items_Rating--Star {
+    margin-left: .2em;
 }
 
 .Wish_Item_Details--Price {

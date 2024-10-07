@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 import "../styles/Wishlist.css";
 import axios from "axios";
 
@@ -10,6 +11,7 @@ function Wishlist() {
   const [selectedWishlist, setSelectedWistlist] = useState("");
   const [addListShow, setAddListShow] = useState(false);
   const [newlist, setNewlist] = useState("");
+  const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -22,8 +24,8 @@ function Wishlist() {
         mailId: mailId,
       });
       setWishlists(response.data);
-      console.log(response.data);
-      console.log("First list name is -> ", response.data[0]?.wishlistname);
+      // console.log(response.data);
+      // console.log("First list name is -> ", response.data[0]?.wishlistname);
       setSelectedWistlist(response.data[0]?.wishlistname);
     } else {
       navigate("/account");
@@ -37,7 +39,20 @@ function Wishlist() {
       });
       console.log(response);
       const data = response.data;
-      setAllWishitems(data);
+      let productsId = [];
+      data?.map((product) => {
+        productsId.push(product.productid);
+      });
+      async function getReviews() {
+        let response = await axios.post("http://localhost:3000/getallreviews", {
+          id: productsId,
+        });
+        if (response.data.access) {
+          setReviews(response.data.data);
+        }
+        setAllWishitems(data);
+      }
+      getReviews();
     } else {
       navigate("/account");
     }
@@ -94,7 +109,7 @@ function Wishlist() {
       getWishlists();
       getFromWish();
     }
-    console.log(response);
+    // console.log(response);
   }
 
   async function addToCart(product) {
@@ -105,14 +120,14 @@ function Wishlist() {
       discount: product.discount,
       mailId: mailId,
     });
-    console.log(response);
+    // console.log(response);
   }
 
   async function removeFromWish(id) {
     let response = await axios.delete("http://localhost:3000/removefromwish", {
       data: { id },
     });
-    console.log(response);
+    // console.log(response);
     getFromWish();
   }
 
@@ -136,6 +151,32 @@ function Wishlist() {
     }
     let finalAmount = amountArray.reverse().join("");
     return finalAmount;
+  }
+
+  function getProductRatingData(id) {
+    let totalRating = 0;
+    let totalRatings = 0;
+    let averageRatingRounded = -1;
+    let actualProductRating = 0;
+    if (reviews.length) {
+      reviews.forEach((review) => {
+        if (review.productid == id) {
+          totalRating += review.rating;
+          if (review.rating) {
+            totalRatings += 1;
+          }
+        }
+      });
+      if (totalRatings) {
+        actualProductRating = totalRating / totalRatings;
+        averageRatingRounded = Math.round(actualProductRating) - 1;
+      }
+    }
+    return {
+      ratings: totalRatings,
+      averageStarRating: averageRatingRounded,
+      actualRating: actualProductRating.toFixed(1),
+    };
   }
 
   useEffect(() => {
@@ -289,6 +330,9 @@ function Wishlist() {
                     let priceDecimal = price.split(".")[1].toString();
                     let convertedPrice =
                       currencyConvert(priceInt) + "." + priceDecimal;
+                    let productRatingData = getProductRatingData(
+                      item.productid
+                    );
                     return (
                       <div key={index} className="Wish_Items--Item">
                         <div className="Wish_Item--Image">
@@ -313,6 +357,36 @@ function Wishlist() {
                           >
                             {item.title}
                           </p>
+                          <div className="Wish_Items_Details--Rating">
+                            <span className="Wish_Items_Rating--Average_Rating">
+                              {productRatingData.actualRating}
+                            </span>
+                            <div className="Wish_Items_Rating--Star_Container">
+                              {Array(5)
+                                .fill(0)
+                                .map((_, index) => {
+                                  return (
+                                    <FaStar
+                                      className="Wish_Items_Rating--Star"
+                                      key={index}
+                                      size={15}
+                                      color={
+                                        index <=
+                                        productRatingData.averageStarRating
+                                          ? "orange"
+                                          : "white"
+                                      }
+                                    />
+                                  );
+                                })}
+                            </div>
+                            <span className="Wish_Items_Rating--Total_Ratings">
+                              {productRatingData.ratings}{" "}
+                              {productRatingData.ratings == 1
+                                ? "rating"
+                                : "ratings"}
+                            </span>
+                          </div>
                           <p className="Wish_Item_Details--Price">
                             <span className="Wish_Item_Details--Discount">
                               -{item.discount}%
