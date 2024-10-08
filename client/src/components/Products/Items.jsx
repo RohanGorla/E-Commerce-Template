@@ -198,31 +198,31 @@ function Items() {
         >
           <div className="Items_Wishlist_Selector--Tint"></div>
           <div className="Items_Wishlist_Selector--Container">
-            <div className="Items_Wishlist_Selector--Subcontainer">
+            <div className="Items_Wishlist_Selector--Header_Container">
               <div className="Items_Wishlist_Selector--Header">
                 <h2 className="Items_Wishlist_Selector--Header_Heading">
                   Select wishlist
                 </h2>
               </div>
-              <div className="Items_Wishlist_Selector--Lists">
-                {wishlists.map((list, index) => {
-                  return (
-                    <div
-                      className="Items_Wishlist_Selector--List"
-                      key={index}
-                      onClick={() => {
-                        setSelectedWistlist(list.wishlistname);
-                        setShowSelectlist(false);
-                        addToWishlist(wishProduct, list.wishlistname);
-                      }}
-                    >
-                      <p className="Items_Wishlist_Selector--Listname">
-                        {list.wishlistname}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
+            </div>
+            <div className="Items_Wishlist_Selector--Lists">
+              {wishlists.map((list, index) => {
+                return (
+                  <div
+                    className="Items_Wishlist_Selector--List"
+                    key={index}
+                    onClick={() => {
+                      setSelectedWistlist(list.wishlistname);
+                      setShowSelectlist(false);
+                      addToWishlist(wishProduct, list.wishlistname);
+                    }}
+                  >
+                    <p className="Items_Wishlist_Selector--Listname">
+                      {list.wishlistname}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
             <div className="Item_Wishlist_Selector--Cancel_Button">
               <button
