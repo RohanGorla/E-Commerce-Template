@@ -232,6 +232,7 @@ function Items() {
           </div>
         </div>
       </div>
+      {/* Error Message Box */}
       <div
         className={
           error

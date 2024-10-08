@@ -20,12 +20,12 @@
 }
 
 .Items_Wishlist_Selector--Active {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,8 +35,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     opacity: .6;
     background-color: black;
 }
