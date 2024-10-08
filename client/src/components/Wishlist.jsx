@@ -231,6 +231,8 @@ function Wishlist() {
                 className="Wish_AddNewList--Buttons_Cancel"
                 onClick={() => {
                   setAddListShow(false);
+                  setError(false);
+                  setErrorMsg("");
                 }}
               >
                 Cancel
