@@ -11,6 +11,8 @@ function Items() {
   const [actualProducts, setActualProducts] = useState([]);
   const [wishlists, setWishlists] = useState([]);
   const [wishProduct, setWishProduct] = useState({});
+  const [addListShow, setAddListShow] = useState(false);
+  const [newlist, setNewlist] = useState("");
   const [selectedWishlist, setSelectedWistlist] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
   const [lowerPrice, setLowerPrice] = useState("");
@@ -23,6 +25,8 @@ function Items() {
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [addlistError, setAddlistError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
 
@@ -138,6 +142,49 @@ function Items() {
     }
   }
 
+  async function addwishlist() {
+    if (mailId) {
+      let addListAccess;
+      if (newlist.length) {
+        if (wishlists.length) {
+          for (let i = 0; i < wishlists.length; i++) {
+            if (
+              newlist.toLowerCase() == wishlists[i].wishlistname.toLowerCase()
+            ) {
+              setAddlistError(true);
+              setErrorMsg("You have another list with the same name!");
+              addListAccess = false;
+              break;
+            } else {
+              addListAccess = true;
+            }
+          }
+        } else {
+          addListAccess = true;
+        }
+        if (addListAccess) {
+          const response = await axios.post(
+            "http://localhost:3000/addwishlist",
+            {
+              mailId: mailId,
+              wishlistname: newlist,
+            }
+          );
+          setWishlists(response.data);
+          setAddListShow(false);
+          setAddlistError(false);
+          setErrorMsg("");
+          if (wishlists.length == 0) {
+            setSelectedWistlist(newlist);
+          }
+        }
+      } else {
+        setAddlistError(true);
+        setErrorMsg("Wishlist name cannot be empty!");
+      }
+    }
+  }
+
   async function addToWishlist(product, list) {
     if (mailId) {
       const response = await axios.post("http://localhost:3000/addtowish", {
@@ -202,6 +249,61 @@ function Items() {
   return (
     <div className="Items_Container">
       <div className="Items_Main">
+        {/* Add Wishlist Box */}
+        <div
+          className={
+            addListShow
+              ? "Items_AddNewList_Container"
+              : "Items_AddNewList_Container--Inactive"
+          }
+        >
+          <div className="Items_AddNewList--Tint"></div>
+          <div className="Items_AddNewList">
+            <div className="Items_AddNewList--Header">
+              <p className="Items_AddNewList--Header_Heading">Add new list</p>
+              <p className="Items_AddNewList--Header_Note">
+                Create a new wish list to save your favourite items!
+              </p>
+            </div>
+            <div
+              className={
+                addlistError
+                  ? "Items_AddNewList--Error"
+                  : "Items_AddNewList--Error--Inactive"
+              }
+            >
+              <p className="Items_AddNewList--Error_Heading">Error!</p>
+              <p className="Items_AddNewList--Error_Note">{errorMsg}</p>
+            </div>
+            <div className="Items_AddNewList--Input">
+              <label>Wishlist name</label>
+              <input
+                type="text"
+                value={newlist}
+                onChange={(e) => {
+                  setNewlist(e.target.value);
+                }}
+                placeholder="Enter list name"
+              ></input>
+              <div className="Items_AddNewList--Input_Buttons">
+                <button
+                  className="Items_AddNewList--Buttons_Cancel"
+                  onClick={() => {
+                    setAddListShow(false);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="Items_AddNewList--Buttons_Create"
+                  onClick={addwishlist}
+                >
+                  Create
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Select Wishlist Box */}
         <div
           className={
@@ -217,6 +319,15 @@ function Items() {
                 <h2 className="Items_Wishlist_Selector--Header_Heading">
                   Select wishlist
                 </h2>
+                <button
+                  className="Items_Wishlist_Selector--Header_Button"
+                  onClick={() => {
+                    setAddListShow(true);
+                    setShowSelectlist(false);
+                  }}
+                >
+                  Create new list
+                </button>
               </div>
             </div>
             <div className="Items_Wishlist_Selector--Lists">
@@ -238,8 +349,12 @@ function Items() {
                 );
               })}
             </div>
-            <div className="Item_Wishlist_Selector--Cancel_Button">
+            <div className="Items_Wishlist_Selector--Buttons">
+              {/* <button className="Items_Wishlist_Selector--Buttons_Create">
+                Create new list
+              </button> */}
               <button
+                className="Items_Wishlist_Selector--Buttons_Cancel"
                 onClick={() => {
                   setShowSelectlist(false);
                 }}

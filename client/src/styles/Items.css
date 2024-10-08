@@ -29,6 +29,123 @@
     display: flex;
 }
 
+/* Add Wishlist Box */
+
+.Items_AddNewList_Container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Items_AddNewList_Container--Inactive {
+    display: none;
+}
+
+.Items_AddNewList--Tint {
+    background-color: black;
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+}
+
+.Items_AddNewList {
+    background-color: rgb(64, 64, 64);
+    position: relative;
+    z-index: 3;
+    width: 700px;
+    padding: 2em 4em;
+    border-style: none;
+    border-radius: 10px;
+    border: solid 1.5px white;
+}
+
+.Items_AddNewList--Header,
+.Items_AddNewList--Error {
+    background-color: rgb(25, 25, 25);
+    padding: 1.4em .7em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Items_AddNewList--Error {
+    background-color: rgb(197, 61, 61);
+    margin-top: .5em;
+}
+
+.Items_AddNewList--Error--Inactive {
+    display: none;
+}
+
+.Items_AddNewList--Header_Heading,
+.Items_AddNewList--Error_Heading {
+    font-size: var(--Wish_AddNewList--Header_Heading);
+    font-family: var(--Prdct_Main_Ff);
+    font-weight: 700;
+    margin-bottom: .2em;
+}
+
+.Items_AddNewList--Header_Note,
+.Items_AddNewList--Error_Note {
+    font-size: var(--Wish_AddNewList--Header_Note);
+    font-family: var(--Prdct_Second_Ff);
+}
+
+.Items_AddNewList--Input {
+    background-color: rgb(25, 25, 25);
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+    margin-top: 1.3em;
+    padding: 1.4em 2.7em;
+}
+
+.Items_AddNewList--Input label {
+    font-size: var(--Wish_AddNewList_Input--Label);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 500;
+    display: block;
+    margin-bottom: .3em;
+}
+
+.Items_AddNewList--Input input {
+    font-size: var(--Wish_AddNewList_Input);
+    font-family: var(--Prdct_Second_Ff);
+    padding: .3em .2em .2em .4em;
+    margin-bottom: 1em;
+    border-style: none;
+}
+
+.Items_AddNewList--Input_Buttons button {
+    font-size: var(--Wish_AddNewList_Buttons);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 500;
+    padding: .4em .8em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Items_AddNewList--Buttons_Cancel {
+    background-color: rgb(248, 66, 66);
+    color: white;
+}
+
+.Items_AddNewList--Buttons_Create {
+    background-color: goldenrod;
+    color: black;
+    margin-left: .5em;
+}
+
 /* Wishlist Selector Container */
 
 .Items_Wishlist_Selector {
@@ -67,7 +184,7 @@
     grid-template-areas: 'WS_Header'
                          'WS_Lists'
                          'WS_Button';
-    grid-template-rows: 80px 1fr 60px;
+    grid-template-rows: 90px 1fr 50px;
     border-style: none;
     border: 2px solid white;
     border-radius: 8px;
@@ -80,15 +197,32 @@
 
 .Items_Wishlist_Selector--Header {
     background-color: rgb(25, 25, 25);
-    padding: 1em 0em;
+    padding: 1em;
     border-style: none;
     border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .Items_Wishlist_Selector--Header_Heading {
     font-size: var(--Prdct_WishlistHeading_Fs);
     font-family: var(--Prdct_Main_Ff);
-    text-align: center;
+    /* text-align: center; */
+}
+
+.Items_Wishlist_Selector--Header_Button {
+    background-color: goldenrod;
+    font-size: var(--Prdct_WishlistBtn_Fs);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 600;
+    padding: .6em 1em;
+    border-style: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+        transform: scaleX(1.03) scaleY(1.04);
+    }
 }
 
 .Items_Wishlist_Selector--Lists {
@@ -99,7 +233,7 @@
 
 .Items_Wishlist_Selector--List {
     background-color: rgb(24, 23, 23);
-    text-align: center;
+    /* text-align: center; */
     width: 100%;
     padding: 1em;
     border-radius: 7px;
@@ -119,27 +253,24 @@
     font-family: var(--Prdct_Main_Ff);
 }
 
-.Item_Wishlist_Selector--Cancel_Button {
-    background-color: #242424;
+.Items_Wishlist_Selector--Buttons {
     grid-area: WS_Button;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    margin: 0em auto;
-    padding: .5em 0em;
+    padding: .5em 2em;
     cursor: pointer;
 }
 
-.Item_Wishlist_Selector--Cancel_Button button {
+.Items_Wishlist_Selector--Buttons_Cancel {
     background-color: black;
     color: white;
-    padding: 1em 3em;
     font-size: var(--Prdct_WishlistBtn_Fs);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 600;
+    padding: .6em 1em;
     border-style: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
     &:hover {
+        transform: scaleX(1.03) scaleY(1.04);
         color: red;
     }
 }
