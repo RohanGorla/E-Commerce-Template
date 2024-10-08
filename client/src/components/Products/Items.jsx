@@ -129,6 +129,9 @@ function Items() {
         console.log(response.data.errorMsg);
         setError(true);
         setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
       }
     } else {
       navigate("/account");
@@ -227,6 +230,18 @@ function Items() {
               Cancel
             </button>
           </div>
+        </div>
+      </div>
+      <div
+        className={
+          error
+            ? "Items--Error Items--Error--Active"
+            : "Items--Error Items--Error--Inactive"
+        }
+      >
+        <div className="Items_Error--Container">
+          <p className="Items_Error--Heading">Error!</p>
+          <p className="Items_Error--Message">{errorMessage}</p>
         </div>
       </div>
       {/* add a category button to go back to selecting categories if needed. */}

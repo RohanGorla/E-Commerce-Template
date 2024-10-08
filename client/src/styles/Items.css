@@ -9,6 +9,8 @@
     --Prdct_WishlistName_Fs: 16px;
     --Prdct_Btn_Fs: 15px;
     --Prdct_WishlistBtn_Fs: 14px;
+    --Items_Error--Heading: 20px;
+    --Items_Error--Message: 16px;
     --Prdct_Main_Ff: "Inter", sans-serif;
     --Prdct_Second_Ff: "Roboto", sans-serif;
 }
@@ -125,6 +127,7 @@
 .Items_Main {
     max-width: 1500px;
     height: 100%;
+    position: relative;
     /* overflow-y: scroll; */
     margin: 0 auto;
     padding: .5em 0em;
@@ -132,6 +135,48 @@
     /* background-color: red; */
     /* padding-top: 7em; */
     display: flex;
+}
+
+.Items--Error {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    transition: all .4s ease-in-out;
+}
+
+.Items--Error--Active {
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    width: 100%;
+}
+
+.Items--Error--Inactive {
+    position: absolute;
+    z-index: 1;
+    top: -150px;
+    width: 100%;
+}
+
+.Items_Error--Container {
+    width: 700px;
+    margin: 0 auto;
+    background-color: red;
+    padding: 1.5em 3em;
+    border-style: none;
+    border: 2px white solid;
+    border-radius: 8px;
+}
+
+.Items_Error--Heading {
+    font-size: var(--Items_Error--Heading);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 600;
+}
+
+.Items_Error--Message {
+    font-size: var(--Items_Error--Message);
+    font-family: var(--Prdct_Main_Ff);
 }
 
 .Items_Filters_Container {

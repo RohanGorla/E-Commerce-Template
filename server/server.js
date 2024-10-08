@@ -247,7 +247,7 @@ app.post("/addtocart", (req, res) => {
         console.log("already exists");
         res.send({
           access: false,
-          errorMsg: "You have already added this product to your cart!",
+          errorMsg: "You already have this product in your cart!",
         });
       } else {
         console.log("not exists");
