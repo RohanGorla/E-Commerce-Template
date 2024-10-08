@@ -11,6 +11,7 @@
     --Prdct_WishlistBtn_Fs: 14px;
     --Items_Error--Heading: 20px;
     --Items_Error--Message: 16px;
+    --Items_Wishlist_Selector--Lists_Error: 16px;
     --Prdct_Main_Ff: "Inter", sans-serif;
     --Prdct_Second_Ff: "Roboto", sans-serif;
 }
@@ -253,6 +254,13 @@
     font-family: var(--Prdct_Main_Ff);
 }
 
+.Items_Wishlist_Selector--Lists_Error {
+    font-family: var(--Prdct_Second_Ff);
+    font-size: var(--Items_Wishlist_Selector--Lists_Error);
+    font-weight: 500;
+    text-align: center;
+}
+
 .Items_Wishlist_Selector--Buttons {
     grid-area: WS_Button;
     padding: .5em 2em;
@@ -406,7 +414,7 @@
 }
 
 .Item_Image {
-    width: 30%;
+    width: 25%;
     margin: 0em 1.3em;
     display: flex;
     align-items: center;

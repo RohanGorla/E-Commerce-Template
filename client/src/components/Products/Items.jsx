@@ -345,23 +345,27 @@ function Items() {
               </div>
             </div>
             <div className="Items_Wishlist_Selector--Lists">
-              {wishlists.map((list, index) => {
-                return (
-                  <div
-                    className="Items_Wishlist_Selector--List"
-                    key={index}
-                    onClick={() => {
-                      setSelectedWistlist(list.wishlistname);
-                      setShowSelectlist(false);
-                      addToWishlist(wishProduct, list.wishlistname);
-                    }}
-                  >
-                    <p className="Items_Wishlist_Selector--Listname">
-                      {list.wishlistname}
-                    </p>
-                  </div>
-                );
-              })}
+              {wishlists.length ? (
+                wishlists.map((list, index) => {
+                  return (
+                    <div
+                      className="Items_Wishlist_Selector--List"
+                      key={index}
+                      onClick={() => {
+                        setSelectedWistlist(list.wishlistname);
+                        setShowSelectlist(false);
+                        addToWishlist(wishProduct, list.wishlistname);
+                      }}
+                    >
+                      <p className="Items_Wishlist_Selector--Listname">
+                        {list.wishlistname}
+                      </p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="Items_Wishlist_Selector--Lists_Error">No lists to show!</p>
+              )}
             </div>
             <div className="Items_Wishlist_Selector--Buttons">
               {/* <button className="Items_Wishlist_Selector--Buttons_Create">
