@@ -152,6 +152,19 @@ function Items() {
     }
   }
 
+  function currencyConvert(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
+  }
+
   function getProductRatingData(id) {
     let totalRating = 0;
     let totalRatings = 0;
@@ -189,6 +202,7 @@ function Items() {
   return (
     <div className="Items_Container">
       <div className="Items_Main">
+        {/* Select Wishlist Box */}
         <div
           className={
             showSelectlist
@@ -249,16 +263,16 @@ function Items() {
           </div>
         </div>
         {/* add a category button to go back to selecting categories if needed. */}
-        {/* <h1>Products List</h1>
-      <button
+        {/* <h1>Products List</h1> */}
+        {/* <button
         style={{ padding: ".2em .3em", margin: ".5em 0", cursor: "pointer" }}
         onClick={() => {
           navigate("/products");
         }}
       >
         Category
-      </button> */}
-        {/* <div className="Items_Container"> */}
+        </button> */}
+        {/* Items Filters */}
         <div className="Items_Filters_Container">
           <div className="Items_Filters">
             <div className="Items_Filter_Container">
@@ -268,25 +282,25 @@ function Items() {
                   setShowCompany(!showCompany);
                 }}
               >
-                <p className="Items_Filters_Label--Name">Select Category</p>
+                <p className="Items_Filters_Label--Name">Select Company</p>
               </div>
               <div
                 className={
                   showCompany
-                    ? "Items_Filter_Company Items_Filter_Company--Active"
-                    : "Items_Filter_Company Items_Filter_Company--Inactive"
+                    ? "Items_Filter--Filter Items_Filter--Filter--Active"
+                    : "Items_Filter--Filter Items_Filter--Filter--Inactive"
                 }
               >
                 {allCom.map((com, index) => {
                   return (
                     <div
-                      className="Items_Filter_Company_Name_Container"
+                      className="Items_Filter--Filter_Name_Container"
                       onClick={() => {
                         setSelectedCompany(com.company);
                       }}
                       key={index}
                     >
-                      <p className="Items_Filter_Company_Name">{com.company}</p>
+                      <p className="Items_Filter--Filter_Name">{com.company}</p>
                     </div>
                   );
                 })}
@@ -304,12 +318,12 @@ function Items() {
               <div
                 className={
                   showPrice
-                    ? "Items_Filter_Price Items_Filter_Price--Active"
-                    : "Items_Filter_Price Items_Filter_Price--Inactive"
+                    ? "Items_Filter--Filter Items_Filter--Filter--Active"
+                    : "Items_Filter--Filter Items_Filter--Filter--Inactive"
                 }
               >
                 <div
-                  className="Items_Filter_Price_Container"
+                  className="Items_Filter--Filter_Name_Container"
                   onClick={() => {
                     setLowerPrice(0);
                     setUpperPrice(15000);
@@ -318,7 +332,7 @@ function Items() {
                   <p className="Items_Filter_Price">0 to 15,000</p>
                 </div>
                 <div
-                  className="Items_Filter_Price_Container"
+                  className="Items_Filter--Filter_Name_Container"
                   onClick={() => {
                     setLowerPrice(15001);
                     setUpperPrice(30000);
@@ -327,7 +341,7 @@ function Items() {
                   <p className="Items_Filter_Price">15,001 to 30,000</p>
                 </div>
                 <div
-                  className="Items_Filter_Price_Container"
+                  className="Items_Filter--Filter_Name_Container"
                   onClick={() => {
                     setLowerPrice(30000);
                     setUpperPrice(45000);
@@ -336,7 +350,7 @@ function Items() {
                   <p className="Items_Filter_Price">30,001 to 45,000</p>
                 </div>
                 <div
-                  className="Items_Filter_Price_Container"
+                  className="Items_Filter--Filter_Name_Container"
                   onClick={() => {
                     setLowerPrice(45000);
                     setUpperPrice(60000);
@@ -345,7 +359,7 @@ function Items() {
                   <p className="Items_Filter_Price">45,001 to 60,000</p>
                 </div>
                 <div
-                  className="Items_Filter_Price_Container"
+                  className="Items_Filter--Filter_Name_Container"
                   onClick={() => {
                     setLowerPrice(60000);
                     setUpperPrice(75000);
@@ -354,7 +368,7 @@ function Items() {
                   <p className="Items_Filter_Price">60,001 to 75,000</p>
                 </div>
                 <div
-                  className="Items_Filter_Price_Container"
+                  className="Items_Filter--Filter_Name_Container"
                   onClick={() => {
                     setLowerPrice(75000);
                     setUpperPrice(0);
@@ -362,44 +376,23 @@ function Items() {
                 >
                   <p className="Items_Filter_Price">75,001 and above</p>
                 </div>
-                {/* </div> */}
               </div>
             </div>
           </div>
-          {/* <button>collapse</button> */}
         </div>
+        {/* Actual Items */}
         <div className="Items_List_Container">
           <div className="Items_List">
             {products.map((product, index) => {
-              let mrp = product.price;
+              let mrp = currencyConvert(product.price);
               let offer_price = (
                 product.price -
                 product.price * (product.discount / 100)
               ).toFixed(2);
-              let mrp_string = mrp.toString();
-              let offer_price_string = offer_price.toString().split(".")[0];
-              let offer_price_decimal = offer_price.toString().split(".")[1];
-              let mrp_array = mrp_string.split("").reverse();
-              let offer_price_array = offer_price_string.split("").reverse();
-              let mrp_iterator = Math.floor(mrp_array.length / 2);
-              let offer_price_iterator = Math.floor(
-                offer_price_array.length / 2
-              );
-              let k = 3;
-              for (let j = 0; j < mrp_iterator - 1; j++) {
-                mrp_array.splice(k, 0, ",");
-                k += 3;
-              }
-              k = 3;
-              for (let j = 0; j < offer_price_iterator - 1; j++) {
-                offer_price_array.splice(k, 0, ",");
-                k += 3;
-              }
-              let mrp_actual = mrp_array.reverse().join("");
-              let offer_price_actual =
-                offer_price_array.reverse().join("") +
-                "." +
-                offer_price_decimal;
+              let offerPriceInt = offer_price.split(".")[0];
+              let offerPriceDecimal = offer_price.split(".")[1].toString();
+              let offerPriceActual =
+                currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
               let data = getProductRatingData(product.id);
               return (
                 <div key={index} className="Item_Container">
@@ -449,11 +442,10 @@ function Items() {
                       <span className="Item_Discount">
                         -{product.discount}%
                       </span>{" "}
-                      ₹{offer_price_actual}
+                      ₹{offerPriceActual}
                     </p>
                     <p className="Item_MRP">
-                      M.R.P:{" "}
-                      <span className="Item_MRP_Strike">₹{mrp_actual}</span>
+                      M.R.P: <span className="Item_MRP_Strike">₹{mrp}</span>
                     </p>
                     <div className="Item_Buttons">
                       <button
@@ -490,7 +482,6 @@ function Items() {
             })}
           </div>
         </div>
-        {/* </div> */}
       </div>
     </div>
   );
