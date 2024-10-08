@@ -197,6 +197,16 @@ function Items() {
         wishlist: list,
       });
       console.log(response);
+      if (response.data.access) {
+        setError(false);
+        setErrorMessage("");
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
     }
   }
 

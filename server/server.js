@@ -381,15 +381,29 @@ app.post("/addtowish", (req, res) => {
     req.body.wishlist,
   ];
   db.query(
-    "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname) values (?)",
-    [values],
+    "select * from wishlistitems where mailid = ? and wishlistname = ? and productid = ?",
+    [req.body.mailId, req.body.wishlist, req.body.id],
     (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.send(err);
+      if (err) return res.send({ access: false, errorMsg: err });
+      if (data.length) {
+        res.send({
+          access: false,
+          errorMsg: "You already have this product in this wishlist!",
+        });
+      } else {
+        db.query(
+          "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname) values (?)",
+          [values],
+          (err, data) => {
+            if (err) {
+              console.log(err);
+              return res.send(err);
+            }
+            console.log("insert into wishlistitems data ->", data);
+            res.send({ access: true, data: data });
+          }
+        );
       }
-      console.log("insert into wishlistitems data ->", data);
-      res.send(data);
     }
   );
 });
