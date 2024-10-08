@@ -21,6 +21,8 @@ function Items() {
   const [showCompany, setShowCompany] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
 
@@ -110,7 +112,7 @@ function Items() {
   }, [lowerPrice, upperPrice, selectedCompany]);
 
   async function addToCart(id, title, price, discount) {
-    console.log(id, title, price, discount);
+    // console.log(id, title, price, discount);
     if (mailId) {
       const response = await axios.post("http://localhost:3000/addtocart", {
         id: id,
@@ -119,7 +121,15 @@ function Items() {
         discount: discount,
         mailId: mailId,
       });
-      console.log(response);
+      // console.log(response);
+      if (response.data.access) {
+        setError(false);
+        setErrorMessage("");
+      } else {
+        console.log(response.data.errorMsg);
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+      }
     } else {
       navigate("/account");
     }
@@ -147,18 +157,18 @@ function Items() {
     if (reviews.length) {
       reviews.forEach((review) => {
         if (review.productid == id) {
-          console.log(
-            `product id ${id} equal -> ${review.productid} -> ${review.rating}`
-          );
+          // console.log(
+          //   `product id ${id} equal -> ${review.productid} -> ${review.rating}`
+          // );
           totalRating += review.rating;
           if (review.rating) {
             totalRatings += 1;
           }
         } else {
-          console.log("else");
-          console.log(
-            `product id ${id} inequal -> ${review.productid} -> ${review.rating}`
-          );
+          // console.log("else");
+          // console.log(
+          //   `product id ${id} inequal -> ${review.productid} -> ${review.rating}`
+          // );
         }
       });
       if (totalRatings) {

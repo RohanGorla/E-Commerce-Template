@@ -235,16 +235,22 @@ app.post("/addtocart", (req, res) => {
     (err, data) => {
       if (err) return res.send(err);
       if (data.length) {
-        itemCount = data[0].count;
-        db.query(
-          "update cart set ? where productid = ? and mailid = ?",
-          [{ count: itemCount + 1 }, id, mailId],
-          (err, data) => {
-            if (err) return res.send(err);
-            res.send(data);
-          }
-        );
+        // itemCount = data[0].count;
+        // db.query(
+        //   "update cart set ? where productid = ? and mailid = ?",
+        //   [{ count: itemCount + 1 }, id, mailId],
+        //   (err, data) => {
+        //     if (err) return res.send(err);
+        //     res.send(data);
+        //   }
+        // );
+        console.log("already exists");
+        res.send({
+          access: false,
+          errorMsg: "You have already added this product to your cart!",
+        });
       } else {
+        console.log("not exists");
         const values = [mailId, id, title, price, discount, itemCount + 1];
         db.query(
           "insert into cart (mailid, productid, title, price, discount, count) values (?)",
@@ -255,7 +261,7 @@ app.post("/addtocart", (req, res) => {
               return res.send(err);
             }
             console.log(data);
-            res.send(data);
+            res.send({ access: true });
           }
         );
       }
