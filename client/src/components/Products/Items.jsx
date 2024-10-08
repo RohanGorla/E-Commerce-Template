@@ -174,6 +174,7 @@ function Items() {
           setAddListShow(false);
           setAddlistError(false);
           setErrorMsg("");
+          addToWishlist(wishProduct, newlist);
           if (wishlists.length == 0) {
             setSelectedWistlist(newlist);
           }
@@ -290,6 +291,9 @@ function Items() {
                   className="Items_AddNewList--Buttons_Cancel"
                   onClick={() => {
                     setAddListShow(false);
+                    setAddlistError(false);
+                    setErrorMsg("");
+                    setNewlist("");
                   }}
                 >
                   Cancel
