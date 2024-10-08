@@ -15,10 +15,6 @@
     --Prdct_Second_Ff: "Roboto", sans-serif;
 }
 
-::-webkit-scrollbar {
-    width: 0px;
-}
-
 .Items_Wishlist_Selector {
     display: none;
 }

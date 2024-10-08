@@ -278,13 +278,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 1em;
 }
 
 .Wish_Items--Header_Selectedlist_And_Delete p {
     font-size: var(--Wist_Items--Header_Listname);
     font-family: var(--Wish_Main_Font);
     font-weight: 600;
+    align-self: flex-end;
 }
 
 .Wish_Items--Header_Buttons--Delete {
@@ -296,6 +296,7 @@
     padding: .6em 1em;
     border-style: none;
     border-radius: 4px;
+    margin-top: 1em;
     cursor: pointer;
     &:hover {
         transform: scaleX(1.05) scaleY(1.07);

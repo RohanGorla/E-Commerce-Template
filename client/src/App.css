@@ -32,6 +32,10 @@
     font-style: normal;
 */
 
+::-webkit-scrollbar {
+    width: 0px;
+}
+
 .App_Navbar_Container {
     position: sticky;
     z-index: 10;
