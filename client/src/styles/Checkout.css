@@ -1,0 +1,204 @@
+
+
+.Checkout_Main_Container {
+    border-style: none;
+    border-radius: 10px;
+}
+
+.Checkout_Header {
+    background-color: rgb(35, 35, 35);
+    padding: 1em 0em;
+}
+
+.Checkout_Header--Heading {
+    font-size: var(--Checkout_Header--Heading);
+    font-family: var(--Checkout_Main_Font);
+    text-align: center;
+}
+
+.Checkout_Main {
+    display: flex;
+    max-width: 1300px;
+    margin: 0em auto;
+    padding: 1em;
+}
+
+.Checkout_Main--Products {
+    width: 70%;
+    padding-right: .5em;
+}
+
+.Checkout_Products--Product {
+    background-color: rgb(35, 35, 35);
+    display: flex;
+    padding: 1em;
+    border-style: none;
+    border-radius: 7px;
+    border: 2px solid white;
+}
+
+.Checkout_Products--Product +
+.Checkout_Products--Product {
+    margin-top: 1em;
+}
+
+.Checkout_Products--Product_Image {
+    width: 25%;
+}
+
+.Checkout_Products--Product_Image img {
+    max-width: 100%;
+}
+
+.Checkout_Products--Product_Details {
+    font-family: var(--Checkout_Main_Font);
+    width: 70%;
+    margin-left: 2em;
+}
+
+
+
+.Checkout_Product_Details--Name {
+    font-size: var(--Checkout_Product_Details--Name);
+    font-family: var(--Checkout_Secondary_Font);
+    max-width: 550px;
+    margin-bottom: .6em;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Checkout_Product_Details--Price {
+    font-size: var(--Checkout_Product_Details--Price);
+    display: flex;
+}
+
+.Checkout_Product_Details--Price_Symbol {
+    font-size: var(--Checkout_Product_Details--Price_Symbol);
+    align-self: self-start;
+    margin-top: .15em;
+}
+
+.Checkout_Product_Details--Total_Cost {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.Checkout_Product_Details--Quantity {
+    font-size: var(--Checkout_Product_Details--Quantity);
+}
+
+.Checkout_Product_Details--Total {
+    font-size: var(--Checkout_Product_Details--Total);
+    display: flex;
+    font-weight: 600;
+}
+
+.Checkout_Product_Details--Total_Symbol {
+    font-size: var(--Checkout_Product_Details--Total_Symbol);
+    align-self: flex-start;
+    font-weight: 500;
+    margin-top: .25em;
+}
+
+.Checkout_Main--Info {
+    font-family: var(--Checkout_Secondary_Font);
+    width: 30%;
+    /* outline: 2px solid white; */
+}
+
+.Checkout_Info_Container {
+    background-color: rgb(35, 35, 35);
+    padding: 1em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Checkout_Info_Order--Quantity,
+.Checkout_Info_Order--Total,
+.Checkout_Info_Order--Delivery,
+.Checkout_Info_Order--Final {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Checkout_Info--Header {
+    margin-bottom: 1em;
+}
+
+.Checkout_Info--Header h2 {
+    text-align: center;
+    font-size: var(--Checkout_Info_Header--Heading);
+}
+
+.Checkout_Info_Details--Address {
+    margin-bottom: 1em;
+}
+
+.Checkout_Info--Details h3 {
+    font-size: var(--Checkout_Info_Details--Heading);
+}
+
+.Checkout_Info--Details p {
+    font-size: var(--Checkout_Info_Details--Info);
+    margin-top: .4em;
+}
+
+.Checkout_Info_Order--Final {
+    margin-top: .6em;
+    padding: .3em 0em;
+    border-style: none;
+    border-top: 1px solid white;
+}
+
+:root {
+    --Checkout_Main_Font: "Roboto", sans-serif;
+    --Checkout_Secondary_Font: "Inter", sans-serif;
+    --Checkout_Header--Heading: 28px;
+    --Checkout_Product_Details--Name: 18px;
+    --Checkout_Product_Details--Price: 20px;
+    --Checkout_Product_Details--Quantity: 14px;
+    --Checkout_Product_Details--Total: 18px;
+    --Checkout_Product_Details--Price_Symbol: 14px;
+    --Checkout_Product_Details--Total_Symbol: 12px;
+    --Checkout_Info_Header--Heading: 26px;
+    --Checkout_Info_Details--Heading: 20px;
+    --Checkout_Info_Details--Info: 16px;
+    --Checkout_Info--Payment_Note: 14px;
+    --Checkout_Info--Payment_Button: 16px;
+}
+
+.Checkout_Info--Payment {
+    margin-top: 1em;
+}
+
+.Checkout_Info--Payment_Note {
+    font-size: var(--Checkout_Info--Payment_Note);
+}
+
+.Checkout_Info--Payment_Button {
+    background-color: goldenrod;
+    display: block;
+    font-size: var(--Checkout_Info--Payment_Button);
+    font-weight: 600;
+    width: 80%;
+    margin: 1em auto;
+    padding: .6em 0em;
+    border-style: none;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: goldenrod;
+        border: 2px solid goldenrod;
+    }
+}

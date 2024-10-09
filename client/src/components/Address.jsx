@@ -14,11 +14,11 @@ function Address() {
     });
     console.log(response);
     if (response.data.access) {
-      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
       localStorage.setItem(
         "userInfo",
         JSON.stringify({ ...userInfo, base_address: current.addressname })
       );
+      localStorage.setItem("address", JSON.stringify(current));
     }
   }
 
@@ -76,7 +76,6 @@ function Address() {
               const currentAddress = address;
               console.log(currentAddress);
               changeBaseAddress(currentAddress);
-              localStorage.setItem("address", JSON.stringify(currentAddress));
             }}
           >
             <h2

@@ -200,11 +200,11 @@ app.post("/checkauthorized", async (req, res) => {
   const mail = req.body.mail;
   const token = req.body.token;
   db.query("select token from userinfo where mailid = ?", mail, (err, data) => {
-    if (err) res.send(err);
+    if (err) res.send({ access: false, errorMsg: err });
     if (data[0].token === token) {
       db.query("select * from cart where mailid = ?", mail, (err, data) => {
-        if (err) res.send(err);
-        res.send(data);
+        if (err) res.send({ access: false, errorMsg: err });
+        res.send({ access: true, data: data });
       });
     }
   });
@@ -430,38 +430,33 @@ app.post("/getorders", (req, res) => {
 
 app.post("/placeorder", (req, res) => {
   let mail = req.body.mail;
-  console.log(mail);
-  db.query(
-    "select productid, title, price, discount from cart where mailid = ?",
-    mail,
-    (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.send(err);
-      }
-      console.log("cart data->", data);
-      data.map((data) => {
-        let values = [
-          mail,
-          data.productid,
-          data.title,
-          data.price,
-          data.discount,
-        ];
-        db.query(
-          "insert into orders (mailid, productid, title, price, discount) values (?)",
-          [values],
-          (err, data) => {
-            if (err) {
-              console.log(err);
-              return res.send(err);
-            }
-            console.log("insert data ->", data);
-          }
-        );
-      });
+  db.query("select * from cart where mailid = ?", mail, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
     }
-  );
+    console.log("cart data->", data);
+    data.map((data) => {
+      let values = [
+        mail,
+        data.productid,
+        data.title,
+        data.price,
+        data.discount,
+      ];
+      db.query(
+        "insert into orders (mailid, productid, title, price, discount) values (?)",
+        [values],
+        (err, data) => {
+          if (err) {
+            console.log(err);
+            return res.send(err);
+          }
+          console.log("insert data ->", data);
+        }
+      );
+    });
+  });
   db.query("delete from cart where mailid = ?", mail, (err, data) => {
     if (err) return res.send(err);
     console.log(data);
