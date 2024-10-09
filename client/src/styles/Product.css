@@ -1,0 +1,459 @@
+:root {
+    --Product_Details--Name: 25px;
+    --Product_Details--Discount: 15px;
+    --Product_Details--Category: 15px;
+    --Product_Details--Rating: 16px;
+    --Product_Details--Mrp: 15px;
+    --Product_Details--FinalPrice: 23px;
+    --Product_Details--Address: 15px;
+    --Product_Details--Button: 16px;
+    --Product_Details--About_Title: 28px;
+    --Product_Details--About_Info: 17px;
+    --Product_Reviews--Header_Heading: 28px;
+    --Product_Reviews--Review--Note: 16px;
+    --Product_Reviews--Reviewer_Name: 18px;
+    --Product_Reviews--Button: 14px;
+    --Product_Details--Main_Font: "Roboto", sans-serif;
+    --Product_Details--Side_Font: "Inter", sans-serif;
+}
+
+.Product_Main_Container {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.Product_Main {
+    max-width: 1300px;
+    margin: 0 auto;
+    /* background-color: rgb(35, 34, 34); */
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+/* Product Container */
+
+.Product_Main--Product {
+    display: flex;
+}
+
+/* Product Images */
+
+.Product_Main--Product_Images {
+    /* width: 700px; */
+    margin-top: 4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Product_Images--Main_Image {
+    width: 500px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Product_Images--Main_Image img {
+    display: block;
+    width: 100%;
+    max-height: 100%;
+}
+
+.Product_Images--More_Images {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.Product_More_Images--Image {
+    width: 80px;
+    height: 60px;
+    margin: 0 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.Product_More_Images--Image--Active {
+    padding: .3em;
+    border: 2px solid orangered;
+    border-radius: 5px;
+}
+
+.Product_More_Images--Image img {
+    max-width: 90%;
+}
+
+/* Product Details */
+
+.Product_Main--Product_Details {
+    margin: 2em 0 0 10em;
+}
+
+.Product_Details--Name {
+    font-size: var(--Product_Details--Name);
+    font-family: var(--Product_Details--Main_Font);
+    margin: .3em 0;
+    line-height: 1.3;
+}
+
+.Product_Details--Category {
+    font-size: var(--Product_Details--Category);
+    font-family: var(--Product_Details--Main_Font);
+    margin: .5em 0 .8em 0;
+}
+
+/* Product Rating Display */
+
+.Product_Details--Rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.Product_Details--Actualrating,
+.Product_Details--Ratingscount {
+    font-size: var(--Product_Details--Rating);
+    font-family: var(--Product_Details--Main_Font);
+}
+
+.Product_Details--Stars {
+    margin-left: .5em;
+    margin-right: 1em;
+}
+
+.Product_Details--Star +
+.Product_Details--Star {
+    margin-left: .2em;
+}
+
+.Product_Details--Price {
+    font-size: var(--Product_Details--FinalPrice);
+    font-family: var(--Product_Details--Side_Font);
+    margin-bottom: .3em;
+}
+
+.Product_Details--Discount {
+    font-size: var(--Product_Details--Discount);
+    font-weight: 400;
+}
+
+.Product_Details--MRP {
+    font-size: var(--Product_Details--Mrp);
+    font-family: var(--Product_Details--Side_Font);
+    font-weight: 300;
+}
+
+.Product_Details--MRP_Strike {
+    text-decoration: line-through;
+}
+
+.Product_Details--Address {
+    margin: 1em 0;
+}
+
+.Product_Details--Address p {
+    font-size: var(--Product_Details--Address);
+    font-family: var(--Product_Details--Side_Font);
+    font-weight: 300;
+}
+
+/* Buy & Add To Cart Buttons */
+
+.Product_Details--Buttons {
+    margin: 1em 0;
+}
+
+.Product_Details--Buttons button {
+    font-size: var(--Product_Details--Button);
+    font-family: var(--Product_Details--Side_Font);
+    font-weight: 500;
+    background-color: goldenrod;
+    border-style: none;
+    padding: .7em 2em;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.Product_Details--Buttons_Buy,
+.Product_Details--Buttons_Cart {
+    margin: 0 .5em 0 0;
+}
+
+/* Product About Info */
+
+.Product_Details--About_Product h4 {
+    font-size: var(--Product_Details--About_Title);
+    font-family: var(--Product_Details--Main_Font);
+}
+
+.Product_Details--About_Product p {
+    font-size: var(--Product_Details--About_Info);
+    font-family: var(--Product_Details--Side_Font);
+    margin: 1em 0;
+}
+
+/* Product Reviews Container */
+
+.Product_Reviews--Header {
+    /* border-bottom: 1px solid white; */
+    margin-bottom: 1.5em;
+}
+
+.Product_Reviews--Header h4 {
+    font-family: var(--Product_Details--Main_Font);
+    font-size: var(--Product_Reviews--Header_Heading);
+    padding-left: .5em;
+    /* padding-bottom: .5em; */
+}
+
+.Product_Reviews--Main {
+    font-family: var(--Product_Details--Main_Font);
+    padding: 1em;
+    display: flex;
+}
+
+/* Product Reviews - Ratings */
+
+.Product_Reviews--Rating {
+    width: 30%;
+}
+
+.Product_Reviews--Stars_Container {
+    display: flex;
+    align-items: center;
+}
+
+.Product_Reviews--Stars {
+    width: fit-content;
+}
+
+.Product_Reviews--Star +
+.Product_Reviews--Star {
+    margin-left: .3em;
+}
+
+.Product_Reviews--Actualrating {
+    font-size: var(--Product_Details--Rating);
+    margin-top: .3em;
+    margin-left: 1em;
+}
+
+.Product_Reviews--Ratingscount {
+    font-size: var(--Product_Details--Rating);
+    margin: .5em 0 1em 0;
+}
+
+.Product_Reviews--Rating_Distribution--Stars {
+    background-color: rgb(44, 44, 44);
+    max-width: 200px;
+    padding: .3em .5em;
+    border-style: none;
+    border: 1px solid white;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Product_Reviews--Rating_Distribution--Stars + 
+.Product_Reviews--Rating_Distribution--Stars {
+    margin-top: .5em;   
+}
+
+.Product_Reviews--Rating_Distribution--Star +
+.Product_Reviews--Rating_Distribution--Star {
+    margin-left: .2em;
+}
+
+.Product_Reviews--Rating_Distribution--Percentage {
+    font-size: var(--Product_Details--Rating);
+}
+
+.Product_Reviews--Your_Review_Container--Inactive,
+.Product_Reviews--Your_Review--Note--Inactive,
+.Product_Reviews--Your_Review_Main--Inactive,
+.Product_Reviews--Your_Review--Add_Edit_Button--Inactive,
+.Product_Reviews--Write_Review--Inactive,
+.Product_Reviews--Write_Review--Delete_Buttons--Inactive {
+    display: none;
+}
+
+/* Product Reviews - Reviews */
+
+.Product_Reviews--Reviews_Container {
+    width: 70%;
+}
+
+/* Product You Own Review Display */
+
+.Product_Reviews--Your_Review_Container {
+    background-color: rgb(44, 44, 44);
+    padding: 1em .5em;
+    max-width: 700px;
+    border-style: none;
+    border-radius: 7px;
+    border: 1px white solid;
+}
+
+.Product_Reviews--Your_Review--Note {
+    font-size: var(--Product_Reviews--Review--Note);
+}
+
+.Product_Reviews--Your_Name {
+    font-size: var(--Product_Reviews--Reviewer_Name);
+    margin-bottom: .2em;
+}
+
+.Product_Reviews--Your_Rating--Stars {
+    margin-bottom: .5em;
+}
+
+.Product_Reviews--Your_Rating--Star +
+.Product_Reviews--Your_Rating--Star {
+    margin-left: .3em;
+}
+
+.Product_Reviews--Your_Review {
+    font-size: var(--Product_Reviews--Review--Note);
+}
+
+.Product_Reviews--Your_Review--Add_Edit_Button {
+    margin-top: .8em;
+}
+
+.Product_Reviews--Your_Review--Add_Edit_Button button {
+    background-color: black;
+    color: white;
+    font-size: var(--Product_Reviews--Button);
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Write or Edit Your Own Review */
+
+.Product_Reviews--Write_Review {
+    background-color: rgb(44, 44, 44);
+    padding: 1em .5em;
+    max-width: 700px;
+    border-style: none;
+    border-radius: 7px;
+    border: 1px white solid;
+}
+
+.Product_Reviews--Write_Review--Your_Name {
+    font-size: var(--Product_Reviews--Reviewer_Name);
+    margin-bottom: .5em;
+}
+
+.Product_Reviews--Write_Review--Rating {
+    margin-bottom: .7em;
+}
+
+.Product_Reviews--Write_Review--Stars {
+    width: fit-content;
+}
+
+.Product_Reviews--Write_Review--Star +
+.Product_Reviews--Write_Review--Star {
+    margin-left: .3em;
+}
+
+.Product_Reviews--Write_Review--Star {
+    cursor: pointer;
+}
+
+.Product_Reviews--Write_Review--Review_Input {
+    display: block;
+    resize: vertical;
+    width: 90%;
+    font-size: var(--Product_Reviews--Review--Note);
+    padding: .3em .3em .2em .5em;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.Product_Reviews--Write_Review--Buttons {
+    margin-top: 1em;
+    width: 90%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Product_Reviews--Write_Review--Buttons--Submit {
+    background-color: goldenrod;
+    color: black;
+    font-size: var(--Product_Reviews--Button);
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.Product_Reviews--Write_Review--Buttons--Cancel {
+    background-color: black;
+    color: white;
+    font-size: var(--Product_Reviews--Button);
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Product_Reviews--Write_Review--Buttons--Delete {
+    background-color: rgb(190, 4, 4);
+    color: white;
+    font-size: var(--Product_Reviews--Button);
+    padding: .7em 1em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Other People Reviews */
+
+.Product_Reviews--Others_Reviews_Container {
+    margin-top: 1em;
+    padding: 1em .5em;
+    max-width: 700px;
+    background-color: rgb(44, 44, 44);
+    border-style: none;
+    border-radius: 7px;
+    border: 1px white solid
+}
+
+.Product_Reviews--No_Reviews p {
+    font-size: var(--Product_Reviews--Review--Note);
+}
+
+.Product_Reviews--Others_Review_Container +
+.Product_Reviews--Others_Review_Container {
+    margin-top: 1.5em;
+}
+
+.Product_Reviews--Others_Review--Name {
+    font-size: var(--Product_Reviews--Reviewer_Name);
+    margin-bottom: .3em;
+}
+
+.Product_Reviews--Others_Review--Rating {
+    margin: .2em 0em;
+}
+
+.Product_Reviews--Others_Review--Stars {
+    width: fit-content;
+}
+
+.Product_Reviews--Others_Review--Star +
+.Product_Reviews--Others_Review--Star {
+    margin-left: .3em;
+}
+
+.Product_Reviews--Others_Review {
+    font-size: var(--Product_Reviews--Review--Note);
+}

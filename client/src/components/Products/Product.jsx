@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, act } from "react";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
-import "../../styles/Products.css";
+import "../../styles/Product.css";
 
 function Product() {
   const { product } = useParams();
@@ -157,6 +157,19 @@ function Product() {
     setShowReview(true);
   }
 
+  function currencyConvert(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
+  }
+
   useEffect(() => {
     async function getProduct() {
       let response = await axios.post("http://localhost:3000/getproduct", {
@@ -164,33 +177,17 @@ function Product() {
       });
       console.log(response);
       let data = response.data[0];
-      let mrp = data.price;
+      let mrp = currencyConvert(data.price);
       let offer_price = (
         data.price -
         data.price * (data.discount / 100)
       ).toFixed(2);
-      let mrp_string = mrp.toString();
-      let offer_price_string = offer_price.toString().split(".")[0];
-      let offer_price_decimal = offer_price.toString().split(".")[1];
-      let mrp_array = mrp_string.split("").reverse();
-      let offer_price_array = offer_price_string.split("").reverse();
-      let mrp_iterator = Math.floor(mrp_array.length / 2);
-      let offer_price_iterator = Math.floor(offer_price_array.length / 2);
-      let k = 3;
-      for (let j = 0; j < mrp_iterator - 1; j++) {
-        mrp_array.splice(k, 0, ",");
-        k += 3;
-      }
-      k = 3;
-      for (let j = 0; j < offer_price_iterator - 1; j++) {
-        offer_price_array.splice(k, 0, ",");
-        k += 3;
-      }
-      let mrp_actual = mrp_array.reverse().join("");
-      let offer_price_actual =
-        offer_price_array.reverse().join("") + "." + offer_price_decimal;
-      data.mrp = mrp_actual;
-      data.actualPrice = offer_price_actual;
+      let offerPriceInt = offer_price.split(".")[0];
+      let offerPriceDecimal = offer_price.toString().split(".")[1];
+      let actualPrice =
+        currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
+      data.mrp = mrp;
+      data.actualPrice = actualPrice;
       setProductData(data);
     }
     async function getReviews() {
@@ -205,21 +202,21 @@ function Product() {
 
   return (
     <div className="Product_Main_Container">
-      <div className="Product_Container">
-        <div className="Product_Main">
-          <div className="Product_Image">
-            <div className="Product_Main_Image">
+      <div className="Product_Main">
+        <div className="Product_Main--Product">
+          <div className="Product_Main--Product_Images">
+            <div className="Product_Images--Main_Image">
               <img src={currentUrl}></img>
             </div>
-            <div className="More_Product_Images">
+            <div className="Product_Images--More_Images">
               {imageUrls.map((url, index) => {
                 return (
                   <div
                     key={index}
                     className={
                       url.src == currentUrl
-                        ? "More_Image_Box More_Image_Box--Active"
-                        : "More_Image_Box"
+                        ? "Product_More_Images--Image Product_More_Images--Image--Active"
+                        : "Product_More_Images--Image"
                     }
                     onClick={() => {
                       setCurrentUrl(url.src);
@@ -230,31 +227,18 @@ function Product() {
                 );
               })}
             </div>
-            {/* <div className="Product_Review">
-            <div className="Write_Review">
-              <h3>Product Reviews</h3>
-              <p>
-                Reviewing as {userInfo.firstname} {userInfo.lastname}
-              </p>
-              <textarea
-                placeholder="Write your review..."
-                rows={5}
-                cols={100}
-                id="Review_Input"
-              ></textarea>
-            </div>
-            <div className="Reviews"></div>
-          </div> */}
           </div>
-          <div className="Product_Details">
-            <p className="Product_Title">{productData?.title}</p>
-            <p className="Product_Category">
+          <div className="Product_Main--Product_Details">
+            <p className="Product_Details--Name">{productData?.title}</p>
+            <p className="Product_Details--Category">
               {productData?.category} - {productData?.company}
             </p>
-            <div className="Product_Rating_Top_Star_Container">
-              <span className="Product_Rating_Top">{actualRating}</span>
+            <div className="Product_Details--Rating">
+              <span className="Product_Details--Actualrating">
+                {actualRating}
+              </span>
               <div
-                className="Product_Rating_Top_Star_Container--Box"
+                className="Product_Details--Stars"
                 onMouseLeave={() => {
                   setStarHoverIndex(-1);
                 }}
@@ -264,7 +248,7 @@ function Product() {
                   .map((_, index) => {
                     return (
                       <FaStar
-                        className="Actual_Top_Star_Rating"
+                        className="Product_Details--Star"
                         key={index}
                         size={20}
                         color={index <= averageStarRating ? "orange" : "white"}
@@ -272,19 +256,23 @@ function Product() {
                     );
                   })}
               </div>
-              <span className="Product_Rating_Top">{ratings} ratings</span>
+              <span className="Product_Details--Ratingscount">
+                {ratings} ratings
+              </span>
             </div>
-            <p className="Product_Price">
-              <span className="Product_Discount">
+            <p className="Product_Details--Price">
+              <span className="Product_Details--Discount">
                 -{productData?.discount}%
               </span>{" "}
               ₹{productData?.actualPrice}
             </p>
-            <p className="Product_MRP">
+            <p className="Product_Details--MRP">
               M.R.P:{" "}
-              <span className="Product_MRP_Strike">₹{productData?.mrp}</span>
+              <span className="Product_Details--MRP_Strike">
+                ₹{productData?.mrp}
+              </span>
             </p>
-            <div className="Delivery_Address">
+            <div className="Product_Details--Address">
               {address ? (
                 <>
                   <p>
@@ -298,9 +286,9 @@ function Product() {
                 </>
               )}
             </div>
-            <div className="Products_Buttons">
+            <div className="Product_Details--Buttons">
               <button
-                className="Buy_Button"
+                className="Product_Details--Buttons_Buy"
                 onClick={() => {
                   window.open(`${window.location.origin}/buy/${product}`);
                 }}
@@ -308,7 +296,7 @@ function Product() {
                 Buy now
               </button>
               <button
-                className="Addtocart_Button"
+                className="Product_Details--Buttons_Cart"
                 onClick={() => {
                   // window.open(`${window.location.origin}/buy/${product}`);
                   addToCart();
@@ -317,7 +305,7 @@ function Product() {
                 Add to cart
               </button>
             </div>
-            <div className="About_Product">
+            <div className="Product_Details--About_Product">
               <h4>About the product</h4>
               <p>
                 Introducing our latest electronic product, the ProSound Wireless
@@ -347,158 +335,17 @@ function Product() {
             </div>
           </div>
         </div>
-        <div className="Product_Review_Main_Heading_Container">
-          <h3 className="Product_Review_Main_Heading">Product Reviews</h3>
-        </div>
-        <div className="Product_Review_Main_Container">
-          {/* Product Rating Container */}
-          <div className="Product_Rating_Container">
-            {/* Product Average Star Rating Container */}
-            <div className="Product_Rating_Star_Container">
-              <div
-                className="Product_Rating_Star_Container--Box"
-                onMouseLeave={() => {
-                  setStarHoverIndex(-1);
-                }}
-              >
-                {Array(5)
-                  .fill(0)
-                  .map((_, index) => {
-                    return (
-                      <FaStar
-                        className="Actual_Star_Rating"
-                        key={index}
-                        size={20}
-                        color={index <= averageStarRating ? "orange" : "white"}
-                      />
-                    );
-                  })}
-              </div>
-              <p className="Product_Rating_Actual_Rating">
-                {actualRating} out of 5
-              </p>
-            </div>
-            {/* Number Of Ratings */}
-            <p className="Product_Rating_Total_Ratings">{ratings} ratings.</p>
-            {/* Rating Distribution */}
-            <div className="Product_Rating_Distribution_Container">
-              {Array(5)
-                .fill(0)
-                .map((_, index) => {
-                  let ratingsCount = getTotalRatings(5 - index);
-                  console.log("ratings count ->", ratingsCount);
-                  let ratingsPercentage = 0;
-                  if (ratings != 0) {
-                    ratingsPercentage = Math.floor(
-                      (ratingsCount / ratings) * 100
-                    );
-                  }
-                  console.log(ratingsPercentage);
-                  return (
-                    <div
-                      key={index}
-                      className="Product_Rating_Distribution_Star_Container"
-                    >
-                      <div>
-                        {Array(5 - index)
-                          .fill(0)
-                          .map((_, index) => {
-                            return (
-                              <FaStar
-                                key={index}
-                                className="Actual_Star_Rating"
-                                color="orange"
-                              />
-                            );
-                          })}
-                      </div>
-                      <p>{ratingsPercentage}%</p>
-                    </div>
-                  );
-                })}
-            </div>
+        <div className="Product_Main--Reviews">
+          <div className="Product_Reviews--Header">
+            <h4 className="Product_Reviews--Header_Heading">Product Reviews</h4>
           </div>
-          {/* Product Review Container */}
-          <div className="Product_User_Reviews_Container">
-            {/* Your Own Review Container */}
-            <div
-              className={
-                showReview
-                  ? "Your_Review_Container"
-                  : "Your_Review_Container--Inactive"
-              }
-            >
-              {/* If You Donot Have Own Review */}
-              <p
-                className={
-                  hasReview
-                    ? "Your_Review--Note--Inactive"
-                    : "Your_Review--Note"
-                }
-              >
-                Add your review about this product.
-              </p>
-              {/* If You Have Own Review */}
-              <div
-                className={
-                  showReview && hasReview
-                    ? "Your_Review"
-                    : "Your_Review--Inactive"
-                }
-              >
-                {/* <p className="Review--Heading">Your review</p> */}
-                <p className="Reviewer_Name">
-                  {userInfo?.firstname} {userInfo?.lastname}
-                </p>
-                <div className="Your_Rating">
-                  {Array(5)
-                    .fill(0)
-                    .map((_, index) => {
-                      return (
-                        <FaStar
-                          key={index}
-                          className="Your_Rating--Star"
-                          color={
-                            index <= yourReview.rating - 1 ? "orange" : "white"
-                          }
-                        />
-                      );
-                    })}
-                </div>
-                <p className="Actual_Review">{review}</p>
-              </div>
-              {/* Add/Edit Your Own Review Buttons Container */}
-              <div
-                className={
-                  showReview
-                    ? "Write_Review_Button"
-                    : "Write_Review_Button Write_Review_Button--Inactive"
-                }
-              >
-                <button
-                  onClick={() => {
-                    setShowReview(false);
-                  }}
-                >
-                  {hasReview ? "Edit review" : "Add review"}
-                </button>
-              </div>
-            </div>
-            {/* Write or Edit Your On Review Container */}
-            <div
-              className={
-                showReview
-                  ? "Write_Review Write_Review--Inactive"
-                  : "Write_Review"
-              }
-            >
-              <p className="Reviewing_As--Name">
-                Reviewing as {userInfo?.firstname} {userInfo?.lastname}
-              </p>
-              {/* Give Your Star Rating Container */}
-              <div className="Give_Rating_Star_Container">
+          <div className="Product_Reviews--Main">
+            {/* Product Rating Container */}
+            <div className="Product_Reviews--Rating">
+              {/* Product Average Star Rating Container */}
+              <div className="Product_Reviews--Stars_Container">
                 <div
-                  className="Give_Rating_Star_Container--Box"
+                  className="Product_Reviews--Stars"
                   onMouseLeave={() => {
                     setStarHoverIndex(-1);
                   }}
@@ -508,109 +355,257 @@ function Product() {
                     .map((_, index) => {
                       return (
                         <FaStar
-                          className="Give_Star_Rating"
+                          className="Product_Reviews--Star"
                           key={index}
                           size={20}
                           color={
-                            index <= starHoverIndex || index <= starSetIndex
-                              ? "orange"
-                              : "white"
+                            index <= averageStarRating ? "orange" : "white"
                           }
-                          onMouseOver={() => {
-                            setStarHoverIndex(index);
-                          }}
-                          onClick={() => {
-                            setStarSetIndex(index);
-                          }}
                         />
                       );
                     })}
                 </div>
+                <p className="Product_Reviews--Actualrating">
+                  {actualRating} out of 5
+                </p>
               </div>
-              {/* Give Your Review Textarea */}
-              <textarea
-                placeholder="Write your review..."
-                rows={5}
-                // cols={50}
-                className="Reviewing_As--Input"
-                value={review}
-                onChange={(e) => {
-                  setReview(e.target.value);
-                }}
-              ></textarea>
-              {/* Add-Edit-Delete Your Review Buttons */}
-              <div className="Write_Review_Buttons">
-                <div className="Write_Review_Submit-Cancel_Btn_Container">
-                  <button
-                    className="Write_Review_Submit_Btn"
-                    onClick={addReview}
-                  >
-                    Submit
-                  </button>
-                  <button
-                    className="Write_Review_Cancel_Btn"
-                    onClick={() => {
-                      setShowReview(true);
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-                <div
-                  className={
-                    hasReview
-                      ? "Write_Review_Delete_Btn_Container"
-                      : "Write_Review_Delete_Btn_Container Write_Review_Delete_Btn_Container--Inactive"
-                  }
-                >
-                  <button
-                    className="Write_Review_Delete_Btn"
-                    onClick={deleteReview}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* Other People Reviews Container */}
-            <div className="Reviews">
-              {reviews.length == 0 ? (
-                <div className="No_Reviews">
-                  <p>
-                    {hasReview
-                      ? "Your's is the first review on this product!"
-                      : "This porduct has no user reviews. Be the first person to review this product!"}
-                  </p>
-                </div>
-              ) : (
-                reviews.map((review) => {
-                  return (
-                    <div key={review.id} className="Individual_Review">
-                      <p className="Reviewer_Name">{review.username}</p>
-                      <div className="Individual_Rating_Container">
-                        <div className="Individual_Rating_Container--Box">
-                          {Array(5)
+              {/* Number Of Ratings */}
+              <p className="Product_Reviews--Ratingscount">
+                {ratings} ratings.
+              </p>
+              {/* Rating Distribution */}
+              <div className="Product_Reviews--Rating_Distribution_Container">
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => {
+                    let ratingsCount = getTotalRatings(5 - index);
+                    let ratingsPercentage = 0;
+                    if (ratings != 0) {
+                      ratingsPercentage = Math.floor(
+                        (ratingsCount / ratings) * 100
+                      );
+                    }
+                    return (
+                      <div
+                        key={index}
+                        className="Product_Reviews--Rating_Distribution--Stars"
+                      >
+                        <div>
+                          {Array(5 - index)
                             .fill(0)
                             .map((_, index) => {
                               return (
                                 <FaStar
                                   key={index}
-                                  className="Individual_Rating_Star"
-                                  color={
-                                    index <= review.rating - 1
-                                      ? "orange"
-                                      : "white"
-                                  }
+                                  className="Product_Reviews--Rating_Distribution--Star"
+                                  color="orange"
                                 />
                               );
                             })}
                         </div>
+                        <p className="Product_Reviews--Rating_Distribution--Percentage">
+                          {ratingsPercentage}%
+                        </p>
                       </div>
-                      <p className="Actual_Review">{review.review}</p>
-                    </div>
-                  );
-                })
-              )}
+                    );
+                  })}
+              </div>
+            </div>
+            {/* Product Review Container */}
+            <div className="Product_Reviews--Reviews_Container">
+              {/* Your Own Review Container */}
+              <div
+                className={
+                  showReview
+                    ? "Product_Reviews--Your_Review_Container"
+                    : "Product_Reviews--Your_Review_Container--Inactive"
+                }
+              >
+                {/* If You Donot Have Own Review */}
+                <p
+                  className={
+                    hasReview
+                      ? "Product_Reviews--Your_Review--Note--Inactive"
+                      : "Product_Reviews--Your_Review--Note"
+                  }
+                >
+                  Add your review about this product.
+                </p>
+                {/* If You Have Own Review */}
+                <div
+                  className={
+                    showReview && hasReview
+                      ? "Product_Reviews--Your_Review_Main"
+                      : "Product_Reviews--Your_Review_Main--Inactive"
+                  }
+                >
+                  <p className="Product_Reviews--Your_Name">
+                    {userInfo?.firstname} {userInfo?.lastname}
+                  </p>
+                  <div className="Product_Reviews--Your_Rating--Stars">
+                    {Array(5)
+                      .fill(0)
+                      .map((_, index) => {
+                        return (
+                          <FaStar
+                            key={index}
+                            className="Product_Reviews--Your_Rating--Star"
+                            color={
+                              index <= yourReview.rating - 1
+                                ? "orange"
+                                : "white"
+                            }
+                          />
+                        );
+                      })}
+                  </div>
+                  <p className="Product_Reviews--Your_Review">{review}</p>
+                </div>
+                {/* Add/Edit Your Own Review Buttons Container */}
+                <div
+                  className={
+                    showReview
+                      ? "Product_Reviews--Your_Review--Add_Edit_Button"
+                      : "Product_Reviews--Your_Review--Add_Edit_Button--Inactive"
+                  }
+                >
+                  <button
+                    onClick={() => {
+                      setShowReview(false);
+                    }}
+                  >
+                    {hasReview ? "Edit review" : "Add review"}
+                  </button>
+                </div>
+              </div>
+              {/* Write or Edit Your Own Review Container */}
+              <div
+                className={
+                  showReview
+                    ? "Product_Reviews--Write_Review Product_Reviews--Write_Review--Inactive"
+                    : "Product_Reviews--Write_Review"
+                }
+              >
+                <p className="Product_Reviews--Write_Review--Your_Name">
+                  Reviewing as {userInfo?.firstname} {userInfo?.lastname}
+                </p>
+                {/* Give Your Star Rating Container */}
+                <div className="Product_Reviews--Write_Review--Rating">
+                  <div
+                    className="Product_Reviews--Write_Review--Stars"
+                    onMouseLeave={() => {
+                      setStarHoverIndex(-1);
+                    }}
+                  >
+                    {Array(5)
+                      .fill(0)
+                      .map((_, index) => {
+                        return (
+                          <FaStar
+                            className="Product_Reviews--Write_Review--Star"
+                            key={index}
+                            size={20}
+                            color={
+                              index <= starHoverIndex || index <= starSetIndex
+                                ? "orange"
+                                : "white"
+                            }
+                            onMouseOver={() => {
+                              setStarHoverIndex(index);
+                            }}
+                            onClick={() => {
+                              setStarSetIndex(index);
+                            }}
+                          />
+                        );
+                      })}
+                  </div>
+                </div>
+                {/* Give Your Review Textarea */}
+                <textarea
+                  placeholder="Write your review..."
+                  rows={5}
+                  // cols={50}
+                  className="Product_Reviews--Write_Review--Review_Input"
+                  value={review}
+                  onChange={(e) => {
+                    setReview(e.target.value);
+                  }}
+                ></textarea>
+                {/* Add-Edit-Delete Your Review Buttons */}
+                <div className="Product_Reviews--Write_Review--Buttons">
+                  <div className="Product_Reviews--Write_Review--Submit_Cancel_Buttons">
+                    <button
+                      className="Product_Reviews--Write_Review--Buttons--Submit"
+                      onClick={addReview}
+                    >
+                      Submit
+                    </button>
+                    <button
+                      className="Product_Reviews--Write_Review--Buttons--Cancel"
+                      onClick={() => {
+                        setShowReview(true);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  <div
+                    className={
+                      hasReview
+                        ? "Product_Reviews--Write_Review--Delete_Buttons"
+                        : "Product_Reviews--Write_Review--Delete_Buttons Product_Reviews--Write_Review--Delete_Buttons--Inactive"
+                    }
+                  >
+                    <button
+                      className="Product_Reviews--Write_Review--Buttons--Delete"
+                      onClick={deleteReview}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {/* Other People Reviews Container */}
+              <div className="Product_Reviews--Others_Reviews_Container">
+                {reviews.length == 0 ? (
+                  <div className="Product_Reviews--No_Reviews">
+                    <p>
+                      {hasReview
+                        ? "Your's is the first review on this product!"
+                        : "This porduct has no user reviews. Be the first person to review this product!"}
+                    </p>
+                  </div>
+                ) : (
+                  reviews.map((review) => {
+                    return (
+                      <div key={review.id} className="Product_Reviews--Others_Review_Container">
+                        <p className="Product_Reviews--Others_Review--Name">{review.username}</p>
+                        <div className="Product_Reviews--Others_Review--Rating">
+                          <div className="Product_Reviews--Others_Review--Stars">
+                            {Array(5)
+                              .fill(0)
+                              .map((_, index) => {
+                                return (
+                                  <FaStar
+                                    key={index}
+                                    className="Product_Reviews--Others_Review--Star"
+                                    color={
+                                      index <= review.rating - 1
+                                        ? "orange"
+                                        : "white"
+                                    }
+                                  />
+                                );
+                              })}
+                          </div>
+                        </div>
+                        <p className="Product_Reviews--Others_Review">{review.review}</p>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
             </div>
           </div>
         </div>
