@@ -345,9 +345,6 @@ function Product() {
               <div className="Product_Reviews--Stars_Container">
                 <div
                   className="Product_Reviews--Stars"
-                  onMouseLeave={() => {
-                    setStarHoverIndex(-1);
-                  }}
                 >
                   {Array(5)
                     .fill(0)

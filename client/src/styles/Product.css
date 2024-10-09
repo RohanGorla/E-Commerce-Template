@@ -174,19 +174,26 @@
 }
 
 .Product_Details--Buttons button {
+    background-color: goldenrod;
     font-size: var(--Product_Details--Button);
     font-family: var(--Product_Details--Side_Font);
-    font-weight: 500;
-    background-color: goldenrod;
+    font-weight: 700;
+    padding: .6em 2.5em;
     border-style: none;
-    padding: .7em 2em;
+    border: 2px solid transparent;
     border-radius: 7px;
     cursor: pointer;
+    &:hover {
+        transform: scaleX(1.04) scaleY(1.07);
+        transition: all .05s ease-in-out;
+        background-color: white;
+        color: goldenrod;
+        border: 2px goldenrod solid;
+    }
 }
 
-.Product_Details--Buttons_Buy,
-.Product_Details--Buttons_Cart {
-    margin: 0 .5em 0 0;
+.Product_Details--Buttons_Buy {
+    margin-right: 1em;
 }
 
 /* Product About Info */
@@ -343,10 +350,14 @@
     background-color: black;
     color: white;
     font-size: var(--Product_Reviews--Button);
-    padding: .7em 1em;
+    font-weight: 600;
+    padding: .8em 1.5em;
     border-style: none;
     border-radius: 5px;
     cursor: pointer;
+    &:hover {
+        color: red;
+    }
 }
 
 /* Write or Edit Your Own Review */
@@ -400,35 +411,32 @@
     justify-content: space-between;
 }
 
+.Product_Reviews--Write_Review--Buttons button {
+    font-size: var(--Product_Reviews--Button);
+    font-weight: 600;
+    padding: .7em 1.5em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        transform: scaleX(1.04) scaleY(1.07);
+    }
+}
+
 .Product_Reviews--Write_Review--Buttons--Submit {
     background-color: goldenrod;
     color: black;
-    font-size: var(--Product_Reviews--Button);
-    padding: .7em 1em;
-    border-style: none;
-    border-radius: 5px;
     margin-right: 1em;
-    cursor: pointer;
 }
 
 .Product_Reviews--Write_Review--Buttons--Cancel {
     background-color: black;
     color: white;
-    font-size: var(--Product_Reviews--Button);
-    padding: .7em 1em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 .Product_Reviews--Write_Review--Buttons--Delete {
     background-color: rgb(190, 4, 4);
     color: white;
-    font-size: var(--Product_Reviews--Button);
-    padding: .7em 1em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 /* Other People Reviews */
