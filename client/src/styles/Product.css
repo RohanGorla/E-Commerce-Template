@@ -23,9 +23,10 @@
 }
 
 .Product_Main {
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
-    /* background-color: rgb(35, 34, 34); */
+    padding: 1em 2em;
+    background-color: rgb(35, 34, 34);
     font-optical-sizing: auto;
     font-style: normal;
 }
@@ -40,10 +41,12 @@
 
 .Product_Main--Product_Images {
     /* width: 700px; */
-    margin-top: 4em;
+    /* margin-top: 4em; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* border: 1px solid white; */
+    /* outline: 2px white dotted; */
 }
 
 .Product_Images--Main_Image {
@@ -52,6 +55,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /* outline: 2px red dotted; */
 }
 
 .Product_Images--Main_Image img {
@@ -64,6 +68,7 @@
     display: flex;
     justify-content: center;
     margin-top: 2em;
+    /* outline: 2px green dotted; */
 }
 
 .Product_More_Images--Image {
@@ -89,13 +94,15 @@
 /* Product Details */
 
 .Product_Main--Product_Details {
-    margin: 2em 0 0 10em;
+    padding: 2em 4em;
+    /* padding-left: 4em; */
+    /* outline: 2px dotted blue; */
 }
 
 .Product_Details--Name {
     font-size: var(--Product_Details--Name);
     font-family: var(--Product_Details--Main_Font);
-    margin: .3em 0;
+    /* margin: .3em 0; */
     line-height: 1.3;
 }
 
@@ -184,18 +191,27 @@
 
 /* Product About Info */
 
-.Product_Details--About_Product h4 {
+.Product_Main--About {
+    margin-top: 3em;
+    max-width: 900px;
+}
+
+.Product_Main--About h4 {
     font-size: var(--Product_Details--About_Title);
     font-family: var(--Product_Details--Main_Font);
 }
 
-.Product_Details--About_Product p {
+.Product_Main--About p {
     font-size: var(--Product_Details--About_Info);
     font-family: var(--Product_Details--Side_Font);
     margin: 1em 0;
 }
 
 /* Product Reviews Container */
+
+.Product_Main--Reviews {
+    margin-top: 3em;
+}
 
 .Product_Reviews--Header {
     /* border-bottom: 1px solid white; */
@@ -205,13 +221,13 @@
 .Product_Reviews--Header h4 {
     font-family: var(--Product_Details--Main_Font);
     font-size: var(--Product_Reviews--Header_Heading);
-    padding-left: .5em;
+    /* padding-left: .5em; */
     /* padding-bottom: .5em; */
 }
 
 .Product_Reviews--Main {
     font-family: var(--Product_Details--Main_Font);
-    padding: 1em;
+    /* padding: 1em; */
     display: flex;
 }
 
@@ -286,7 +302,7 @@
     width: 70%;
 }
 
-/* Product You Own Review Display */
+/* Product Your Own Review Display */
 
 .Product_Reviews--Your_Review_Container {
     background-color: rgb(44, 44, 44);

@@ -305,35 +305,34 @@ function Product() {
                 Add to cart
               </button>
             </div>
-            <div className="Product_Details--About_Product">
-              <h4>About the product</h4>
-              <p>
-                Introducing our latest electronic product, the ProSound Wireless
-                Earbuds—your perfect companion for an immersive audio
-                experience. With sleek design and cutting-edge technology, these
-                earbuds deliver crystal-clear sound and deep bass, ensuring you
-                never miss a beat.
-              </p>
-              <p>
-                When you purchase the ProSound Wireless Earbuds, you'll receive
-                everything you need to get started. Inside the box, you'll find
-                the earbuds themselves, along with a compact charging case that
-                provides up to 20 hours of additional playtime.
-              </p>
-              <p>
-                We've also added a few extras to enhance your experience with
-                the ProSound Wireless Earbuds. Included in the package is a
-                quick start guide to help you set up your earbuds in minutes,
-                along with a warranty card that provides coverage for any
-                manufacturing defects for up to one year.
-              </p>
-              <p>
-                Lastly, the ProSound Wireless Earbuds come with access to our
-                dedicated customer support team, available 24/7 to assist you
-                with any questions or issues.
-              </p>
-            </div>
           </div>
+        </div>
+        <div className="Product_Main--About">
+          <h4>About the product</h4>
+          <p>
+            Introducing our latest electronic product, the ProSound Wireless
+            Earbuds—your perfect companion for an immersive audio experience.
+            With sleek design and cutting-edge technology, these earbuds deliver
+            crystal-clear sound and deep bass, ensuring you never miss a beat.
+          </p>
+          <p>
+            When you purchase the ProSound Wireless Earbuds, you'll receive
+            everything you need to get started. Inside the box, you'll find the
+            earbuds themselves, along with a compact charging case that provides
+            up to 20 hours of additional playtime.
+          </p>
+          <p>
+            We've also added a few extras to enhance your experience with the
+            ProSound Wireless Earbuds. Included in the package is a quick start
+            guide to help you set up your earbuds in minutes, along with a
+            warranty card that provides coverage for any manufacturing defects
+            for up to one year.
+          </p>
+          <p>
+            Lastly, the ProSound Wireless Earbuds come with access to our
+            dedicated customer support team, available 24/7 to assist you with
+            any questions or issues.
+          </p>
         </div>
         <div className="Product_Main--Reviews">
           <div className="Product_Reviews--Header">
@@ -579,8 +578,13 @@ function Product() {
                 ) : (
                   reviews.map((review) => {
                     return (
-                      <div key={review.id} className="Product_Reviews--Others_Review_Container">
-                        <p className="Product_Reviews--Others_Review--Name">{review.username}</p>
+                      <div
+                        key={review.id}
+                        className="Product_Reviews--Others_Review_Container"
+                      >
+                        <p className="Product_Reviews--Others_Review--Name">
+                          {review.username}
+                        </p>
                         <div className="Product_Reviews--Others_Review--Rating">
                           <div className="Product_Reviews--Others_Review--Stars">
                             {Array(5)
@@ -600,7 +604,9 @@ function Product() {
                               })}
                           </div>
                         </div>
-                        <p className="Product_Reviews--Others_Review">{review.review}</p>
+                        <p className="Product_Reviews--Others_Review">
+                          {review.review}
+                        </p>
                       </div>
                     );
                   })
