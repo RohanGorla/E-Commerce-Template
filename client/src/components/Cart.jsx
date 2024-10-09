@@ -47,7 +47,7 @@ function Cart() {
     );
     console.log(response);
     if (response.data.access) {
-      navigate("/checkout");
+      window.open(`${window.location.origin}/checkout`);
     }
   }
 
