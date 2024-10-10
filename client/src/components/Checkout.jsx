@@ -164,21 +164,21 @@ function Checkout() {
             }
           >
             <div className="Checkout_Select_Address--Tint"></div>
-            {addressData.length ? (
-              <div className="Checkout_Select_Address--Address_Container">
-                <div className="Checkout_Select_Address--Address_Subcontainer">
-                  <div
-                    className="Close--Checkout_Select_Address"
-                    onClick={() => {
-                      setShowAddress(false);
-                    }}
-                  >
-                    <span className="Close--Checkout_Select_Address--Cross"></span>
-                  </div>
-                  <div className="Checkout_Select_Address--Header">
-                    <h3>Select Delivery Address</h3>
-                  </div>
-                  {addressData.map((address, index) => {
+            <div className="Checkout_Select_Address--Address_Container">
+              <div className="Checkout_Select_Address--Address_Subcontainer">
+                <div
+                  className="Close--Checkout_Select_Address"
+                  onClick={() => {
+                    setShowAddress(false);
+                  }}
+                >
+                  <span className="Close--Checkout_Select_Address--Cross"></span>
+                </div>
+                <div className="Checkout_Select_Address--Header">
+                  <h3>Select Delivery Address</h3>
+                </div>
+                {addressData.length ? (
+                  addressData.map((address, index) => {
                     return (
                       <div
                         key={index}
@@ -213,12 +213,20 @@ function Checkout() {
                         </div>
                       </div>
                     );
-                  })}
-                </div>
+                  })
+                ) : (
+                  <div className="Checkout_Select_Address--Empty">
+                    <p className="Checkout_Select_Address--Empty--Note">
+                      You have not added any delivery addresses. Add an address to ship
+                      your order!
+                    </p>
+                    <button className="Checkout_Select_Address--Empty--Button">
+                      Add Delivery Address
+                    </button>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="Checkout_Select_Address--No_Address"></div>
-            )}
+            </div>
           </div>
           <div className="Checkout_Header">
             <h1 className="Checkout_Header--Heading">Checkout</h1>
@@ -283,22 +291,22 @@ function Checkout() {
                       Delivery Address
                     </h3>
                     <p className="Checkout_Info_Address--Name">
-                      {address.addressname}
+                      {address?.addressname}
                     </p>
                     <p className="Checkout_Info_Address--House">
-                      {address.house}
+                      {address?.house}
                     </p>
                     <p className="Checkout_Info_Address--Street">
-                      {address.street}
+                      {address?.street}
                     </p>
                     <p className="Checkout_Info_Address--Landmark">
-                      Near {address.landmark}
+                      Near {address?.landmark}
                     </p>
                     <p className="Checkout_Info_Address--City_State">
-                      {address.city}, {address.state}
+                      {address?.city}, {address?.state}
                     </p>
                     <p className="Checkout_Info_Address--Country">
-                      {address.country}
+                      {address?.country}
                     </p>
                     <div className="Checkout_Info_Address--Button">
                       <button
