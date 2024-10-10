@@ -13,6 +13,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { access } from "fs";
+import Razorpay from "razorpay";
 
 const app = express();
 app.use(express.json());
@@ -420,6 +421,31 @@ app.delete("/removefromwish", (req, res) => {
   });
 });
 
+app.post("/initiatepayment", (req, res) => {
+  let mail = req.body.mail;
+  db.query("select * from cart where mailid = ?", mail, async (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    let total = 0;
+    data.forEach((item) => {
+      total +=
+        Number(item.count) *
+        (Number(item.price) * (1 - Number(item.discount) / 100));
+    });
+    var options = {
+      amount: total * 100,
+      currency: "INR",
+    };
+
+    var instance = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY,
+      key_secret: process.env.RAZORPAY_SECRET,
+    });
+
+    let response = await instance.orders.create(options);
+    res.send({ access: true, data: response });
+  });
+});
+
 app.post("/getorders", (req, res) => {
   let mail = req.body.mail;
   db.query("select * from orders where mailid = ?", mail, (err, data) => {
@@ -430,38 +456,41 @@ app.post("/getorders", (req, res) => {
 
 app.post("/placeorder", (req, res) => {
   let mail = req.body.mail;
-  db.query("select * from cart where mailid = ?", mail, (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.send(err);
-    }
-    console.log("cart data->", data);
-    data.map((data) => {
-      let values = [
-        mail,
-        data.productid,
-        data.title,
-        data.price,
-        data.discount,
-      ];
-      db.query(
-        "insert into orders (mailid, productid, title, price, discount) values (?)",
-        [values],
-        (err, data) => {
-          if (err) {
-            console.log(err);
-            return res.send(err);
-          }
-          console.log("insert data ->", data);
-        }
-      );
-    });
-  });
-  db.query("delete from cart where mailid = ?", mail, (err, data) => {
-    if (err) return res.send(err);
-    console.log(data);
-    res.send(data);
-  });
+  console.log("orders");
+  res.send({ access: true });
+  // db.query("select * from cart where mailid = ?", mail, (err, data) => {
+  //   if (err) {
+  //     console.log(err);
+  //     return res.send({ access: false, errorMsg: err });
+  //   }
+  //   console.log("cart data->", data);
+  //   data.map((data) => {
+  //     let values = [
+  //       mail,
+  //       data.productid,
+  //       data.title,
+  //       data.price,
+  //       data.discount,
+  //     ];
+  //     db.query(
+  //       "insert into orders (mailid, productid, title, price, discount) values (?)",
+  //       [values],
+  //       (err, data) => {
+  //         if (err) {
+  //           console.log(err);
+  //           return res.send(err);
+  //         }
+  //         console.log("insert data ->", data);
+  //         res.send({ access: true });
+  //       }
+  //     );
+  //   });
+  // });
+  // db.query("delete from cart where mailid = ?", mail, (err, data) => {
+  //   if (err) return res.send(err);
+  //   console.log(data);
+  //   res.send({ access: true });
+  // });
 });
 
 app.post("/getaddress", (req, res) => {
