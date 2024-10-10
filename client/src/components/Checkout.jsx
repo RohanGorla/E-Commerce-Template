@@ -22,6 +22,22 @@ function Checkout() {
     console.log(orders);
   }
 
+  async function changeBaseAddress(current) {
+    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
+      address: current,
+      mailId: userInfo.mailId,
+    });
+    console.log(response);
+    if (response.data.access) {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: current.addressname })
+      );
+      localStorage.setItem("address", JSON.stringify(current));
+    }
+    setShowAddress(false);
+  }
+
   function currencyConvert(amount) {
     let amountString = amount.toString();
     let amountArray = amountString.split("").reverse();
@@ -134,51 +150,17 @@ function Checkout() {
                       {address.country}
                     </p>
                     <div className="Checkout_Select_Address--Button">
-                      <button>Deliver to this address</button>
+                      <button
+                        onClick={() => {
+                          changeBaseAddress(address);
+                        }}
+                      >
+                        Deliver to this address
+                      </button>
                     </div>
                   </div>
                 );
               })}
-              <div className="Checkout_Select_Address--Address">
-                <p className="Checkout_Select_Address--Name">
-                  {address.addressname}
-                </p>
-                <p className="Checkout_Select_Address--House">
-                  {address.house}
-                </p>
-                <p className="Checkout_Select_Address--Street">
-                  {address.street}
-                </p>
-                <p className="Checkout_Select_Address--Landmark">
-                  Near {address.landmark}
-                </p>
-                <p className="Checkout_Select_Address--City_State">
-                  {address.city}, {address.state}
-                </p>
-                <p className="Checkout_Select_Address--Country">
-                  {address.country}
-                </p>
-              </div>
-              <div className="Checkout_Select_Address--Address">
-                <p className="Checkout_Select_Address--Name">
-                  {address.addressname}
-                </p>
-                <p className="Checkout_Select_Address--House">
-                  {address.house}
-                </p>
-                <p className="Checkout_Select_Address--Street">
-                  {address.street}
-                </p>
-                <p className="Checkout_Select_Address--Landmark">
-                  Near {address.landmark}
-                </p>
-                <p className="Checkout_Select_Address--City_State">
-                  {address.city}, {address.state}
-                </p>
-                <p className="Checkout_Select_Address--Country">
-                  {address.country}
-                </p>
-              </div>
             </div>
           </div>
         ) : (
@@ -263,6 +245,15 @@ function Checkout() {
                 <p className="Checkout_Info_Address--Country">
                   {address.country}
                 </p>
+                <div className="Checkout_Info_Address--Button">
+                  <button
+                    onClick={() => {
+                      setShowAddress(true);
+                    }}
+                  >
+                    Change Delivery Address
+                  </button>
+                </div>
               </div>
               <div className="Checkout_Info_Details--Order">
                 <h3 className="Checkout_Info_Order--Heading">

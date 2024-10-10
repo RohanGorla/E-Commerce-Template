@@ -107,25 +107,6 @@
     transform: rotate(45deg);
 }
 
-:root {
-    --Checkout_Main_Font: "Roboto", sans-serif;
-    --Checkout_Secondary_Font: "Inter", sans-serif;
-    --Checkout_Header--Heading: 28px;
-    --Checkout_Select_Address--Header_Heading: 24px;
-    --Checkout_Select_Address--Name: 18px;
-    --Checkout_Select_Address--Button: 16px;
-    --Checkout_Product_Details--Name: 18px;
-    --Checkout_Product_Details--Price: 20px;
-    --Checkout_Product_Details--Quantity: 14px;
-    --Checkout_Product_Details--Total: 18px;
-    --Checkout_Product_Details--Price_Symbol: 14px;
-    --Checkout_Product_Details--Total_Symbol: 12px;
-    --Checkout_Info_Header--Heading: 26px;
-    --Checkout_Info_Details--Heading: 20px;
-    --Checkout_Info_Details--Info: 16px;
-    --Checkout_Info--Payment_Note: 14px;
-    --Checkout_Info--Payment_Button: 16px;
-}
 
 .Checkout_Select_Address--Header {
     background-color: rgb(35, 35, 35);
@@ -314,10 +295,6 @@
     font-size: var(--Checkout_Info_Header--Heading);
 }
 
-.Checkout_Info_Details--Address {
-    margin-bottom: 1em;
-}
-
 .Checkout_Info--Details h3 {
     font-size: var(--Checkout_Info_Details--Heading);
 }
@@ -325,6 +302,54 @@
 .Checkout_Info--Details p {
     font-size: var(--Checkout_Info_Details--Info);
     margin-top: .4em;
+}
+
+:root {
+    --Checkout_Main_Font: "Roboto", sans-serif;
+    --Checkout_Secondary_Font: "Inter", sans-serif;
+    --Checkout_Header--Heading: 28px;
+    --Checkout_Select_Address--Header_Heading: 24px;
+    --Checkout_Select_Address--Name: 18px;
+    --Checkout_Select_Address--Button: 16px;
+    --Checkout_Product_Details--Name: 18px;
+    --Checkout_Product_Details--Price: 20px;
+    --Checkout_Product_Details--Quantity: 14px;
+    --Checkout_Product_Details--Total: 18px;
+    --Checkout_Product_Details--Price_Symbol: 14px;
+    --Checkout_Product_Details--Total_Symbol: 12px;
+    --Checkout_Info_Header--Heading: 26px;
+    --Checkout_Info_Details--Heading: 20px;
+    --Checkout_Info_Details--Info: 16px;
+    --Checkout_Info_Address--Button: 14px;
+    --Checkout_Info--Payment_Note: 14px;
+    --Checkout_Info--Payment_Button: 16px;
+}
+
+.Checkout_Info_Details--Address {
+    margin-bottom: 1.5em;
+}
+
+.Checkout_Info_Address--Button {
+    margin-top: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Checkout_Info_Address--Button button {
+    background-color: black;
+    color: white;
+    font-size: var(--Checkout_Info_Address--Button);
+    font-weight: 600;
+    padding: .6em 2em;
+    border-style: none;
+    border-radius: 5px;
+    border: 3px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
 }
 
 .Checkout_Info_Order--Final {
