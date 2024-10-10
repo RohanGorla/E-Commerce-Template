@@ -5,7 +5,8 @@ import "../styles/Checkout.css";
 
 function Checkout() {
   const [cartData, setCartData] = useState([]);
-  const [showAddress, setShowAddress] = useState(false);
+  const [addressData, setAddressData] = useState([]);
+  const [showAddress, setShowAddress] = useState(true);
   const [count, setCount] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
@@ -37,6 +38,14 @@ function Checkout() {
   useEffect(() => {
     const mailId = userInfo?.mailId;
     const token = userInfo?.token;
+    async function getAddress() {
+      let response = await axios.post("http://localhost:3000/getaddress", {
+        mail: mailId,
+      });
+      console.log(response);
+      setAddressData(response.data);
+    }
+    getAddress();
     async function checkAuthorized() {
       let response = await axios.post("http://localhost:3000/checkauthorized", {
         mail: mailId,
@@ -81,17 +90,105 @@ function Checkout() {
 
   return (
     <div className="Checkout_Main_Container">
+      <div
+        className={
+          showAddress
+            ? "Checkout_Select_Address"
+            : "Checkout_Select_Address--Inactive"
+        }
+      >
+        <div className="Checkout_Select_Address--Tint"></div>
+        {addressData.length ? (
+          <div className="Checkout_Select_Address--Address_Container">
+            <div className="Checkout_Select_Address--Address_Subcontainer">
+              <div
+                className="Close--Checkout_Select_Address"
+                onClick={() => {
+                  setShowAddress(false);
+                }}
+              >
+                <span className="Close--Checkout_Select_Address--Cross"></span>
+              </div>
+              <div className="Checkout_Select_Address--Header">
+                <h3>Select Delivery Address</h3>
+              </div>
+              {addressData.map((address, index) => {
+                return (
+                  <div key={index} className="Checkout_Select_Address--Address">
+                    <p className="Checkout_Select_Address--Name">
+                      {address.addressname}
+                    </p>
+                    <p className="Checkout_Select_Address--House">
+                      {address.house}
+                    </p>
+                    <p className="Checkout_Select_Address--Street">
+                      {address.street}
+                    </p>
+                    <p className="Checkout_Select_Address--Landmark">
+                      Near {address.landmark}
+                    </p>
+                    <p className="Checkout_Select_Address--City_State">
+                      {address.city}, {address.state}
+                    </p>
+                    <p className="Checkout_Select_Address--Country">
+                      {address.country}
+                    </p>
+                    <div className="Checkout_Select_Address--Button">
+                      <button>Deliver to this address</button>
+                    </div>
+                  </div>
+                );
+              })}
+              <div className="Checkout_Select_Address--Address">
+                <p className="Checkout_Select_Address--Name">
+                  {address.addressname}
+                </p>
+                <p className="Checkout_Select_Address--House">
+                  {address.house}
+                </p>
+                <p className="Checkout_Select_Address--Street">
+                  {address.street}
+                </p>
+                <p className="Checkout_Select_Address--Landmark">
+                  Near {address.landmark}
+                </p>
+                <p className="Checkout_Select_Address--City_State">
+                  {address.city}, {address.state}
+                </p>
+                <p className="Checkout_Select_Address--Country">
+                  {address.country}
+                </p>
+              </div>
+              <div className="Checkout_Select_Address--Address">
+                <p className="Checkout_Select_Address--Name">
+                  {address.addressname}
+                </p>
+                <p className="Checkout_Select_Address--House">
+                  {address.house}
+                </p>
+                <p className="Checkout_Select_Address--Street">
+                  {address.street}
+                </p>
+                <p className="Checkout_Select_Address--Landmark">
+                  Near {address.landmark}
+                </p>
+                <p className="Checkout_Select_Address--City_State">
+                  {address.city}, {address.state}
+                </p>
+                <p className="Checkout_Select_Address--Country">
+                  {address.country}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="Checkout_Select_Address--No_Address"></div>
+        )}
+      </div>
       <div className="Checkout_Header">
         <h1 className="Checkout_Header--Heading">Checkout</h1>
       </div>
       <div className="Checkout_Main">
-        <div
-          className={
-            showAddress
-              ? "Checkout_Main--Address"
-              : "Checkout_Main--Address--Inactive"
-          }
-        ></div>
         <div className="Checkout_Main--Products">
           <div className="Checkout_Products_Container">
             {cartData.map((product, index) => {
