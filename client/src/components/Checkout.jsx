@@ -6,7 +6,7 @@ import "../styles/Checkout.css";
 function Checkout() {
   const [cartData, setCartData] = useState([]);
   const [addressData, setAddressData] = useState([]);
-  const [showAddress, setShowAddress] = useState(true);
+  const [showAddress, setShowAddress] = useState(false);
   const [count, setCount] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
