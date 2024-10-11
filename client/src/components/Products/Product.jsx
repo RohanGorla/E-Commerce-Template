@@ -17,6 +17,7 @@ function Product() {
   const [averageStarRating, setAverageStarRating] = useState(-1);
   const [actualRating, setActualRating] = useState(0);
   const [ratings, setRatings] = useState(0);
+  const [count, setCount] = useState(1);
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const imageUrls = [
@@ -46,9 +47,23 @@ function Product() {
         title: productData.title,
         price: productData.price,
         discount: productData.discount,
+        count: count,
         mailId: mail,
       });
       console.log(response);
+    }
+  }
+
+  async function buyProduct() {
+    let response = await axios.post("http://localhost:3000/buyproduct", {
+      product: productData,
+      count: count,
+      mail: userInfo?.mailId,
+    });
+    if (response.data.access) {
+      window.open(`${window.location.origin}/buy`);
+    } else {
+      console.log(response.data.errorMsg);
     }
   }
 
@@ -287,16 +302,45 @@ function Product() {
               )}
             </div>
             <div className="Product_Details--Buttons">
+              <div className="Product_Details--Counter">
+                <span className="Product_Details--Counter--Note">Qty: </span>
+                <button
+                  className="Product_Details_Counter--Decrement"
+                  onClick={() => {
+                    setCount((prev) => {
+                      return prev - 1;
+                    });
+                  }}
+                >
+                  -
+                </button>
+                <input
+                  className="Product_Details_Counter--Input"
+                  type="input"
+                  value={count}
+                  onChange={(e) => {
+                    setCount(e.target.value);
+                  }}
+                ></input>
+                <button
+                  className="Product_Details_Counter--Increment"
+                  onClick={() => {
+                    setCount((prev) => {
+                      return prev + 1;
+                    });
+                  }}
+                >
+                  +
+                </button>
+              </div>
               <button
-                className="Product_Details--Buttons_Buy"
-                onClick={() => {
-                  window.open(`${window.location.origin}/buy/${product}`);
-                }}
+                className="Product_Detail--Button Product_Details--Buttons_Buy"
+                onClick={buyProduct}
               >
                 Buy now
               </button>
               <button
-                className="Product_Details--Buttons_Cart"
+                className="Product_Detail--Button Product_Details--Buttons_Cart"
                 onClick={() => {
                   // window.open(`${window.location.origin}/buy/${product}`);
                   addToCart();
@@ -343,9 +387,7 @@ function Product() {
             <div className="Product_Reviews--Rating">
               {/* Product Average Star Rating Container */}
               <div className="Product_Reviews--Stars_Container">
-                <div
-                  className="Product_Reviews--Stars"
-                >
+                <div className="Product_Reviews--Stars">
                   {Array(5)
                     .fill(0)
                     .map((_, index) => {
