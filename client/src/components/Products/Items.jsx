@@ -566,7 +566,7 @@ function Items() {
                             );
                           })}
                       </div>
-                      <span className="Product_Rating_Top">
+                      <span className="Item_Rating_Top">
                         {data.ratings}{" "}
                         {data.ratings == 1 ? "rating" : "ratings"}
                       </span>
