@@ -142,7 +142,7 @@ function Checkout() {
       let response = await axios.post("http://localhost:3000/getaddress", {
         mail: mailId,
       });
-      console.log(response);
+      // console.log(response);
       setAddressData(response.data);
     }
     getAddress();
@@ -156,26 +156,26 @@ function Checkout() {
         let count = 0;
         let totalCost = 0;
         response.data.data.forEach((product) => {
+          let cost = product.price - (product.price * product.discount) / 100;
           count += Number(product.count);
-          totalCost +=
-            Number(product.count) *
-            (
-              Number(product.price) *
-              (1 - Number(product.discount) / 100)
-            ).toFixed(2);
+          totalCost += Number(product.count * cost);
         });
         let totalCostCurrency =
-          currencyConvert(totalCost.toString().split(".")[0]) +
+          currencyConvert(
+            Number(totalCost.toFixed(2)).toString().split(".")[0]
+          ) +
           "." +
-          totalCost.toString().split(".")[1];
+          Number(totalCost.toFixed(2)).toString().split(".")[1];
         if (totalCost > 500) {
           setOrderTotal(totalCostCurrency);
           setFreeDelivery(true);
         } else {
           let orderTotal =
-            currencyConvert((totalCost + 20).toString().split(".")[0]) +
+            currencyConvert(
+              (Number(totalCost.toFixed(2)) + 20).toString().split(".")[0]
+            ) +
             "." +
-            (totalCost + 20).toString().split(".")[1];
+            (Number(totalCost.toFixed(2)) + 20).toString().split(".")[1];
           setOrderTotal(orderTotal);
           setFreeDelivery(false);
         }
