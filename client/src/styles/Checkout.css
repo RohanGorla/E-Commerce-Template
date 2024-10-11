@@ -1,6 +1,8 @@
 :root {
     --Checkout_Main_Font: "Roboto", sans-serif;
     --Checkout_Secondary_Font: "Inter", sans-serif;
+    --Checkout_Order_Placed--Success: 20px;
+    --Checkout_Order_Placed--Timer: 16px;
     --Checkout_Header--Heading: 28px;
     --Checkout_Add_Address--Label: 16px;
     --Checkout_Add_Address--Input: 15px;
@@ -20,6 +22,28 @@
     --Checkout_Info_Address--Button: 14px;
     --Checkout_Info--Payment_Note: 14px;
     --Checkout_Info--Payment_Button: 16px;
+}
+
+.Checkout_Order_Placed {
+    background-color: rgb(35, 35, 35);
+    font-family: var(--Checkout_Main_Font);
+    width: 90%;
+    max-width: 1000px;
+    margin: 0em auto;
+    margin-top: 4em;
+    padding: 2em 3em;
+    border-style: none;
+    border: 2px solid white;
+    border-radius: 9px;
+}
+
+.Checkout_Order_Placed--Success {
+    font-size: var(--Checkout_Order_Placed--Success);
+    margin-bottom: 1em;
+}
+
+.Checkout_Order_Placed--Timer {
+    font-size: var(--Checkout_Order_Placed--Timer);
 }
 
 .Checkout_Main_Container {
@@ -42,6 +66,7 @@
     align-items: center;
 }
 
+.Checkout_Order_Placed--Inactive,
 .Checkout_Add_Address--Inactive,
 .Checkout_Select_Address--Inactive {
     display: none;

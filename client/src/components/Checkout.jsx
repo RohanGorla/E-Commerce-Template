@@ -24,8 +24,10 @@ function Checkout() {
   const [paymentId, setPaymentId] = useState("");
   const [signature, setSignature] = useState("");
   const [paymentInitiate, setPaymentInitiate] = useState(false);
+  const [time, setTime] = useState(30);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const address = JSON.parse(localStorage.getItem("address"));
+  const order = JSON.parse(localStorage.getItem("order"));
 
   async function placeOrder() {
     const mailId = userInfo?.mailId;
@@ -33,10 +35,16 @@ function Checkout() {
       mail: mailId,
     });
     if (response.data.access) {
-      console.log("window will close!");
-      // setTimeout(() => {
-      window.close();
-      // }, 3000);
+      localStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
+      setTimeout(() => {
+        localStorage.removeItem("order");
+        window.close();
+      }, 30000);
+      setInterval(() => {
+        setTime((prev) => {
+          return prev - 1;
+        });
+      }, 1000);
     }
   }
 
@@ -61,7 +69,6 @@ function Checkout() {
             setPaymentId(response.razorpay_payment_id);
             setSignature(response.razorpay_signature);
             setResOrderId(response.razorpay_order_id);
-            console.log("going to place orders");
             placeOrder();
           },
           notes: {
@@ -143,11 +150,14 @@ function Checkout() {
   useEffect(() => {
     const mailId = userInfo?.mailId;
     const token = userInfo?.token;
+    const orderPlaced = order?.orderPlaced;
+    if (orderPlaced) {
+      setPaymentInitiate(true);
+    }
     async function getAddress() {
       let response = await axios.post("http://localhost:3000/getaddress", {
         mail: mailId,
       });
-      // console.log(response);
       setAddressData(response.data);
     }
     getAddress();
@@ -197,7 +207,23 @@ function Checkout() {
   return (
     <>
       {paymentInitiate ? (
-        <></>
+        <div
+          className={
+            order?.orderPlaced
+              ? "Checkout_Order_Placed"
+              : "Checkout_Order_Placed--Inactive"
+          }
+        >
+          <p className="Checkout_Order_Placed--Success">
+            Your order has been placed successfully! You can view all your order
+            details in the 'Your orders' section in Your account.
+          </p>
+          <p className="Checkout_Order_Placed--Timer">
+            You can close this tab now or it will be closed automatically in{" "}
+            {time}
+            seconds.
+          </p>
+        </div>
       ) : (
         <div className="Checkout_Main_Container">
           <div
