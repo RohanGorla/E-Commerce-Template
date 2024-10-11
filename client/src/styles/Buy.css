@@ -283,8 +283,8 @@
 }
 
 .Buy_Header--Heading {
-    font-size: var(--Checkout_Header--Heading);
-    font-family: var(--Checkout_Main_Font);
+    font-size: var(--Buy_Header--Heading);
+    font-family: var(--Buy_Main_Font);
     text-align: center;
 }
 
@@ -377,3 +377,106 @@
     margin-top: .25em;
 }
 
+.Buy_Main--Info {
+    font-family: var(--Buy_Secondary_Font);
+    align-self: flex-start;
+    position: sticky;
+    top: 20px;
+    z-index: 1;
+    width: 30%;
+}
+
+.Buy_Info_Container {
+    background-color: rgb(35, 35, 35);
+    padding: 1em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Buy_Info_Order--Quantity,
+.Buy_Info_Order--Total,
+.Buy_Info_Order--Delivery,
+.Buy_Info_Order--Final {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Buy_Info--Header {
+    margin-bottom: 1em;
+}
+
+.Buy_Info--Header h2 {
+    font-size: var(--Buy_Info_Header--Heading);
+}
+
+.Buy_Info--Details h3 {
+    font-size: var(--Buy_Info_Details--Heading);
+}
+
+.Buy_Info--Details p {
+    font-size: var(--Buy_Info_Details--Info);
+    margin-top: .4em;
+}
+
+.Buy_Info_Details--Address {
+    margin-bottom: 1.5em;
+}
+
+.Buy_Info_Address--Button {
+    margin-top: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Buy_Info_Address--Button button {
+    background-color: black;
+    color: white;
+    font-size: var(--Buy_Info_Address--Button);
+    font-weight: 600;
+    padding: .6em 2em;
+    border-style: none;
+    border-radius: 5px;
+    border: 3px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(210, 209, 209);
+        color: black;
+    }
+}
+
+.Buy_Info_Order--Final {
+    margin-top: .6em;
+    padding: .3em 0em;
+    border-style: none;
+    border-top: 1px solid white;
+}
+
+.Buy_Info--Payment {
+    margin-top: 1em;
+}
+
+.Buy_Info--Payment_Note {
+    font-size: var(--Buy_Info--Payment_Note);
+}
+
+.Buy_Info--Payment_Button {
+    background-color: goldenrod;
+    display: block;
+    font-size: var(--Buy_Info--Payment_Button);
+    font-weight: 600;
+    width: 80%;
+    margin: 1em auto;
+    padding: .6em 0em;
+    border-style: none;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: goldenrod;
+        border: 2px solid goldenrod;
+    }
+}

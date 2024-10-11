@@ -393,7 +393,7 @@ function Buy() {
                   <div className="Buy_Info_Details--Order">
                     <h3 className="Buy_Info_Order--Heading">Payment Summary</h3>
                     <div className="Buy_Info_Order--Quantity">
-                      <p>Items:</p>
+                      <p>Quantity:</p>
                       <p>{productData.count}</p>
                     </div>
                     <div className="Buy_Info_Order--Total">
