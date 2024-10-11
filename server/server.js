@@ -180,19 +180,15 @@ app.post("/checkUser", async (req, res) => {
 app.post("/authenticateuser", async (req, res) => {
   const mailId = req.body.mail;
   const token = req.body.token;
-  db.query(
-    "select * from userinfo where mailid = ?",
-    mailId,
-    async (err, data) => {
-      if (err) return err;
-      const actualToken = data[0].token;
-      if (actualToken === token) {
-        res.send({ code: true, data });
-      } else {
-        res.send({ code: false });
-      }
+  db.query("select * from userinfo where mailid = ?", mailId, (err, data) => {
+    if (err) return err;
+    const actualToken = data[0].token;
+    if (actualToken === token) {
+      res.send({ code: true, data });
+    } else {
+      res.send({ code: false });
     }
-  );
+  });
 });
 
 // In Checkout page
