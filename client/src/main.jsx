@@ -29,6 +29,7 @@ import Editpassword from "./components/Editpassword.jsx";
 import Orders from "./components/Orders.jsx";
 import Address from "./components/Address.jsx";
 import Addaddress from "./components/Addaddress.jsx";
+import Merchant from "./components/Merchant.jsx";
 import AddProduct from "./components/AddProduct.jsx";
 import Profile from "./components/Profile.jsx";
 import "./index.css";
@@ -68,10 +69,12 @@ const router = createBrowserRouter(
           </Route>
         </Route>
         <Route path="profile" element={<Profile />} />
-        <Route path="addproduct" element={<AddProduct />} />
       </Route>
       <Route path="checkout" element={<Checkout />} />
       <Route path="buy" element={<Buy />} />
+      <Route path="merchant" element={<Merchant />}>
+        <Route path="addproduct" element={<AddProduct />} />
+      </Route>
     </>
   )
 );

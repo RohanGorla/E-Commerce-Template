@@ -112,7 +112,7 @@ function Account() {
         <div
           className="Account_Card"
           onClick={() => {
-            navigate("/addproduct");
+            window.open(`${location.origin}/merchant`);
           }}
         >
           <div className="Account_Cardinfo">
