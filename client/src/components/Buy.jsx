@@ -32,6 +32,7 @@ function Buy() {
     const mailId = userInfo?.mailId;
     let response = await axios.post("http://localhost:3000/placebuyorder", {
       mail: mailId,
+      product: productData,
     });
     if (response.data.access) {
       localStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
@@ -50,9 +51,12 @@ function Buy() {
   async function openPayment() {
     const mailId = userInfo?.mailId;
     if (address) {
-      let response = await axios.post("http://localhost:3000/initiatebuypayment", {
-        mail: mailId,
-      });
+      let response = await axios.post(
+        "http://localhost:3000/initiatebuypayment",
+        {
+          mail: mailId,
+        }
+      );
       let amount = Math.round(orderTotalNumber * 100);
       if (response.data.access) {
         console.log(response.data.data.id);

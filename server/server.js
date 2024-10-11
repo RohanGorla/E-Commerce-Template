@@ -502,10 +502,26 @@ app.post("/initiatebuypayment", (req, res) => {
 
 app.post("/placebuyorder", (req, res) => {
   let mail = req.body.mail;
-  db.query("delete from buy where mailid = ?", mail, (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
-    res.send({ access: true });
-  });
+  let product = req.body.product;
+  let values = [
+    mail,
+    product.productid,
+    product.title,
+    product.price,
+    product.discount,
+    product.count,
+  ];
+  db.query(
+    "insert into orders (mailid, productid, title, price, discount, count) values (?)",
+    [values],
+    (err, data) => {
+      if (err) return res.send({ access: false, errorMsg: err });
+      db.query("delete from buy where mailid = ?", mail, (err, data) => {
+        if (err) return res.send({ access: false, errorMsg: err });
+        res.send({ access: true });
+      });
+    }
+  );
 });
 
 app.post("/initiatepayment", (req, res) => {
