@@ -56,6 +56,22 @@ function Buy() {
     setShowAddAddress(false);
   }
 
+  async function changeBaseAddress(current) {
+    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
+      address: current,
+      mailId: userInfo?.mailId,
+    });
+    console.log(response);
+    if (response.data.access) {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: current.addressname })
+      );
+      localStorage.setItem("address", JSON.stringify(current));
+    }
+    setShowSelectAddress(false);
+  }
+
   function currencyConvert(amount) {
     let amountString = amount.toString();
     let amountArray = amountString.split("").reverse();
