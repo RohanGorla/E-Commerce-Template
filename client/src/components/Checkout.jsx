@@ -42,36 +42,41 @@ function Checkout() {
 
   async function openPayment() {
     const mailId = userInfo?.mailId;
-    let response = await axios.post("http://localhost:3000/initiatepayment", {
-      mail: mailId,
-    });
-    if (response.data.access) {
-      console.log(response.data.data.id);
-      const options = {
-        key: import.meta.env.VITE_KEY,
-        amount: totalCostNumber * 100,
-        currency: "INR",
-        name: "Ron-commerce",
-        description: "Test Transaction",
-        image: "https://example.com/your_logo",
-        order_id: response.data.id,
-        handler: function (response) {
-          setPaymentId(response.razorpay_payment_id);
-          setSignature(response.razorpay_signature);
-          setResOrderId(response.razorpay_order_id);
-          console.log("going to place orders");
-          placeOrder();
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-      setPaymentInitiate(true);
-      const paymentObject = new window.Razorpay(options);
-      paymentObject.open();
+    if (address) {
+      let response = await axios.post("http://localhost:3000/initiatepayment", {
+        mail: mailId,
+      });
+      let amount = Math.round(totalCostNumber * 100);
+      if (response.data.access) {
+        console.log(response.data.data.id);
+        const options = {
+          key: import.meta.env.VITE_KEY,
+          amount: amount,
+          currency: "INR",
+          name: "Ron-commerce",
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: response.data.id,
+          handler: function (response) {
+            setPaymentId(response.razorpay_payment_id);
+            setSignature(response.razorpay_signature);
+            setResOrderId(response.razorpay_order_id);
+            console.log("going to place orders");
+            placeOrder();
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+        setPaymentInitiate(true);
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      }
+    } else {
+      setShowSelectAddress(true);
     }
   }
 
@@ -158,24 +163,24 @@ function Checkout() {
         response.data.data.forEach((product) => {
           let cost = product.price - (product.price * product.discount) / 100;
           count += Number(product.count);
-          totalCost += Number(product.count * cost);
+          totalCost += product.count * cost;
         });
         let totalCostCurrency =
           currencyConvert(
-            Number(totalCost.toFixed(2)).toString().split(".")[0]
+            (Math.round(totalCost * 100) / 100).toString().split(".")[0]
           ) +
           "." +
-          Number(totalCost.toFixed(2)).toString().split(".")[1];
+          (Math.round(totalCost * 100) / 100).toString().split(".")[1];
         if (totalCost > 500) {
           setOrderTotal(totalCostCurrency);
           setFreeDelivery(true);
         } else {
           let orderTotal =
             currencyConvert(
-              (Number(totalCost.toFixed(2)) + 20).toString().split(".")[0]
+              (Math.round(totalCost * 100) / 100 + 20).toString().split(".")[0]
             ) +
             "." +
-            (Number(totalCost.toFixed(2)) + 20).toString().split(".")[1];
+            (Math.round(totalCost * 100) / 100 + 20).toString().split(".")[1];
           setOrderTotal(orderTotal);
           setFreeDelivery(false);
         }
@@ -256,8 +261,8 @@ function Checkout() {
                 ) : (
                   <div className="Checkout_Select_Address--Empty">
                     <p className="Checkout_Select_Address--Empty--Note">
-                      You have not added any delivery addresses. Add an address
-                      to ship your order!
+                      You have not added any delivery address. Add an address to
+                      ship your order!
                     </p>
                     <button
                       className="Checkout_Select_Address--Empty--Button"
