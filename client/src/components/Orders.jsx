@@ -3,21 +3,23 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Orders() {
-  const [orders, sestOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
-    const mail = localStorage.getItem("mailId");
+    const mailId = userInfo?.mailId;
     async function getorders() {
       let response = await axios.post("http://localhost:3000/getorders", {
-        mail: mail,
+        mail: mailId,
       });
       console.log(response);
-      sestOrders(response.data);
+      setOrders(response.data);
     }
-    if (mail) {
+    if (mailId) {
       getorders();
     }
   }, []);
+
   return (
     <div>
       {orders.map((order) => {

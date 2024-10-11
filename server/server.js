@@ -422,14 +422,6 @@ app.delete("/removefromwish", (req, res) => {
   });
 });
 
-app.post("/getbuyproduct", (req, res) => {
-  const mail = req.body.mail;
-  db.query("select * from buy where mailid = ?", mail, (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
-    return res.send({ access: true, data: data });
-  });
-});
-
 app.post("/buyproduct", (req, res) => {
   let productData = req.body.product;
   let mail = req.body.mail;
@@ -466,6 +458,14 @@ app.post("/buyproduct", (req, res) => {
         }
       );
     }
+  });
+});
+
+app.post("/getbuyproduct", (req, res) => {
+  const mail = req.body.mail;
+  db.query("select * from buy where mailid = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    return res.send({ access: true, data: data });
   });
 });
 
@@ -513,13 +513,19 @@ app.post("/initiatepayment", (req, res) => {
   db.query("select * from cart where mailid = ?", mail, async (err, data) => {
     if (err) return res.send({ access: false, errorMsg: err });
     let total = 0;
+    let orderTotal;
     data.forEach((item) => {
       let cost = item.price - (item.price * item.discount) / 100;
       total += item.count * cost;
     });
+    if (total > 500) {
+      orderTotal = total;
+    } else {
+      orderTotal = total + 20;
+    }
     try {
       var options = {
-        amount: Math.round(total * 100),
+        amount: Math.round(orderTotal * 100),
         currency: "INR",
       };
 
@@ -533,14 +539,6 @@ app.post("/initiatepayment", (req, res) => {
     } catch (e) {
       console.log(e);
     }
-  });
-});
-
-app.post("/getorders", (req, res) => {
-  let mail = req.body.mail;
-  db.query("select * from orders where mailid = ?", mail, (err, data) => {
-    if (err) return res.send(err);
-    return res.send(data);
   });
 });
 
@@ -581,6 +579,14 @@ app.post("/placeorder", (req, res) => {
   //   console.log(data);
   //   res.send({ access: true });
   // });
+});
+
+app.post("/getorders", (req, res) => {
+  let mail = req.body.mail;
+  db.query("select * from orders where mailid = ?", mail, (err, data) => {
+    if (err) return res.send(err);
+    return res.send(data);
+  });
 });
 
 app.post("/getaddress", (req, res) => {

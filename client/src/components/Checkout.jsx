@@ -18,7 +18,7 @@ function Checkout() {
   const [count, setCount] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
-  const [totalCostNumber, setTotalCostNumber] = useState(0);
+  const [orderCostNumber, setOrderCostNumber] = useState(0);
   const [freeDelivery, setFreeDelivery] = useState(false);
   const [resOrderId, setResOrderId] = useState("");
   const [paymentId, setPaymentId] = useState("");
@@ -54,7 +54,7 @@ function Checkout() {
       let response = await axios.post("http://localhost:3000/initiatepayment", {
         mail: mailId,
       });
-      let amount = Math.round(totalCostNumber * 100);
+      let amount = Math.round(orderCostNumber * 100);
       if (response.data.access) {
         console.log(response.data.data.id);
         const options = {
@@ -175,19 +175,28 @@ function Checkout() {
           count += Number(product.count);
           totalCost += product.count * cost;
         });
-        let totalCostCurrency =
-          currencyConvert(
-            (Math.round(totalCost * 100) / 100).toString().split(".")[0]
-          ) +
-          "." +
-          (Math.round(totalCost * 100) / 100).toString().split(".")[1];
-        if (totalCost > 500) {
-          setOrderTotal(totalCostCurrency);
-          setTotalCost(totalCostCurrency);
-          setTotalCostNumber(totalCost);
-          setFreeDelivery(true);
+        console.log(totalCost);
+        let totalCostCurrency;
+        let orderCostCurrency;
+        if (totalCost.toString().split(".").length === 1) {
+          totalCostCurrency =
+            currencyConvert(
+              (Math.round(totalCost * 100) / 100).toString().split(".")[0]
+            ) + ".00";
+          orderCostCurrency =
+            currencyConvert(
+              (Math.round((totalCost + 20) * 100) / 100)
+                .toString()
+                .split(".")[0]
+            ) + ".00";
         } else {
-          let orderTotal =
+          totalCostCurrency =
+            currencyConvert(
+              (Math.round(totalCost * 100) / 100).toString().split(".")[0]
+            ) +
+            "." +
+            (Math.round(totalCost * 100) / 100).toString().split(".")[1];
+          orderCostCurrency =
             currencyConvert(
               (Math.round((totalCost + 20) * 100) / 100)
                 .toString()
@@ -195,9 +204,17 @@ function Checkout() {
             ) +
             "." +
             (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[1];
-          setOrderTotal(orderTotal);
+        }
+        if (totalCost > 500) {
+          setOrderTotal(totalCostCurrency);
+          setTotalCost(totalCostCurrency);
+          setOrderCostNumber(totalCost);
+          setFreeDelivery(true);
+        } else {
+          setOrderTotal(orderCostCurrency);
+          setTotalCost(totalCostCurrency);
+          setOrderCostNumber(totalCost + 20);
           setFreeDelivery(false);
-          setTotalCostNumber(totalCost + 20);
         }
         setCount(count);
       }
