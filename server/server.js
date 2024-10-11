@@ -427,22 +427,25 @@ app.post("/initiatepayment", (req, res) => {
     if (err) return res.send({ access: false, errorMsg: err });
     let total = 0;
     data.forEach((item) => {
-      total +=
-        Number(item.count) *
-        (Number(item.price) * (1 - Number(item.discount) / 100));
+      let cost = item.price - (item.price * item.discount) / 100;
+      total += item.count * cost;
     });
-    var options = {
-      amount: total * 100,
-      currency: "INR",
-    };
+    try {
+      var options = {
+        amount: Math.round(total * 100),
+        currency: "INR",
+      };
 
-    var instance = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY,
-      key_secret: process.env.RAZORPAY_SECRET,
-    });
+      var instance = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY,
+        key_secret: process.env.RAZORPAY_SECRET,
+      });
 
-    let response = await instance.orders.create(options);
-    res.send({ access: true, data: response });
+      let response = await instance.orders.create(options);
+      res.send({ access: true, data: response });
+    } catch (e) {
+      console.log(e);
+    }
   });
 });
 
