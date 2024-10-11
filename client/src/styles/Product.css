@@ -6,6 +6,8 @@
     --Product_Details--Mrp: 15px;
     --Product_Details--FinalPrice: 23px;
     --Product_Details--Address: 15px;
+    --Product_Details_Counter: 18px;
+    --Product_Details--Counter--Note: 16px;
     --Product_Details--Button: 16px;
     --Product_Details--About_Title: 28px;
     --Product_Details--About_Info: 17px;
@@ -173,7 +175,47 @@
     margin: 1em 0;
 }
 
-.Product_Details--Buttons button {
+.Product_Details--Counter {
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.Product_Details--Counter--Note {
+    font-family: var(--Product_Details--Main_Font);
+    font-size: var(--Product_Details--Counter--Note);
+    margin-right: .7em;
+}
+
+.Product_Details_Counter--Decrement,
+.Product_Details_Counter--Increment {
+    background-color: rgb(189, 188, 188);
+    font-size: var(--Product_Details_Counter);
+    font-family: var(--Cart_Main_Font);
+    padding: .1em;
+    border-style: none;
+    width: 25px;
+    height: 25px;
+}
+
+.Product_Details_Counter--Decrement {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+.Product_Details_Counter--Increment {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.Product_Details_Counter--Input {
+    text-align: center;
+    height: 25px;
+    width: 30px;
+    padding: .1em;
+}
+
+.Product_Details--Buttons .Product_Detail--Button {
     background-color: goldenrod;
     font-size: var(--Product_Details--Button);
     font-family: var(--Product_Details--Side_Font);
