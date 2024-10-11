@@ -16,6 +16,9 @@ function Buy() {
   const [addressCountry, setAddressCountry] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productTotal, setProductTotal] = useState("");
+  const [orderTotal, setOrderTotal] = useState("");
+  const [orderTotalNumber, setOrderTotalNumber] = useState(0);
+  const [freeDelivery, setFreeDelivery] = useState(false);
   const [initiatePayment, setInitiatePayment] = useState(false);
   const [time, setTime] = useState(30);
   const address = JSON.parse(localStorage.getItem("address"));
@@ -90,6 +93,21 @@ function Buy() {
           (Math.round(total * 100) / 100).toString().split(".")[1];
         setProductTotal(totalCurrency);
         setProductPrice(priceCurrency);
+        if (total > 500) {
+          setFreeDelivery(true);
+          setOrderTotal(totalCurrency);
+          setOrderTotalNumber(total);
+        } else {
+          setFreeDelivery(false);
+          let orderTotalCurrency =
+            currencyConvert(
+              (Math.round((total + 20) * 100) / 100).toString().split(".")[0]
+            ) +
+            "." +
+            (Math.round((total + 20) * 100) / 100).toString().split(".")[1];
+          setOrderTotal(orderTotalCurrency);
+          setOrderTotalNumber(total + 20);
+        }
         setProductData(data);
       } else {
         console.log(response.data.errorMsg);
@@ -333,6 +351,73 @@ function Buy() {
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className="Buy_Main--Info">
+              <div className="Buy_Info_Container">
+                <div className="Buy_Info--Header">
+                  <h2>Order Details</h2>
+                </div>
+                <div className="Buy_Info--Details">
+                  <div className="Buy_Info_Details--Address">
+                    <h3 className="Buy_Info_Address--Heading">
+                      Delivery Address
+                    </h3>
+                    <p className="Buy_Info_Address--Name">
+                      {address?.addressname}
+                    </p>
+                    <p className="Buy_Info_Address--House">{address?.house}</p>
+                    <p className="Buy_Info_Address--Street">
+                      {address?.street}
+                    </p>
+                    <p className="Buy_Info_Address--Landmark">
+                      Near {address?.landmark}
+                    </p>
+                    <p className="Buy_Info_Address--City_State">
+                      {address?.city}, {address?.state}
+                    </p>
+                    <p className="Buy_Info_Address--Country">
+                      {address?.country}
+                    </p>
+                    <div className="Buy_Info_Address--Button">
+                      <button
+                        onClick={() => {
+                          setShowSelectAddress(true);
+                        }}
+                      >
+                        Change Delivery Address
+                      </button>
+                    </div>
+                  </div>
+                  <div className="Buy_Info_Details--Order">
+                    <h3 className="Buy_Info_Order--Heading">Payment Summary</h3>
+                    <div className="Buy_Info_Order--Quantity">
+                      <p>Items:</p>
+                      <p>{productData.count}</p>
+                    </div>
+                    <div className="Buy_Info_Order--Total">
+                      <p>Total:</p>
+                      <p>₹{productTotal}</p>
+                    </div>
+                    <div className="Buy_Info_Order--Delivery">
+                      <p>Delivery fee:</p>
+                      <p>{freeDelivery ? "₹0" : "₹20"}</p>
+                    </div>
+                    <div className="Buy_Info_Order--Final">
+                      <p>Order total:</p>
+                      <p>₹{productTotal}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="Buy_Info--Payment">
+                  <p className="Buy_Info--Payment_Note">
+                    Thoroughly review your order details before proceeding to
+                    payment!
+                  </p>
+                  <button className="Buy_Info--Payment_Button">
+                    Proceed to Pay
+                  </button>
                 </div>
               </div>
             </div>

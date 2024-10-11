@@ -183,20 +183,23 @@ function Checkout() {
           (Math.round(totalCost * 100) / 100).toString().split(".")[1];
         if (totalCost > 500) {
           setOrderTotal(totalCostCurrency);
+          setTotalCost(totalCostCurrency);
+          setTotalCostNumber(totalCost);
           setFreeDelivery(true);
         } else {
           let orderTotal =
             currencyConvert(
-              (Math.round(totalCost * 100) / 100 + 20).toString().split(".")[0]
+              (Math.round((totalCost + 20) * 100) / 100)
+                .toString()
+                .split(".")[0]
             ) +
             "." +
-            (Math.round(totalCost * 100) / 100 + 20).toString().split(".")[1];
+            (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[1];
           setOrderTotal(orderTotal);
           setFreeDelivery(false);
+          setTotalCostNumber(totalCost + 20);
         }
         setCount(count);
-        setTotalCost(totalCostCurrency);
-        setTotalCostNumber(totalCost);
       }
     }
     if (mailId && token) {
