@@ -225,7 +225,12 @@ app.post("/addtocart", (req, res) => {
   const price = req.body.price;
   const discount = req.body.discount;
   const mailId = req.body.mailId;
-  let itemCount = 0;
+  let count;
+  if (req.body.count) {
+    count = req.body.count;
+  } else {
+    count = 1;
+  }
   db.query(
     "select count from cart where productid = ? and mailid = ?",
     [id, mailId],
@@ -248,7 +253,7 @@ app.post("/addtocart", (req, res) => {
         });
       } else {
         console.log("not exists");
-        const values = [mailId, id, title, price, discount, itemCount + 1];
+        const values = [mailId, id, title, price, discount, count];
         db.query(
           "insert into cart (mailid, productid, title, price, discount, count) values (?)",
           [values],
@@ -417,6 +422,28 @@ app.delete("/removefromwish", (req, res) => {
   });
 });
 
+app.post("/buyproduct", (req, res) => {
+  let productData = req.body.product;
+  let mail = req.body.mail;
+  let count = req.body.count;
+  let values = [
+    mail,
+    productData.id,
+    productData.title,
+    productData.price,
+    productData.discount,
+    count,
+  ];
+  db.query(
+    "insert into buy (mailid, productid, title, price, discount, count) values (?)",
+    [values],
+    (err, data) => {
+      if (err) return res.send({ access: false, errorMsg: err });
+      res.send({ access: true });
+    }
+  );
+});
+
 app.post("/initiatepayment", (req, res) => {
   let mail = req.body.mail;
   db.query("select * from cart where mailid = ?", mail, async (err, data) => {
@@ -543,10 +570,10 @@ app.put("/updatebaseaddress", (req, res) => {
 });
 
 app.post("/getproduct", (req, res) => {
-  const id = req.body.id;
-  db.query("select * from products where id = ?", id, (err, data) => {
-    if (err) return res.send(err);
-    return res.send(data);
+  const mail = req.body.mail;
+  db.query("select * from buy where mailid = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    return res.send({ access: true, data: data });
   });
 });
 
