@@ -422,6 +422,14 @@ app.delete("/removefromwish", (req, res) => {
   });
 });
 
+app.post("/getbuyproduct", (req, res) => {
+  const mail = req.body.mail;
+  db.query("select * from buy where mailid = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    return res.send({ access: true, data: data });
+  });
+});
+
 app.post("/buyproduct", (req, res) => {
   let productData = req.body.product;
   let mail = req.body.mail;
@@ -472,6 +480,14 @@ app.post("/initiatebuypayment", (req, res) => {
     } catch (e) {
       console.log(e);
     }
+  });
+});
+
+app.post("/placebuyorder", (req, res) => {
+  let mail = req.body.mail;
+  db.query("delete from buy where mailid = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    res.send({ access: true });
   });
 });
 
@@ -601,8 +617,8 @@ app.put("/updatebaseaddress", (req, res) => {
 });
 
 app.post("/getproduct", (req, res) => {
-  const mail = req.body.mail;
-  db.query("select * from buy where mailid = ?", mail, (err, data) => {
+  const id = req.body.id;
+  db.query("select * from products where id = ?", id, (err, data) => {
     if (err) return res.send({ access: false, errorMsg: err });
     return res.send({ access: true, data: data });
   });
