@@ -442,14 +442,31 @@ app.post("/buyproduct", (req, res) => {
     productData.discount,
     count,
   ];
-  db.query(
-    "insert into buy (mailid, productid, title, price, discount, count) values (?)",
-    [values],
-    (err, data) => {
-      if (err) return res.send({ access: false, errorMsg: err });
-      res.send({ access: true });
+  db.query("select id from buy where mailid = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    if (data.length) {
+      db.query("delete from buy where mailid = ?", mail, (err, data) => {
+        if (err) return res.send({ access: false, errorMsg: err });
+        db.query(
+          "insert into buy (mailid, productid, title, price, discount, count) values (?)",
+          [values],
+          (err, data) => {
+            if (err) return res.send({ access: false, errorMsg: err });
+            res.send({ access: true });
+          }
+        );
+      });
+    } else {
+      db.query(
+        "insert into buy (mailid, productid, title, price, discount, count) values (?)",
+        [values],
+        (err, data) => {
+          if (err) return res.send({ access: false, errorMsg: err });
+          res.send({ access: true });
+        }
+      );
     }
-  );
+  });
 });
 
 app.post("/initiatebuypayment", (req, res) => {
