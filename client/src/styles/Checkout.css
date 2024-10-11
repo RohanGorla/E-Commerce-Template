@@ -2,6 +2,8 @@
     --Checkout_Main_Font: "Roboto", sans-serif;
     --Checkout_Secondary_Font: "Inter", sans-serif;
     --Checkout_Header--Heading: 28px;
+    --Checkout_Add_Address--Label: 16px;
+    --Checkout_Add_Address--Input: 15px;
     --Checkout_Select_Address--Header_Heading: 24px;
     --Checkout_Select_Address--Name: 18px;
     --Checkout_Select_Address--Button: 16px;
@@ -26,6 +28,7 @@
     overflow-y: scroll;
 }
 
+.Checkout_Add_Address,
 .Checkout_Select_Address {
     font-family: var(--Checkout_Main_Font);
     position: absolute;
@@ -39,10 +42,12 @@
     align-items: center;
 }
 
+.Checkout_Add_Address--Inactive,
 .Checkout_Select_Address--Inactive {
     display: none;
 }
 
+.Checkout_Add_Address--Tint,
 .Checkout_Select_Address--Tint {
     position: absolute;
     z-index: 2;
@@ -54,6 +59,7 @@
     opacity: .8;
 }
 
+.Checkout_Add_Address--Container,
 .Checkout_Select_Address--Address_Container {
     background-color: rgb(35, 35, 35);
     position: relative;
@@ -66,12 +72,60 @@
     border: 2px solid white;
 }
 
+.Checkout_Add_Address--Header h3,
+.Checkout_Select_Address--Header h3 {
+    font-size: var(--Checkout_Select_Address--Header_Heading);
+}
+
+.Checkout_Add_Address--Subcontainer,
 .Checkout_Select_Address--Address_Subcontainer {
     height: 100%;
     width: 100%;
     overflow-y: scroll;
 }
 
+.Checkout_Add_Address--Header {
+    background-color: rgb(35, 35, 35);
+    position: sticky;
+    top: 0px;
+    padding: .2em 0em .5em 0em;
+}
+
+.Checkout_Add_Address--Portion +
+.Checkout_Add_Address--Portion {
+    margin-top: 1em;
+}
+
+.Checkout_Add_Address--Portion label {
+    font-size: var(--Checkout_Add_Address--Label);
+    display: block;
+}
+
+.Checkout_Add_Address--Portion input {
+    font-size: var(--Checkout_Add_Address--Input);
+    width: 250px;
+    margin-top: .3em;
+    padding: .3em .2em .2em .3em;
+}
+
+.Checkout_Add_Address--Portion button {
+    font-size: var(--Checkout_Select_Address--Button);
+    font-weight: 600;
+    background-color: goldenrod;
+    padding: .5em 2em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Checkout_Select_Address--Header {
+    background-color: rgb(35, 35, 35);
+    position: sticky;
+    top: 0px;
+    padding: .5em 0em 1em 0em;
+}
+
+.Close--Checkout_Add_Address,
 .Close--Checkout_Select_Address {
     position: absolute;
     z-index: 3;
@@ -82,16 +136,19 @@
     cursor: pointer;
     &:hover {
 
+        .Close--Checkout_Add_Address--Cross::after,
         .Close--Checkout_Select_Address--Cross::after {
             background-color: red;
         }
         
+        .Close--Checkout_Add_Address--Cross::before,
         .Close--Checkout_Select_Address--Cross::before {
             background-color: red;
         }
     }
 }
 
+.Close--Checkout_Add_Address--Cross,
 .Close--Checkout_Select_Address--Cross {
     position: relative;
     width: 28px;
@@ -102,6 +159,7 @@
     align-items: center;
 }
 
+.Close--Checkout_Add_Address--Cross::after,
 .Close--Checkout_Select_Address--Cross::after {
     background-color: white;
     position: absolute;
@@ -113,6 +171,7 @@
     transform: rotate(-45deg);
 }
 
+.Close--Checkout_Add_Address--Cross::before,
 .Close--Checkout_Select_Address--Cross::before {
     background-color: white;
     position: absolute;
@@ -122,17 +181,6 @@
     height: 3px;
     margin: 0em auto;
     transform: rotate(45deg);
-}
-
-.Checkout_Select_Address--Header {
-    background-color: rgb(35, 35, 35);
-    position: sticky;
-    top: 0px;
-    padding: .5em 0em 1em 0em;
-}
-
-.Checkout_Select_Address--Header h3 {
-    font-size: var(--Checkout_Select_Address--Header_Heading);
 }
 
 .Checkout_Select_Address--Address {
