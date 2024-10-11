@@ -19,11 +19,72 @@ function Buy() {
   const [orderTotal, setOrderTotal] = useState("");
   const [orderTotalNumber, setOrderTotalNumber] = useState(0);
   const [freeDelivery, setFreeDelivery] = useState(false);
+  const [resOrderId, setResOrderId] = useState("");
+  const [paymentId, setPaymentId] = useState("");
+  const [signature, setSignature] = useState("");
   const [initiatePayment, setInitiatePayment] = useState(false);
   const [time, setTime] = useState(30);
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const order = JSON.parse(localStorage.getItem("order"));
+
+  async function placeOrder() {
+    const mailId = userInfo?.mailId;
+    let response = await axios.post("http://localhost:3000/placebuyorder", {
+      mail: mailId,
+    });
+    if (response.data.access) {
+      localStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
+      setTimeout(() => {
+        localStorage.removeItem("order");
+        window.close();
+      }, 30000);
+      setInterval(() => {
+        setTime((prev) => {
+          return prev - 1;
+        });
+      }, 1000);
+    }
+  }
+
+  async function openPayment() {
+    const mailId = userInfo?.mailId;
+    if (address) {
+      let response = await axios.post("http://localhost:3000/initiatebuypayment", {
+        mail: mailId,
+      });
+      let amount = Math.round(orderTotalNumber * 100);
+      if (response.data.access) {
+        console.log(response.data.data.id);
+        const options = {
+          key: import.meta.env.VITE_KEY,
+          amount: amount,
+          currency: "INR",
+          name: "Ron-commerce",
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: response.data.id,
+          handler: function (response) {
+            setPaymentId(response.razorpay_payment_id);
+            setSignature(response.razorpay_signature);
+            setResOrderId(response.razorpay_order_id);
+            placeOrder();
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+        setInitiatePayment(true);
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      }
+    } else {
+      setShowSelectAddress(true);
+    }
+  }
 
   async function addDeliveryAddress() {
     let mailId = userInfo?.mailId;
@@ -88,7 +149,7 @@ function Buy() {
   useEffect(() => {
     const mailId = userInfo?.mailId;
     async function getProduct() {
-      let response = await axios.post("http://localhost:3000/getproduct", {
+      let response = await axios.post("http://localhost:3000/getbuyproduct", {
         mail: mailId,
       });
       if (response.data.access) {
@@ -145,8 +206,8 @@ function Buy() {
         <div
           className={
             order?.orderPlaced
-              ? "But_Order_Placed"
-              : "But_Order_Placed--Inactive"
+              ? "Buy_Order_Placed"
+              : "Buy_Order_Placed--Inactive"
           }
         >
           <p className="Buy_Order_Placed--Success">
@@ -422,7 +483,7 @@ function Buy() {
                     </div>
                     <div className="Buy_Info_Order--Final">
                       <p>Order total:</p>
-                      <p>₹{productTotal}</p>
+                      <p>₹{orderTotal}</p>
                     </div>
                   </div>
                 </div>
@@ -431,7 +492,10 @@ function Buy() {
                     Thoroughly review your order details before proceeding to
                     payment!
                   </p>
-                  <button className="Buy_Info--Payment_Button">
+                  <button
+                    className="Buy_Info--Payment_Button"
+                    onClick={openPayment}
+                  >
                     Proceed to Pay
                   </button>
                 </div>

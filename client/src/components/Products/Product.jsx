@@ -191,19 +191,21 @@ function Product() {
         id: product,
       });
       console.log(response);
-      let data = response.data[0];
-      let mrp = currencyConvert(data.price);
-      let offer_price = (
-        data.price -
-        data.price * (data.discount / 100)
-      ).toFixed(2);
-      let offerPriceInt = offer_price.split(".")[0];
-      let offerPriceDecimal = offer_price.toString().split(".")[1];
-      let actualPrice =
-        currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
-      data.mrp = mrp;
-      data.actualPrice = actualPrice;
-      setProductData(data);
+      if (response.data.access) {
+        let data = response.data.data[0];
+        let mrp = currencyConvert(data.price);
+        let offer_price = (
+          data.price -
+          data.price * (data.discount / 100)
+        ).toFixed(2);
+        let offerPriceInt = offer_price.split(".")[0];
+        let offerPriceDecimal = offer_price.toString().split(".")[1];
+        let actualPrice =
+          currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
+        data.mrp = mrp;
+        data.actualPrice = actualPrice;
+        setProductData(data);
+      }
     }
     async function getReviews() {
       let response = await axios.post("http://localhost:3000/getreviews", {
