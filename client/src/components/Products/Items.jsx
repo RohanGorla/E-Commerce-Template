@@ -23,10 +23,10 @@ function Items() {
   const [showCompany, setShowCompany] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [addlistError, setAddlistError] = useState(false);
+  const [addListErrorMessage, setaddListErrorMessage] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [addlistError, setAddlistError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -43,13 +43,13 @@ function Items() {
         count: 1,
       });
       if (response.data.access) {
+        setError(false);
+        setErrorMessage("");
         setSuccess(true);
         setSuccessMessage(response.data.successMsg);
         setTimeout(() => {
           setSuccess(false);
         }, 3500);
-        setError(false);
-        setErrorMessage("");
       } else {
         setSuccess(false);
         setSuccessMessage("");
@@ -74,7 +74,9 @@ function Items() {
               newlist.toLowerCase() == wishlists[i].wishlistname.toLowerCase()
             ) {
               setAddlistError(true);
-              setErrorMsg("You have another list with the same name!");
+              setaddListErrorMessage(
+                "You have another wishlist with the same name!"
+              );
               addListAccess = false;
               break;
             } else {
@@ -95,7 +97,7 @@ function Items() {
           setWishlists(response.data);
           setAddListShow(false);
           setAddlistError(false);
-          setErrorMsg("");
+          setaddListErrorMessage("");
           addToWishlist(wishProduct, newlist);
           if (wishlists.length == 0) {
             setSelectedWistlist(newlist);
@@ -103,7 +105,7 @@ function Items() {
         }
       } else {
         setAddlistError(true);
-        setErrorMsg("Wishlist name cannot be empty!");
+        setaddListErrorMessage("Wishlist name cannot be empty!");
       }
     }
   }
@@ -118,11 +120,17 @@ function Items() {
         discount: product.discount,
         wishlist: list,
       });
-      console.log(response);
       if (response.data.access) {
         setError(false);
         setErrorMessage("");
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
       } else {
+        setSuccess(false);
+        setSuccessMessage("");
         setError(true);
         setErrorMessage(response.data.errorMsg);
         setTimeout(() => {
@@ -291,7 +299,9 @@ function Items() {
               }
             >
               <p className="Items_AddNewList--Error_Heading">Error!</p>
-              <p className="Items_AddNewList--Error_Note">{errorMsg}</p>
+              <p className="Items_AddNewList--Error_Note">
+                {addListErrorMessage}
+              </p>
             </div>
             <div className="Items_AddNewList--Input">
               <label>Wishlist name</label>
@@ -309,7 +319,7 @@ function Items() {
                   onClick={() => {
                     setAddListShow(false);
                     setAddlistError(false);
-                    setErrorMsg("");
+                    setaddListErrorMessage("");
                     setNewlist("");
                   }}
                 >
