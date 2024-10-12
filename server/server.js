@@ -246,7 +246,7 @@ app.post("/addtocart", (req, res) => {
               if (err) return res.send({ access: false, errorMsg: err });
               res.send({
                 access: true,
-                successMsg: "Successfully updated item quantity in cart!",
+                successMsg: "Successfully updated product quantity in cart!",
               });
             }
           );
@@ -262,7 +262,7 @@ app.post("/addtocart", (req, res) => {
             }
             res.send({
               access: true,
-              successMsg: "Item has been successfully added to your cart!",
+              successMsg: "Product has been successfully added to your cart!",
             });
           }
         );
@@ -390,7 +390,7 @@ app.post("/addtowish", (req, res) => {
       if (data.length) {
         res.send({
           access: false,
-          errorMsg: "You already have this product in this wishlist!",
+          errorMsg: `You already have this product in ${req.body.wishlist}!`,
         });
       } else {
         db.query(
@@ -401,8 +401,10 @@ app.post("/addtowish", (req, res) => {
               console.log(err);
               return res.send(err);
             }
-            console.log("insert into wishlistitems data ->", data);
-            res.send({ access: true, data: data });
+            res.send({
+              access: true,
+              successMsg: `Product has been successfully added to ${req.body.wishlist}`,
+            });
           }
         );
       }
