@@ -64,6 +64,8 @@
     --Orders_Main--Order_Count: 14px;
     --Orders_Main--Order_Total: 18px;
     --Orders_Main--Order_Delivery--Date: 16px;
+    --Orders_Main--Order_Delivery--Address_Details: 14px;
+    --Orders_Main--Order_Delivery--Address_Details--Name: 16px;
     --Orders_Empty--Header: 24px;
     --Order_Empty_Note: 18px;
     --Orders_Empty--Button: 16px;
@@ -109,11 +111,53 @@
 
 .Orders_Main--Order_Delivery--Date {
     font-size: var(--Orders_Main--Order_Delivery--Date);
-    margin-bottom: .3em;
+    margin-bottom: .5em;
+}
+
+.Orders_Main--Order_Delivery--Address_Container {
+    position: relative;
+    width: fit-content;
+}
+
+.Orders_Main--Order_Delivery--Address_Details {
+    background-color: black;
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+    width: fit-content;
+    max-width: 260px;
+    padding: .7em;
+    border-style: none;
+    border-radius: 6px;
+    border: 1px solid white;
+}
+
+.Orders_Main--Order_Delivery--Address_Details--Inactive {
+    display: none;
+}
+
+.Orders_Main--Order_Delivery--Address_Details--Name {
+    font-size: var(--Orders_Main--Order_Delivery--Address_Details--Name);
+    font-weight: 500;
+}
+
+.Orders_Main--Order_Delivery--Address_Details--House,
+.Orders_Main--Order_Delivery--Address_Details--Street,
+.Orders_Main--Order_Delivery--Address_Details--City,
+.Orders_Main--Order_Delivery--Address_Details--Country {
+    font-size: var(--Orders_Main--Order_Delivery--Address_Details);
+    margin-top: .5em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .Orders_Main--Order_Delivery--Address {
     font-size: var(--Orders_Main--Order_Delivery--Address);
+    position: relative;
     display: flex;
     align-items: center;
 }

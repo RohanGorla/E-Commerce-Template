@@ -5,6 +5,8 @@ import "../styles/Orders.css";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
+  const [showAddress, setShowAddress] = useState(false);
+  const [showAddressId, setShowAddressId] = useState(-1);
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -37,7 +39,13 @@ function Orders() {
   }, []);
 
   return (
-    <div className="Orders_Container">
+    <div
+      className="Orders_Container"
+      onClick={(e) => {
+        setShowAddress(false);
+        setShowAddressId(-1);
+      }}
+    >
       {orders.length ? (
         <div className="Orders_Main">
           <div className="Orders_Main--Header">
@@ -103,13 +111,60 @@ function Orders() {
                     <p className="Orders_Main--Order_Delivery--Date">
                       Arriving on `Delivery date`
                     </p>
-                    <p className="Orders_Main--Order_Delivery--Address">
-                      Delivery address -
-                      <span className="Orders_Main--Order_Delivery--Address_Name">
-                        {address.addressname}
-                        <span className="Orders_Main--Order_Delivery--Address_Show"></span>
-                      </span>
-                    </p>
+                    <div className="Orders_Main--Order_Delivery--Address_Container">
+                      <div
+                        className={
+                          showAddress
+                            ? order.productid == showAddressId
+                              ? "Orders_Main--Order_Delivery--Address_Details"
+                              : "Orders_Main--Order_Delivery--Address_Details--Inactive"
+                            : "Orders_Main--Order_Delivery--Address_Details--Inactive"
+                        }
+                        onClick={(e) => {
+                          setShowAddress(true);
+                          setShowAddressId(order.productid);
+                          e.stopPropagation();
+                        }}
+                      >
+                        <p className="Orders_Main--Order_Delivery--Address_Details--Name">
+                          {address.addressname}
+                        </p>
+                        <p className="Orders_Main--Order_Delivery--Address_Details--House">
+                          {address.house}
+                        </p>
+                        {/* <p className="Orders_Main--Order_Delivery--Address_Details--Landmark">
+                          {address.landmark}
+                        </p> */}
+                        <p className="Orders_Main--Order_Delivery--Address_Details--Street">
+                          {address.street}
+                        </p>
+                        <p className="Orders_Main--Order_Delivery--Address_Details--City">
+                          {address.city}, {address.state}
+                        </p>
+                        <p className="Orders_Main--Order_Delivery--Address_Details--Country">
+                          {address.country}
+                        </p>
+                      </div>
+                      <p className="Orders_Main--Order_Delivery--Address">
+                        Delivery address -
+                        <span
+                          className="Orders_Main--Order_Delivery--Address_Name"
+                          onClick={(e) => {
+                            if (order.productid == showAddressId) {
+                              setShowAddress(false);
+                              setShowAddressId(-1);
+                            } else {
+                              setShowAddress(true);
+                              setShowAddressId(order.productid);
+                            }
+                            e.stopPropagation();
+                          }}
+                        >
+                          {address.addressname}
+                          <span className="Orders_Main--Order_Delivery--Address_Show"></span>
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </div>
               );
