@@ -27,93 +27,10 @@ function Items() {
   const [errorMessage, setErrorMessage] = useState("");
   const [addlistError, setAddlistError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
-
-  useEffect(() => {
-    async function getProducts() {
-      const response = await axios.post("http://localhost:3000/getproducts", {
-        category: item,
-      });
-      const data = response.data;
-      let productsId = [];
-      data.map((product) => {
-        productsId.push(product.id);
-      });
-      async function getReviews() {
-        let response = await axios.post("http://localhost:3000/getallreviews", {
-          id: productsId,
-        });
-        if (response.data.access) {
-          setReviews(response.data.data);
-        }
-        setProducts(data);
-        setActualProducts(data);
-      }
-      getReviews();
-    }
-    async function getWishlists() {
-      if (mailId) {
-        const response = await axios.post(
-          "http://localhost:3000/getwishlists",
-          {
-            mailId: mailId,
-          }
-        );
-        setWishlists(response.data);
-      }
-    }
-    async function getCompany() {
-      let response = await axios.post("http://localhost:3000/getcompany", {
-        category: item,
-      });
-      setAllCom(response.data);
-    }
-    getProducts();
-    getWishlists();
-    getCompany();
-  }, []);
-
-  useEffect(() => {
-    let newData = actualProducts.filter((product) => {
-      if (selectedCompany) {
-        if (lowerPrice || upperPrice) {
-          let price = product.price - product.price * (product.discount / 100);
-          if (upperPrice == 0) {
-            if (lowerPrice <= price && product.company == selectedCompany) {
-              return product;
-            }
-          } else {
-            if (
-              lowerPrice <= price &&
-              upperPrice >= price &&
-              product.company == selectedCompany
-            ) {
-              return product;
-            }
-          }
-        } else {
-          if (product.company == selectedCompany) {
-            return product;
-          }
-        }
-      } else {
-        if (lowerPrice || upperPrice) {
-          let price = product.price - product.price * (product.discount / 100);
-          if (upperPrice == 0) {
-            if (lowerPrice <= price) {
-              return product;
-            }
-          } else {
-            if (lowerPrice <= price && upperPrice >= price) {
-              return product;
-            }
-          }
-        }
-      }
-    });
-    setProducts(newData);
-  }, [lowerPrice, upperPrice, selectedCompany]);
 
   async function addToCart(id, title, price, discount) {
     if (mailId) {
@@ -126,11 +43,16 @@ function Items() {
         count: 1,
       });
       if (response.data.access) {
-        console.log(response.data.successMsg);
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
         setError(false);
         setErrorMessage("");
       } else {
-        console.log(response.data.errorMsg);
+        setSuccess(false);
+        setSuccessMessage("");
         setError(true);
         setErrorMessage(response.data.errorMsg);
         setTimeout(() => {
@@ -256,6 +178,91 @@ function Items() {
       actualRating: actualProductRating.toFixed(1),
     };
   }
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.post("http://localhost:3000/getproducts", {
+        category: item,
+      });
+      const data = response.data;
+      let productsId = [];
+      data.map((product) => {
+        productsId.push(product.id);
+      });
+      async function getReviews() {
+        let response = await axios.post("http://localhost:3000/getallreviews", {
+          id: productsId,
+        });
+        if (response.data.access) {
+          setReviews(response.data.data);
+        }
+        setProducts(data);
+        setActualProducts(data);
+      }
+      getReviews();
+    }
+    async function getWishlists() {
+      if (mailId) {
+        const response = await axios.post(
+          "http://localhost:3000/getwishlists",
+          {
+            mailId: mailId,
+          }
+        );
+        setWishlists(response.data);
+      }
+    }
+    async function getCompany() {
+      let response = await axios.post("http://localhost:3000/getcompany", {
+        category: item,
+      });
+      setAllCom(response.data);
+    }
+    getProducts();
+    getWishlists();
+    getCompany();
+  }, []);
+
+  useEffect(() => {
+    let newData = actualProducts.filter((product) => {
+      if (selectedCompany) {
+        if (lowerPrice || upperPrice) {
+          let price = product.price - product.price * (product.discount / 100);
+          if (upperPrice == 0) {
+            if (lowerPrice <= price && product.company == selectedCompany) {
+              return product;
+            }
+          } else {
+            if (
+              lowerPrice <= price &&
+              upperPrice >= price &&
+              product.company == selectedCompany
+            ) {
+              return product;
+            }
+          }
+        } else {
+          if (product.company == selectedCompany) {
+            return product;
+          }
+        }
+      } else {
+        if (lowerPrice || upperPrice) {
+          let price = product.price - product.price * (product.discount / 100);
+          if (upperPrice == 0) {
+            if (lowerPrice <= price) {
+              return product;
+            }
+          } else {
+            if (lowerPrice <= price && upperPrice >= price) {
+              return product;
+            }
+          }
+        }
+      }
+    });
+    setProducts(newData);
+  }, [lowerPrice, upperPrice, selectedCompany]);
 
   return (
     <div className="Items_Container">
@@ -395,6 +402,19 @@ function Items() {
           <div className="Items_Error--Container">
             <p className="Items_Error--Heading">Error!</p>
             <p className="Items_Error--Message">{errorMessage}</p>
+          </div>
+        </div>
+        {/* Success Message Box */}
+        <div
+          className={
+            success
+              ? "Items--Success Items--Success--Active"
+              : "Items--Success Items--Success--Inactive"
+          }
+        >
+          <div className="Items_Success--Container">
+            <p className="Items_Success--Heading">Success!</p>
+            <p className="Items_Success--Message">{successMessage}</p>
           </div>
         </div>
         {/* add a category button to go back to selecting categories if needed. */}
