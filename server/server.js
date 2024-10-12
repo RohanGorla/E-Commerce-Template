@@ -570,41 +570,47 @@ app.post("/initiatepayment", (req, res) => {
 
 app.post("/placeorder", (req, res) => {
   let mail = req.body.mail;
-  console.log("orders");
-  res.send({ access: true });
-  // db.query("select * from cart where mailid = ?", mail, (err, data) => {
-  //   if (err) {
-  //     console.log(err);
-  //     return res.send({ access: false, errorMsg: err });
-  //   }
-  //   console.log("cart data->", data);
-  //   data.map((data) => {
-  //     let values = [
-  //       mail,
-  //       data.productid,
-  //       data.title,
-  //       data.price,
-  //       data.discount,
-  //     ];
-  //     db.query(
-  //       "insert into orders (mailid, productid, title, price, discount) values (?)",
-  //       [values],
-  //       (err, data) => {
-  //         if (err) {
-  //           console.log(err);
-  //           return res.send(err);
-  //         }
-  //         console.log("insert data ->", data);
-  //         res.send({ access: true });
-  //       }
-  //     );
-  //   });
-  // });
-  // db.query("delete from cart where mailid = ?", mail, (err, data) => {
-  //   if (err) return res.send(err);
-  //   console.log(data);
-  //   res.send({ access: true });
-  // });
+  let address = JSON.stringify({
+    addressname: req.body.address.addressname,
+    house: req.body.address.house,
+    street: req.body.address.street,
+    landmark: req.body.address.landmark,
+    city: req.body.address.city,
+    state: req.body.address.state,
+    country: req.body.address.country,
+  });
+  db.query("select * from cart where mailid = ?", mail, (err, cartData) => {
+    if (err) {
+      console.log(err);
+      return res.send({ access: false, errorMsg: err });
+    }
+    cartData.forEach((product) => {
+      let values = [
+        mail,
+        product.productid,
+        product.title,
+        product.price,
+        product.discount,
+        product.count,
+        address,
+      ];
+      db.query(
+        "insert into orders (mailid, productid, title, price, discount, count, address) values (?)",
+        [values],
+        (err, data) => {
+          if (err) {
+            console.log(err);
+            return res.send({ access: false, errorMsg: err });
+          }
+          console.log("insert data ->", data);
+        }
+      );
+    });
+  });
+  db.query("delete from cart where mailid = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    res.send({ access: true });
+  });
 });
 
 app.post("/getorders", (req, res) => {

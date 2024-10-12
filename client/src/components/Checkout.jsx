@@ -33,6 +33,7 @@ function Checkout() {
     const mailId = userInfo?.mailId;
     let response = await axios.post("http://localhost:3000/placeorder", {
       mail: mailId,
+      address: address
     });
     if (response.data.access) {
       sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
