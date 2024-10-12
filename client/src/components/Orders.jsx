@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/Orders.css";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
@@ -21,23 +23,26 @@ function Orders() {
   }, []);
 
   return (
-    <div>
-      {orders.map((order) => {
-        console.log(order);
-        let address = JSON.parse(order.address) || {city: "city"};
-        console.log(address);
-        {
-          /* let name = address?.addressname || "Blah"; */
-        }
-        return (
-          <>
-            <h2>{order.title}</h2>
-            <p>{order.price}</p>
-            <p>{order.discount}</p>
-            <p>{address.city}</p>
-          </>
-        );
-      })}
+    <div className="Orders_Container">
+      {orders.length ? (
+        <div className="Orders_Main"></div>
+      ) : (
+        <div className="Orders_Empty">
+          <p className="Orders_Empty--Header">You do not have any orders!</p>
+          <p className="Orders_Empty--Note">
+            You have not placed any orders yet. Once you successfully place an
+            order, the order details will be shown here!
+          </p>
+          <button
+            className="Orders_Empty--Button"
+            onClick={() => {
+              navigate("/products");
+            }}
+          >
+            Go shopping
+          </button>
+        </div>
+      )}
     </div>
   );
 }

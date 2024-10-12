@@ -1,0 +1,40 @@
+:root {
+    --Order_Main_Font: "Inter, sans-serif";
+    --Order_Secondary_Font: "Roboto", sans-serif;
+    --Orders_Empty--Header: 24px;
+    --Order_Empty_Note: 18px;
+    --Orders_Empty--Button: 16px;
+}
+
+.Orders_Empty {
+    background-color: rgb(35, 35, 35);
+    font-family: var(--Order_Secondary_Font);
+    max-width: 1000px;
+    padding: 2em 3em;
+    margin: 0em auto;
+    margin-top: 3em;
+    border-style: none;
+    border-radius: 9px;
+    border: 2px solid white;
+}
+
+.Orders_Empty--Header {
+    font-size: var(--Orders_Empty--Header);
+    font-weight: 500;
+    margin-bottom: .2em;
+}
+
+.Orders_Empty--Note {
+    font-size: var(--Order_Empty_Note);
+}
+
+.Orders_Empty--Button {
+    font-size: var(--Orders_Empty--Button);
+    font-weight: 600;
+    background-color: goldenrod;
+    padding: .6em 2em;
+    margin-top: 1em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
