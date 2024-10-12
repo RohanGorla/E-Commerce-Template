@@ -351,7 +351,6 @@ function Wishlist() {
                           <p
                             className="Wish_Item_Details--Name"
                             onClick={() => {
-                              console.log("hello");
                               window.open(
                                 `${window.location.origin}/products/product/${item.productid}`
                               );

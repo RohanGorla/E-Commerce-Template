@@ -104,6 +104,7 @@
 
 .Cart_Items_Display--Image img {
     width: 100%;
+    cursor: pointer;
 }
 
 .Cart_Items_Display--Details {
@@ -121,6 +122,10 @@
     -webkit-line-clamp: 3;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
+    &:hover {
+        color: orangered;
+    }
 }
 
 .Cart_Items_Details--Rating {

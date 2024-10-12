@@ -132,10 +132,24 @@ function Cart() {
                   return (
                     <div key={index} className="Cart_Items_Display">
                       <div className="Cart_Items_Display--Image">
-                        <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                        <img
+                          src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                          onClick={() => {
+                            window.open(
+                              `${window.location.origin}/products/product/${item.productid}`
+                            );
+                          }}
+                        ></img>
                       </div>
                       <div className="Cart_Items_Display--Details">
-                        <p className="Cart_Items_Details--Title">
+                        <p
+                          className="Cart_Items_Details--Title"
+                          onClick={() => {
+                            window.open(
+                              `${window.location.origin}/products/product/${item.productid}`
+                            );
+                          }}
+                        >
                           {item.title}
                         </p>
                         <div className="Cart_Items_Details--Rating">
