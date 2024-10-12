@@ -119,7 +119,13 @@ function Wishlist() {
       price: product.price,
       discount: product.discount,
       mailId: mailId,
+      count: 1,
     });
+    if (response.data.access) {
+      console.log(response.data.successMsg);
+    } else {
+      console.log(response.data.errorMsg);
+    }
     // console.log(response);
   }
 

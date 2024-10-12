@@ -225,45 +225,45 @@ app.post("/addtocart", (req, res) => {
   const price = req.body.price;
   const discount = req.body.discount;
   const mailId = req.body.mailId;
-  let count;
-  if (req.body.count) {
-    count = req.body.count;
-  } else {
-    count = 1;
-  }
+  const itemCount = req.body.count;
   db.query(
     "select count from cart where productid = ? and mailid = ?",
     [id, mailId],
     (err, data) => {
       if (err) return res.send(err);
       if (data.length) {
-        // itemCount = data[0].count;
-        // db.query(
-        //   "update cart set ? where productid = ? and mailid = ?",
-        //   [{ count: itemCount + 1 }, id, mailId],
-        //   (err, data) => {
-        //     if (err) return res.send(err);
-        //     res.send(data);
-        //   }
-        // );
-        console.log("already exists");
-        res.send({
-          access: false,
-          errorMsg: "You already have this product in your cart!",
-        });
+        if (data[0].count === itemCount) {
+          return res.send({
+            access: false,
+            errorMsg:
+              "You already have this product with the same quantity in your cart!",
+          });
+        } else {
+          db.query(
+            "update cart set ? where productid = ? and mailid = ?",
+            [{ count: itemCount }, id, mailId],
+            (err, data) => {
+              if (err) return res.send({ access: false, errorMsg: err });
+              res.send({
+                access: true,
+                successMsg: "Successfully updated item quantity in cart!",
+              });
+            }
+          );
+        }
       } else {
-        console.log("not exists");
-        const values = [mailId, id, title, price, discount, count];
+        const values = [mailId, id, title, price, discount, itemCount];
         db.query(
           "insert into cart (mailid, productid, title, price, discount, count) values (?)",
           [values],
           (err, data) => {
             if (err) {
-              console.log(err);
-              return res.send(err);
+              return res.send({ access: false, errorMsg: err });
             }
-            console.log(data);
-            res.send({ access: true });
+            res.send({
+              access: true,
+              successMsg: "Item has been successfully added to your cart!",
+            });
           }
         );
       }

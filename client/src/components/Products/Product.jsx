@@ -40,7 +40,7 @@ function Product() {
   const [currentUrl, setCurrentUrl] = useState(imageUrls[0].src);
 
   async function addToCart() {
-    const mail = localStorage.getItem("mailId");
+    const mail = userInfo?.mailId;
     if (mail) {
       const response = await axios.post("http://localhost:3000/addtocart", {
         id: product,
@@ -50,7 +50,11 @@ function Product() {
         count: count,
         mailId: mail,
       });
-      console.log(response);
+      if (response.data.access) {
+        console.log(response.data.successMsg);
+      } else {
+        console.log(response.data.errorMsg);
+      }
     }
   }
 
@@ -137,8 +141,8 @@ function Product() {
   }
 
   async function addReview() {
-    const username = userInfo.firstname + " " + userInfo.lastname;
-    const mail = userInfo.mailId;
+    const username = userInfo?.firstname + " " + userInfo?.lastname;
+    const mail = userInfo?.mailId;
     if (review.length || starSetIndex >= 0) {
       if (hasReview) {
         let response = await axios.put("http://localhost:3000/editreview", {
@@ -165,7 +169,7 @@ function Product() {
 
   async function deleteReview() {
     let response = await axios.delete("http://localhost:3000/deletereview", {
-      data: { id: product, mail: userInfo.mailId },
+      data: { id: product, mail: userInfo?.mailId },
     });
     console.log(response);
     repeater(response);

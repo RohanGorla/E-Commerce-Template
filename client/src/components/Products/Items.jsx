@@ -116,7 +116,6 @@ function Items() {
   }, [lowerPrice, upperPrice, selectedCompany]);
 
   async function addToCart(id, title, price, discount) {
-    // console.log(id, title, price, discount);
     if (mailId) {
       const response = await axios.post("http://localhost:3000/addtocart", {
         id: id,
@@ -124,9 +123,10 @@ function Items() {
         price: price,
         discount: discount,
         mailId: mailId,
+        count: 1,
       });
-      // console.log(response);
       if (response.data.access) {
+        console.log(response.data.successMsg);
         setError(false);
         setErrorMessage("");
       } else {
