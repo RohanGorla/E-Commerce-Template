@@ -12,8 +12,12 @@ function Wishlist() {
   const [addListShow, setAddListShow] = useState(false);
   const [newlist, setNewlist] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [addListError, setAddListError] = useState(false);
+  const [addListErrorMsg, setAddListErrorMsg] = useState("");
   const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
   const navigate = useNavigate();
@@ -67,8 +71,8 @@ function Wishlist() {
             if (
               newlist.toLowerCase() == wishlists[i].wishlistname.toLowerCase()
             ) {
-              setError(true);
-              setErrorMsg("You have another list with the same name!");
+              setAddListError(true);
+              setAddListErrorMsg("You have another list with the same name!");
               addListAccess = false;
               break;
             } else {
@@ -88,15 +92,15 @@ function Wishlist() {
           );
           setWishlists(response.data);
           setAddListShow(false);
-          setError(false);
-          setErrorMsg("");
+          setAddListError(false);
+          setAddListErrorMsg("");
           if (wishlists.length == 0) {
             setSelectedWistlist(newlist);
           }
         }
       } else {
-        setError(true);
-        setErrorMsg("Wishlist name cannot be empty!");
+        setAddListError(true);
+        setAddListErrorMsg("Wishlist name cannot be empty!");
       }
     }
   }
@@ -122,9 +126,21 @@ function Wishlist() {
       count: 1,
     });
     if (response.data.access) {
-      console.log(response.data.successMsg);
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+      setError(false);
+      setErrorMessage("");
     } else {
-      console.log(response.data.errorMsg);
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
     // console.log(response);
   }
@@ -214,13 +230,13 @@ function Wishlist() {
           </div>
           <div
             className={
-              error
+              addListError
                 ? "Wish_AddNewList--Error"
                 : "Wish_AddNewList--Error--Inactive"
             }
           >
             <p className="Wish_AddNewList--Error_Heading">Error!</p>
-            <p className="Wish_AddNewList--Error_Note">{errorMsg}</p>
+            <p className="Wish_AddNewList--Error_Note">{addListErrorMsg}</p>
           </div>
           <div className="Wish_AddNewList--Input">
             <label>Wishlist name</label>
@@ -237,8 +253,8 @@ function Wishlist() {
                 className="Wish_AddNewList--Buttons_Cancel"
                 onClick={() => {
                   setAddListShow(false);
-                  setError(false);
-                  setErrorMsg("");
+                  setAddListError(false);
+                  setAddListErrorMsg("");
                 }}
               >
                 Cancel
@@ -251,6 +267,32 @@ function Wishlist() {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Wish--Error Wish--Error--Active"
+            : "Wish--Error Wish--Error--Inactive"
+        }
+      >
+        <div className="Wish_Error--Container">
+          <p className="Wish_Error--Heading">Error!</p>
+          <p className="Wish_Error--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Wish--Success Wish--Success--Active"
+            : "Wish--Success Wish--Success--Inactive"
+        }
+      >
+        <div className="Wish_Success--Container">
+          <p className="Wish_Success--Heading">Success!</p>
+          <p className="Wish_Success--Message">{successMessage}</p>
         </div>
       </div>
       <div className="Wish_Subcontainer">
