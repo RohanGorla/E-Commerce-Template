@@ -293,17 +293,11 @@
 }
 
 .Items--Error--Active {
-    position: absolute;
-    z-index: 1;
     top: 20px;
-    width: 100%;
 }
 
 .Items--Error--Inactive {
-    position: absolute;
-    z-index: 1;
     top: -200px;
-    width: 100%;
 }
 
 .Items_Error--Container {
@@ -337,17 +331,11 @@
 }
 
 .Items--Success--Active {
-    position: absolute;
-    z-index: 1;
     top: 20px;
-    width: 100%;
 }
 
 .Items--Success--Inactive {
-    position: absolute;
-    z-index: 1;
     top: -200px;
-    width: 100%;
 }
 
 .Items_Success--Container {

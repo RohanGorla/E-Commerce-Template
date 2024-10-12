@@ -18,6 +18,12 @@ function Product() {
   const [actualRating, setActualRating] = useState(0);
   const [ratings, setRatings] = useState(0);
   const [count, setCount] = useState(1);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [addlistError, setAddlistError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const imageUrls = [
@@ -51,9 +57,21 @@ function Product() {
         mailId: mail,
       });
       if (response.data.access) {
-        console.log(response.data.successMsg);
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+        setError(false);
+        setErrorMessage("");
       } else {
-        console.log(response.data.errorMsg);
+        setSuccess(false);
+        setSuccessMessage("");
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
       }
     }
   }
@@ -224,6 +242,33 @@ function Product() {
   return (
     <div className="Product_Main_Container">
       <div className="Product_Main">
+        {/* Error Message Box */}
+        <div
+          className={
+            error
+              ? "Product--Error Product--Error--Active"
+              : "Product--Error Product--Error--Inactive"
+          }
+        >
+          <div className="Product_Error--Container">
+            <p className="Product_Error--Heading">Error!</p>
+            <p className="Product_Error--Message">{errorMessage}</p>
+          </div>
+        </div>
+        {/* Success Message Box */}
+        <div
+          className={
+            success
+              ? "Product--Success Product--Success--Active"
+              : "Product--Success Product--Success--Inactive"
+          }
+        >
+          <div className="Product_Success--Container">
+            <p className="Product_Success--Heading">Success!</p>
+            <p className="Product_Success--Message">{successMessage}</p>
+          </div>
+        </div>
+        {/* Product Details Section */}
         <div className="Product_Main--Product">
           <div className="Product_Main--Product_Images">
             <div className="Product_Images--Main_Image">
@@ -357,6 +402,7 @@ function Product() {
             </div>
           </div>
         </div>
+        {/* Product About Section */}
         <div className="Product_Main--About">
           <h4>About the product</h4>
           <p>
@@ -384,6 +430,7 @@ function Product() {
             any questions or issues.
           </p>
         </div>
+        {/* Product Reviews And Ratings */}
         <div className="Product_Main--Reviews">
           <div className="Product_Reviews--Header">
             <h4 className="Product_Reviews--Header_Heading">Product Reviews</h4>
