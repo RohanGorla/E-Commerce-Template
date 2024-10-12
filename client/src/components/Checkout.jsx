@@ -27,7 +27,7 @@ function Checkout() {
   const [time, setTime] = useState(30);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const address = JSON.parse(localStorage.getItem("address"));
-  const order = JSON.parse(localStorage.getItem("order"));
+  const order = JSON.parse(sessionStorage.getItem("order"));
 
   async function placeOrder() {
     const mailId = userInfo?.mailId;
@@ -35,9 +35,8 @@ function Checkout() {
       mail: mailId,
     });
     if (response.data.access) {
-      localStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
+      sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
       setTimeout(() => {
-        localStorage.removeItem("order");
         window.close();
       }, 30000);
       setInterval(() => {

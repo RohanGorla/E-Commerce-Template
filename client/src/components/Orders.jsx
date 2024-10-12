@@ -23,11 +23,18 @@ function Orders() {
   return (
     <div>
       {orders.map((order) => {
+        console.log(order);
+        let address = JSON.parse(order.address) || {city: "city"};
+        console.log(address);
+        {
+          /* let name = address?.addressname || "Blah"; */
+        }
         return (
           <>
             <h2>{order.title}</h2>
             <p>{order.price}</p>
             <p>{order.discount}</p>
+            <p>{address.city}</p>
           </>
         );
       })}
