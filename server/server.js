@@ -503,6 +503,15 @@ app.post("/initiatebuypayment", (req, res) => {
 app.post("/placebuyorder", (req, res) => {
   let mail = req.body.mail;
   let product = req.body.product;
+  let address = JSON.stringify({
+    addressname: req.body.address.addressname,
+    house: req.body.address.house,
+    street: req.body.address.street,
+    landmark: req.body.address.landmark,
+    city: req.body.address.city,
+    state: req.body.address.state,
+    country: req.body.address.country,
+  });
   let values = [
     mail,
     product.productid,
@@ -510,9 +519,10 @@ app.post("/placebuyorder", (req, res) => {
     product.price,
     product.discount,
     product.count,
+    address,
   ];
   db.query(
-    "insert into orders (mailid, productid, title, price, discount, count) values (?)",
+    "insert into orders (mailid, productid, title, price, discount, count, address) values (?)",
     [values],
     (err, data) => {
       if (err) return res.send({ access: false, errorMsg: err });
