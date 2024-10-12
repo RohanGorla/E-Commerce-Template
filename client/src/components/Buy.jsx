@@ -26,18 +26,18 @@ function Buy() {
   const [time, setTime] = useState(30);
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const order = JSON.parse(localStorage.getItem("order"));
+  const order = JSON.parse(sessionStorage.getItem("order"));
 
   async function placeOrder() {
     const mailId = userInfo?.mailId;
     let response = await axios.post("http://localhost:3000/placebuyorder", {
       mail: mailId,
       product: productData,
+      address: address,
     });
     if (response.data.access) {
-      localStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
+      sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
       setTimeout(() => {
-        localStorage.removeItem("order");
         window.close();
       }, 30000);
       setInterval(() => {
