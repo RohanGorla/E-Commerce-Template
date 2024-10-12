@@ -364,7 +364,9 @@ function Items() {
                   );
                 })
               ) : (
-                <p className="Items_Wishlist_Selector--Lists_Error">No lists to show!</p>
+                <p className="Items_Wishlist_Selector--Lists_Error">
+                  No lists to show!
+                </p>
               )}
             </div>
             <div className="Items_Wishlist_Selector--Buttons">
@@ -540,7 +542,16 @@ function Items() {
                     ></img>
                   </div>
                   <div className="Item_Details">
-                    <p className="Item_Name">{product.title}</p>
+                    <p
+                      className="Item_Name"
+                      onClick={() => {
+                        window.open(
+                          `${window.location.origin}/products/product/${product.id}`
+                        );
+                      }}
+                    >
+                      {product.title}
+                    </p>
                     <p className="Item_Category">
                       {product.category} - {product.company}
                     </p>

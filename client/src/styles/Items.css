@@ -423,6 +423,7 @@
 .Item_Image img {
     max-width: 100%;
     height: 220px;
+    cursor: pointer;
 }
 
 .Item_Details {
@@ -442,6 +443,10 @@
     text-overflow: ellipsis;
     font-size: var(--Prdct_Name_Fs);
     font-family: var(--Prdct_Main_Ff);
+    cursor: pointer;
+    &:hover {
+        color: orangered;
+    }
 }
 
 .Item_Category {
