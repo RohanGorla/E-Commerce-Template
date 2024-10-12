@@ -41,7 +41,7 @@ function Orders() {
   return (
     <div
       className="Orders_Container"
-      onClick={(e) => {
+      onClick={() => {
         setShowAddress(false);
         setShowAddressId(-1);
       }}
@@ -56,18 +56,11 @@ function Orders() {
               let address = JSON.parse(order.address);
               let cost = order.price - (order.price * order.discount) / 100;
               let orderTotal = order.count * cost;
-              let costCurrency;
               let orderCurrency;
               if (cost.toString().split(".").length === 1) {
-                costCurrency =
-                  currencyConvert(cost.toString().split(".")[0]) + ".00";
                 orderCurrency =
                   currencyConvert(orderTotal.toString().split(".")[0]) + ".00";
               } else {
-                costCurrency =
-                  currencyConvert(cost.toString().split(".")[0]) +
-                  "." +
-                  cost.toString().split(".")[1];
                 orderCurrency =
                   currencyConvert(orderTotal.toString().split(".")[0]) +
                   "." +
@@ -96,12 +89,6 @@ function Orders() {
                     >
                       {order.title}
                     </p>
-                    {/* <p className="Orders_Main--Order_Price">
-                      <span className="Orders_Main--Order_Price--Symbol">
-                        ₹
-                      </span>
-                      {costCurrency}
-                    </p> */}
                     <p className="Orders_Main--Order_Count">
                       Qty: {order.count}
                     </p>
@@ -116,9 +103,9 @@ function Orders() {
                         className={
                           showAddress
                             ? order.productid == showAddressId
-                              ? "Orders_Main--Order_Delivery--Address_Details"
-                              : "Orders_Main--Order_Delivery--Address_Details--Inactive"
-                            : "Orders_Main--Order_Delivery--Address_Details--Inactive"
+                              ? "Orders_Main--Order_Delivery--Address_Details Orders_Main--Order_Delivery--Address_Details--Active"
+                              : "Orders_Main--Order_Delivery--Address_Details Orders_Main--Order_Delivery--Address_Details--Inactive"
+                            : "Orders_Main--Order_Delivery--Address_Details Orders_Main--Order_Delivery--Address_Details--Inactive"
                         }
                         onClick={(e) => {
                           setShowAddress(true);
@@ -132,9 +119,6 @@ function Orders() {
                         <p className="Orders_Main--Order_Delivery--Address_Details--House">
                           {address.house}
                         </p>
-                        {/* <p className="Orders_Main--Order_Delivery--Address_Details--Landmark">
-                          {address.landmark}
-                        </p> */}
                         <p className="Orders_Main--Order_Delivery--Address_Details--Street">
                           {address.street}
                         </p>
@@ -159,6 +143,19 @@ function Orders() {
                             }
                             e.stopPropagation();
                           }}
+                          
+                          // If Hover Function Is Preferred Use Below Code
+
+                          // onMouseOver={() => {
+                          //   setShowAddress(true);
+                          //   setShowAddressId(order.productid);
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setTimeout(() => {
+                          //     setShowAddress(false);
+                          //     setShowAddressId(-1);
+                          //   }, 300);
+                          // }}
                         >
                           {address.addressname}
                           <span className="Orders_Main--Order_Delivery--Address_Show"></span>

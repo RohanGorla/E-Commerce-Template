@@ -1,6 +1,20 @@
+:root {
+    --Order_Main_Font: "Roboto", sans-serif;
+    --Order_Secondary_Font: "Inter", sans-serif;
+    --Orders_Main--Header: 30px;
+    --Orders_Main--Order_Name: 20px;
+    --Orders_Main--Order_Price: 22px;
+    --Orders_Main--Order_Count: 14px;
+    --Orders_Main--Order_Total: 18px;
+    --Orders_Main--Order_Delivery--Date: 16px;
+    --Orders_Main--Order_Delivery--Address_Details: 14px;
+    --Orders_Main--Order_Delivery--Address_Details--Name: 16px;
+    --Orders_Empty--Header: 24px;
+    --Order_Empty_Note: 18px;
+    --Orders_Empty--Button: 16px;
+}
 
 .Orders_Main {
-    /* background-color: rgb(35, 35, 35); */
     max-width: 1100px;
     margin: 0em auto;
     padding: 0em 1em;
@@ -22,6 +36,8 @@
     font-size: var(--Orders_Main--Header);
 }
 
+/* Individual Order Container */
+
 .Orders_Main--Order_Container {
     background-color: rgb(35, 35, 35);
     display: flex;
@@ -35,6 +51,8 @@
 .Orders_Main--Order_Container {
     margin-top: 1em;
 }
+
+/* Order Product Image */
 
 .Orders_Main--Order_Image {
     width: 25%;
@@ -50,25 +68,11 @@
     cursor: pointer;
 }
 
+/* Order Essential Details */
+
 .Orders_Main--Order_Details {
     width: 60%;
     font-family: var(--Order_Main_Font);
-}
-
-:root {
-    --Order_Main_Font: "Roboto", sans-serif;
-    --Order_Secondary_Font: "Inter, sans-serif";
-    --Orders_Main--Header: 30px;
-    --Orders_Main--Order_Name: 20px;
-    --Orders_Main--Order_Price: 22px;
-    --Orders_Main--Order_Count: 14px;
-    --Orders_Main--Order_Total: 18px;
-    --Orders_Main--Order_Delivery--Date: 16px;
-    --Orders_Main--Order_Delivery--Address_Details: 14px;
-    --Orders_Main--Order_Delivery--Address_Details--Name: 16px;
-    --Orders_Empty--Header: 24px;
-    --Order_Empty_Note: 18px;
-    --Orders_Empty--Button: 16px;
 }
 
 .Orders_Main--Order_Name {
@@ -87,24 +91,13 @@
     }
 }
 
-.Orders_Main--Order_Price {
-    font-size: var(--Orders_Main--Order_Price);
-    margin-bottom: .3em;
-    display: flex;
-}
-
-.Orders_Main--Order_Price--Symbol {
-    align-self: flex-start;
-    font-size: 14px;
-    margin-top: .2em;
-}
-
 .Orders_Main--Order_Count {
     font-size: var(--Orders_Main--Order_Count);
     margin-bottom: .5em;
 }
 
 .Orders_Main--Order_Total {
+    font-family: var(--Order_Secondary_Font);
     font-size: var(--Orders_Main--Order_Total);
     margin-bottom: .3em;
 }
@@ -114,14 +107,16 @@
     margin-bottom: .5em;
 }
 
+/* Order Delivery Address Container */
+
 .Orders_Main--Order_Delivery--Address_Container {
     position: relative;
     width: fit-content;
 }
 
 .Orders_Main--Order_Delivery--Address_Details {
-    background-color: black;
     position: absolute;
+    background-color: black;
     bottom: 20px;
     right: 0px;
     width: fit-content;
@@ -130,10 +125,16 @@
     border-style: none;
     border-radius: 6px;
     border: 1px solid white;
+    transition: all .2s ease-in-out;
+}
+
+.Orders_Main--Order_Delivery--Address_Details--Active {
+    opacity: 1;
+    
 }
 
 .Orders_Main--Order_Delivery--Address_Details--Inactive {
-    display: none;
+    opacity: 0;
 }
 
 .Orders_Main--Order_Delivery--Address_Details--Name {
@@ -167,7 +168,20 @@
     align-items: center;
     margin-left: .3em;
     cursor: pointer;
+    &:hover {
+        color: orangered;
+
+        .Orders_Main--Order_Delivery--Address_Show::after {
+            background-color: orangered;
+        }
+
+        .Orders_Main--Order_Delivery--Address_Show::before {
+            background-color: orangered;
+        }
+    }
 }
+
+/* Order Delivery Address Up Arrow Icon */
 
 .Orders_Main--Order_Delivery--Address_Show {
     position: relative;
@@ -199,7 +213,7 @@
     transform-origin: 0% 50%;
 }
 
-/* If There Are No Orders */
+/* Orders Empty Section */
 
 .Orders_Empty {
     background-color: rgb(35, 35, 35);
