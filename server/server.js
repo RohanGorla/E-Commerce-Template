@@ -373,6 +373,21 @@ app.post("/getfromwish", (req, res) => {
   );
 });
 
+app.post("/checkwished", (req, res) => {
+  let mail = req.body.mailId;
+  let productId = req.body.productId;
+  db.query(
+    "select wishlistname from wishlistitems where mailid = ? and productid = ?",
+    [mail, productId],
+    (err, data) => {
+      if (err) return res.send({ access: false, errorMsg: err });
+      if (data.length) {
+        res.send({ access: true });
+      }
+    }
+  );
+});
+
 app.post("/addtowish", (req, res) => {
   const values = [
     req.body.id,

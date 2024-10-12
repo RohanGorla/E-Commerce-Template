@@ -1,6 +1,6 @@
 import { useState, useEffect, act } from "react";
 import { useParams } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaHeart } from "react-icons/fa";
 import axios from "axios";
 import "../../styles/Product.css";
 
@@ -18,6 +18,8 @@ function Product() {
   const [actualRating, setActualRating] = useState(0);
   const [ratings, setRatings] = useState(0);
   const [count, setCount] = useState(1);
+  const [wishlists, setWishlists] = useState([]);
+  const [wished, setWished] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [addlistError, setAddlistError] = useState(false);
@@ -208,6 +210,7 @@ function Product() {
   }
 
   useEffect(() => {
+    const mailId = userInfo?.mailId;
     async function getProduct() {
       let response = await axios.post("http://localhost:3000/getproduct", {
         id: product,
@@ -235,8 +238,29 @@ function Product() {
       });
       repeater(response);
     }
+    async function getWishinfo() {
+      if (mailId) {
+        const listsResponse = await axios.post(
+          "http://localhost:3000/getwishlists",
+          {
+            mailId: mailId,
+          }
+        );
+        setWishlists(listsResponse.data);
+        const wishedResponse = await axios.post(
+          "http://localhost:3000/checkwished",
+          { mailId: mailId, productId: product }
+        );
+        if (wishedResponse.data.access) {
+          setWished(true);
+        } else {
+          setWished(false);
+        }
+      }
+    }
     getProduct();
     getReviews();
+    getWishinfo();
   }, []);
 
   return (
@@ -325,6 +349,14 @@ function Product() {
               <span className="Product_Details--Ratingscount">
                 {ratings} ratings
               </span>
+              <FaHeart
+                size={20}
+                className={
+                  wished
+                    ? "Product_Details--Heart Product_Details--Heart--Wished"
+                    : "Product_Details--Heart"
+                }
+              />
             </div>
             <p className="Product_Details--Price">
               <span className="Product_Details--Discount">
@@ -399,6 +431,7 @@ function Product() {
               >
                 Add to cart
               </button>
+              {/* <FaHeart size={22} className="Product_Details--Heart" /> */}
             </div>
           </div>
         </div>
