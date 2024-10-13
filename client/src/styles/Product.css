@@ -9,8 +9,11 @@
     --Product_Details_Counter: 18px;
     --Product_Details--Counter--Note: 16px;
     --Product_Details--Button: 16px;
-    --Product_Details--About_Title: 28px;
-    --Product_Details--About_Info: 17px;
+    --Product_Details--About_And_Delivery_Title: 28px;
+    --Product_Details--About_And_Delivery_Info: 17px;
+    --Product_Main--Delivery--SubHeading: 20px;
+    --Product_Main--Delivery_Address--Addressname: 18px;
+    --Product_Main--Delivery_Address--Button: 14px;
     --Product_Reviews--Header_Heading: 28px;
     --Product_Reviews--Review--Note: 16px;
     --Product_Reviews--Reviewer_Name: 18px;
@@ -323,22 +326,70 @@
     color: red;
 }
 
-/* Product About Info */
+/* Product About And Delivery Details */
 
-.Product_Main--About {
+.Product_Main--About_And_Delivery {
+    font-family: var(--Product_Details--Main_Font);
     margin-top: 3em;
-    max-width: 900px;
+    display: flex;
 }
 
-.Product_Main--About h4 {
-    font-size: var(--Product_Details--About_Title);
-    font-family: var(--Product_Details--Main_Font);
+.Product_Main--About {
+    /* outline: 2px dotted blue; */
+    width: 70%;
+    padding: 1em 2em;
+    padding-left: 0em;
+}
+
+.Product_Main--About h4,
+.Product_Main--Delivery h4 {
+    font-size: var(--Product_Details--About_And_Delivery_Title);
 }
 
 .Product_Main--About p {
-    font-size: var(--Product_Details--About_Info);
+    font-size: var(--Product_Details--About_And_Delivery_Info);
     font-family: var(--Product_Details--Side_Font);
     margin: 1em 0;
+}
+
+.Product_Main--Delivery {
+    /* outline: 2px white dotted; */
+    background-color: rgb(44, 44, 44);
+    width: 30%;
+    padding: 1em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Product_Main--Delivery h5 {
+    font-size: var(--Product_Main--Delivery--SubHeading);
+    margin: .3em 0em;
+}
+
+.Product_Main--Delivery p {
+    font-size: var(--Product_Details--About_And_Delivery_Info);
+}
+
+.Product_Main--Delivery_Address--Info +
+.Product_Main--Delivery_Address--Info {
+    margin-top: .4em;
+}
+
+.Product_Main--Delivery_Address--Addressname {
+    font-size: var(--Product_Main--Delivery_Address--Addressname);
+    font-weight: 600;
+}
+
+.Product_Main--Delivery_Address button {
+    font-size: var(--Product_Main--Delivery_Address--Button);
+    background-color: goldenrod;
+    font-weight: 600;
+    margin: .6em 0em;
+    padding: .7em 2em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Product Reviews Container */

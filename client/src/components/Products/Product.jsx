@@ -20,6 +20,8 @@ function Product() {
   const [count, setCount] = useState(1);
   const [wishlists, setWishlists] = useState([]);
   const [wished, setWished] = useState(false);
+  const [deliveryDate, setDeliveryDate] = useState("");
+  const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [addlistError, setAddlistError] = useState(false);
@@ -258,6 +260,18 @@ function Product() {
         }
       }
     }
+    let todayDate = new Date();
+    let deliveryDate = new Date(
+      todayDate.getFullYear(),
+      todayDate.getMonth(),
+      todayDate.getDate() + 7
+    );
+    let delDtStr = deliveryDate.toDateString();
+    let delDtDisplay = `${delDtStr.split(" ")[0]}, ${delDtStr.split(" ")[1]} ${
+      delDtStr.split(" ")[2]
+    }, ${delDtStr.split(" ")[3]}`;
+    setDeliveryDate(deliveryDate);
+    setDeliveryDateDisplay(delDtDisplay);
     getProduct();
     getReviews();
     getWishinfo();
@@ -327,12 +341,7 @@ function Product() {
               <span className="Product_Details--Actualrating">
                 {actualRating}
               </span>
-              <div
-                className="Product_Details--Stars"
-                onMouseLeave={() => {
-                  setStarHoverIndex(-1);
-                }}
-              >
+              <div className="Product_Details--Stars">
                 {Array(5)
                   .fill(0)
                   .map((_, index) => {
@@ -436,32 +445,72 @@ function Product() {
           </div>
         </div>
         {/* Product About Section */}
-        <div className="Product_Main--About">
-          <h4>About the product</h4>
-          <p>
-            Introducing our latest electronic product, the ProSound Wireless
-            Earbuds—your perfect companion for an immersive audio experience.
-            With sleek design and cutting-edge technology, these earbuds deliver
-            crystal-clear sound and deep bass, ensuring you never miss a beat.
-          </p>
-          <p>
-            When you purchase the ProSound Wireless Earbuds, you'll receive
-            everything you need to get started. Inside the box, you'll find the
-            earbuds themselves, along with a compact charging case that provides
-            up to 20 hours of additional playtime.
-          </p>
-          <p>
-            We've also added a few extras to enhance your experience with the
-            ProSound Wireless Earbuds. Included in the package is a quick start
-            guide to help you set up your earbuds in minutes, along with a
-            warranty card that provides coverage for any manufacturing defects
-            for up to one year.
-          </p>
-          <p>
-            Lastly, the ProSound Wireless Earbuds come with access to our
-            dedicated customer support team, available 24/7 to assist you with
-            any questions or issues.
-          </p>
+        <div className="Product_Main--About_And_Delivery">
+          <div className="Product_Main--About">
+            <h4>About the product</h4>
+            <p>
+              Introducing our latest electronic product, the ProSound Wireless
+              Earbuds—your perfect companion for an immersive audio experience.
+              With sleek design and cutting-edge technology, these earbuds
+              deliver crystal-clear sound and deep bass, ensuring you never miss
+              a beat.
+            </p>
+            <p>
+              When you purchase the ProSound Wireless Earbuds, you'll receive
+              everything you need to get started. Inside the box, you'll find
+              the earbuds themselves, along with a compact charging case that
+              provides up to 20 hours of additional playtime.
+            </p>
+            <p>
+              We've also added a few extras to enhance your experience with the
+              ProSound Wireless Earbuds. Included in the package is a quick
+              start guide to help you set up your earbuds in minutes, along with
+              a warranty card that provides coverage for any manufacturing
+              defects for up to one year.
+            </p>
+            <p>
+              Lastly, the ProSound Wireless Earbuds come with access to our
+              dedicated customer support team, available 24/7 to assist you with
+              any questions or issues.
+            </p>
+          </div>
+          <div className="Product_Main--Delivery">
+            <h4>Shipping details</h4>
+            <h5>Delivery address</h5>
+            {address ? (
+              <div className="Product_Main--Delivery_Address">
+                <p className="Product_Main--Delivery_Address--Info Product_Main--Delivery_Address--Addressname">
+                  {address.addressname}
+                </p>
+                <p className="Product_Main--Delivery_Address--Info">
+                  {address.house}
+                </p>
+                <p className="Product_Main--Delivery_Address--Info">
+                  {address.landmark}
+                </p>
+                <p className="Product_Main--Delivery_Address--Info">
+                  {address.street}
+                </p>
+                <p className="Product_Main--Delivery_Address--Info">
+                  {address.city}, {address.state}
+                </p>
+                <p className="Product_Main--Delivery_Address--Info">
+                  {address.country}
+                </p>
+                <button>Change Delivery Address</button>
+              </div>
+            ) : (
+              <div className="Product_Main--Delivery_Address--Empty">
+                <p>
+                  No delivery address selected. Please select a delivery
+                  address!
+                </p>
+                <button>Select Delivery Address</button>
+              </div>
+            )}
+            <h5>Delivery date</h5>
+            <p>{deliveryDateDisplay}</p>
+          </div>
         </div>
         {/* Product Reviews And Ratings */}
         <div className="Product_Main--Reviews">
