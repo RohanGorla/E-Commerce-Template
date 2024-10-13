@@ -310,8 +310,8 @@ app.post("/getwishlists", (req, res) => {
     "select * from wishlists where mailid = ?",
     [mailId],
     (err, data) => {
-      if (err) return res.send(err);
-      res.send(data);
+      if (err) return res.send({ access: false, errorMsg: err });
+      res.send({ access: true, data: data });
     }
   );
 });
@@ -381,9 +381,7 @@ app.post("/checkwished", (req, res) => {
     [mail, productId],
     (err, data) => {
       if (err) return res.send({ access: false, errorMsg: err });
-      if (data.length) {
-        res.send({ access: true });
-      }
+      res.send({ access: true, data: data });
     }
   );
 });
