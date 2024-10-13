@@ -379,7 +379,11 @@ app.post("/checkwished", (req, res) => {
     [mail, productId],
     (err, data) => {
       if (err) return res.send({ access: false, errorMsg: err });
-      res.send({ access: true, data: data });
+      if (data.length) {
+        res.send({ access: true, data: data });
+      } else {
+        res.send({ access: false });
+      }
     }
   );
 });
@@ -410,7 +414,7 @@ app.post("/addtowish", (req, res) => {
           (err, data) => {
             if (err) {
               console.log(err);
-              return res.send(err);
+              return res.send({ access: false, errorMsg: err });
             }
             res.send({
               access: true,

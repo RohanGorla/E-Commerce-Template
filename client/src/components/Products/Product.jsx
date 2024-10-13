@@ -208,6 +208,7 @@ function Product() {
       setTimeout(() => {
         setSuccess(false);
       }, 3500);
+      getWishedInfo();
     } else {
       setSuccess(false);
       setSuccessMessage("");
