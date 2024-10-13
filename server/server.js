@@ -323,16 +323,15 @@ app.post("/addwishlist", (req, res) => {
     "insert into wishlists (mailid, wishlistname) values(?)",
     [[mailId, listName]],
     (err, data) => {
-      if (err) return res.send(err);
-      console.log(data);
+      if (err) return res.send({ access: false, errorMsg: err });
     }
   );
   db.query(
     "select * from wishlists where mailid = ?",
     [mailId],
     (err, data) => {
-      if (err) return res.send(err);
-      res.send(data);
+      if (err) return res.send({ access: false, errorMsg: err });
+      res.send({ access: true, data: data });
     }
   );
 });
@@ -365,10 +364,9 @@ app.post("/getfromwish", (req, res) => {
     (err, data) => {
       if (err) {
         console.log(err);
-        return res.send(err);
+        return res.send({ access: false, errorMsg: err });
       }
-      console.log("select * from wishlistitems data ->", data);
-      res.send(data);
+      res.send({ access: true, data: data });
     }
   );
 });
