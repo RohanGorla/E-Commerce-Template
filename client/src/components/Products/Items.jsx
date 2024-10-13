@@ -125,6 +125,7 @@ function Items() {
         setErrorMessage("");
         setSuccess(true);
         setSuccessMessage(response.data.successMsg);
+        setShowSelectlist(false);
         setTimeout(() => {
           setSuccess(false);
         }, 3500);
@@ -370,7 +371,6 @@ function Items() {
                       key={index}
                       onClick={() => {
                         setSelectedWistlist(list.wishlistname);
-                        setShowSelectlist(false);
                         addToWishlist(wishProduct, list.wishlistname);
                       }}
                     >

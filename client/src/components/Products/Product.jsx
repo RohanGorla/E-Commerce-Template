@@ -7,6 +7,8 @@ import "../../styles/Product.css";
 function Product() {
   const { product } = useParams();
   const [productData, setProductData] = useState({});
+  const [deliveryDate, setDeliveryDate] = useState("");
+  const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
   const [review, setReview] = useState("");
   const [yourReview, setYourReview] = useState({});
   const [reviews, setReviews] = useState([]);
@@ -20,8 +22,8 @@ function Product() {
   const [count, setCount] = useState(1);
   const [wishlists, setWishlists] = useState([]);
   const [wished, setWished] = useState(false);
-  const [deliveryDate, setDeliveryDate] = useState("");
-  const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
+  const [showSelectlist, setShowSelectlist] = useState(false);
+  const [addListShow, setAddListShow] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [addlistError, setAddlistError] = useState(false);
@@ -68,6 +70,38 @@ function Product() {
         }, 3500);
         setError(false);
         setErrorMessage("");
+      } else {
+        setSuccess(false);
+        setSuccessMessage("");
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    }
+  }
+
+  async function addToWishlist(list) {
+    const mailId = userInfo?.mailId;
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/addtowish", {
+        id: productData.id,
+        title: productData.title,
+        mailId: mailId,
+        price: productData.price,
+        discount: productData.discount,
+        wishlist: list,
+      });
+      if (response.data.access) {
+        setError(false);
+        setErrorMessage("");
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setShowSelectlist(false);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
       } else {
         setSuccess(false);
         setSuccessMessage("");
@@ -279,33 +313,99 @@ function Product() {
 
   return (
     <div className="Product_Main_Container">
+      {/* Select Wishlist Box */}
+      <div
+        className={
+          showSelectlist
+            ? "Product_Wishlist_Selector--Active"
+            : "Product_Wishlist_Selector"
+        }
+      >
+        <div className="Product_Wishlist_Selector--Tint"></div>
+        <div className="Product_Wishlist_Selector--Container">
+          <div className="Product_Wishlist_Selector--Header_Container">
+            <div className="Product_Wishlist_Selector--Header">
+              <h2 className="Product_Wishlist_Selector--Header_Heading">
+                Select wishlist
+              </h2>
+              <button
+                className="Product_Wishlist_Selector--Header_Button"
+                onClick={() => {
+                  setAddListShow(true);
+                  setShowSelectlist(false);
+                }}
+              >
+                Create new list
+              </button>
+            </div>
+          </div>
+          <div className="Product_Wishlist_Selector--Lists">
+            {wishlists.length ? (
+              wishlists.map((list, index) => {
+                return (
+                  <div
+                    className="Product_Wishlist_Selector--List"
+                    key={index}
+                    onClick={() => {
+                      // setSelectedWistlist(list.wishlistname);
+                      addToWishlist(list.wishlistname);
+                    }}
+                  >
+                    <p className="Product_Wishlist_Selector--Listname">
+                      {list.wishlistname}
+                    </p>
+                  </div>
+                );
+              })
+            ) : (
+              <p className="Product_Wishlist_Selector--Lists_Error">
+                No lists to show!
+              </p>
+            )}
+          </div>
+          <div className="Product_Wishlist_Selector--Buttons">
+            {/* <button className="Product_Wishlist_Selector--Buttons_Create">
+              Create new list
+            </button> */}
+            <button
+              className="Product_Wishlist_Selector--Buttons_Cancel"
+              onClick={() => {
+                setShowSelectlist(false);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Product--Error Product--Error--Active"
+            : "Product--Error Product--Error--Inactive"
+        }
+      >
+        <div className="Product_Error--Container">
+          <p className="Product_Error--Heading">Error!</p>
+          <p className="Product_Error--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Product--Success Product--Success--Active"
+            : "Product--Success Product--Success--Inactive"
+        }
+      >
+        <div className="Product_Success--Container">
+          <p className="Product_Success--Heading">Success!</p>
+          <p className="Product_Success--Message">{successMessage}</p>
+        </div>
+      </div>
+      {/* Product Main */}
       <div className="Product_Main">
-        {/* Error Message Box */}
-        <div
-          className={
-            error
-              ? "Product--Error Product--Error--Active"
-              : "Product--Error Product--Error--Inactive"
-          }
-        >
-          <div className="Product_Error--Container">
-            <p className="Product_Error--Heading">Error!</p>
-            <p className="Product_Error--Message">{errorMessage}</p>
-          </div>
-        </div>
-        {/* Success Message Box */}
-        <div
-          className={
-            success
-              ? "Product--Success Product--Success--Active"
-              : "Product--Success Product--Success--Inactive"
-          }
-        >
-          <div className="Product_Success--Container">
-            <p className="Product_Success--Heading">Success!</p>
-            <p className="Product_Success--Message">{successMessage}</p>
-          </div>
-        </div>
         {/* Product Details Section */}
         <div className="Product_Main--Product">
           <div className="Product_Main--Product_Images">
@@ -365,6 +465,9 @@ function Product() {
                     ? "Product_Details--Heart Product_Details--Heart--Wished"
                     : "Product_Details--Heart"
                 }
+                onClick={() => {
+                  setShowSelectlist(true);
+                }}
               />
             </div>
             <p className="Product_Details--Price">
