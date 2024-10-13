@@ -139,9 +139,14 @@
     width: 100%;
     padding: 1em;
     border-radius: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     cursor: pointer;
     &:hover {
-        color: red;
+        .Product_Wishlist_Selector--Listname {
+            color: red;
+        }        
     }
 }
 
@@ -153,6 +158,14 @@
 .Product_Wishlist_Selector--Listname {
     font-size: var(--Product_Wishlist_Name);
     font-family: var(--Product_Details--Main_Font);
+}
+
+.Product_Wishlist_Selector--Heart--Wished {
+    color: red;
+}
+
+.Product_Wishlist_Selector--Heart--Notwished {
+    color: rgb(160, 160, 160);
 }
 
 .Product_Wishlist_Selector--Lists_Error {

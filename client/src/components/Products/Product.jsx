@@ -22,6 +22,7 @@ function Product() {
   const [count, setCount] = useState(1);
   const [wishlists, setWishlists] = useState([]);
   const [wished, setWished] = useState(false);
+  const [wishedLists, setWishedLists] = useState([]);
   const [addressData, setAddressData] = useState([]);
   const [showSelectAddress, setShowSelectAddress] = useState(false);
   const [showAddAddress, setShowAddAddress] = useState(false);
@@ -121,6 +122,24 @@ function Product() {
           setError(false);
         }, 3500);
       }
+    }
+  }
+
+  async function getWishedInfo() {
+    const mailId = userInfo?.mailId;
+    const response = await axios.post("http://localhost:3000/checkwished", {
+      mailId: mailId,
+      productId: product,
+    });
+    if (response.data.access) {
+      setWished(true);
+      let wishedlists = response.data.data.map((list) => {
+        return list.wishlistname;
+      });
+      setWishedLists(wishedlists);
+    } else {
+      setWished(false);
+      setWishedLists([]);
     }
   }
 
@@ -336,7 +355,7 @@ function Product() {
       });
       repeater(response);
     }
-    async function getWishinfo() {
+    async function getWishlists() {
       if (mailId) {
         const listsResponse = await axios.post(
           "http://localhost:3000/getwishlists",
@@ -344,15 +363,8 @@ function Product() {
             mailId: mailId,
           }
         );
-        setWishlists(listsResponse.data);
-        const wishedResponse = await axios.post(
-          "http://localhost:3000/checkwished",
-          { mailId: mailId, productId: product }
-        );
-        if (wishedResponse.data.access) {
-          setWished(true);
-        } else {
-          setWished(false);
+        if (listsResponse.data.access) {
+          setWishlists(listsResponse.data.data);
         }
       }
     }
@@ -368,7 +380,8 @@ function Product() {
     }
     getProduct();
     getReviews();
-    getWishinfo();
+    getWishlists();
+    getWishedInfo();
     getAddress();
     let todayDate = new Date();
     let deliveryDate = new Date(
@@ -427,6 +440,14 @@ function Product() {
                     <p className="Product_Wishlist_Selector--Listname">
                       {list.wishlistname}
                     </p>
+                    <FaHeart
+                      className={
+                        wishedLists.includes(list.wishlistname)
+                          ? "Product_Wishlist_Selector--Heart--Wished"
+                          : "Product_Wishlist_Selector--Heart--Notwished"
+                      }
+                      size={20}
+                    />
                   </div>
                 );
               })
