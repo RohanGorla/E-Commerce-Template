@@ -428,7 +428,7 @@ app.delete("/removefromwish", (req, res) => {
   const listname = req.body.list;
   const mailId = req.body.mail;
   db.query(
-    "delete from wishlistitems where mailid = ? and listname = ? and productid = ?",
+    "delete from wishlistitems where mailid = ? and wishlistname = ? and productid = ?",
     [mailId, listname, id],
     (err, data) => {
       if (err) {
