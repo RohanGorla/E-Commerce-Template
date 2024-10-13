@@ -12,7 +12,6 @@ function Address() {
       address: current,
       mailId: userInfo.mailId,
     });
-    console.log(response);
     if (response.data.access) {
       localStorage.setItem(
         "userInfo",
@@ -24,16 +23,17 @@ function Address() {
 
   useEffect(() => {
     async function getAddress() {
-      // const mail = localStorage.getItem("mailId");
       const mail = userInfo.mailId;
       let response = await axios.post("http://localhost:3000/getaddress", {
         mail: mail,
       });
-      console.log(response);
-      setAddress(response.data);
+      if (response.data.access) {
+        setAddress(response.data.data);
+      }
     }
     getAddress();
   }, []);
+
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       <div

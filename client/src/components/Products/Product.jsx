@@ -22,6 +22,16 @@ function Product() {
   const [count, setCount] = useState(1);
   const [wishlists, setWishlists] = useState([]);
   const [wished, setWished] = useState(false);
+  const [addressData, setAddressData] = useState([]);
+  const [showSelectAddress, setShowSelectAddress] = useState(false);
+  const [showAddAddress, setShowAddAddress] = useState(false);
+  const [addressFullName, setAddressFullName] = useState("");
+  const [addressHouse, setAddressHouse] = useState("");
+  const [addressStreet, setAddressStreet] = useState("");
+  const [addressLandmark, setAddressLandmark] = useState("");
+  const [addressCity, setAddressCity] = useState("");
+  const [addressState, setAddressState] = useState("");
+  const [addressCountry, setAddressCountry] = useState("");
   const [showSelectlist, setShowSelectlist] = useState(false);
   const [addListShow, setAddListShow] = useState(false);
   const [error, setError] = useState(false);
@@ -112,6 +122,58 @@ function Product() {
         }, 3500);
       }
     }
+  }
+
+  async function addDeliveryAddress() {
+    let mailId = userInfo?.mailId;
+    let response = await axios.post("http://localhost:3000/addaddress", {
+      mail: mailId,
+      name: addressFullName,
+      house: addressHouse,
+      street: addressStreet,
+      landmark: addressLandmark,
+      city: addressCity,
+      state: addressState,
+      country: addressCountry,
+    });
+    if (response.data.access) {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: addressFullName })
+      );
+      localStorage.setItem(
+        "address",
+        JSON.stringify({
+          addressname: addressFullName,
+          house: addressHouse,
+          street: addressStreet,
+          landmark: addressLandmark,
+          city: addressCity,
+          state: addressState,
+          country: addressCountry,
+        })
+      );
+      setShowAddAddress(false);
+      setAddressData(response.data.data);
+    } else {
+      console.log(response.data.errorMsg);
+    }
+  }
+
+  async function changeBaseAddress(current) {
+    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
+      address: current,
+      mailId: userInfo?.mailId,
+    });
+    console.log(response);
+    if (response.data.access) {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: current.addressname })
+      );
+      localStorage.setItem("address", JSON.stringify(current));
+    }
+    setShowSelectAddress(false);
   }
 
   async function buyProduct() {
@@ -294,6 +356,20 @@ function Product() {
         }
       }
     }
+    async function getAddress() {
+      let response = await axios.post("http://localhost:3000/getaddress", {
+        mail: mailId,
+      });
+      if (response.data.access) {
+        setAddressData(response.data.data);
+      } else {
+        console.log(response.data.errorMsg);
+      }
+    }
+    getProduct();
+    getReviews();
+    getWishinfo();
+    getAddress();
     let todayDate = new Date();
     let deliveryDate = new Date(
       todayDate.getFullYear(),
@@ -306,9 +382,6 @@ function Product() {
     }, ${delDtStr.split(" ")[3]}`;
     setDeliveryDate(deliveryDate);
     setDeliveryDateDisplay(delDtDisplay);
-    getProduct();
-    getReviews();
-    getWishinfo();
   }, []);
 
   return (
@@ -375,6 +448,184 @@ function Product() {
             >
               Cancel
             </button>
+          </div>
+        </div>
+      </div>
+      {/* Add Address Box */}
+      <div
+        className={
+          showAddAddress
+            ? "Checkout_Add_Address"
+            : "Checkout_Add_Address--Inactive"
+        }
+      >
+        <div className="Checkout_Add_Address--Tint"></div>
+        <div className="Checkout_Add_Address--Container">
+          <div className="Checkout_Add_Address--Subcontainer">
+            <div
+              className="Close--Checkout_Add_Address"
+              onClick={() => {
+                setShowAddAddress(false);
+              }}
+            >
+              <span className="Close--Checkout_Add_Address--Cross"></span>
+            </div>
+            <div className="Checkout_Add_Address--Header">
+              <h3>Add Delivery Address</h3>
+            </div>
+            <div className="Checkout_Add_Address--Address">
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Name">
+                <label>Address name</label>
+                <input
+                  value={addressFullName}
+                  onChange={(e) => {
+                    setAddressFullName(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--House">
+                <label>House/Flat</label>
+                <input
+                  value={addressHouse}
+                  onChange={(e) => {
+                    setAddressHouse(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Street">
+                <label>Street</label>
+                <input
+                  value={addressStreet}
+                  onChange={(e) => {
+                    setAddressStreet(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Landmark">
+                <label>Landmark</label>
+                <input
+                  value={addressLandmark}
+                  onChange={(e) => {
+                    setAddressLandmark(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--City">
+                <label>City</label>
+                <input
+                  value={addressCity}
+                  onChange={(e) => {
+                    setAddressCity(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--State">
+                <label>State</label>
+                <input
+                  value={addressState}
+                  onChange={(e) => {
+                    setAddressState(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Country">
+                <label>Country</label>
+                <input
+                  value={addressCountry}
+                  onChange={(e) => {
+                    setAddressCountry(e.target.value);
+                  }}
+                  required
+                ></input>
+              </div>
+              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Button">
+                <button onClick={addDeliveryAddress}>
+                  Add Delivery Address
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Select Address Box */}
+      <div
+        className={
+          showSelectAddress
+            ? "Checkout_Select_Address"
+            : "Checkout_Select_Address--Inactive"
+        }
+      >
+        <div className="Checkout_Select_Address--Tint"></div>
+        <div className="Checkout_Select_Address--Address_Container">
+          <div className="Checkout_Select_Address--Address_Subcontainer">
+            <div
+              className="Close--Checkout_Select_Address"
+              onClick={() => {
+                setShowSelectAddress(false);
+              }}
+            >
+              <span className="Close--Checkout_Select_Address--Cross"></span>
+            </div>
+            <div className="Checkout_Select_Address--Header">
+              <h3>Select Delivery Address</h3>
+            </div>
+            {addressData.length ? (
+              addressData.map((address, index) => {
+                return (
+                  <div key={index} className="Checkout_Select_Address--Address">
+                    <p className="Checkout_Select_Address--Name">
+                      {address.addressname}
+                    </p>
+                    <p className="Checkout_Select_Address--House">
+                      {address.house}
+                    </p>
+                    <p className="Checkout_Select_Address--Street">
+                      {address.street}
+                    </p>
+                    <p className="Checkout_Select_Address--Landmark">
+                      Near {address.landmark}
+                    </p>
+                    <p className="Checkout_Select_Address--City_State">
+                      {address.city}, {address.state}
+                    </p>
+                    <p className="Checkout_Select_Address--Country">
+                      {address.country}
+                    </p>
+                    <div className="Checkout_Select_Address--Button">
+                      <button
+                        onClick={() => {
+                          changeBaseAddress(address);
+                        }}
+                      >
+                        Deliver to this address
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="Checkout_Select_Address--Empty">
+                <p className="Checkout_Select_Address--Empty--Note">
+                  You have not added any delivery address. Add an address to
+                  ship your order!
+                </p>
+                <button
+                  className="Checkout_Select_Address--Empty--Button"
+                  onClick={() => {
+                    setShowAddAddress(true);
+                    setShowSelectAddress(false);
+                  }}
+                >
+                  Add Delivery Address
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -600,7 +851,13 @@ function Product() {
                 <p className="Product_Main--Delivery_Address--Info">
                   {address.country}
                 </p>
-                <button>Change Delivery Address</button>
+                <button
+                  onClick={() => {
+                    setShowSelectAddress(true);
+                  }}
+                >
+                  Change Delivery Address
+                </button>
               </div>
             ) : (
               <div className="Product_Main--Delivery_Address--Empty">
@@ -608,7 +865,13 @@ function Product() {
                   No delivery address selected. Please select a delivery
                   address!
                 </p>
-                <button>Select Delivery Address</button>
+                <button
+                  onClick={() => {
+                    setShowAddAddress(true);
+                  }}
+                >
+                  Select Delivery Address
+                </button>
               </div>
             )}
             <h5>Delivery date</h5>
