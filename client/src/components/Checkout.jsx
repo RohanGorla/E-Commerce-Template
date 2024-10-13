@@ -33,7 +33,7 @@ function Checkout() {
     const mailId = userInfo?.mailId;
     let response = await axios.post("http://localhost:3000/placeorder", {
       mail: mailId,
-      address: address
+      address: address,
     });
     if (response.data.access) {
       sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
@@ -99,23 +99,26 @@ function Checkout() {
       state: addressState,
       country: addressCountry,
     });
-    localStorage.setItem(
-      "userInfo",
-      JSON.stringify({ ...userInfo, base_address: addressFullName })
-    );
-    localStorage.setItem(
-      "address",
-      JSON.stringify({
-        addressname: addressFullName,
-        house: addressHouse,
-        street: addressStreet,
-        landmark: addressLandmark,
-        city: addressCity,
-        state: addressState,
-        country: addressCountry,
-      })
-    );
-    setShowAddAddress(false);
+    if (response.data.access) {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: addressFullName })
+      );
+      localStorage.setItem(
+        "address",
+        JSON.stringify({
+          addressname: addressFullName,
+          house: addressHouse,
+          street: addressStreet,
+          landmark: addressLandmark,
+          city: addressCity,
+          state: addressState,
+          country: addressCountry,
+        })
+      );
+      setShowAddAddress(false);
+      setAddressData(response.data.data);
+    }
   }
 
   async function changeBaseAddress(current) {
@@ -158,7 +161,7 @@ function Checkout() {
       let response = await axios.post("http://localhost:3000/getaddress", {
         mail: mailId,
       });
-      setAddressData(response.data);
+      setAddressData(response.data.data);
     }
     getAddress();
     async function checkAuthorized() {
@@ -266,6 +269,14 @@ function Checkout() {
                 </div>
                 <div className="Checkout_Select_Address--Header">
                   <h3>Select Delivery Address</h3>
+                  <button
+                    onClick={() => {
+                      setShowAddAddress(true);
+                      setShowSelectAddress(false);
+                    }}
+                  >
+                    Add New Address
+                  </button>
                 </div>
                 {addressData.length ? (
                   addressData.map((address, index) => {

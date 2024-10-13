@@ -1,19 +1,19 @@
 :root {
+    --Prdct_Main_Ff: "Inter", sans-serif;
+    --Prdct_Second_Ff: "Roboto", sans-serif;
     --Prdct_Name_Fs: 20px;
     --Prdct_Comp_Fs: 13px;
     --Prdct_Disc_Fs: 13px;
     --Prdct_Pric_Fs: 20px;
     --Prdct_MRP_Fs: 13px;
     --Prdct_Fltr_Fs: 15px;
-    --Prdct_WishlistHeading_Fs: 22px;
+    --Prdct_WishlistHeading_Fs: 22px; 
     --Prdct_WishlistName_Fs: 16px;
     --Prdct_Btn_Fs: 15px;
     --Prdct_WishlistBtn_Fs: 14px;
     --Items_Error--Heading: 20px;
     --Items_Error--Message: 16px;
     --Items_Wishlist_Selector--Lists_Error: 16px;
-    --Prdct_Main_Ff: "Inter", sans-serif;
-    --Prdct_Second_Ff: "Roboto", sans-serif;
 }
 
 .Items_Container {

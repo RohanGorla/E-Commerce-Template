@@ -103,6 +103,17 @@
     font-size: var(--Checkout_Select_Address--Header_Heading);
 }
 
+.Checkout_Select_Address--Header button {
+    font-size: var(--Product_Select_Address--Button);
+    font-weight: 600;
+    background-color: goldenrod;
+    padding: .5em 1.5em;
+    border-style: none;
+    border-radius: 5px;
+    margin-top: .5em;
+    cursor: pointer;
+}
+
 .Checkout_Add_Address--Subcontainer,
 .Checkout_Select_Address--Address_Subcontainer {
     height: 100%;

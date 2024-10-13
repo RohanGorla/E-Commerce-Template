@@ -1,4 +1,14 @@
 :root {
+    --Product_Wishlist_Heading: 22px;
+    --Product_Wishlist_Button: 14px;
+    --Product_Wishlist_Name: 16px;
+    --Product_Wishlist_Selector--Lists_Error: 16px;
+    --Product_Add_Address--Label: 16px;
+    --Product_Add_Address--Input: 15px;
+    --Product_Select_Address--Header_Heading: 24px;
+    --Product_Select_Address--Name: 18px;
+    --Product_Select_Address--Button: 16px;
+    --Product_Select_Address--Empty--Note: 16px;
     --Product_Details--Name: 25px;
     --Product_Details--Discount: 15px;
     --Product_Details--Category: 15px;
@@ -98,15 +108,15 @@
 }
 
 .Product_Wishlist_Selector--Header_Heading {
-    font-size: var(--Prdct_WishlistHeading_Fs);
-    font-family: var(--Prdct_Main_Ff);
+    font-size: var(--Product_Wishlist_Heading);
+    font-family: var(--Product_Details--Main_Font);
     /* text-align: center; */
 }
 
 .Product_Wishlist_Selector--Header_Button {
     background-color: goldenrod;
-    font-size: var(--Prdct_WishlistBtn_Fs);
-    font-family: var(--Prdct_Second_Ff);
+    font-size: var(--Product_Wishlist_Button);
+    font-family: var(--Product_Details--Side_Font);
     font-weight: 600;
     padding: .6em 1em;
     border-style: none;
@@ -141,13 +151,13 @@
 }
 
 .Product_Wishlist_Selector--Listname {
-    font-size: var(--Prdct_WishlistName_Fs);
-    font-family: var(--Prdct_Main_Ff);
+    font-size: var(--Product_Wishlist_Name);
+    font-family: var(--Product_Details--Main_Font);
 }
 
 .Product_Wishlist_Selector--Lists_Error {
-    font-family: var(--Prdct_Second_Ff);
-    font-size: var(--Items_Wishlist_Selector--Lists_Error);
+    font-family: var(--Product_Details--Side_Font);
+    font-size: var(--Product_Wishlist_Selector--Lists_Error);
     font-weight: 500;
     text-align: center;
 }
@@ -161,8 +171,8 @@
 .Product_Wishlist_Selector--Buttons_Cancel {
     background-color: black;
     color: white;
-    font-size: var(--Prdct_WishlistBtn_Fs);
-    font-family: var(--Prdct_Second_Ff);
+    font-size: var(--Product_Wishlist_Button);
+    font-family: var(--Product_Details--Side_Font);
     font-weight: 600;
     padding: .7em 1em;
     border-style: none;
@@ -171,6 +181,241 @@
     &:hover {
         transform: scaleX(1.03) scaleY(1.04);
         color: red;
+    }
+}
+
+/* Add And Select Address Boxes */
+
+.Product_Add_Address,
+.Product_Select_Address {
+    font-family: var(--Product_Details--Main_Font);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Product_Order_Placed--Inactive,
+.Product_Add_Address--Inactive,
+.Product_Select_Address--Inactive {
+    display: none;
+}
+
+.Product_Add_Address--Tint,
+.Product_Select_Address--Tint {
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .8;
+}
+
+.Product_Add_Address--Container,
+.Product_Select_Address--Address_Container {
+    background-color: rgb(35, 35, 35);
+    position: relative;
+    z-index: 3;
+    width: 400px;
+    height: 600px;
+    padding: 1em;
+    border-style: none;
+    border-radius: 9px;
+    border: 2px solid white;
+}
+
+.Product_Add_Address--Header h3,
+.Product_Select_Address--Header h3 {
+    font-size: var(--Product_Select_Address--Header_Heading);
+}
+
+.Product_Select_Address--Header button {
+    font-size: var(--Product_Select_Address--Button);
+    font-weight: 600;
+    background-color: goldenrod;
+    padding: .5em 1.5em;
+    border-style: none;
+    border-radius: 5px;
+    margin-top: .5em;
+    cursor: pointer;
+}
+
+.Product_Add_Address--Subcontainer,
+.Product_Select_Address--Address_Subcontainer {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.Product_Add_Address--Header {
+    background-color: rgb(35, 35, 35);
+    position: sticky;
+    top: 0px;
+    padding: .2em 0em .5em 0em;
+}
+
+.Product_Add_Address--Portion +
+.Product_Add_Address--Portion {
+    margin-top: 1em;
+}
+
+.Product_Add_Address--Portion label {
+    font-size: var(--Product_Add_Address--Label);
+    display: block;
+}
+
+.Product_Add_Address--Portion input {
+    font-size: var(--Product_Add_Address--Input);
+    width: 250px;
+    margin-top: .3em;
+    padding: .3em .2em .2em .3em;
+}
+
+.Product_Add_Address--Portion button {
+    font-size: var(--Product_Select_Address--Button);
+    font-weight: 600;
+    background-color: goldenrod;
+    padding: .5em 2em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Product_Select_Address--Header {
+    background-color: rgb(35, 35, 35);
+    position: sticky;
+    top: 0px;
+    padding: .5em 0em 1em 0em;
+}
+
+.Close--Product_Add_Address,
+.Close--Product_Select_Address {
+    position: absolute;
+    z-index: 3;
+    top: 1.5em;
+    right: 1.5em;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    &:hover {
+        .Close--Product_Add_Address--Cross::after,
+        .Close--Product_Select_Address--Cross::after {
+            background-color: red;
+        }
+        .Close--Product_Add_Address--Cross::before,
+        .Close--Product_Select_Address--Cross::before {
+            background-color: red;
+        }
+    }
+}
+
+.Close--Product_Add_Address--Cross,
+.Close--Product_Select_Address--Cross {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Close--Product_Add_Address--Cross::after,
+.Close--Product_Select_Address--Cross::after {
+    background-color: white;
+    position: absolute;
+    display: block;
+    content: "";
+    width: 20px;
+    height: 3px;
+    margin: 0em auto;
+    transform: rotate(-45deg);
+}
+
+.Close--Product_Add_Address--Cross::before,
+.Close--Product_Select_Address--Cross::before {
+    background-color: white;
+    position: absolute;
+    display: block;
+    content: "";
+    width: 20px;
+    height: 3px;
+    margin: 0em auto;
+    transform: rotate(45deg);
+}
+
+.Product_Select_Address--Address {
+    background-color: black;
+    padding: 1em;
+    border-style: none;
+    border-radius: 7px;
+    border: 1px solid white;
+}
+
+.Product_Select_Address--Address +
+.Product_Select_Address--Address {
+    margin-top: 1em;
+}
+
+.Product_Select_Address--Address p {
+    margin: .3em 0em;
+}
+
+.Product_Select_Address--Name {
+    font-size: var(--Product_Select_Address--Name);
+    font-weight: 600;
+}
+
+.Product_Select_Address--Button {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+.Product_Select_Address--Button button {
+    background-color: rgb(246, 195, 77);
+    font-size: var(--Product_Select_Address--Button);
+    font-weight: 600;
+    padding: .5em 1.5em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: goldenrod;
+        transform: scaleX(1.01) scaleY(1.02);
+    }
+}
+
+.Product_Select_Address--Empty {
+    margin-top: 2em;
+}
+
+.Product_Select_Address--Empty--Note {
+    font-size: var(--Product_Select_Address--Empty--Note);
+    margin-bottom: .7em;
+}
+
+.Product_Select_Address--Empty--Button {
+    background-color: black;
+    color: white;
+    font-size: var(--Product_Select_Address--Button);
+    font-weight: 600;
+    padding: .65em 2em;
+    border-style: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(210, 209, 209);
+        color: black;
+        transform: scaleX(1.01) scaleY(1.02);
+        border-radius: 7px;
     }
 }
 

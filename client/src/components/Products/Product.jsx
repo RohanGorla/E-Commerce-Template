@@ -455,26 +455,26 @@ function Product() {
       <div
         className={
           showAddAddress
-            ? "Checkout_Add_Address"
-            : "Checkout_Add_Address--Inactive"
+            ? "Product_Add_Address"
+            : "Product_Add_Address--Inactive"
         }
       >
-        <div className="Checkout_Add_Address--Tint"></div>
-        <div className="Checkout_Add_Address--Container">
-          <div className="Checkout_Add_Address--Subcontainer">
+        <div className="Product_Add_Address--Tint"></div>
+        <div className="Product_Add_Address--Container">
+          <div className="Product_Add_Address--Subcontainer">
             <div
-              className="Close--Checkout_Add_Address"
+              className="Close--Product_Add_Address"
               onClick={() => {
                 setShowAddAddress(false);
               }}
             >
-              <span className="Close--Checkout_Add_Address--Cross"></span>
+              <span className="Close--Product_Add_Address--Cross"></span>
             </div>
-            <div className="Checkout_Add_Address--Header">
+            <div className="Product_Add_Address--Header">
               <h3>Add Delivery Address</h3>
             </div>
-            <div className="Checkout_Add_Address--Address">
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Name">
+            <div className="Product_Add_Address--Address">
+              <div className="Product_Add_Address--Portion Product_Add_Address--Name">
                 <label>Address name</label>
                 <input
                   value={addressFullName}
@@ -484,7 +484,7 @@ function Product() {
                   required
                 ></input>
               </div>
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--House">
+              <div className="Product_Add_Address--Portion Product_Add_Address--House">
                 <label>House/Flat</label>
                 <input
                   value={addressHouse}
@@ -494,7 +494,7 @@ function Product() {
                   required
                 ></input>
               </div>
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Street">
+              <div className="Product_Add_Address--Portion Product_Add_Address--Street">
                 <label>Street</label>
                 <input
                   value={addressStreet}
@@ -504,7 +504,7 @@ function Product() {
                   required
                 ></input>
               </div>
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Landmark">
+              <div className="Product_Add_Address--Portion Product_Add_Address--Landmark">
                 <label>Landmark</label>
                 <input
                   value={addressLandmark}
@@ -514,7 +514,7 @@ function Product() {
                   required
                 ></input>
               </div>
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--City">
+              <div className="Product_Add_Address--Portion Product_Add_Address--City">
                 <label>City</label>
                 <input
                   value={addressCity}
@@ -524,7 +524,7 @@ function Product() {
                   required
                 ></input>
               </div>
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--State">
+              <div className="Product_Add_Address--Portion Product_Add_Address--State">
                 <label>State</label>
                 <input
                   value={addressState}
@@ -534,7 +534,7 @@ function Product() {
                   required
                 ></input>
               </div>
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Country">
+              <div className="Product_Add_Address--Portion Product_Add_Address--Country">
                 <label>Country</label>
                 <input
                   value={addressCountry}
@@ -544,7 +544,7 @@ function Product() {
                   required
                 ></input>
               </div>
-              <div className="Checkout_Add_Address--Portion Checkout_Add_Address--Button">
+              <div className="Product_Add_Address--Portion Product_Add_Address--Button">
                 <button onClick={addDeliveryAddress}>
                   Add Delivery Address
                 </button>
@@ -557,47 +557,55 @@ function Product() {
       <div
         className={
           showSelectAddress
-            ? "Checkout_Select_Address"
-            : "Checkout_Select_Address--Inactive"
+            ? "Product_Select_Address"
+            : "Product_Select_Address--Inactive"
         }
       >
-        <div className="Checkout_Select_Address--Tint"></div>
-        <div className="Checkout_Select_Address--Address_Container">
-          <div className="Checkout_Select_Address--Address_Subcontainer">
+        <div className="Product_Select_Address--Tint"></div>
+        <div className="Product_Select_Address--Address_Container">
+          <div className="Product_Select_Address--Address_Subcontainer">
             <div
-              className="Close--Checkout_Select_Address"
+              className="Close--Product_Select_Address"
               onClick={() => {
                 setShowSelectAddress(false);
               }}
             >
-              <span className="Close--Checkout_Select_Address--Cross"></span>
+              <span className="Close--Product_Select_Address--Cross"></span>
             </div>
-            <div className="Checkout_Select_Address--Header">
+            <div className="Product_Select_Address--Header">
               <h3>Select Delivery Address</h3>
+              <button
+                onClick={() => {
+                  setShowAddAddress(true);
+                  setShowSelectAddress(false);
+                }}
+              >
+                Add New Address
+              </button>
             </div>
             {addressData.length ? (
               addressData.map((address, index) => {
                 return (
-                  <div key={index} className="Checkout_Select_Address--Address">
-                    <p className="Checkout_Select_Address--Name">
+                  <div key={index} className="Product_Select_Address--Address">
+                    <p className="Product_Select_Address--Name">
                       {address.addressname}
                     </p>
-                    <p className="Checkout_Select_Address--House">
+                    <p className="Product_Select_Address--House">
                       {address.house}
                     </p>
-                    <p className="Checkout_Select_Address--Street">
+                    <p className="Product_Select_Address--Street">
                       {address.street}
                     </p>
-                    <p className="Checkout_Select_Address--Landmark">
+                    <p className="Product_Select_Address--Landmark">
                       Near {address.landmark}
                     </p>
-                    <p className="Checkout_Select_Address--City_State">
+                    <p className="Product_Select_Address--City_State">
                       {address.city}, {address.state}
                     </p>
-                    <p className="Checkout_Select_Address--Country">
+                    <p className="Product_Select_Address--Country">
                       {address.country}
                     </p>
-                    <div className="Checkout_Select_Address--Button">
+                    <div className="Product_Select_Address--Button">
                       <button
                         onClick={() => {
                           changeBaseAddress(address);
@@ -610,13 +618,13 @@ function Product() {
                 );
               })
             ) : (
-              <div className="Checkout_Select_Address--Empty">
-                <p className="Checkout_Select_Address--Empty--Note">
+              <div className="Product_Select_Address--Empty">
+                <p className="Product_Select_Address--Empty--Note">
                   You have not added any delivery address. Add an address to
                   ship your order!
                 </p>
                 <button
-                  className="Checkout_Select_Address--Empty--Button"
+                  className="Product_Select_Address--Empty--Button"
                   onClick={() => {
                     setShowAddAddress(true);
                     setShowSelectAddress(false);
