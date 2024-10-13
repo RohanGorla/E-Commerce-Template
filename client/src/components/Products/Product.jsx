@@ -95,39 +95,6 @@ function Product() {
     }
   }
 
-  async function addToWishlist(list) {
-    const mailId = userInfo?.mailId;
-    if (mailId) {
-      const response = await axios.post("http://localhost:3000/addtowish", {
-        id: productData.id,
-        title: productData.title,
-        mailId: mailId,
-        price: productData.price,
-        discount: productData.discount,
-        wishlist: list,
-      });
-      if (response.data.access) {
-        setError(false);
-        setErrorMessage("");
-        setSuccess(true);
-        setSuccessMessage(response.data.successMsg);
-        setShowSelectlist(false);
-        getWishedInfo();
-        setTimeout(() => {
-          setSuccess(false);
-        }, 3500);
-      } else {
-        setSuccess(false);
-        setSuccessMessage("");
-        setError(true);
-        setErrorMessage(response.data.errorMsg);
-        setTimeout(() => {
-          setError(false);
-        }, 3500);
-      }
-    }
-  }
-
   async function getWishedInfo() {
     const mailId = userInfo?.mailId;
     const response = await axios.post("http://localhost:3000/checkwished", {
@@ -192,6 +159,65 @@ function Product() {
         setAddlistErrorMessage("Wishlist name cannot be empty!");
       }
     }
+  }
+
+  async function addToWishlist(list) {
+    const mailId = userInfo?.mailId;
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/addtowish", {
+        id: productData.id,
+        title: productData.title,
+        mailId: mailId,
+        price: productData.price,
+        discount: productData.discount,
+        wishlist: list,
+      });
+      if (response.data.access) {
+        setError(false);
+        setErrorMessage("");
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setShowSelectlist(false);
+        getWishedInfo();
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+      } else {
+        setSuccess(false);
+        setSuccessMessage("");
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    }
+  }
+
+  async function removeFromWishlist(list) {
+    const mailId = userInfo?.mailId;
+    let response = await axios.delete("http://localhost:3000/removefromwish", {
+      data: { productId: productData.id, list: list, mail: mailId },
+    });
+    if (response.data.access) {
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setError(false);
+      setErrorMessage("");
+      setShowSelectlist(false);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+    getFromWish();
   }
 
   async function addDeliveryAddress() {
@@ -480,15 +506,13 @@ function Product() {
             {wishlists.length ? (
               wishlists.map((list, index) => {
                 return (
-                  <div
-                    className="Product_Wishlist_Selector--List"
-                    key={index}
-                    onClick={() => {
-                      // setSelectedWistlist(list.wishlistname);
-                      addToWishlist(list.wishlistname);
-                    }}
-                  >
-                    <p className="Product_Wishlist_Selector--Listname">
+                  <div className="Product_Wishlist_Selector--List" key={index}>
+                    <p
+                      className="Product_Wishlist_Selector--Listname"
+                      onClick={() => {
+                        addToWishlist(list.wishlistname);
+                      }}
+                    >
                       {list.wishlistname}
                     </p>
                     <FaHeart
@@ -498,6 +522,9 @@ function Product() {
                           : "Product_Wishlist_Selector--Heart--Notwished"
                       }
                       size={20}
+                      onClick={() => {
+                        removeFromWishlist(list.wishlistname);
+                      }}
                     />
                   </div>
                 );
@@ -518,7 +545,7 @@ function Product() {
                 setShowSelectlist(false);
               }}
             >
-              Cancel
+              Close
             </button>
           </div>
         </div>

@@ -155,9 +155,25 @@ function Wishlist() {
 
   async function removeFromWish(id) {
     let response = await axios.delete("http://localhost:3000/removefromwish", {
-      data: { id },
+      data: { productId: id, list: selectedWishlist, mail: mailId },
     });
-    // console.log(response);
+    if (response.data.access) {
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+      setError(false);
+      setErrorMessage("");
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
     getFromWish();
   }
 
@@ -468,7 +484,7 @@ function Wishlist() {
                             <button
                               className="Wish_Item_Buttons--Remove"
                               onClick={() => {
-                                removeFromWish(item.id);
+                                removeFromWish(item.productid);
                               }}
                             >
                               Remove from list
