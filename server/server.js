@@ -643,8 +643,8 @@ app.post("/getaddress", (req, res) => {
     "select * from address where usermail = ?",
     req.body.mail,
     (err, data) => {
-      if (err) return res.send(err);
-      res.send(data);
+      if (err) return res.send({ access: false, errorMsg: err });
+      res.send({ access: true, data: data });
     }
   );
 });
@@ -664,8 +664,15 @@ app.post("/addaddress", (req, res) => {
     "insert into address (usermail, addressname, house, street, landmark, city, state, country) values (?)",
     [values],
     (err, data) => {
-      if (err) return res.send(err);
-      res.send(data);
+      if (err) return res.send({ access: false, errorMsg: err });
+      db.query(
+        "select * from address where usermail = ?",
+        req.body.mail,
+        (err, addressData) => {
+          if (err) return res.send({ access: false, errorMsg: err });
+          res.send({ access: true, data: addressData });
+        }
+      );
     }
   );
 });
