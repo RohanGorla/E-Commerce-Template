@@ -27,10 +27,12 @@ function Wishlist() {
       const response = await axios.post("http://localhost:3000/getwishlists", {
         mailId: mailId,
       });
-      setWishlists(response.data);
-      // console.log(response.data);
-      // console.log("First list name is -> ", response.data[0]?.wishlistname);
-      setSelectedWistlist(response.data[0]?.wishlistname);
+      if (response.data.access) {
+        setWishlists(response.data.data);
+        setSelectedWistlist(response.data.data[0]?.wishlistname);
+      } else {
+        console.log(response.data.errorMsg);
+      }
     } else {
       navigate("/account");
     }
@@ -41,22 +43,28 @@ function Wishlist() {
       const response = await axios.post("http://localhost:3000/getfromwish", {
         mailId: mailId,
       });
-      console.log(response);
-      const data = response.data;
-      let productsId = [];
-      data?.map((product) => {
-        productsId.push(product.productid);
-      });
-      async function getReviews() {
-        let response = await axios.post("http://localhost:3000/getallreviews", {
-          id: productsId,
+      if (response.data.access) {
+        const data = response.data.data;
+        let productsId = [];
+        data?.map((product) => {
+          productsId.push(product.productid);
         });
-        if (response.data.access) {
-          setReviews(response.data.data);
+        async function getReviews() {
+          let response = await axios.post(
+            "http://localhost:3000/getallreviews",
+            {
+              id: productsId,
+            }
+          );
+          if (response.data.access) {
+            setReviews(response.data.data);
+          }
+          setAllWishitems(data);
         }
-        setAllWishitems(data);
+        getReviews();
+      } else {
+        console.log(response.data.errorMsg);
       }
-      getReviews();
     } else {
       navigate("/account");
     }

@@ -34,10 +34,12 @@ function Product() {
   const [addressState, setAddressState] = useState("");
   const [addressCountry, setAddressCountry] = useState("");
   const [showSelectlist, setShowSelectlist] = useState(false);
-  const [addListShow, setAddListShow] = useState(false);
+  const [showAddlist, setShowAddlist] = useState(false);
+  const [addlistError, setAddlistError] = useState(false);
+  const [addlistErrorMessage, setAddlistErrorMessage] = useState("");
+  const [newlist, setNewlist] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [addlistError, setAddlistError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -110,6 +112,7 @@ function Product() {
         setSuccess(true);
         setSuccessMessage(response.data.successMsg);
         setShowSelectlist(false);
+        getWishedInfo();
         setTimeout(() => {
           setSuccess(false);
         }, 3500);
@@ -140,6 +143,54 @@ function Product() {
     } else {
       setWished(false);
       setWishedLists([]);
+    }
+  }
+
+  async function addWishlist() {
+    const mailId = userInfo?.mailId;
+    if (mailId) {
+      let addListAccess;
+      if (newlist.length) {
+        if (wishlists.length) {
+          for (let i = 0; i < wishlists.length; i++) {
+            if (
+              newlist.toLowerCase() == wishlists[i].wishlistname.toLowerCase()
+            ) {
+              setAddlistError(true);
+              setAddlistErrorMessage(
+                "You have another list with the same name!"
+              );
+              addListAccess = false;
+              break;
+            } else {
+              addListAccess = true;
+            }
+          }
+        } else {
+          addListAccess = true;
+        }
+        if (addListAccess) {
+          const response = await axios.post(
+            "http://localhost:3000/addwishlist",
+            {
+              mailId: mailId,
+              wishlistname: newlist,
+            }
+          );
+          if (response.data.access) {
+            setWishlists(response.data.data);
+            setShowAddlist(false);
+            setAddlistError(false);
+            setAddlistErrorMessage("");
+            addToWishlist(newlist);
+          }
+        } else {
+          console.log(response.data.errorMsg);
+        }
+      } else {
+        setAddlistError(true);
+        setAddlistErrorMessage("Wishlist name cannot be empty!");
+      }
     }
   }
 
@@ -417,7 +468,7 @@ function Product() {
               <button
                 className="Product_Wishlist_Selector--Header_Button"
                 onClick={() => {
-                  setAddListShow(true);
+                  setShowAddlist(true);
                   setShowSelectlist(false);
                 }}
               >
@@ -469,6 +520,63 @@ function Product() {
             >
               Cancel
             </button>
+          </div>
+        </div>
+      </div>
+      {/* Add Wishlist Box */}
+      <div
+        className={
+          showAddlist
+            ? "Wish_AddNewList_Container"
+            : "Wish_AddNewList_Container--Inactive"
+        }
+      >
+        <div className="Wish_AddNewList--Tint"></div>
+        <div className="Wish_AddNewList">
+          <div className="Wish_AddNewList--Header">
+            <p className="Wish_AddNewList--Header_Heading">Add new list</p>
+            <p className="Wish_AddNewList--Header_Note">
+              Create a new wish list to save your favourite items!
+            </p>
+          </div>
+          <div
+            className={
+              addlistError
+                ? "Wish_AddNewList--Error"
+                : "Wish_AddNewList--Error--Inactive"
+            }
+          >
+            <p className="Wish_AddNewList--Error_Heading">Error!</p>
+            <p className="Wish_AddNewList--Error_Note">{addlistErrorMessage}</p>
+          </div>
+          <div className="Wish_AddNewList--Input">
+            <label>Wishlist name</label>
+            <input
+              type="text"
+              value={newlist}
+              onChange={(e) => {
+                setNewlist(e.target.value);
+              }}
+              placeholder="Enter list name"
+            ></input>
+            <div className="Wish_AddNewList--Input_Buttons">
+              <button
+                className="Wish_AddNewList--Buttons_Cancel"
+                onClick={() => {
+                  setShowAddlist(false);
+                  setAddlistError(false);
+                  setAddlistErrorMessage("");
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="Wish_AddNewList--Buttons_Create"
+                onClick={addWishlist}
+              >
+                Create
+              </button>
+            </div>
           </div>
         </div>
       </div>
