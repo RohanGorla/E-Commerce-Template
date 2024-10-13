@@ -424,15 +424,27 @@ app.post("/addtowish", (req, res) => {
 });
 
 app.delete("/removefromwish", (req, res) => {
-  const id = req.body.id;
-  db.query("delete from wishlistitems where id = ?", id, (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.send(err);
+  const id = req.body.productId;
+  const listname = req.body.list;
+  const mailId = req.body.mail;
+  db.query(
+    "delete from wishlistitems where mailid = ? and listname = ? and productid = ?",
+    [mailId, listname, id],
+    (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      }
+      res.send({
+        access: true,
+        successMsg: `Product has been successfully deleted from ${listname}!`,
+      });
     }
-    console.log("remove from wishlistitems data ->", data);
-    res.send(data);
-  });
+  );
 });
 
 app.post("/buyproduct", (req, res) => {
