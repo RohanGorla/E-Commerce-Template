@@ -1,0 +1,141 @@
+:root {
+    --Address_Main_Font: "Roboto", sans-serif;
+    --Address_Secondary_Font: "Inter", sans-serif;
+    --Address_Main--Header: 35px;
+    --Address_Main--Address--Name: 21px;
+    --Address_Main--Address: 17px;
+    --Address_Main--Address_Options: 14px;
+    --Addaddress_Heading_Fontsize: 20px;
+    --Address_Main_Fontsize: 15px;
+    --Address_Secondary_Fontsize: 17px;
+    --Addaddress_Button_Fontsize: 15px;
+}
+
+.Address_Main {
+    font-family: var(--Address_Main_Font);
+    max-width: 1200px;
+    margin: 0em auto;
+    padding: 0em 1em;
+}
+
+.Address_Main--Header {
+    background-color: rgb(35, 35, 35);
+    position: sticky;
+    top: 0px;
+    margin-bottom: 1em;
+    padding: 1em 0em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Address_Main--Header h1 {
+    font-size: var(--Address_Main--Header);
+    text-align: center;
+}
+
+.Address_Main--Addresses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    justify-content: center;
+    row-gap: 1.5em;
+}
+
+.Address_Main--Address_Container {
+    padding: .3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Address_Main--Address {
+    background-color: rgb(42, 42, 42);
+    width: 90%;
+    max-width: 430px;
+    padding: 1em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.Address_Main--Address--Default {
+    background-color: rgb(35, 35, 35);
+}
+
+.Address_Main--Address_Info {
+    font-size: var(--Address_Main--Address);
+    margin: .5em 0em;
+}
+.Address_Main--Address_Name {
+    font-size: var(--Address_Main--Address--Name);
+    font-weight: 600;
+    margin-bottom: .7em;
+}
+
+.Address_Main--Address_Name--Default_Note {
+    font-size: var(--Address_Main--Address);
+    font-weight: 400;
+}
+
+.Address_Main--Address_Options {
+    margin-top: 2em;
+}
+
+.Address_Main--Address_Options--Option{
+    font-size: var(--Address_Main--Address_Options);
+    cursor: pointer;
+    &:hover {
+        color: red;
+    }
+}
+
+.Address_Main--Address_Options--Seperator {
+    font-size: var(--Address_Main--Address);
+}
+
+.Addaddress_Main {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: rgb(67, 66, 66);
+    padding: 2em 1.5em;
+    border-radius: 10px;
+}
+
+.Addaddress_Main--Header {
+    text-align: center;
+    font-family: var(--Address_Main_Font);
+    font-size: var(--Addaddress_Heading_Fontsize);
+}
+
+.Addaddress_Component {
+    margin: 1em 0;
+}
+
+.Addaddress_Component label {
+    font-family: var(--Address_Secondary_Font);
+    font-size: var(--Address_Secondary_Fontsize);
+    font-weight: 500;
+}
+
+.Addaddress_Component input {
+    display: block;
+    width: 250px;
+    font-family: var(--Address_Secondary_Font);
+    font-size: var(--Address_Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}
+
+.Addaddress_Button button {
+    font-size: var(--Address_Secondary_Font);
+    font-size: var(--Addaddress_Button_Fontsize);
+    font-weight: 600;
+    padding: .5em 1.7em;
+    background-color: goldenrod;
+    border-style: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
