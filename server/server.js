@@ -682,7 +682,11 @@ app.post("/addaddress", (req, res) => {
         req.body.mail,
         (err, addressData) => {
           if (err) return res.send({ access: false, errorMsg: err });
-          res.send({ access: true, data: addressData });
+          res.send({
+            access: true,
+            data: addressData,
+            successMsg: "Address has been added successfully!",
+          });
         }
       );
     }
@@ -702,9 +706,33 @@ app.put("/updatebaseaddress", (req, res) => {
           access: false,
           errorMsg: "Some error has occurred!",
         });
-      res.send({ access: true });
+      res.send({
+        access: true,
+        successMsg: "Base address has been updated successfully!",
+      });
     }
   );
+});
+
+app.delete("/deleteaddress", (req, res) => {
+  let mail = req.body.mail;
+  let addressname = req.body.addressname;
+  let addressId = req.body.addressId;
+  db.query(
+    "delete from address where id = ? and addressname = ? and usermail = ?",
+    [addressId, addressname, mail],
+    (err, data) => {
+      if (err) return res.send({ access: false, errorMsg: err });
+    }
+  );
+  db.query("select * from address where usermail = ?", mail, (err, data) => {
+    if (err) return res.send({ access: false, errorMsg: err });
+    res.send({
+      access: true,
+      data: data,
+      successMsg: "Address has been deleted successfully!",
+    });
+  });
 });
 
 app.post("/getproduct", (req, res) => {

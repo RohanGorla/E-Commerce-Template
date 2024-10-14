@@ -6,8 +6,8 @@ import axios from "axios";
 function Address() {
   const [orderedAddress, setOrderedAddress] = useState([]);
   const [address, setAddress] = useState([]);
-  console.log(address);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo?.mailId;
   const navigate = useNavigate();
 
   async function getAddress() {
@@ -51,6 +51,41 @@ function Address() {
         }
       });
       setAddress([...baseAddress, ...otherAddress]);
+    }
+  }
+
+  async function removeAddress(address) {
+    let response = await axios.delete("http://localhost:3000/deleteaddress", {
+      data: {
+        mail: mailId,
+        addressname: address.addressname,
+        addressId: address.id,
+      },
+    });
+    if (address.addressname === userInfo?.base_address) {
+      setOrderedAddress(response.data.data);
+      setAddress(response.data.data);
+      localStorage.removeItem("address");
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: null })
+      );
+    } else {
+      if (response.data.access) {
+        setOrderedAddress(response.data.data);
+        let baseAddress = [];
+        let otherAddress = [];
+        response.data.data.filter((address) => {
+          if (address.addressname === userInfo?.base_address) {
+            baseAddress.push(address);
+          } else {
+            otherAddress.push(address);
+          }
+        });
+        setAddress([...baseAddress, ...otherAddress]);
+      } else {
+        console.log(response.data.errorMsg);
+      }
     }
   }
 
@@ -103,13 +138,23 @@ function Address() {
                   </p>
                   {address.addressname === userInfo?.base_address ? (
                     <div className="Address_Main--Address_Options">
-                      <span className="Address_Main--Address_Options--Option">
+                      <span
+                        className="Address_Main--Address_Options--Option"
+                        onClick={() => {
+                          removeAddress(address);
+                        }}
+                      >
                         Remove
                       </span>
                     </div>
                   ) : (
                     <div className="Address_Main--Address_Options">
-                      <span className="Address_Main--Address_Options--Option">
+                      <span
+                        className="Address_Main--Address_Options--Option"
+                        onClick={() => {
+                          removeAddress(address);
+                        }}
+                      >
                         Remove
                       </span>{" "}
                       |{" "}
