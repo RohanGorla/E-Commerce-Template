@@ -11,11 +11,14 @@ function Addaddress() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
   async function addAddress() {
     const mail = userInfo.mailId;
+
     let response = await axios.post("http://localhost:3000/addaddress", {
       mail: mail,
       name: fullName,
@@ -26,11 +29,33 @@ function Addaddress() {
       state: state,
       country: country,
     });
-    navigate("/account/address");
+    if (response.data.access) {
+      setError(false);
+      setErrorMessage("");
+      navigate("/account/address");
+    } else {
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
   }
 
   return (
     <div className="Addaddress_Page">
+      <div
+        className={
+          error
+            ? "Addaddress--Error Addaddress--Error--Active"
+            : "Addaddress--Error Addaddress--Error--Inactive"
+        }
+      >
+        <div className="Addaddress_Error--Container">
+          <p className="Addaddress_Error--Heading">Error!</p>
+          <p className="Addaddress_Error--Message">{errorMessage}</p>
+        </div>
+      </div>
       <div className="Addaddress_Main">
         <div className="Addaddress_Main--Header">
           <h2>Add address</h2>

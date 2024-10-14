@@ -89,6 +89,42 @@
     font-size: var(--Address_Main--Address);
 }
 
+.Addaddress--Error {
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+    transition: all .4s ease-in-out;
+}
+
+.Addaddress--Error--Active {
+    top: 100px;
+}
+
+.Addaddress--Error--Inactive {
+    top: -50px;
+}
+
+.Addaddress_Error--Container {
+    width: 700px;
+    margin: 0 auto;
+    background-color: red;
+    padding: 1.5em 3em;
+    border-style: none;
+    border: 2px white solid;
+    border-radius: 8px;
+}
+
+.Addaddress_Error--Heading {
+    font-size: var(--Items_Error--Heading);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 600;
+}
+
+.Addaddress_Error--Message {
+    font-size: var(--Items_Error--Message);
+    font-family: var(--Prdct_Main_Ff);
+}
+
 .Addaddress_Main {
     max-width: 400px;
     margin: 0 auto;

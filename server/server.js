@@ -673,22 +673,29 @@ app.post("/addaddress", (req, res) => {
     req.body.country,
   ];
   db.query(
-    "insert into address (usermail, addressname, house, street, landmark, city, state, country) values (?)",
-    [values],
+    "select * from address where usermail = ?",
+    req.body.mail,
     (err, data) => {
       if (err) return res.send({ access: false, errorMsg: err });
-      db.query(
-        "select * from address where usermail = ?",
-        req.body.mail,
-        (err, addressData) => {
-          if (err) return res.send({ access: false, errorMsg: err });
-          res.send({
-            access: true,
-            data: addressData,
-            successMsg: "Address has been added successfully!",
-          });
-        }
-      );
+      if (data.length) {
+        res.send({
+          access: false,
+          errorMsg:
+            "You have another address with the same address name! Addressnames have to be unique!",
+        });
+      } else {
+        db.query(
+          "insert into address (usermail, addressname, house, street, landmark, city, state, country) values (?)",
+          [values],
+          (err, data) => {
+            if (err) return res.send({ access: false, errorMsg: err });
+            res.send({
+              access: true,
+              successMsg: "Address has been added successfully!",
+            });
+          }
+        );
+      }
     }
   );
 });
