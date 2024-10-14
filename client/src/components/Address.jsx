@@ -68,7 +68,12 @@ function Address() {
       localStorage.removeItem("address");
       localStorage.setItem(
         "userInfo",
-        JSON.stringify({ ...userInfo, base_address: null })
+        JSON.stringify({
+          firstname: userInfo?.firstname,
+          lastname: userInfo?.lastname,
+          mailId: userInfo?.mailId,
+          token: userInfo?.token,
+        })
       );
     } else {
       if (response.data.access) {
@@ -104,7 +109,7 @@ function Address() {
       </div> */}
       <div className="Address_Main">
         <div className="Address_Main--Header">
-          <h1>Address</h1>
+          <h1>Your Address</h1>
         </div>
         <div className="Address_Main--Addresses">
           {address?.map((address, index) => {

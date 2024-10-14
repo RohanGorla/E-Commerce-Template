@@ -13,7 +13,7 @@
 
 .Address_Main {
     font-family: var(--Address_Main_Font);
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0em auto;
     padding: 0em 1em;
 }
@@ -23,7 +23,7 @@
     position: sticky;
     top: 0px;
     margin-bottom: 1em;
-    padding: 1em 0em;
+    padding: 1em 2em;
     border-style: none;
     border-radius: 8px;
     border: 2px solid white;
@@ -31,27 +31,21 @@
 
 .Address_Main--Header h1 {
     font-size: var(--Address_Main--Header);
-    text-align: center;
 }
 
 .Address_Main--Addresses {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     row-gap: 1.5em;
-}
-
-.Address_Main--Address_Container {
-    padding: .3em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    column-gap: 1.5em;
+    padding: .5em;
 }
 
 .Address_Main--Address {
     background-color: rgb(42, 42, 42);
-    width: 90%;
-    max-width: 430px;
+    position: relative;
+    max-width: 420px;
+    height: 280px;
     padding: 1em;
     border-style: none;
     border-radius: 8px;
@@ -78,6 +72,8 @@
 }
 
 .Address_Main--Address_Options {
+    position: absolute;
+    bottom: 20px;
     margin-top: 2em;
 }
 
@@ -102,9 +98,9 @@
 }
 
 .Addaddress_Main--Header {
-    text-align: center;
-    font-family: var(--Address_Main_Font);
     font-size: var(--Addaddress_Heading_Fontsize);
+    font-family: var(--Address_Main_Font);
+    text-align: center;
 }
 
 .Addaddress_Component {

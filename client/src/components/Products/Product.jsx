@@ -40,7 +40,6 @@ function Product() {
   const [newlist, setNewlist] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const address = JSON.parse(localStorage.getItem("address"));
