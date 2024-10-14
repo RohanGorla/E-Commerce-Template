@@ -57,6 +57,8 @@ app.get("/", (req, res) => {
   });
 });
 
+/* Registration and Authentication */
+// In Register page
 app.post("/addUser", async (req, res) => {
   let firstname = req.body.first;
   let lastname = req.body.last;
@@ -102,7 +104,6 @@ app.post("/addUser", async (req, res) => {
 });
 
 // In Login page
-
 app.post("/checkUser", async (req, res) => {
   let mailId = req.body.mail;
   let password = req.body.password;
@@ -176,7 +177,6 @@ app.post("/checkUser", async (req, res) => {
 });
 
 // In Account page
-
 app.post("/authenticateuser", async (req, res) => {
   const mailId = req.body.mail;
   const token = req.body.token;
@@ -184,15 +184,14 @@ app.post("/authenticateuser", async (req, res) => {
     if (err) return err;
     const actualToken = data[0].token;
     if (actualToken === token) {
-      res.send({ code: true, data });
+      res.send({ access: true, data: data });
     } else {
-      res.send({ code: false });
+      res.send({ access: false });
     }
   });
 });
 
 // In Checkout page
-
 app.post("/checkauthorized", async (req, res) => {
   const mail = req.body.mail;
   const token = req.body.token;
@@ -1068,7 +1067,7 @@ app.put("/updatebaseaddress", (req, res) => {
         });
       res.send({
         access: true,
-        successMsg: "Default address has been updated successfully!",
+        successMsg: "Delivery address has been updated successfully!",
       });
     }
   );
@@ -1169,7 +1168,12 @@ app.post("/buyproduct", (req, res) => {
 app.post("/getbuyproduct", (req, res) => {
   const mail = req.body.mail;
   db.query("select * from buy where mailid = ?", mail, (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     return res.send({ access: true, data: data });
   });
 });
@@ -1177,7 +1181,12 @@ app.post("/getbuyproduct", (req, res) => {
 app.post("/initiatebuypayment", (req, res) => {
   let mail = req.body.mail;
   db.query("select * from buy where mailid = ?", mail, async (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     let cost = data[0].price * (1 - data[0].discount / 100);
     let total = cost * data[0].count;
     let totalAmount;
@@ -1208,14 +1217,15 @@ app.post("/initiatebuypayment", (req, res) => {
 app.post("/placebuyorder", (req, res) => {
   let mail = req.body.mail;
   let product = req.body.product;
-  let address = JSON.stringify({
-    addressname: req.body.address.addressname,
-    house: req.body.address.house,
-    street: req.body.address.street,
-    landmark: req.body.address.landmark,
-    city: req.body.address.city,
-    state: req.body.address.state,
-    country: req.body.address.country,
+  let address = req.body.address;
+  let addressData = JSON.stringify({
+    addressname: address.addressname,
+    house: address.house,
+    street: address.street,
+    landmark: address.landmark,
+    city: address.city,
+    state: address.state,
+    country: address.country,
   });
   let values = [
     mail,
@@ -1224,15 +1234,25 @@ app.post("/placebuyorder", (req, res) => {
     product.price,
     product.discount,
     product.count,
-    address,
+    addressData,
   ];
   db.query(
     "insert into orders (mailid, productid, title, price, discount, count, address) values (?)",
     [values],
     (err, data) => {
-      if (err) return res.send({ access: false, errorMsg: err });
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       db.query("delete from buy where mailid = ?", mail, (err, data) => {
-        if (err) return res.send({ access: false, errorMsg: err });
+        if (err)
+          return res.send({
+            access: false,
+            errorMsg:
+              "Some error has occurred! Please try again or refresh the page!",
+          });
         res.send({ access: true });
       });
     }
@@ -1242,7 +1262,12 @@ app.post("/placebuyorder", (req, res) => {
 app.post("/initiatepayment", (req, res) => {
   let mail = req.body.mail;
   db.query("select * from cart where mailid = ?", mail, async (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     let total = 0;
     let orderTotal;
     data.forEach((item) => {
@@ -1287,7 +1312,11 @@ app.post("/placeorder", (req, res) => {
   db.query("select * from cart where mailid = ?", mail, (err, cartData) => {
     if (err) {
       console.log(err);
-      return res.send({ access: false, errorMsg: err });
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     }
     cartData.forEach((product) => {
       let values = [
@@ -1305,15 +1334,23 @@ app.post("/placeorder", (req, res) => {
         (err, data) => {
           if (err) {
             console.log(err);
-            return res.send({ access: false, errorMsg: err });
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+            });
           }
-          console.log("insert data ->", data);
         }
       );
     });
   });
   db.query("delete from cart where mailid = ?", mail, (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     res.send({ access: true });
   });
 });
@@ -1321,7 +1358,12 @@ app.post("/placeorder", (req, res) => {
 app.post("/getorders", (req, res) => {
   let mail = req.body.mail;
   db.query("select * from orders where mailid = ?", mail, (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     return res.send({ access: true, ordersData: data });
   });
 });

@@ -24,12 +24,68 @@ function Buy() {
   const [signature, setSignature] = useState("");
   const [initiatePayment, setInitiatePayment] = useState(false);
   const [time, setTime] = useState(30);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo?.mailId;
   const order = JSON.parse(sessionStorage.getItem("order"));
 
-  async function placeOrder() {
-    const mailId = userInfo?.mailId;
+  /* Get Buy Product API */
+
+  async function getProduct() {
+    let response = await axios.post("http://localhost:3000/getbuyproduct", {
+      mail: mailId,
+    });
+    if (response.data.access) {
+      let data = response.data.data[0];
+      let cost = data.price * (1 - data.discount / 100);
+      let priceCurrency =
+        currencyConvert(
+          (Math.round(cost * 100) / 100).toString().split(".")[0]
+        ) +
+        "." +
+        (Math.round(cost * 100) / 100).toString().split(".")[1];
+      let total = cost * data.count;
+      let totalCurrency =
+        currencyConvert(
+          (Math.round(total * 100) / 100).toString().split(".")[0]
+        ) +
+        "." +
+        (Math.round(total * 100) / 100).toString().split(".")[1];
+      setProductTotal(totalCurrency);
+      setProductPrice(priceCurrency);
+      if (total > 500) {
+        setFreeDelivery(true);
+        setOrderTotal(totalCurrency);
+        setOrderTotalNumber(total);
+      } else {
+        setFreeDelivery(false);
+        let orderTotalCurrency =
+          currencyConvert(
+            (Math.round((total + 20) * 100) / 100).toString().split(".")[0]
+          ) +
+          "." +
+          (Math.round((total + 20) * 100) / 100).toString().split(".")[1];
+        setOrderTotal(orderTotalCurrency);
+        setOrderTotalNumber(total + 20);
+      }
+      setProductData(data);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
+  /* Place Buy Order API */
+
+  async function placeBuyOrder() {
     let response = await axios.post("http://localhost:3000/placebuyorder", {
       mail: mailId,
       product: productData,
@@ -48,8 +104,9 @@ function Buy() {
     }
   }
 
+  /* Initiate Payment API */
+
   async function openPayment() {
-    const mailId = userInfo?.mailId;
     if (address) {
       let response = await axios.post(
         "http://localhost:3000/initiatebuypayment",
@@ -59,7 +116,6 @@ function Buy() {
       );
       let amount = Math.round(orderTotalNumber * 100);
       if (response.data.access) {
-        console.log(response.data.data.id);
         const options = {
           key: import.meta.env.VITE_KEY,
           amount: amount,
@@ -67,12 +123,12 @@ function Buy() {
           name: "Ron-commerce",
           description: "Test Transaction",
           image: "https://example.com/your_logo",
-          order_id: response.data.id,
+          order_id: response.data.data.id,
           handler: function (response) {
             setPaymentId(response.razorpay_payment_id);
             setSignature(response.razorpay_signature);
             setResOrderId(response.razorpay_order_id);
-            placeOrder();
+            placeBuyOrder();
           },
           notes: {
             address: "Razorpay Corporate Office",
@@ -84,14 +140,33 @@ function Buy() {
         setInitiatePayment(true);
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTime(() => {
+          setError(false);
+        }, 3500);
       }
     } else {
+      setError(true);
+      setErrorMessage("Select a delivery address before initiating payment!");
+      setTime(() => {
+        setError(false);
+      }, 3500);
       setShowSelectAddress(true);
     }
   }
 
+  /* Address APIs */
+
+  async function getAddress() {
+    let response = await axios.post("http://localhost:3000/getaddress", {
+      mail: mailId,
+    });
+    setAddressData(response.data);
+  }
+
   async function addDeliveryAddress() {
-    let mailId = userInfo?.mailId;
     let response = await axios.post("http://localhost:3000/addaddress", {
       mail: mailId,
       name: addressFullName,
@@ -102,40 +177,69 @@ function Buy() {
       state: addressState,
       country: addressCountry,
     });
-    localStorage.setItem(
-      "userInfo",
-      JSON.stringify({ ...userInfo, base_address: addressFullName })
-    );
-    localStorage.setItem(
-      "address",
-      JSON.stringify({
-        addressname: addressFullName,
-        house: addressHouse,
-        street: addressStreet,
-        landmark: addressLandmark,
-        city: addressCity,
-        state: addressState,
-        country: addressCountry,
-      })
-    );
+    if (response.data.access) {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({ ...userInfo, base_address: addressFullName })
+      );
+      localStorage.setItem(
+        "address",
+        JSON.stringify({
+          addressname: addressFullName,
+          house: addressHouse,
+          street: addressStreet,
+          landmark: addressLandmark,
+          city: addressCity,
+          state: addressState,
+          country: addressCountry,
+        })
+      );
+      setError(false);
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
     setShowAddAddress(false);
   }
 
   async function changeBaseAddress(current) {
     let response = await axios.put("http://localhost:3000/updatebaseaddress", {
       address: current,
-      mailId: userInfo?.mailId,
+      mailId: mailId,
     });
-    console.log(response);
     if (response.data.access) {
       localStorage.setItem(
         "userInfo",
         JSON.stringify({ ...userInfo, base_address: current.addressname })
       );
       localStorage.setItem("address", JSON.stringify(current));
+      setError(false);
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
     setShowSelectAddress(false);
   }
+
+  /* Number to Currency Converter */
 
   function currencyConvert(amount) {
     let amountString = amount.toString();
@@ -151,61 +255,39 @@ function Buy() {
   }
 
   useEffect(() => {
-    const mailId = userInfo?.mailId;
-    async function getProduct() {
-      let response = await axios.post("http://localhost:3000/getbuyproduct", {
-        mail: mailId,
-      });
-      if (response.data.access) {
-        let data = response.data.data[0];
-        let cost = data.price * (1 - data.discount / 100);
-        let priceCurrency =
-          currencyConvert(
-            (Math.round(cost * 100) / 100).toString().split(".")[0]
-          ) +
-          "." +
-          (Math.round(cost * 100) / 100).toString().split(".")[1];
-        let total = cost * data.count;
-        let totalCurrency =
-          currencyConvert(
-            (Math.round(total * 100) / 100).toString().split(".")[0]
-          ) +
-          "." +
-          (Math.round(total * 100) / 100).toString().split(".")[1];
-        setProductTotal(totalCurrency);
-        setProductPrice(priceCurrency);
-        if (total > 500) {
-          setFreeDelivery(true);
-          setOrderTotal(totalCurrency);
-          setOrderTotalNumber(total);
-        } else {
-          setFreeDelivery(false);
-          let orderTotalCurrency =
-            currencyConvert(
-              (Math.round((total + 20) * 100) / 100).toString().split(".")[0]
-            ) +
-            "." +
-            (Math.round((total + 20) * 100) / 100).toString().split(".")[1];
-          setOrderTotal(orderTotalCurrency);
-          setOrderTotalNumber(total + 20);
-        }
-        setProductData(data);
-      } else {
-        console.log(response.data.errorMsg);
-      }
-    }
-    async function getAddress() {
-      let response = await axios.post("http://localhost:3000/getaddress", {
-        mail: mailId,
-      });
-      setAddressData(response.data);
-    }
     getAddress();
     getProduct();
   }, []);
 
   return (
-    <>
+    <div className="Buy_Page">
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Success_Message_Box Success_Message_Box--Active"
+            : "Success_Message_Box Success_Message_Box--Inactive"
+        }
+      >
+        <div className="Success_Message_Box--Container">
+          <p className="Success_Message_Box--Heading">Success!</p>
+          <p className="Success_Message_Box--Message">{successMessage}</p>
+        </div>
+      </div>
+      {/* Buy Page Main */}
       {initiatePayment ? (
         <div
           className={
@@ -508,7 +590,7 @@ function Buy() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

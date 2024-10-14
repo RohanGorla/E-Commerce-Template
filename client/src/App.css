@@ -94,18 +94,18 @@
 /* Success Message Box */
 
 .Success_Message_Box {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     width: 100%;
     transition: all .4s ease-in-out;
 }
 
 .Success_Message_Box--Active {
-    top: 20px;
+    top: 100px;
 }
 
 .Success_Message_Box--Inactive {
-    top: -200px;
+    top: -50px;
 }
 
 .Success_Message_Box--Container {

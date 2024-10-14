@@ -1,39 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Account.css";
 
 function Account() {
-  const [data, setdata] = useState([]);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
-  function authenticateUser() {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const userMail = userInfo?.mailId;
-    const token = userInfo?.token;
-    console.log(userMail, token);
-    if (userMail && token) {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo?.mailId;
+  const token = userInfo?.token;
+
+  /* Authenticate User API */
+
+  async function authenticate() {
+    let response = await axios.post("http://localhost:3000/authenticateuser", {
+      mail: mailId,
+      token: token,
+    });
+    if (response.data.access) {
+      setData(response.data.data[0]);
+    } else {
+      navigate("/account/login");
+    }
+  }
+
+  useEffect(() => {
+    if (mailId && token) {
       authenticate();
     } else {
       navigate("/account/login");
     }
-    async function authenticate() {
-      let response = await axios.post(
-        "http://localhost:3000/authenticateuser",
-        {
-          mail: userMail,
-          token: token,
-        }
-      );
-      if (response.data.code) {
-        setdata(response.data.data[0]);
-      } else {
-        navigate("/account/login");
-      }
-    }
-  }
-  useEffect(() => {
-    authenticateUser();
   }, []);
+
   return (
     <div className="Account_Container">
       <h2 className="Account_Heading">Your Account</h2>
@@ -48,12 +46,10 @@ function Account() {
           <button
             className="Account_Signout_Btn"
             onClick={() => {
-              localStorage.removeItem("mailId");
-              localStorage.removeItem("token");
               localStorage.removeItem("userInfo");
               localStorage.removeItem("address");
-              setdata([]);
-              authenticateUser();
+              setData([]);
+              authenticate();
             }}
           >
             Sign out
@@ -69,7 +65,7 @@ function Account() {
         >
           <div className="Account_Cardinfo">
             <p className="Account_Cardname">Your Orders</p>
-            <p className="Account_Carddetail">View all your past orders.</p>
+            <p className="Account_Carddetail">View all your order details.</p>
           </div>
         </div>
         <div

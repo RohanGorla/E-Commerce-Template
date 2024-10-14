@@ -14,13 +14,14 @@ function Addaddress() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo?.mailId;
   const navigate = useNavigate();
 
-  async function addAddress() {
-    const mail = userInfo.mailId;
+  /* Add Address API */
 
+  async function addAddress() {
     let response = await axios.post("http://localhost:3000/addaddress", {
-      mail: mail,
+      mail: mailId,
       name: fullName,
       house: house,
       street: street,
@@ -47,13 +48,13 @@ function Addaddress() {
       <div
         className={
           error
-            ? "Addaddress--Error Addaddress--Error--Active"
-            : "Addaddress--Error Addaddress--Error--Inactive"
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
         }
       >
-        <div className="Addaddress_Error--Container">
-          <p className="Addaddress_Error--Heading">Error!</p>
-          <p className="Addaddress_Error--Message">{errorMessage}</p>
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
         </div>
       </div>
       <div className="Addaddress_Main">

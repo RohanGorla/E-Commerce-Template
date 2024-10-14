@@ -6,14 +6,19 @@ import axios from "axios";
 function Address() {
   const [orderedAddress, setOrderedAddress] = useState([]);
   const [address, setAddress] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
   const navigate = useNavigate();
 
+  /* Get Address API */
+
   async function getAddress() {
-    const mail = userInfo?.mailId;
     let response = await axios.post("http://localhost:3000/getaddress", {
-      mail: mail,
+      mail: mailId,
     });
     if (response.data.access) {
       setOrderedAddress(response.data.data);
@@ -27,13 +32,22 @@ function Address() {
         }
       });
       setAddress([...baseAddress, ...otherAddress]);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
+
+  /* Update Base Address API */
 
   async function changeBaseAddress(current) {
     let response = await axios.put("http://localhost:3000/updatebaseaddress", {
       address: current,
-      mailId: userInfo?.mailId,
+      mailId: mailId,
     });
     if (response.data.access) {
       localStorage.setItem(
@@ -51,8 +65,23 @@ function Address() {
         }
       });
       setAddress([...baseAddress, ...otherAddress]);
+      setError(false);
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
+
+  /* Remove Address API */
 
   async function removeAddress(address) {
     let response = await axios.delete("http://localhost:3000/deleteaddress", {
@@ -62,21 +91,21 @@ function Address() {
         addressId: address.id,
       },
     });
-    if (address.addressname === userInfo?.base_address) {
-      setOrderedAddress(response.data.data);
-      setAddress(response.data.data);
-      localStorage.removeItem("address");
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify({
-          firstname: userInfo?.firstname,
-          lastname: userInfo?.lastname,
-          mailId: userInfo?.mailId,
-          token: userInfo?.token,
-        })
-      );
-    } else {
-      if (response.data.access) {
+    if (response.data.access) {
+      if (address.addressname === userInfo?.base_address) {
+        setOrderedAddress(response.data.data);
+        setAddress(response.data.data);
+        localStorage.removeItem("address");
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            firstname: userInfo?.firstname,
+            lastname: userInfo?.lastname,
+            mailId: userInfo?.mailId,
+            token: userInfo?.token,
+          })
+        );
+      } else {
         setOrderedAddress(response.data.data);
         let baseAddress = [];
         let otherAddress = [];
@@ -88,9 +117,20 @@ function Address() {
           }
         });
         setAddress([...baseAddress, ...otherAddress]);
-      } else {
-        console.log(response.data.errorMsg);
       }
+      setError(false);
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
 
@@ -100,6 +140,33 @@ function Address() {
 
   return (
     <div className="Address_Page">
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Success_Message_Box Success_Message_Box--Active"
+            : "Success_Message_Box Success_Message_Box--Inactive"
+        }
+      >
+        <div className="Success_Message_Box--Container">
+          <p className="Success_Message_Box--Heading">Success!</p>
+          <p className="Success_Message_Box--Message">{successMessage}</p>
+        </div>
+      </div>
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Address Main */}
       <div className="Address_Main">
         <div className="Address_Main--Header">
           <h1>Your Address</h1>
