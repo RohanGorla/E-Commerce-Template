@@ -1,11 +1,12 @@
 import { useState, useEffect, act } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaStar, FaHeart } from "react-icons/fa";
 import axios from "axios";
 import "../../styles/Product.css";
 
 function Product() {
   const { product } = useParams();
+  const navigate = useNavigate();
   const [productData, setProductData] = useState({});
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
@@ -35,15 +36,16 @@ function Product() {
   const [addressCountry, setAddressCountry] = useState("");
   const [showSelectlist, setShowSelectlist] = useState(false);
   const [showAddlist, setShowAddlist] = useState(false);
+  const [newlist, setNewlist] = useState("");
   const [addlistError, setAddlistError] = useState(false);
   const [addlistErrorMessage, setAddlistErrorMessage] = useState("");
-  const [newlist, setNewlist] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo?.mailId;
   const imageUrls = [
     {
       src: "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg",
@@ -63,25 +65,52 @@ function Product() {
   ];
   const [currentUrl, setCurrentUrl] = useState(imageUrls[0].src);
 
-  async function addToCart() {
-    const mail = userInfo?.mailId;
-    if (mail) {
-      const response = await axios.post("http://localhost:3000/addtocart", {
-        id: product,
-        title: productData.title,
-        price: productData.price,
-        discount: productData.discount,
-        count: count,
-        mailId: mail,
-      });
-      if (response.data.access) {
-        setSuccess(true);
-        setSuccessMessage(response.data.successMsg);
-        setTimeout(() => {
-          setSuccess(false);
-        }, 3500);
+  /* Product APIs */
+
+  async function getProduct() {
+    let response = await axios.post("http://localhost:3000/getproduct", {
+      id: product,
+    });
+    if (response.data.access) {
+      let data = response.data.data[0];
+      let mrp = currencyConvert(data.price);
+      let offer_price = data.price - data.price * (data.discount / 100);
+      let offer_price_rounded = Math.round(offer_price * 100) / 100;
+      let offerPriceInt = offer_price_rounded.toString().split(".")[0];
+      let offerPriceDecimal = offer_price_rounded.toString().split(".")[1];
+      let offerPriceActual;
+      if (offerPriceDecimal === undefined) {
+        offerPriceActual = currencyConvert(offerPriceInt) + ".00";
+      } else {
+        offerPriceActual =
+          currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
+      }
+      data.mrp = mrp;
+      data.actualPrice = offerPriceActual;
+      setProductData(data);
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
         setError(false);
-        setErrorMessage("");
+      }, 3500);
+    }
+  }
+
+  /* Wishlist and Cart APIs */
+
+  async function getWishlists() {
+    if (mailId) {
+      const listsResponse = await axios.post(
+        "http://localhost:3000/getwishlists",
+        {
+          mailId: mailId,
+        }
+      );
+      if (listsResponse.data.access) {
+        setWishlists(listsResponse.data.data);
       } else {
         setSuccess(false);
         setSuccessMessage("");
@@ -94,26 +123,7 @@ function Product() {
     }
   }
 
-  async function getWishedInfo() {
-    const mailId = userInfo?.mailId;
-    const response = await axios.post("http://localhost:3000/checkwished", {
-      mailId: mailId,
-      productId: product,
-    });
-    if (response.data.access) {
-      setWished(true);
-      let wishedlists = response.data.data.map((list) => {
-        return list.wishlistname;
-      });
-      setWishedLists(wishedlists);
-    } else {
-      setWished(false);
-      setWishedLists([]);
-    }
-  }
-
   async function addWishlist() {
-    const mailId = userInfo?.mailId;
     if (mailId) {
       let addListAccess;
       if (newlist.length) {
@@ -151,17 +161,43 @@ function Product() {
             addToWishlist(newlist);
           }
         } else {
-          console.log(response.data.errorMsg);
+          setSuccess(false);
+          setSuccessMessage("");
+          setError(true);
+          setErrorMessage(response.data.errorMsg);
+          setTimeout(() => {
+            setError(false);
+          }, 3500);
         }
       } else {
         setAddlistError(true);
         setAddlistErrorMessage("Wishlist name cannot be empty!");
       }
+    } else {
+      navigate("/account");
+    }
+  }
+
+  async function getWishedInfo() {
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/checkwished", {
+        mailId: mailId,
+        productId: product,
+      });
+      if (response.data.access) {
+        setWished(true);
+        let wishedlists = response.data.data.map((list) => {
+          return list.wishlistname;
+        });
+        setWishedLists(wishedlists);
+      } else {
+        setWished(false);
+        setWishedLists([]);
+      }
     }
   }
 
   async function addToWishlist(list) {
-    const mailId = userInfo?.mailId;
     if (mailId) {
       const response = await axios.post("http://localhost:3000/addtowish", {
         id: productData.id,
@@ -172,11 +208,11 @@ function Product() {
         wishlist: list,
       });
       if (response.data.access) {
+        setShowSelectlist(false);
         setError(false);
         setErrorMessage("");
         setSuccess(true);
         setSuccessMessage(response.data.successMsg);
-        setShowSelectlist(false);
         getWishedInfo();
         setTimeout(() => {
           setSuccess(false);
@@ -190,99 +226,314 @@ function Product() {
           setError(false);
         }, 3500);
       }
+    } else {
+      navigate("/account");
     }
   }
 
   async function removeFromWishlist(list) {
-    const mailId = userInfo?.mailId;
-    let response = await axios.delete("http://localhost:3000/removefromwish", {
-      data: { productId: productData.id, list: list, mail: mailId },
-    });
-    if (response.data.access) {
-      setSuccess(true);
-      setSuccessMessage(response.data.successMsg);
-      setError(false);
-      setErrorMessage("");
-      setShowSelectlist(false);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 3500);
-      getWishedInfo();
-    } else {
-      setSuccess(false);
-      setSuccessMessage("");
-      setError(true);
-      setErrorMessage(response.data.errorMsg);
-      setTimeout(() => {
+    if (mailId) {
+      let response = await axios.delete(
+        "http://localhost:3000/removefromwish",
+        {
+          data: { productId: productData.id, list: list, mail: mailId },
+        }
+      );
+      if (response.data.access) {
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
         setError(false);
-      }, 3500);
+        setErrorMessage("");
+        setShowSelectlist(false);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+        getWishedInfo();
+      } else {
+        setSuccess(false);
+        setSuccessMessage("");
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      navigate("/account");
     }
-    getFromWish();
   }
 
-  async function addDeliveryAddress() {
-    let mailId = userInfo?.mailId;
-    let response = await axios.post("http://localhost:3000/addaddress", {
+  async function addToCart() {
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/addtocart", {
+        id: product,
+        title: productData.title,
+        price: productData.price,
+        discount: productData.discount,
+        count: count,
+        mailId: mailId,
+      });
+      if (response.data.access) {
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setError(false);
+        setErrorMessage("");
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+      } else {
+        setSuccess(false);
+        setSuccessMessage("");
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      navigate("/account");
+    }
+  }
+
+  /* Address APIs */
+
+  async function getAddress() {
+    let response = await axios.post("http://localhost:3000/getaddress", {
       mail: mailId,
-      name: addressFullName,
-      house: addressHouse,
-      street: addressStreet,
-      landmark: addressLandmark,
-      city: addressCity,
-      state: addressState,
-      country: addressCountry,
     });
     if (response.data.access) {
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify({ ...userInfo, base_address: addressFullName })
-      );
-      localStorage.setItem(
-        "address",
-        JSON.stringify({
-          addressname: addressFullName,
-          house: addressHouse,
-          street: addressStreet,
-          landmark: addressLandmark,
-          city: addressCity,
-          state: addressState,
-          country: addressCountry,
-        })
-      );
-      setShowAddAddress(false);
       setAddressData(response.data.data);
     } else {
       console.log(response.data.errorMsg);
     }
   }
 
-  async function changeBaseAddress(current) {
-    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
-      address: current,
-      mailId: userInfo?.mailId,
-    });
-    console.log(response);
-    if (response.data.access) {
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify({ ...userInfo, base_address: current.addressname })
-      );
-      localStorage.setItem("address", JSON.stringify(current));
+  async function addDeliveryAddress() {
+    if (mailId) {
+      let response = await axios.post("http://localhost:3000/addaddress", {
+        mail: mailId,
+        name: addressFullName,
+        house: addressHouse,
+        street: addressStreet,
+        landmark: addressLandmark,
+        city: addressCity,
+        state: addressState,
+        country: addressCountry,
+      });
+      if (response.data.access) {
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ ...userInfo, base_address: addressFullName })
+        );
+        localStorage.setItem(
+          "address",
+          JSON.stringify({
+            addressname: addressFullName,
+            house: addressHouse,
+            street: addressStreet,
+            landmark: addressLandmark,
+            city: addressCity,
+            state: addressState,
+            country: addressCountry,
+          })
+        );
+        setShowAddAddress(false);
+        setAddressData(response.data.data);
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setError(false);
+        setErrorMessage("");
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      navigate("/account");
     }
-    setShowSelectAddress(false);
   }
 
-  async function buyProduct() {
-    let response = await axios.post("http://localhost:3000/buyproduct", {
-      product: productData,
-      count: count,
-      mail: userInfo?.mailId,
+  async function changeBaseAddress(current) {
+    if (mailId) {
+      let response = await axios.put(
+        "http://localhost:3000/updatebaseaddress",
+        {
+          address: current,
+          mailId: mailId,
+        }
+      );
+      if (response.data.access) {
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ ...userInfo, base_address: current.addressname })
+        );
+        localStorage.setItem("address", JSON.stringify(current));
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setError(false);
+        setErrorMessage("");
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setSuccess(false);
+        setSuccessMessage("");
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+      setShowSelectAddress(false);
+    } else {
+      navigate("/account");
+    }
+  }
+
+  /* Reviews APIs */
+
+  async function getReviews() {
+    let response = await axios.post("http://localhost:3000/getreviews", {
+      id: product,
     });
     if (response.data.access) {
-      window.open(`${window.location.origin}/buy`);
-    } else {
-      console.log(response.data.errorMsg);
+      repeater(response);
     }
+  }
+
+  async function addReview() {
+    const username = userInfo?.firstname + " " + userInfo?.lastname;
+    if (mailId) {
+      if (review.length || starSetIndex >= 0) {
+        if (hasReview) {
+          let response = await axios.put("http://localhost:3000/editreview", {
+            id: product,
+            mail: mailId,
+            review: review,
+            rating: starSetIndex + 1,
+          });
+          if (response.data.access) {
+            repeater(response);
+            setSuccess(true);
+            setSuccessMessage(response.data.successMsg);
+            setError(false);
+            setErrorMessage("");
+            setTimeout(() => {
+              setSuccess(false);
+            }, 3500);
+          } else {
+            setError(true);
+            setErrorMessage(response.data.errorMsg);
+            setSuccess(false);
+            setSuccessMessage("");
+            setTimeout(() => {
+              setError(false);
+            }, 3500);
+          }
+        } else {
+          let response = await axios.post("http://localhost:3000/addreview", {
+            id: product,
+            mail: mailId,
+            user: username,
+            review: review,
+            rating: starSetIndex + 1,
+          });
+          if (response.data.access) {
+            repeater(response);
+            setSuccess(true);
+            setSuccessMessage(response.data.successMsg);
+            setError(false);
+            setErrorMessage("");
+            setTimeout(() => {
+              setSuccess(false);
+            }, 3500);
+          } else {
+            setError(true);
+            setErrorMessage(response.data.errorMsg);
+            setSuccess(false);
+            setSuccessMessage("");
+            setTimeout(() => {
+              setError(false);
+            }, 3500);
+          }
+        }
+        setShowReview(true);
+      }
+    } else {
+      navigate("/account");
+    }
+  }
+
+  async function deleteReview() {
+    if (mailId) {
+      let response = await axios.delete("http://localhost:3000/deletereview", {
+        data: { id: product, mail: mailId },
+      });
+      if (response.data.access) {
+        repeater(response);
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setError(false);
+        setErrorMessage("");
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setSuccess(false);
+        setSuccessMessage("");
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+      setShowReview(true);
+    } else {
+      navigate("/account");
+    }
+  }
+
+  /* Buy APIs */
+
+  async function buyProduct() {
+    if (mailId) {
+      let response = await axios.post("http://localhost:3000/buyproduct", {
+        product: productData,
+        count: count,
+        mail: userInfo?.mailId,
+      });
+      if (response.data.access) {
+        window.open(`${window.location.origin}/buy`);
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      navigate("/account");
+    }
+  }
+
+  /* Useful Functions */
+
+  function currencyConvert(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
   }
 
   function getTotalRatings(value) {
@@ -302,164 +553,56 @@ function Product() {
     return ratingsNumber;
   }
 
-  async function repeater(response) {
-    const mail = userInfo?.mailId;
-    if (response.data.code) {
-      let totalRating = 0;
-      let totalRatings = 0;
-      let actualProductRating = 0;
-      let averageRatingRounded = 0;
-      let otherUserReviews = response.data.data.filter((review) => {
-        if (review.mailid !== mail) {
-          totalRating += review.rating;
-          if (review.rating) {
-            totalRatings += 1;
-          }
-          return review;
+  function repeater(response) {
+    let totalRating = 0;
+    let totalRatings = 0;
+    let actualProductRating = 0;
+    let averageRatingRounded = 0;
+    let otherUserReviews = response.data.data.filter((review) => {
+      if (review.mailid !== mailId) {
+        totalRating += review.rating;
+        if (review.rating) {
+          totalRatings += 1;
         }
-      });
-      setReviews(otherUserReviews);
-      let currentUserReview = response.data.data.filter((review) => {
-        if (review.mailid === mail) {
-          totalRating += review.rating;
-          if (review.rating) {
-            totalRatings += 1;
-          }
-          return review;
-        }
-      });
-      setRatings(totalRatings);
-      if (currentUserReview.length) {
-        setHasReview(true);
-        setReview(currentUserReview[0].review);
-        setYourReview(currentUserReview[0]);
-        setStarSetIndex(currentUserReview[0].rating - 1);
-      } else {
-        setHasReview(false);
-        setReview("");
-        setYourReview({});
-        setStarSetIndex(-1);
+        return review;
       }
-      if (response.data.data.length != 0) {
-        if (totalRatings) {
-          actualProductRating = totalRating / totalRatings;
-        }
-        setActualRating(actualProductRating.toFixed(1));
-        averageRatingRounded = Math.round(actualProductRating) - 1;
-        setAverageStarRating(averageRatingRounded);
-      } else {
-        setActualRating(0);
-        setAverageStarRating(-1);
-      }
-    }
-  }
-
-  async function addReview() {
-    const username = userInfo?.firstname + " " + userInfo?.lastname;
-    const mail = userInfo?.mailId;
-    if (review.length || starSetIndex >= 0) {
-      if (hasReview) {
-        let response = await axios.put("http://localhost:3000/editreview", {
-          id: product,
-          mail: mail,
-          review: review,
-          rating: starSetIndex + 1,
-        });
-        console.log(response);
-        repeater(response);
-      } else {
-        let response = await axios.post("http://localhost:3000/addreview", {
-          id: product,
-          mail: mail,
-          user: username,
-          review: review,
-          rating: starSetIndex + 1,
-        });
-        repeater(response);
-      }
-      setShowReview(true);
-    }
-  }
-
-  async function deleteReview() {
-    let response = await axios.delete("http://localhost:3000/deletereview", {
-      data: { id: product, mail: userInfo?.mailId },
     });
-    console.log(response);
-    repeater(response);
-    setShowReview(true);
-  }
-
-  function currencyConvert(amount) {
-    let amountString = amount.toString();
-    let amountArray = amountString.split("").reverse();
-    let iterator = Math.floor(amountArray.length / 2);
-    let k = 3;
-    for (let j = 0; j < iterator - 1; j++) {
-      amountArray.splice(k, 0, ",");
-      k += 3;
-    }
-    let finalAmount = amountArray.reverse().join("");
-    return finalAmount;
-  }
-
-  useEffect(() => {
-    const mailId = userInfo?.mailId;
-    async function getProduct() {
-      let response = await axios.post("http://localhost:3000/getproduct", {
-        id: product,
-      });
-      console.log(response);
-      if (response.data.access) {
-        let data = response.data.data[0];
-        let mrp = currencyConvert(data.price);
-        let offer_price = (
-          data.price -
-          data.price * (data.discount / 100)
-        ).toFixed(2);
-        let offerPriceInt = offer_price.split(".")[0];
-        let offerPriceDecimal = offer_price.toString().split(".")[1];
-        let actualPrice =
-          currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
-        data.mrp = mrp;
-        data.actualPrice = actualPrice;
-        setProductData(data);
-      }
-    }
-    async function getReviews() {
-      let response = await axios.post("http://localhost:3000/getreviews", {
-        id: product,
-      });
-      repeater(response);
-    }
-    async function getWishlists() {
-      if (mailId) {
-        const listsResponse = await axios.post(
-          "http://localhost:3000/getwishlists",
-          {
-            mailId: mailId,
-          }
-        );
-        if (listsResponse.data.access) {
-          setWishlists(listsResponse.data.data);
+    setReviews(otherUserReviews);
+    let currentUserReview = response.data.data.filter((review) => {
+      if (review.mailid === mailId) {
+        totalRating += review.rating;
+        if (review.rating) {
+          totalRatings += 1;
         }
+        return review;
       }
+    });
+    setRatings(totalRatings);
+    if (currentUserReview.length) {
+      setHasReview(true);
+      setReview(currentUserReview[0].review);
+      setYourReview(currentUserReview[0]);
+      setStarSetIndex(currentUserReview[0].rating - 1);
+    } else {
+      setHasReview(false);
+      setReview("");
+      setYourReview({});
+      setStarSetIndex(-1);
     }
-    async function getAddress() {
-      let response = await axios.post("http://localhost:3000/getaddress", {
-        mail: mailId,
-      });
-      if (response.data.access) {
-        setAddressData(response.data.data);
-      } else {
-        console.log(response.data.errorMsg);
+    if (response.data.data.length != 0) {
+      if (totalRatings) {
+        actualProductRating = totalRating / totalRatings;
       }
+      setActualRating(actualProductRating.toFixed(1));
+      averageRatingRounded = Math.round(actualProductRating) - 1;
+      setAverageStarRating(averageRatingRounded);
+    } else {
+      setActualRating(0);
+      setAverageStarRating(-1);
     }
-    getProduct();
-    getReviews();
-    getWishlists();
-    getWishedInfo();
-    getAddress();
+  }
+
+  function deliveryDateCalculator() {
     let todayDate = new Date();
     let deliveryDate = new Date(
       todayDate.getFullYear(),
@@ -472,6 +615,15 @@ function Product() {
     }, ${delDtStr.split(" ")[3]}`;
     setDeliveryDate(deliveryDate);
     setDeliveryDateDisplay(delDtDisplay);
+  }
+
+  useEffect(() => {
+    getProduct();
+    getReviews();
+    getWishlists();
+    getWishedInfo();
+    getAddress();
+    deliveryDateCalculator();
   }, []);
 
   return (
@@ -797,26 +949,26 @@ function Product() {
       <div
         className={
           error
-            ? "Product--Error Product--Error--Active"
-            : "Product--Error Product--Error--Inactive"
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
         }
       >
-        <div className="Product_Error--Container">
-          <p className="Product_Error--Heading">Error!</p>
-          <p className="Product_Error--Message">{errorMessage}</p>
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
         </div>
       </div>
       {/* Success Message Box */}
       <div
         className={
           success
-            ? "Product--Success Product--Success--Active"
-            : "Product--Success Product--Success--Inactive"
+            ? "Success_Message_Box Success_Message_Box--Active"
+            : "Success_Message_Box Success_Message_Box--Inactive"
         }
       >
-        <div className="Product_Success--Container">
-          <p className="Product_Success--Heading">Success!</p>
-          <p className="Product_Success--Message">{successMessage}</p>
+        <div className="Success_Message_Box--Container">
+          <p className="Success_Message_Box--Heading">Success!</p>
+          <p className="Success_Message_Box--Message">{successMessage}</p>
         </div>
       </div>
       {/* Product Main */}
@@ -1031,7 +1183,7 @@ function Product() {
                 </p>
                 <button
                   onClick={() => {
-                    setShowAddAddress(true);
+                    setShowSelectAddress(true);
                   }}
                 >
                   Select Delivery Address
@@ -1228,7 +1380,6 @@ function Product() {
                 <textarea
                   placeholder="Write your review..."
                   rows={5}
-                  // cols={50}
                   className="Product_Reviews--Write_Review--Review_Input"
                   value={review}
                   onChange={(e) => {

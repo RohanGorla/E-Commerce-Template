@@ -52,3 +52,79 @@
 .App_Outlet_Container {
     height: calc(100vh - 90px);
 }
+
+/* Error Message Box */
+
+.Error_Message_Box {
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+    transition: all .4s ease-in-out;
+}
+
+.Error_Message_Box--Active {
+    top: 100px;
+}
+
+.Error_Message_Box--Inactive {
+    top: -50px;
+}
+
+.Error_Message_Box--Container {
+    width: 700px;
+    margin: 0 auto;
+    background-color: red;
+    padding: 1.5em 3em;
+    border-style: none;
+    border: 2px white solid;
+    border-radius: 8px;
+}
+
+.Error_Message_Box--Heading {
+    font-size: var(--Items_Error--Heading);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 600;
+}
+
+.Error_Message_Box--Message {
+    font-size: var(--Items_Error--Message);
+    font-family: var(--Prdct_Main_Ff);
+}
+
+/* Success Message Box */
+
+.Success_Message_Box {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    transition: all .4s ease-in-out;
+}
+
+.Success_Message_Box--Active {
+    top: 20px;
+}
+
+.Success_Message_Box--Inactive {
+    top: -200px;
+}
+
+.Success_Message_Box--Container {
+    width: 700px;
+    margin: 0 auto;
+    background-color: rgb(45, 136, 40);
+    padding: 1.5em 3em;
+    border-style: none;
+    border: 2px white solid;
+    border-radius: 8px;
+}
+
+.Success_Message_Box--Heading {
+    font-size: var(--Items_Error--Heading);
+    font-family: var(--Prdct_Second_Ff);
+    font-weight: 600;
+}
+
+.Success_Message_Box--Message {
+    font-size: var(--Items_Error--Message);
+    font-family: var(--Prdct_Main_Ff);
+}

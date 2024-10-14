@@ -1,4 +1,6 @@
 :root {
+    --Product_Details--Main_Font: "Roboto", sans-serif;
+    --Product_Details--Side_Font: "Inter", sans-serif;
     --Product_Wishlist_Heading: 22px;
     --Product_Wishlist_Button: 14px;
     --Product_Wishlist_Name: 16px;
@@ -28,8 +30,6 @@
     --Product_Reviews--Review--Note: 16px;
     --Product_Reviews--Reviewer_Name: 18px;
     --Product_Reviews--Button: 14px;
-    --Product_Details--Main_Font: "Roboto", sans-serif;
-    --Product_Details--Side_Font: "Inter", sans-serif;
 }
 
 .Product_Main_Container {
@@ -431,84 +431,6 @@
         border-radius: 7px;
     }
 }
-
-/* Error Message Box */
-
-.Product--Error {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    transition: all .4s ease-in-out;
-}
-
-.Product--Error--Active {
-    top: 20px;
-}
-
-.Product--Error--Inactive {
-    top: -200px;
-}
-
-.Product_Error--Container {
-    width: 700px;
-    margin: 0 auto;
-    background-color: red;
-    padding: 1.5em 3em;
-    border-style: none;
-    border: 2px white solid;
-    border-radius: 8px;
-}
-
-.Product_Error--Heading {
-    font-size: var(--Items_Error--Heading);
-    font-family: var(--Prdct_Second_Ff);
-    font-weight: 600;
-}
-
-.Product_Error--Message {
-    font-size: var(--Items_Error--Message);
-    font-family: var(--Prdct_Main_Ff);
-}
-
-/* Success Message Box */
-
-.Product--Success {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    transition: all .4s ease-in-out;
-}
-
-.Product--Success--Active {
-    top: 20px;
-}
-
-.Product--Success--Inactive {
-    top: -200px;
-}
-
-.Product_Success--Container {
-    width: 700px;
-    margin: 0 auto;
-    background-color: rgb(45, 136, 40);
-    padding: 1.5em 3em;
-    border-style: none;
-    border: 2px white solid;
-    border-radius: 8px;
-}
-
-.Product_Success--Heading {
-    font-size: var(--Items_Error--Heading);
-    font-family: var(--Prdct_Second_Ff);
-    font-weight: 600;
-}
-
-.Product_Success--Message {
-    font-size: var(--Items_Error--Message);
-    font-family: var(--Prdct_Main_Ff);
-}
-
-/* Product Container */
 
 .Product_Main--Product {
     display: flex;
