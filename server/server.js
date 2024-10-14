@@ -673,8 +673,8 @@ app.post("/addaddress", (req, res) => {
     req.body.country,
   ];
   db.query(
-    "select * from address where usermail = ?",
-    req.body.mail,
+    "select * from address where usermail = ? and addressname = ?",
+    [req.body.mail, req.body.name],
     (err, data) => {
       if (err) return res.send({ access: false, errorMsg: err });
       if (data.length) {

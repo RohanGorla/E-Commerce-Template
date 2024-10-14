@@ -100,16 +100,16 @@ function Address() {
 
   return (
     <div className="Address_Page">
-      {/* <div
-        onClick={() => {
-          navigate("addaddress");
-        }}
-      >
-        <p>+ ADD ADDRESS</p>
-      </div> */}
       <div className="Address_Main">
         <div className="Address_Main--Header">
           <h1>Your Address</h1>
+          <button
+            onClick={() => {
+              navigate("addaddress");
+            }}
+          >
+            Add Address
+          </button>
         </div>
         <div className="Address_Main--Addresses">
           {address?.map((address, index) => {
