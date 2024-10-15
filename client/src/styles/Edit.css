@@ -9,10 +9,13 @@
 .Edit_Main {
     max-width: 650px;
     margin: 0 auto;
+    margin-top: 5em;
     background-color: rgb(67, 66, 66);
     padding: 2em 1.5em;
     border-radius: 10px;
 }
+
+/* This is the older version error message box css. Just for reference.
 
 .Edit_ErrorMsgBox--visible {
     background-color: rgb(234, 65, 65);
@@ -30,7 +33,7 @@
 .Edit_ErrorMsgBox--invisible {
     visibility: hidden;
     height: 0;
-}
+} */
 
 .Edit_Notes {
     margin-bottom: 2em;
@@ -59,6 +62,7 @@
     background-color: gold;
     border-style: none;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 /* Name editing */

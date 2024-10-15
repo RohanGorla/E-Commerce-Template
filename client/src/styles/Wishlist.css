@@ -18,6 +18,10 @@
     --Wish_Items--Empty_Heading: 22px;
 }
 
+.Wish_Page {
+    height: 100%;
+}
+
 .Wish_Container {
     position: relative;
     background-color: rgb(64, 64, 64);

@@ -838,14 +838,25 @@ app.put("/editusername", (req, res) => {
     [{ firstname: first, lastname: last }, mail],
     (err, data) => {
       if (err)
-        return res.send({ access: false, error: "Some error occurred!" });
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       db.query(
         "update reviews set ? where mailid = ?",
         [{ username: fullname }, mail],
         (err, data) => {
           if (err)
-            return res.send({ access: false, error: "Some error occurred!" });
-          res.send({ access: true });
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+            });
+          res.send({
+            access: true,
+            successMsg: "Username updated successfully!",
+          });
         }
       );
     }
@@ -859,11 +870,15 @@ app.post("/getemailchangeotp", (req, res) => {
     [mailId],
     (err, data) => {
       if (err)
-        return res.send({ access: false, error: "Some error occurred!" });
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       if (data.length) {
         res.send({
           access: false,
-          error: "Email is already linked with another account!",
+          errorMsg: "Email is already linked with another account!",
         });
       } else {
         const transporter = nodemailer.createTransport({
@@ -913,13 +928,21 @@ app.put("/editusermail", async (req, res) => {
     [{ mailid: newmail, token: newToken }, oldmail],
     (err, data) => {
       if (err)
-        return res.send({ access: false, error: "Some error occurred!" });
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       db.query(
         "update wishlists set ? where mailid = ?",
         [{ mailid: newmail }, oldmail],
         (err, data) => {
           if (err)
-            return res.send({ access: false, error: "Some error occurred!" });
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+            });
           db.query(
             "update wishlistitems set ? where mailid = ?",
             [{ mailid: newmail }, oldmail],
@@ -927,7 +950,8 @@ app.put("/editusermail", async (req, res) => {
               if (err)
                 return res.send({
                   access: false,
-                  error: "Some error occurred!",
+                  errorMsg:
+                    "Some error has occurred! Please try again or refresh the page!",
                 });
               db.query(
                 "update cart set ? where mailid = ?",
@@ -936,7 +960,8 @@ app.put("/editusermail", async (req, res) => {
                   if (err)
                     return res.send({
                       access: false,
-                      error: "Some error occurred!",
+                      errorMsg:
+                        "Some error has occurred! Please try again or refresh the page!",
                     });
                   db.query(
                     "update orders set ? where mailid = ?",
@@ -945,7 +970,8 @@ app.put("/editusermail", async (req, res) => {
                       if (err)
                         return res.send({
                           access: false,
-                          error: "Some error occurred!",
+                          errorMsg:
+                            "Some error has occurred! Please try again or refresh the page!",
                         });
                       db.query(
                         "update reviews set ? where mailid = ?",
@@ -954,7 +980,8 @@ app.put("/editusermail", async (req, res) => {
                           if (err)
                             res.send({
                               access: false,
-                              error: "Some error occurred!",
+                              errorMsg:
+                                "Some error has occurred! Please try again or refresh the page!",
                             });
                           db.query(
                             "update address set ? where usermail = ?",
@@ -963,9 +990,14 @@ app.put("/editusermail", async (req, res) => {
                               if (err)
                                 res.send({
                                   access: false,
-                                  error: "Some error occurred!",
+                                  errorMsg:
+                                    "Some error has occurred! Please try again or refresh the page!",
                                 });
-                              res.send({ access: true, token: newToken });
+                              res.send({
+                                access: true,
+                                token: newToken,
+                                successMsg: "Email updates successfully!",
+                              });
                             }
                           );
                         }
@@ -992,22 +1024,44 @@ app.put("/edituserpassword", (req, res) => {
     [mail],
     async (err, data) => {
       if (err)
-        return res.send({ access: false, error: "Some error occurred!" });
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       console.log(data[0].password);
-      let correct = await bcrypt.compare(oldPassword, data[0].password);
-      if (correct) {
-        let newPasswordToken = await bcrypt.hash(newPassword, 10);
-        db.query(
-          "update userinfo set ? where token = ?",
-          [{ password: newPasswordToken }, token],
-          (err, data) => {
-            if (err)
-              return res.send({ access: false, error: "Some error occurred!" });
-            res.send({ access: true });
-          }
-        );
+      let checkOld = await bcrypt.compare(oldPassword, data[0].password);
+      if (checkOld) {
+        let checkNew = await bcrypt.compare(newPassword, data[0].password);
+        if (checkNew) {
+          res.send({
+            access: false,
+            errorMsg: "New and Old passwords cannot be the same!",
+          });
+        } else {
+          let newPasswordToken = await bcrypt.hash(newPassword, 10);
+          db.query(
+            "update userinfo set ? where token = ?",
+            [{ password: newPasswordToken }, token],
+            (err, data) => {
+              if (err)
+                return res.send({
+                  access: false,
+                  errorMsg:
+                    "Some error has occurred! Please try again or refresh the page!",
+                });
+              res.send({
+                access: true,
+                successMsg: "Password changed successfully!",
+              });
+            }
+          );
+        }
       } else {
-        res.send({ access: false, error: "Oldpassword incorrect!" });
+        res.send({
+          access: false,
+          errorMsg: "Oldpassword is incorrect! Please try again.",
+        });
       }
     }
   );
