@@ -57,7 +57,7 @@
 
 .Error_Message_Box {
     position: fixed;
-    z-index: 5;
+    z-index: 9;
     width: 100%;
     transition: all .4s ease-in-out;
 }
@@ -67,7 +67,7 @@
 }
 
 .Error_Message_Box--Inactive {
-    top: -50px;
+    top: -100px;
 }
 
 .Error_Message_Box--Container {
@@ -95,7 +95,7 @@
 
 .Success_Message_Box {
     position: fixed;
-    z-index: 1;
+    z-index: 9;
     width: 100%;
     transition: all .4s ease-in-out;
 }
@@ -105,7 +105,7 @@
 }
 
 .Success_Message_Box--Inactive {
-    top: -50px;
+    top: -100px;
 }
 
 .Success_Message_Box--Container {

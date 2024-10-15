@@ -25,70 +25,124 @@ function Checkout() {
   const [signature, setSignature] = useState("");
   const [paymentInitiate, setPaymentInitiate] = useState(false);
   const [time, setTime] = useState(30);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const address = JSON.parse(localStorage.getItem("address"));
   const order = JSON.parse(sessionStorage.getItem("order"));
+  const mailId = userInfo?.mailId;
+  const token = userInfo?.token;
 
-  async function placeOrder() {
-    const mailId = userInfo?.mailId;
-    let response = await axios.post("http://localhost:3000/placeorder", {
+  /* User Authorization API */
+
+  async function checkAuthorized() {
+    let response = await axios.post("http://localhost:3000/checkauthorized", {
       mail: mailId,
-      address: address,
+      token: token,
     });
     if (response.data.access) {
-      sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
+      getCartItems();
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
       setTimeout(() => {
-        window.close();
-      }, 30000);
-      setInterval(() => {
-        setTime((prev) => {
-          return prev - 1;
-        });
-      }, 1000);
+        setError(false);
+      }, 4500);
+      if (response.data.logout) {
+        setTimeout(() => {
+          localStorage.removeItem("userInfo");
+          localStorage.removeItem("address");
+          navigate("/account");
+        }, 5000);
+      }
     }
   }
 
-  async function openPayment() {
-    const mailId = userInfo?.mailId;
-    if (address) {
-      let response = await axios.post("http://localhost:3000/initiatepayment", {
-        mail: mailId,
+  /* Get Cart Products API */
+
+  async function getCartItems() {
+    const response = await axios.post("http://localhost:3000/getcartitems", {
+      mailId: mailId,
+    });
+    if (response.data.access) {
+      setCartData(response.data.data);
+      let count = 0;
+      let totalCost = 0;
+      response.data.data.forEach((product) => {
+        let cost = product.price - (product.price * product.discount) / 100;
+        count += Number(product.count);
+        totalCost += product.count * cost;
       });
-      let amount = Math.round(orderCostNumber * 100);
-      if (response.data.access) {
-        console.log(response.data.data.id);
-        const options = {
-          key: import.meta.env.VITE_KEY,
-          amount: amount,
-          currency: "INR",
-          name: "Ron-commerce",
-          description: "Test Transaction",
-          image: "https://example.com/your_logo",
-          order_id: response.data.id,
-          handler: function (response) {
-            setPaymentId(response.razorpay_payment_id);
-            setSignature(response.razorpay_signature);
-            setResOrderId(response.razorpay_order_id);
-            placeOrder();
-          },
-          notes: {
-            address: "Razorpay Corporate Office",
-          },
-          theme: {
-            color: "#3399cc",
-          },
-        };
-        setPaymentInitiate(true);
-        const paymentObject = new window.Razorpay(options);
-        paymentObject.open();
+      let totalCostCurrency;
+      let orderCostCurrency;
+      if (totalCost.toString().split(".").length === 1) {
+        totalCostCurrency =
+          currencyConvert(
+            (Math.round(totalCost * 100) / 100).toString().split(".")[0]
+          ) + ".00";
+        orderCostCurrency =
+          currencyConvert(
+            (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[0]
+          ) + ".00";
+      } else {
+        totalCostCurrency =
+          currencyConvert(
+            (Math.round(totalCost * 100) / 100).toString().split(".")[0]
+          ) +
+          "." +
+          (Math.round(totalCost * 100) / 100).toString().split(".")[1];
+        orderCostCurrency =
+          currencyConvert(
+            (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[0]
+          ) +
+          "." +
+          (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[1];
       }
+      if (totalCost > 500) {
+        setOrderTotal(totalCostCurrency);
+        setTotalCost(totalCostCurrency);
+        setOrderCostNumber(totalCost);
+        setFreeDelivery(true);
+      } else {
+        setOrderTotal(orderCostCurrency);
+        setTotalCost(totalCostCurrency);
+        setOrderCostNumber(totalCost + 20);
+        setFreeDelivery(false);
+      }
+      setCount(count);
     } else {
-      setShowSelectAddress(true);
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
+  /* Address APIs */
+
+  async function getAddress() {
+    let response = await axios.post("http://localhost:3000/getaddress", {
+      mail: mailId,
+    });
+    if (response.data.access) {
+      setAddressData(response.data.data);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
 
   async function addDeliveryAddress() {
-    let mailId = userInfo?.mailId;
     let response = await axios.post("http://localhost:3000/addaddress", {
       mail: mailId,
       name: addressFullName,
@@ -116,26 +170,141 @@ function Checkout() {
           country: addressCountry,
         })
       );
+      setError(false);
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
       setShowAddAddress(false);
       setAddressData(response.data.data);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
 
   async function changeBaseAddress(current) {
-    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
-      address: current,
-      mailId: userInfo.mailId,
-    });
-    console.log(response);
-    if (response.data.access) {
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify({ ...userInfo, base_address: current.addressname })
+    if (current.addressname === userInfo.base_address) {
+      setError(false);
+      setSuccess(true);
+      setSuccessMessage("Delivery address has been updated successfully!");
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      let response = await axios.put(
+        "http://localhost:3000/updatebaseaddress",
+        {
+          address: current,
+          mailId: mailId,
+        }
       );
-      localStorage.setItem("address", JSON.stringify(current));
+      if (response.data.access) {
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ ...userInfo, base_address: current.addressname })
+        );
+        localStorage.setItem("address", JSON.stringify(current));
+        setError(false);
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+      } else {
+        setSuccess(false);
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
     }
     setShowSelectAddress(false);
   }
+
+  /* Order And Payment APIs */
+
+  async function placeOrder() {
+    let response = await axios.post("http://localhost:3000/placeorder", {
+      mail: mailId,
+      address: address,
+    });
+    if (response.data.access) {
+      sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
+      setTimeout(() => {
+        window.close();
+      }, 30000);
+      setInterval(() => {
+        setTime((prev) => {
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
+  async function openPayment() {
+    if (address) {
+      let response = await axios.post("http://localhost:3000/initiatepayment", {
+        mail: mailId,
+      });
+      let amount = Math.round(orderCostNumber * 100);
+      if (response.data.access) {
+        const options = {
+          key: import.meta.env.VITE_KEY,
+          amount: amount,
+          currency: "INR",
+          name: "Ron-commerce",
+          description: "Test Transaction",
+          image: "https://example.com/your_logo",
+          order_id: response.data.data.id,
+          handler: function (response) {
+            setPaymentId(response.razorpay_payment_id);
+            setSignature(response.razorpay_signature);
+            setResOrderId(response.razorpay_order_id);
+            placeOrder();
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+        setPaymentInitiate(true);
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      } else {
+        setSuccess(false);
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      setError(true);
+      setErrorMessage("Select a delivery address before initiating payment!");
+      setTime(() => {
+        setError(false);
+      }, 3500);
+      setShowSelectAddress(true);
+    }
+  }
+
+  /* Currency Converter */
 
   function currencyConvert(amount) {
     let amountString = amount.toString();
@@ -151,84 +320,47 @@ function Checkout() {
   }
 
   useEffect(() => {
-    const mailId = userInfo?.mailId;
-    const token = userInfo?.token;
     const orderPlaced = order?.orderPlaced;
     if (orderPlaced) {
       setPaymentInitiate(true);
     }
-    async function getAddress() {
-      let response = await axios.post("http://localhost:3000/getaddress", {
-        mail: mailId,
-      });
-      setAddressData(response.data.data);
-    }
     getAddress();
-    async function checkAuthorized() {
-      let response = await axios.post("http://localhost:3000/checkauthorized", {
-        mail: mailId,
-        token: token,
-      });
-      if (response.data.access) {
-        setCartData(response.data.data);
-        let count = 0;
-        let totalCost = 0;
-        response.data.data.forEach((product) => {
-          let cost = product.price - (product.price * product.discount) / 100;
-          count += Number(product.count);
-          totalCost += product.count * cost;
-        });
-        console.log(totalCost);
-        let totalCostCurrency;
-        let orderCostCurrency;
-        if (totalCost.toString().split(".").length === 1) {
-          totalCostCurrency =
-            currencyConvert(
-              (Math.round(totalCost * 100) / 100).toString().split(".")[0]
-            ) + ".00";
-          orderCostCurrency =
-            currencyConvert(
-              (Math.round((totalCost + 20) * 100) / 100)
-                .toString()
-                .split(".")[0]
-            ) + ".00";
-        } else {
-          totalCostCurrency =
-            currencyConvert(
-              (Math.round(totalCost * 100) / 100).toString().split(".")[0]
-            ) +
-            "." +
-            (Math.round(totalCost * 100) / 100).toString().split(".")[1];
-          orderCostCurrency =
-            currencyConvert(
-              (Math.round((totalCost + 20) * 100) / 100)
-                .toString()
-                .split(".")[0]
-            ) +
-            "." +
-            (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[1];
-        }
-        if (totalCost > 500) {
-          setOrderTotal(totalCostCurrency);
-          setTotalCost(totalCostCurrency);
-          setOrderCostNumber(totalCost);
-          setFreeDelivery(true);
-        } else {
-          setOrderTotal(orderCostCurrency);
-          setTotalCost(totalCostCurrency);
-          setOrderCostNumber(totalCost + 20);
-          setFreeDelivery(false);
-        }
-        setCount(count);
-      }
-    }
     if (mailId && token) {
       checkAuthorized();
+    } else {
+      navigate("/account");
     }
   }, []);
 
   return (
     <>
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Success_Message_Box Success_Message_Box--Active"
+            : "Success_Message_Box Success_Message_Box--Inactive"
+        }
+      >
+        <div className="Success_Message_Box--Container">
+          <p className="Success_Message_Box--Heading">Success!</p>
+          <p className="Success_Message_Box--Message">{successMessage}</p>
+        </div>
+      </div>
+      {/* Checkout Page */}
       {paymentInitiate ? (
         <div
           className={

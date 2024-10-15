@@ -196,11 +196,20 @@ app.post("/checkauthorized", async (req, res) => {
   const mail = req.body.mail;
   const token = req.body.token;
   db.query("select token from userinfo where mailid = ?", mail, (err, data) => {
-    if (err) res.send({ access: false, errorMsg: err });
+    if (err)
+      res.send({
+        access: false,
+        errorMsg: "Some error has occurred. Please re-try or refresh the page!",
+        logout: false,
+      });
     if (data[0].token === token) {
-      db.query("select * from cart where mailid = ?", mail, (err, data) => {
-        if (err) res.send({ access: false, errorMsg: err });
-        res.send({ access: true, data: data });
+      res.send({ access: true });
+    } else {
+      res.send({
+        access: false,
+        errorMsg:
+          "You are not authorized! Your user credentials do not match. Please Login again!",
+        logout: true,
       });
     }
   });
@@ -388,7 +397,7 @@ app.post("/getallreviews", (req, res) => {
   db.query(
     "select * from reviews where productid in (?)",
     [ids],
-    (err, data) => {
+    (err, reviewsData) => {
       if (err) {
         console.log(err);
         return res.send({
@@ -397,7 +406,7 @@ app.post("/getallreviews", (req, res) => {
             "Some error has occurred! Please try again or refresh the page!",
         });
       }
-      res.send({ access: true, data: data });
+      res.send({ access: true, data: reviewsData });
     }
   );
 });
@@ -687,13 +696,16 @@ app.delete("/removefromwish", (req, res) => {
 
 app.post("/getcartitems", (req, res) => {
   const mailId = req.body.mailId;
-  db.query("select * from cart where mailid = ?", mailId, (err, data) => {
+  db.query("select * from cart where mailid = ?", mailId, (err, cartData) => {
     if (err) {
       console.log(err);
-      return res.send(err);
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     }
-    console.log("select * cart items data ->", data);
-    res.send(data);
+    res.send({ access: true, data: cartData });
   });
 });
 
@@ -767,7 +779,12 @@ app.put("/updatecartitemcount", (req, res) => {
   let cartData = req.body.cartData;
   let mail = req.body.mail;
   db.query("select * from cart where mailid = ?", mail, (err, data) => {
-    if (err) return res.send({ access: false, errorMsg: err });
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     let previousCart = data;
     for (let i = 0; i < previousCart.length; i++) {
       if (previousCart[i].count != cartData[i].count) {
@@ -775,7 +792,12 @@ app.put("/updatecartitemcount", (req, res) => {
           "update cart set ? where productid = ? and mailid = ?",
           [{ count: cartData[i].count }, cartData[i].productid, mail],
           (err, data) => {
-            if (err) return res.send({ access: false, errorMsg: err });
+            if (err)
+              return res.send({
+                access: false,
+                errorMsg:
+                  "Some error has occurred! Please try again or refresh the page!",
+              });
           }
         );
       }
@@ -789,10 +811,16 @@ app.delete("/removecartitem", (req, res) => {
   db.query("delete from cart where id = ?", id, (err, data) => {
     if (err) {
       console.log(err);
-      return res.send(err);
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
     }
-    console.log("delete cart item data ->", data);
-    res.send(data);
+    res.send({
+      access: true,
+      successMsg: "Product has been removed from cart successfully!",
+    });
   });
 });
 

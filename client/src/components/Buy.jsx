@@ -212,29 +212,41 @@ function Buy() {
   }
 
   async function changeBaseAddress(current) {
-    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
-      address: current,
-      mailId: mailId,
-    });
-    if (response.data.access) {
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify({ ...userInfo, base_address: current.addressname })
-      );
-      localStorage.setItem("address", JSON.stringify(current));
+    if (current.addressname === userInfo.base_address) {
       setError(false);
       setSuccess(true);
-      setSuccessMessage(response.data.successMsg);
+      setSuccessMessage("Delivery address has been updated successfully!");
       setTimeout(() => {
         setSuccess(false);
       }, 3500);
     } else {
-      setSuccess(false);
-      setError(true);
-      setErrorMessage(response.data.errorMsg);
-      setTimeout(() => {
+      let response = await axios.put(
+        "http://localhost:3000/updatebaseaddress",
+        {
+          address: current,
+          mailId: mailId,
+        }
+      );
+      if (response.data.access) {
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ ...userInfo, base_address: current.addressname })
+        );
+        localStorage.setItem("address", JSON.stringify(current));
         setError(false);
-      }, 3500);
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+      } else {
+        setSuccess(false);
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
     }
     setShowSelectAddress(false);
   }
