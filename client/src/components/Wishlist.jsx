@@ -22,6 +22,8 @@ function Wishlist() {
   const mailId = userInfo?.mailId;
   const navigate = useNavigate();
 
+  /* Wish Lists APIs */
+
   async function getWishlists() {
     if (mailId) {
       const response = await axios.post("http://localhost:3000/getwishlists", {
@@ -31,43 +33,24 @@ function Wishlist() {
         setWishlists(response.data.data);
         setSelectedWistlist(response.data.data[0]?.wishlistname);
       } else {
-        console.log(response.data.errorMsg);
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
       }
     } else {
       navigate("/account");
     }
   }
 
-  async function getFromWish() {
-    if (mailId) {
-      const response = await axios.post("http://localhost:3000/getfromwish", {
-        mailId: mailId,
-      });
-      if (response.data.access) {
-        const data = response.data.data;
-        let productsId = [];
-        data?.map((product) => {
-          productsId.push(product.productid);
-        });
-        async function getReviews() {
-          let response = await axios.post(
-            "http://localhost:3000/getallreviews",
-            {
-              id: productsId,
-            }
-          );
-          if (response.data.access) {
-            setReviews(response.data.data);
-          }
-          setAllWishitems(data);
-        }
-        getReviews();
-      } else {
-        console.log(response.data.errorMsg);
+  async function changeWishlist() {
+    const newData = allWishitems.filter((item) => {
+      if (item.wishlistname == selectedWishlist) {
+        return item;
       }
-    } else {
-      navigate("/account");
-    }
+    });
+    setWishlist(newData);
   }
 
   async function addwishlist() {
@@ -98,12 +81,25 @@ function Wishlist() {
               wishlistname: newlist,
             }
           );
-          setWishlists(response.data);
-          setAddListShow(false);
-          setAddListError(false);
-          setAddListErrorMsg("");
-          if (wishlists.length == 0) {
-            setSelectedWistlist(newlist);
+          if (response.data.access) {
+            setSuccess(true);
+            setSuccessMessage(response.data.successMsg);
+            setTimeout(() => {
+              setSuccess(false);
+            }, 3500);
+            setWishlists(response.data);
+            setAddListShow(false);
+            setAddListError(false);
+            setAddListErrorMsg("");
+            if (wishlists.length == 0) {
+              setSelectedWistlist(newlist);
+            }
+          } else {
+            setError(true);
+            setErrorMessage(response.data.errorMsg);
+            setTimeout(() => {
+              setError(false);
+            }, 3500);
           }
         }
       } else {
@@ -123,6 +119,76 @@ function Wishlist() {
     }
     // console.log(response);
   }
+
+  /* Wish Items APIs */
+
+  async function getFromWish() {
+    if (mailId) {
+      const response = await axios.post("http://localhost:3000/getfromwish", {
+        mailId: mailId,
+      });
+      if (response.data.access) {
+        const data = response.data.data;
+        let productsId = [];
+        data?.map((product) => {
+          productsId.push(product.productid);
+        });
+        async function getReviews() {
+          let response = await axios.post(
+            "http://localhost:3000/getallreviews",
+            {
+              id: productsId,
+            }
+          );
+          if (response.data.access) {
+            setReviews(response.data.data);
+          } else {
+            setError(true);
+            setErrorMessage(response.data.errorMsg);
+            setTimeout(() => {
+              setError(false);
+            }, 3500);
+          }
+          setAllWishitems(data);
+        }
+        getReviews();
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      navigate("/account");
+    }
+  }
+
+  async function removeFromWish(id) {
+    let response = await axios.delete("http://localhost:3000/removefromwish", {
+      data: { productId: id, list: selectedWishlist, mail: mailId },
+    });
+    if (response.data.access) {
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+      setError(false);
+      setErrorMessage("");
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+    getFromWish();
+  }
+
+  /* Cart API */
 
   async function addToCart(product) {
     let response = await axios.post("http://localhost:3000/addtocart", {
@@ -150,41 +216,9 @@ function Wishlist() {
         setError(false);
       }, 3500);
     }
-    // console.log(response);
   }
 
-  async function removeFromWish(id) {
-    let response = await axios.delete("http://localhost:3000/removefromwish", {
-      data: { productId: id, list: selectedWishlist, mail: mailId },
-    });
-    if (response.data.access) {
-      setSuccess(true);
-      setSuccessMessage(response.data.successMsg);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 3500);
-      setError(false);
-      setErrorMessage("");
-    } else {
-      setSuccess(false);
-      setSuccessMessage("");
-      setError(true);
-      setErrorMessage(response.data.errorMsg);
-      setTimeout(() => {
-        setError(false);
-      }, 3500);
-    }
-    getFromWish();
-  }
-
-  async function changeWishlist() {
-    const newData = allWishitems.filter((item) => {
-      if (item.wishlistname == selectedWishlist) {
-        return item;
-      }
-    });
-    setWishlist(newData);
-  }
+  /* Useful Functions */
 
   function currencyConvert(amount) {
     let amountString = amount.toString();

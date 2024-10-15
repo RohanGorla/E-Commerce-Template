@@ -561,14 +561,24 @@ app.post("/addwishlist", (req, res) => {
     "insert into wishlists (mailid, wishlistname) values(?)",
     [[mailId, listName]],
     (err, data) => {
-      if (err) return res.send({ access: false, errorMsg: err });
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
     }
   );
   db.query(
     "select * from wishlists where mailid = ?",
     [mailId],
     (err, data) => {
-      if (err) return res.send({ access: false, errorMsg: err });
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       res.send({
         access: true,
         data: data,
@@ -585,13 +595,26 @@ app.delete("/deletewishlist", (req, res) => {
     "delete from wishlists where wishlistname = ? and mailid = ?",
     [list, mail],
     (err, data) => {
-      if (err) return res.send({ access: false });
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       db.query(
         "delete from wishlistitems where wishlistname = ? and mailid = ?",
         [list, mail],
         (err, data) => {
-          if (err) return res.send({ access: false });
-          res.send({ access: true });
+          if (err)
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+            });
+          res.send({
+            access: true,
+            successMsg: `${list} has been deleted successfully!`,
+          });
         }
       );
     }
@@ -606,7 +629,11 @@ app.post("/getfromwish", (req, res) => {
     (err, data) => {
       if (err) {
         console.log(err);
-        return res.send({ access: false, errorMsg: err });
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
       }
       res.send({ access: true, data: data });
     }
