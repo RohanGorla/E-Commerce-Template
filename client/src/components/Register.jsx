@@ -17,13 +17,12 @@ function Register() {
         mail: context.mail,
       }
     );
-    console.log(otpResponse);
     if (otpResponse.data.access) {
       context.setOtp(otpResponse.data.otp);
       navigate("registerotp");
     } else {
       setError(true);
-      setErrorMsg(otpResponse.data.error);
+      setErrorMsg(otpResponse.data.errorMsg);
     }
   }
 
@@ -48,6 +47,7 @@ function Register() {
           <input
             className="Register_Firstname--Input"
             type="text"
+            required
             onChange={(e) => {
               context.setFirst(e.target.value);
             }}
@@ -70,6 +70,7 @@ function Register() {
           <input
             className="Register_Email--Input"
             type="email"
+            required
             onChange={(e) => {
               context.setMail(e.target.value);
             }}

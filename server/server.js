@@ -72,13 +72,14 @@ app.post("/addUser", async (req, res) => {
       if (err)
         return res.send({
           access: false,
-          errorMsg: "Some error has occurred!",
+          errorMsg:
+            "Some error has occurred. Please re-try or refresh the page!",
         });
       if (data.length) {
         exists = true;
       }
       if (exists) {
-        res.send({
+        return res.send({
           access: false,
           errorMsg: "This email is already linked to an existing account!",
         });
@@ -93,7 +94,8 @@ app.post("/addUser", async (req, res) => {
             if (err)
               return res.send({
                 access: false,
-                errorMsg: "Someth error has occurred!",
+                errorMsg:
+                  "Some error has occurred. Please re-try or refresh the page!",
               });
             res.send({ access: true, token: token });
           }
@@ -120,7 +122,8 @@ app.post("/checkUser", async (req, res) => {
       if (err)
         return res.send({
           access: false,
-          errorMsg: "Some error has occurred!",
+          errorMsg:
+            "Some error has occurred. Please re-try or refresh the page!",
         });
       if (data.length) {
         exists = true;
@@ -141,7 +144,8 @@ app.post("/checkUser", async (req, res) => {
               if (err)
                 return res.send({
                   access: false,
-                  errorMsg: "Some error has occurred!",
+                  errorMsg:
+                    "Some error has occurred. Please re-try or refresh the page!",
                 });
               console.log(data);
               db.query(
@@ -151,7 +155,8 @@ app.post("/checkUser", async (req, res) => {
                   if (err)
                     return res.send({
                       access: false,
-                      errorMsg: "Some error has occurred",
+                      errorMsg:
+                        "Some error has occurred. Please re-try or refresh the page!",
                     });
                   res.send({
                     access: true,
@@ -170,7 +175,7 @@ app.post("/checkUser", async (req, res) => {
           res.send({ access: false, errorMsg: "Password is incorrect!" });
         }
       } else {
-        res.send({ access: false, errorMsg: "User doesnot exist!" });
+        res.send({ access: false, errorMsg: "User does not exist!" });
       }
     }
   );
@@ -181,12 +186,20 @@ app.post("/authenticateuser", async (req, res) => {
   const mailId = req.body.mail;
   const token = req.body.token;
   db.query("select * from userinfo where mailid = ?", mailId, (err, data) => {
-    if (err) return err;
+    if (err)
+      return {
+        access: false,
+        errorMsg: "Some error has occurred. Please re-try or refresh the page!",
+      };
     const actualToken = data[0].token;
     if (actualToken === token) {
       res.send({ access: true, data: data });
     } else {
-      res.send({ access: false });
+      res.send({
+        access: false,
+        errorMsg:
+          "Your security token has been compromized! Please sign in again.",
+      });
     }
   });
 });

@@ -11,37 +11,38 @@ function Registerotp() {
   const [errorMsg, setErrorMsg] = useState("");
 
   async function checkotp() {
-    if (context.otp === Number(OTP)) {
-      await axios
-        .post(`${import.meta.env.VITE_BASE_URL}/addUser`, {
+    const checkOtpResponse = await axios.post(
+      "http://localhost:3000/checkotp",
+      {
+        enteredOTP: OTP,
+        sentOTP: context.otp,
+      }
+    );
+    if (checkOtpResponse.data.access) {
+      let response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/addUser`,
+        {
           first: context.first,
           last: context.last,
           mail: context.mail,
           password: context.password,
-        })
-        .then((response) => {
-          console.log(response);
-          if (response.data.access) {
-            // localStorage.setItem("token", response.data.token);
-            // localStorage.setItem("mailId", context.mail);
-            localStorage.setItem(
-              "userInfo",
-              JSON.stringify({
-                firstname: context.first,
-                lastname: context.last,
-                mailId: context.mail,
-                token: response.data.token,
-              })
-            );
-            navigate("/account");
-          } else {
-            setError(true);
-            setErrorMsg(response.data.errorMsg);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        }
+      );
+      if (response.data.access) {
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            firstname: context.first,
+            lastname: context.last,
+            mailId: context.mail,
+            token: response.data.token,
+          })
+        );
+        navigate("/account");
+      } else {
+        setError(true);
+        setErrorMsg(response.data.errorMsg);
+      }
     } else {
       setError(true);
       setErrorMsg("Wrong OTP!");

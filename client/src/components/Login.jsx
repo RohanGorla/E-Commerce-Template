@@ -8,52 +8,46 @@ function Login() {
   const [pass, setPass] = useState("");
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
   const navigate = useNavigate();
 
+  /* Login API */
+
   async function checkUser() {
-    await axios
-      .post(`${import.meta.env.VITE_BASE_URL}/checkUser`, {
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/checkUser`,
+      {
         mail: email,
         password: pass,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.access) {
-          console.log(response.data);
-          localStorage.setItem(
-            "userInfo",
-            JSON.stringify({
-              firstname: response.data.firstname,
-              lastname: response.data.lastname,
-              mailId: email,
-              token: response.data.token,
-              base_address: response.data.base_address,
-            })
-          );
-          if (response.data.baseAdd.length) {
-            localStorage.setItem(
-              "address",
-              JSON.stringify(response.data.baseAdd[0])
-            );
-          }
-          // localStorage.setItem("mailId", email);
-          // localStorage.setItem("token", response.data.token);
-          navigate("/account");
-        } else {
-          setError(true);
-          setErrorMsg(response.data.errorMsg);
-          console.log("false");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    );
+    if (response.data.access) {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({
+          firstname: response.data.firstname,
+          lastname: response.data.lastname,
+          mailId: email,
+          token: response.data.token,
+          base_address: response.data.base_address,
+        })
+      );
+      if (response.data.baseAdd.length) {
+        localStorage.setItem(
+          "address",
+          JSON.stringify(response.data.baseAdd[0])
+        );
+      }
+      navigate("/account");
+    } else {
+      setError(true);
+      setErrorMsg(response.data.errorMsg);
+    }
   }
 
   return (
     <div className="Login_Container">
       <div className="Login_Main">
+        {/* Error Message Box */}
         <div
           className={
             error
@@ -64,6 +58,7 @@ function Login() {
           <p className="Login_ErrorMsgHeading">Error!</p>
           <p className="Login_ErrorMsg">{errorMsg}</p>
         </div>
+        {/* Login Main */}
         <div className="Login_Notes">
           <p>
             Log into your account and enjoy shopping for your favourite product!
@@ -93,7 +88,7 @@ function Login() {
             ></input>
           </div>
         </form>
-        <div className="Login_Buttons" style={{ margin: "1em 0" }}>
+        <div className="Login_Buttons">
           <div className="Login_Buttons--Login">
             <button
               onClick={
