@@ -7,8 +7,30 @@ function Orders() {
   const [orders, setOrders] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
   const [showAddressId, setShowAddressId] = useState(-1);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const mailId = userInfo?.mailId;
+
+  /* Get Orders API */
+
+  async function getorders() {
+    let response = await axios.post("http://localhost:3000/getorders", {
+      mail: mailId,
+    });
+    if (response.data.access) {
+      setOrders(response.data.data);
+    } else {
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
+  /* Currency Converter */
 
   function currencyConvert(amount) {
     let amountString = amount.toString();
@@ -24,17 +46,6 @@ function Orders() {
   }
 
   useEffect(() => {
-    const mailId = userInfo?.mailId;
-    async function getorders() {
-      let response = await axios.post("http://localhost:3000/getorders", {
-        mail: mailId,
-      });
-      if (response.data.access) {
-        setOrders(response.data.ordersData);
-      } else {
-        console.log(response.data.errorMsg);
-      }
-    }
     getorders();
   }, []);
 
@@ -46,6 +57,20 @@ function Orders() {
         setShowAddressId(-1);
       }}
     >
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Orders */}
       {orders.length ? (
         <div className="Orders_Main">
           <div className="Orders_Main--Header">
@@ -58,13 +83,37 @@ function Orders() {
               let orderTotal = order.count * cost;
               let orderCurrency;
               if (cost.toString().split(".").length === 1) {
-                orderCurrency =
-                  currencyConvert(orderTotal.toString().split(".")[0]) + ".00";
+                if (orderTotal > 500) {
+                  orderCurrency = currencyConvert(orderTotal) + ".00";
+                } else {
+                  orderCurrency = currencyConvert(orderTotal + 20) + ".00";
+                }
               } else {
-                orderCurrency =
-                  currencyConvert(orderTotal.toString().split(".")[0]) +
-                  "." +
-                  orderTotal.toString().split(".")[1];
+                if (orderTotal > 500) {
+                  orderCurrency =
+                    currencyConvert(
+                      (Math.round(orderTotal * 100) / 100)
+                        .toString()
+                        .split(".")[0]
+                    ) +
+                    "." +
+                    (Math.round(orderTotal * 100) / 100)
+                      .toString()
+                      .split(".")[1]
+                      .padEnd(2, "0");
+                } else {
+                  orderCurrency =
+                    currencyConvert(
+                      (Math.round((orderTotal + 20) * 100) / 100)
+                        .toString()
+                        .split(".")[0]
+                    ) +
+                    "." +
+                    (Math.round((orderTotal + 20) * 100) / 100)
+                      .toString()
+                      .split(".")[1]
+                      .padEnd(2, "0");
+                }
               }
               return (
                 <div className="Orders_Main--Order_Container" key={index}>
@@ -143,7 +192,7 @@ function Orders() {
                             }
                             e.stopPropagation();
                           }}
-                          
+
                           // If Hover Function Is Preferred Use Below Code
 
                           // onMouseOver={() => {
