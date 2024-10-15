@@ -396,12 +396,20 @@ function Wishlist() {
                 <div className="Wish_Items--Main">
                   {wishlist.map((item, index) => {
                     let convertedMrp = currencyConvert(item.price);
-                    let price = (
-                      item.price -
-                      item.price * (item.discount / 100)
-                    ).toFixed(2);
-                    let priceInt = price.split(".")[0];
-                    let priceDecimal = price.split(".")[1].toString();
+                    let priceInt, priceDecimal;
+                    let price = item.price - (item.price * item.discount) / 100;
+                    if (price.toString().split(".").length === 1) {
+                      priceInt = price;
+                      priceDecimal = ".00";
+                    } else {
+                      priceInt = (Math.round(price * 100) / 100)
+                        .toString()
+                        .split(".")[0];
+                      priceDecimal = (Math.round(price * 100) / 100)
+                        .toString()
+                        .split(".")[1]
+                        .padEnd(2, "0");
+                    }
                     let convertedPrice =
                       currencyConvert(priceInt) + "." + priceDecimal;
                     let productRatingData = getProductRatingData(

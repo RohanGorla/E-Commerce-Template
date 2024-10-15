@@ -583,7 +583,7 @@ function Items() {
               let offerPriceInt = offer_price_rounded.toString().split(".")[0];
               let offerPriceDecimal = offer_price_rounded
                 .toString()
-                .split(".")[1];
+                .split(".")[1].padEnd(2, "0");
               let offerPriceActual;
               if (offerPriceDecimal === undefined) {
                 offerPriceActual = currencyConvert(offerPriceInt) + ".00";

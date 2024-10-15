@@ -394,21 +394,23 @@ app.post("/getreviews", (req, res) => {
 
 app.post("/getallreviews", (req, res) => {
   const ids = req.body.id;
-  db.query(
-    "select * from reviews where productid in (?)",
-    [ids],
-    (err, reviewsData) => {
-      if (err) {
-        console.log(err);
-        return res.send({
-          access: false,
-          errorMsg:
-            "Some error has occurred! Please try again or refresh the page!",
-        });
+  if (ids.length) {
+    db.query(
+      "select * from reviews where productid in (?)",
+      [ids],
+      (err, reviewsData) => {
+        if (err) {
+          console.log(err);
+          return res.send({
+            access: false,
+            errorMsg:
+              "Some error has occurred! Please try again or refresh the page!",
+          });
+        }
+        res.send({ access: true, data: reviewsData });
       }
-      res.send({ access: true, data: reviewsData });
-    }
-  );
+    );
+  }
 });
 
 app.post("/addreview", (req, res) => {

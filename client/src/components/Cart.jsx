@@ -199,14 +199,22 @@ function Cart() {
                 <div className="Cart_Main--Items_Display">
                   {cart.map((item, index) => {
                     let convertedMrp = currencyConvert(item.price);
-                    let price = (
-                      item.price -
-                      item.price * (item.discount / 100)
-                    ).toFixed(2);
-                    let priceInt = price.split(".")[0];
-                    let priceDecimal = price.split(".")[1].toString();
-                    let convertedPrice =
-                      currencyConvert(priceInt) + "." + priceDecimal;
+                    let price = item.price - item.price * (item.discount / 100);
+                    let priceInt;
+                    let priceDecimal;
+                    if (price.toString().split(".").length === 1) {
+                      priceInt = currencyConvert(price);
+                      priceDecimal = ".00";
+                    } else {
+                      priceInt = currencyConvert(
+                        (Math.round(price * 100) / 100).toString().split(".")[0]
+                      );
+                      priceDecimal = (Math.round(price * 100) / 100)
+                        .toString()
+                        .split(".")[1]
+                        .padEnd(2, "0");
+                    }
+                    let convertedPrice = priceInt + "." + priceDecimal;
                     let productRatingData = getProductRatingData(
                       item.productid
                     );

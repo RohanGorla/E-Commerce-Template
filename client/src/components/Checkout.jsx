@@ -94,13 +94,19 @@ function Checkout() {
             (Math.round(totalCost * 100) / 100).toString().split(".")[0]
           ) +
           "." +
-          (Math.round(totalCost * 100) / 100).toString().split(".")[1];
+          (Math.round(totalCost * 100) / 100)
+            .toString()
+            .split(".")[1]
+            .padEnd(2, "0");
         orderCostCurrency =
           currencyConvert(
             (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[0]
           ) +
           "." +
-          (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[1];
+          (Math.round((totalCost + 20) * 100) / 100)
+            .toString()
+            .split(".")[1]
+            .padEnd(2, "0");
       }
       if (totalCost > 500) {
         setOrderTotal(totalCostCurrency);
@@ -575,19 +581,35 @@ function Checkout() {
             <div className="Checkout_Main--Products">
               <div className="Checkout_Products_Container">
                 {cartData.map((product, index) => {
-                  let price = (
-                    product.price -
-                    (product.price * product.discount) / 100
-                  ).toFixed(2);
-                  let actualPrice =
-                    currencyConvert(price.split(".")[0]) +
-                    "." +
-                    price.split(".")[1].toString();
-                  let totalPrice = price * product.count;
-                  let actualTotal =
-                    currencyConvert(totalPrice.toString().split(".")[0]) +
-                    "." +
-                    totalPrice.toString().split(".")[1].toString();
+                  let totalPrice;
+                  let actualPrice;
+                  let price =
+                    product.price - (product.price * product.discount) / 100;
+                  if (price.toString().split(".").length === 1) {
+                    actualPrice = currencyConvert(price) + ".00";
+                    totalPrice = currencyConvert(price * product.count) + ".00";
+                  } else {
+                    actualPrice =
+                      currencyConvert(
+                        (Math.round(price * 100) / 100).toString().split(".")[0]
+                      ) +
+                      "." +
+                      (Math.round(price * 100) / 100)
+                        .toString()
+                        .split(".")[1]
+                        .padEnd(2, "0");
+                    totalPrice =
+                      currencyConvert(
+                        (Math.round(price * product.count * 100) / 100)
+                          .toString()
+                          .split(".")[0]
+                      ) +
+                      "." +
+                      (Math.round(price * product.count * 100) / 100)
+                        .toString()
+                        .split(".")[1]
+                        .padEnd(2, "0");
+                  }
                   return (
                     <div className="Checkout_Products--Product" key={index}>
                       <div className="Checkout_Products--Product_Image">
@@ -611,7 +633,7 @@ function Checkout() {
                             <span className="Checkout_Product_Details--Total_Symbol">
                               ₹
                             </span>
-                            {actualTotal}
+                            {totalPrice}
                           </p>
                         </div>
                       </div>

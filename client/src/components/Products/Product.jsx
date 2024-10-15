@@ -77,7 +77,7 @@ function Product() {
       let offer_price = data.price - data.price * (data.discount / 100);
       let offer_price_rounded = Math.round(offer_price * 100) / 100;
       let offerPriceInt = offer_price_rounded.toString().split(".")[0];
-      let offerPriceDecimal = offer_price_rounded.toString().split(".")[1];
+      let offerPriceDecimal = offer_price_rounded.toString().split(".")[1].padEnd(2, "0");
       let offerPriceActual;
       if (offerPriceDecimal === undefined) {
         offerPriceActual = currencyConvert(offerPriceInt) + ".00";

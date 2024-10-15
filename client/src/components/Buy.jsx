@@ -42,36 +42,63 @@ function Buy() {
     if (response.data.access) {
       let data = response.data.data[0];
       let cost = data.price * (1 - data.discount / 100);
-      let priceCurrency =
-        currencyConvert(
-          (Math.round(cost * 100) / 100).toString().split(".")[0]
-        ) +
-        "." +
-        (Math.round(cost * 100) / 100).toString().split(".")[1];
       let total = cost * data.count;
-      let totalCurrency =
-        currencyConvert(
-          (Math.round(total * 100) / 100).toString().split(".")[0]
-        ) +
-        "." +
-        (Math.round(total * 100) / 100).toString().split(".")[1];
-      setProductTotal(totalCurrency);
-      setProductPrice(priceCurrency);
-      if (total > 500) {
-        setFreeDelivery(true);
-        setOrderTotal(totalCurrency);
-        setOrderTotalNumber(total);
+      let priceCurrency;
+      let totalCurrency;
+      let orderTotalCurrency;
+      if (cost.toString().split(".").length === 1) {
+        priceCurrency = currencyConvert(cost) + ".00";
+        totalCurrency = currencyConvert(cost * data.count) + ".00";
+        if (total > 500) {
+          setFreeDelivery(true);
+          setOrderTotal(totalCurrency);
+          setOrderTotalNumber(total);
+        } else {
+          setFreeDelivery(false);
+          orderTotalCurrency = currencyConvert(total + 20) + ".00";
+          setOrderTotal(orderTotalCurrency);
+          setOrderTotalNumber(total + 20);
+        }
       } else {
-        setFreeDelivery(false);
-        let orderTotalCurrency =
+        priceCurrency =
           currencyConvert(
-            (Math.round((total + 20) * 100) / 100).toString().split(".")[0]
+            (Math.round(cost * 100) / 100).toString().split(".")[0]
           ) +
           "." +
-          (Math.round((total + 20) * 100) / 100).toString().split(".")[1];
-        setOrderTotal(orderTotalCurrency);
-        setOrderTotalNumber(total + 20);
+          (Math.round(cost * 100) / 100)
+            .toString()
+            .split(".")[1]
+            .padEnd(2, "0");
+        totalCurrency =
+          currencyConvert(
+            (Math.round(total * 100) / 100).toString().split(".")[0]
+          ) +
+          "." +
+          (Math.round(total * 100) / 100)
+            .toString()
+            .split(".")[1]
+            .padEnd(2, "0");
+        if (total > 500) {
+          setFreeDelivery(true);
+          setOrderTotal(totalCurrency);
+          setOrderTotalNumber(Math.round(total * 100) / 100);
+        } else {
+          setFreeDelivery(false);
+          orderTotalCurrency =
+            currencyConvert(
+              (Math.round((total + 20) * 100) / 100).toString().split(".")[0]
+            ) +
+            "." +
+            (Math.round((total + 20) * 100) / 100)
+              .toString()
+              .split(".")[1]
+              .padEnd(2, "0");
+          setOrderTotal(orderTotalCurrency);
+          setOrderTotalNumber(total + 20);
+        }
       }
+      setProductTotal(totalCurrency);
+      setProductPrice(priceCurrency);
       setProductData(data);
     } else {
       setSuccess(false);
