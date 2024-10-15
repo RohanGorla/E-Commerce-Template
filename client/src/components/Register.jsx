@@ -9,6 +9,8 @@ function Register() {
   const context = useOutletContext();
   const navigate = useNavigate();
 
+  /* Get Register OTP API */
+
   async function addUser(e) {
     e.preventDefault();
     let otpResponse = await axios.post(

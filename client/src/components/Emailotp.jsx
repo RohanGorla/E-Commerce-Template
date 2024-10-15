@@ -12,6 +12,8 @@ function Emailotp() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  /* Check Otp API */
+
   async function checkotp() {
     const checkOtpResponse = await axios.post(
       "http://localhost:3000/checkotp",
@@ -20,6 +22,7 @@ function Emailotp() {
         sentOTP: context.otp,
       }
     );
+    /* Edit User Email API */
     if (checkOtpResponse.data.access) {
       const response = await axios.put("http://localhost:3000/editusermail", {
         newmail: context.newMail,

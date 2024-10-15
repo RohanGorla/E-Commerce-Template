@@ -1,0 +1,11 @@
+.Navbar_List {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    list-style: none;
+}
+
+.Navbar_Item {
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+}

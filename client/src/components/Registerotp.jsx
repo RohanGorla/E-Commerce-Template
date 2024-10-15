@@ -10,6 +10,8 @@ function Registerotp() {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  /* Check OTP API */
+
   async function checkotp() {
     const checkOtpResponse = await axios.post(
       "http://localhost:3000/checkotp",
@@ -18,6 +20,7 @@ function Registerotp() {
         sentOTP: context.otp,
       }
     );
+    /* Add User API */
     if (checkOtpResponse.data.access) {
       let response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/addUser`,
