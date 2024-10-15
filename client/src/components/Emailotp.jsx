@@ -11,8 +11,15 @@ function Emailotp() {
   const [errorMsg, setErrorMsg] = useState("");
 
   async function checkotp() {
-    if (context.otp === Number(OTP)) {
-      let response = await axios.put("http://localhost:3000/editusermail", {
+    const checkOtpResponse = await axios.post(
+      "http://localhost:3000/checkotp",
+      {
+        enteredOTP: OTP,
+        sentOTP: context.otp,
+      }
+    );
+    if (checkOtpResponse.data.access) {
+      const response = await axios.put("http://localhost:3000/editusermail", {
         newmail: context.newMail,
         oldmail: userInfo.mailId,
         token: userInfo.token,

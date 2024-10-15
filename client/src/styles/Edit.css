@@ -1,9 +1,9 @@
 :root {
-    --Main_Font: "Inter", sans-serif;
-    --Main_Fontsize: 15px;
-    --Secondary_Font: "Roboto", sans-serif;
-    --Secondary_Fontsize: 17px;
-    --Button_Fontsize: 15px;
+    --Edit_Main_Font: "Inter", sans-serif;
+    --Edit_Secondary_Font: "Roboto", sans-serif;
+    --Edit_Main_Fontsize: 15px;
+    --Edit_Secondary_Fontsize: 17px;
+    --Edit_Button: 15px;
 }
 
 .Edit_Main {
@@ -23,8 +23,8 @@
 }
 
 .Edit_ErrorMsgHeading, .Edit_ErrorMsg {
-    font-family: var(--Secondary_Font);
-    font-size: var(--Secondary_Fontsize);
+    font-family: var(--Edit_Secondary_Font);
+    font-size: var(--Edit_Secondary_Fontsize);
 }
 
 .Edit_ErrorMsgBox--invisible {
@@ -34,7 +34,7 @@
 
 .Edit_Notes {
     margin-bottom: 2em;
-    font-family: var(--Secondary_Font);
+    font-family: var(--Edit_Secondary_Font);
 }
 
 .Edit_Notes h2 {
@@ -46,14 +46,14 @@
 }
 
 .Edit_Input label {
-    font-family: var(--Secondary_Font);
-    font-size: var(--Secondary_Fontsize);
+    font-family: var(--Edit_Secondary_Font);
+    font-size: var(--Edit_Secondary_Fontsize);
     font-weight: 500;
 }
 
 .Savechanges_Btn {
-    font-size: var(--Secondary_Font);
-    font-size: var(--Button_Fontsize);
+    font-size: var(--Edit_Secondary_Font);
+    font-size: var(--Edit_Button);
     font-weight: 500;
     padding: .5em 1.7em;
     background-color: gold;
@@ -66,8 +66,8 @@
 .Editname_Input {
     display: block;
     width: 130px;
-    font-family: var(--Secondary_Font);
-    font-size: var(--Main_Fontsize);
+    font-family: var(--Edit_Secondary_Font);
+    font-size: var(--Edit_Main_Fontsize);
     font-weight: 400;
     margin-top: .3em;
     padding: .2em 0 .2em .3em;
@@ -80,8 +80,8 @@
 .Editmail_Input {
     display: block;
     width: 250px;
-    font-family: var(--Secondary_Font);
-    font-size: var(--Main_Fontsize);
+    font-family: var(--Edit_Secondary_Font);
+    font-size: var(--Edit_Main_Fontsize);
     font-weight: 400;
     margin-top: .3em;
     padding: .2em 0 .2em .3em;
@@ -94,8 +94,8 @@
 .Editemailotp_Input {
     display: block;
     width: 100px;
-    font-family: var(--Secondary_Font);
-    font-size: var(--Main_Fontsize);
+    font-family: var(--Edit_Secondary_Font);
+    font-size: var(--Edit_Main_Fontsize);
     font-weight: 400;
     margin-top: .3em;
     padding: .2em 0 .2em .3em;
@@ -108,8 +108,8 @@
 .Editpassword_Input {
     display: block;
     width: 170px;
-    font-family: var(--Secondary_Font);
-    font-size: var(--Main_Fontsize);
+    font-family: var(--Edit_Secondary_Font);
+    font-size: var(--Edit_Main_Fontsize);
     font-weight: 400;
     margin-top: .3em;
     padding: .2em 0 .2em .3em;

@@ -883,12 +883,24 @@ app.post("/getemailchangeotp", (req, res) => {
             subject: "Sending Email using Node.js",
             html: `Your OTP is ${OTP}`,
           });
-          res.send({ access: true, otp: OTP });
+          let hashedOTP = await bcrypt.hash(OTP.toString(), 10);
+          res.send({ access: true, otp: hashedOTP });
         }
         sendmail();
       }
     }
   );
+});
+
+app.post("/checkotp", async (req, res) => {
+  const enteredOTP = req.body.enteredOTP;
+  const sentOTP = req.body.sentOTP;
+  const compareOTP = await bcrypt.compare(enteredOTP, sentOTP);
+  if (compareOTP) {
+    res.send({ access: true });
+  } else {
+    res.send({ access: false });
+  }
 });
 
 app.put("/editusermail", async (req, res) => {
