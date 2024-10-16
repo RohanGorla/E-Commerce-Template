@@ -24,6 +24,10 @@
     --Checkout_Info--Payment_Button: 16px;
 }
 
+.Checkout_Page {
+    position: relative;
+}
+
 .Checkout_Order_Placed {
     background-color: rgb(75, 218, 67);
     font-family: var(--Checkout_Main_Font);

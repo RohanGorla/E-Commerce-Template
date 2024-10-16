@@ -116,8 +116,22 @@ function Wishlist() {
     if (response.data.access) {
       getWishlists();
       getFromWish();
+      setError(false);
+      setErrorMessage("");
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
-    // console.log(response);
   }
 
   /* Wish Items APIs */

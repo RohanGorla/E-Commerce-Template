@@ -15,12 +15,15 @@
     --Cart_Login_Redirect--Button_FS: 16px;
 }
 
+.Cart_Page {
+    position: relative;
+    height: 100%;
+}
+
 .Cart_Main_Container {
+    background-color: black;
     height: 100%;
     overflow-y: scroll;
-    /* background-color: rgb(25, 25, 25);
-    background-color: rgb(66, 66, 66); */
-    background-color: black;
 }
 
 .Cart_Subcontainer {
@@ -31,7 +34,6 @@
 /* Cart Main--Header */
 
 .Cart_Main--Header_Container {
-    /* background-color: rgb(66, 66, 66); */
     background-color: black;
     position: sticky;
     top: 0px;
@@ -42,7 +44,6 @@
 }
 
 .Cart_Main--Header {
-    /* background-color: rgb(66, 66, 66); */
     background-color: rgb(25, 25, 25);
     display: flex;
     justify-content: space-between;
@@ -59,27 +60,25 @@
 }
 
 .Cart_Main--Header_Checkout_Button button {
+    background-color: goldenrod;
+    color: black;
     font-family: var(--Cart_Main_Font);
     font-size: var(--Cart_Login_Redirect--Button_FS);
     font-weight: 500;
     padding: .6em 1.5em;
     border-style: none;
     border-radius: 5px;
-    background-color: goldenrod;
-    color: black;
     cursor: pointer;
 }
 
 /* Cart Main Item Display */
 
 .Cart_Main--Items_Display {
-    /* background-color: rgb(66, 66, 66); */
     background-color: black;
     padding: 1em;
 }
 
 .Cart_Items_Display {
-    /* background-color: rgb(66, 66, 66); */
     background-color: rgb(25, 25, 25);
     display: flex;
     height: 300px;
@@ -179,14 +178,14 @@
 }
 
 .Cart_Items_Buttons--Buynow {
+    background-color: goldenrod;
+    color: black;
     font-family: var(--Cart_Secondary_Font);
     font-size: var(--Cart_Item_Buttons_FS);
     font-weight: 500;
     padding: .5em 1.2em;
     border-style: none;
     border-radius: 5px;
-    background-color: goldenrod;
-    color: black;
     cursor: pointer;
 }
 
@@ -271,7 +270,6 @@
     background-color: black;
     color: white;
     cursor: pointer;
-    /* transition: all .1s ease-in-out; */
     &:hover {
         background-color: goldenrod;
         color: black;

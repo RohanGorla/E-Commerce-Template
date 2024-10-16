@@ -32,7 +32,7 @@ function Items() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
 
-  /* Wishlist and Cart APIs */
+  /* Wishlist APIs */
 
   async function getWishlists() {
     if (mailId) {
@@ -131,6 +131,8 @@ function Items() {
     }
   }
 
+  /* Cart API */
+
   async function addToCart(product) {
     if (mailId) {
       const response = await axios.post("http://localhost:3000/addtocart", {
@@ -202,7 +204,7 @@ function Items() {
     }
   }
 
-  /* Filters APIs */
+  /* Get Filters APIs */
 
   async function getCompany() {
     let response = await axios.post("http://localhost:3000/getcompany", {
@@ -311,372 +313,380 @@ function Items() {
   }, []);
 
   return (
-    <div className="Items_Container">
-      <div className="Items_Main">
-        {/* Add Wishlist Box */}
-        <div
-          className={
-            addListShow
-              ? "Items_AddNewList_Container"
-              : "Items_AddNewList_Container--Inactive"
-          }
-        >
-          <div className="Items_AddNewList--Tint"></div>
-          <div className="Items_AddNewList">
-            <div className="Items_AddNewList--Header">
-              <p className="Items_AddNewList--Header_Heading">Add new list</p>
-              <p className="Items_AddNewList--Header_Note">
-                Create a new wish list to save your favourite items!
-              </p>
-            </div>
-            <div
-              className={
-                addlistError
-                  ? "Items_AddNewList--Error"
-                  : "Items_AddNewList--Error--Inactive"
-              }
-            >
-              <p className="Items_AddNewList--Error_Heading">Error!</p>
-              <p className="Items_AddNewList--Error_Note">
-                {addListErrorMessage}
-              </p>
-            </div>
-            <div className="Items_AddNewList--Input">
-              <label>Wishlist name</label>
-              <input
-                type="text"
-                value={newlist}
-                onChange={(e) => {
-                  setNewlist(e.target.value);
-                }}
-                placeholder="Enter list name"
-              ></input>
-              <div className="Items_AddNewList--Input_Buttons">
-                <button
-                  className="Items_AddNewList--Buttons_Cancel"
-                  onClick={() => {
-                    setAddListShow(false);
-                    setAddlistError(false);
-                    setaddListErrorMessage("");
-                    setNewlist("");
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="Items_AddNewList--Buttons_Create"
-                  onClick={addwishlist}
-                >
-                  Create
-                </button>
-              </div>
-            </div>
+    <div className="Items_Page">
+      {/* Add Wishlist Box */}
+      <div
+        className={
+          addListShow
+            ? "Items_AddNewList_Container"
+            : "Items_AddNewList_Container--Inactive"
+        }
+      >
+        <div className="Items_AddNewList--Tint"></div>
+        <div className="Items_AddNewList">
+          <div className="Items_AddNewList--Header">
+            <p className="Items_AddNewList--Header_Heading">Add new list</p>
+            <p className="Items_AddNewList--Header_Note">
+              Create a new wish list to save your favourite items!
+            </p>
           </div>
-        </div>
-        {/* Select Wishlist Box */}
-        <div
-          className={
-            showSelectlist
-              ? "Items_Wishlist_Selector--Active"
-              : "Items_Wishlist_Selector"
-          }
-        >
-          <div className="Items_Wishlist_Selector--Tint"></div>
-          <div className="Items_Wishlist_Selector--Container">
-            <div className="Items_Wishlist_Selector--Header_Container">
-              <div className="Items_Wishlist_Selector--Header">
-                <h2 className="Items_Wishlist_Selector--Header_Heading">
-                  Select wishlist
-                </h2>
-                <button
-                  className="Items_Wishlist_Selector--Header_Button"
-                  onClick={() => {
-                    setAddListShow(true);
-                    setShowSelectlist(false);
-                  }}
-                >
-                  Create new list
-                </button>
-              </div>
-            </div>
-            <div className="Items_Wishlist_Selector--Lists">
-              {wishlists.length ? (
-                wishlists.map((list, index) => {
-                  return (
-                    <div
-                      className="Items_Wishlist_Selector--List"
-                      key={index}
-                      onClick={() => {
-                        setSelectedWistlist(list.wishlistname);
-                        addToWishlist(wishProduct, list.wishlistname);
-                      }}
-                    >
-                      <p className="Items_Wishlist_Selector--Listname">
-                        {list.wishlistname}
-                      </p>
-                    </div>
-                  );
-                })
-              ) : (
-                <p className="Items_Wishlist_Selector--Lists_Error">
-                  No lists to show!
-                </p>
-              )}
-            </div>
-            <div className="Items_Wishlist_Selector--Buttons">
-              {/* <button className="Items_Wishlist_Selector--Buttons_Create">
-                Create new list
-              </button> */}
+          <div
+            className={
+              addlistError
+                ? "Items_AddNewList--Error"
+                : "Items_AddNewList--Error--Inactive"
+            }
+          >
+            <p className="Items_AddNewList--Error_Heading">Error!</p>
+            <p className="Items_AddNewList--Error_Note">
+              {addListErrorMessage}
+            </p>
+          </div>
+          <div className="Items_AddNewList--Input">
+            <label>Wishlist name</label>
+            <input
+              type="text"
+              value={newlist}
+              onChange={(e) => {
+                setNewlist(e.target.value);
+              }}
+              placeholder="Enter list name"
+            ></input>
+            <div className="Items_AddNewList--Input_Buttons">
               <button
-                className="Items_Wishlist_Selector--Buttons_Cancel"
+                className="Items_AddNewList--Buttons_Cancel"
                 onClick={() => {
-                  setShowSelectlist(false);
+                  setAddListShow(false);
+                  setAddlistError(false);
+                  setaddListErrorMessage("");
+                  setNewlist("");
                 }}
               >
                 Cancel
               </button>
+              <button
+                className="Items_AddNewList--Buttons_Create"
+                onClick={addwishlist}
+              >
+                Create
+              </button>
             </div>
           </div>
         </div>
-        {/* Error Message Box */}
-        <div
-          className={
-            error
-              ? "Error_Message_Box Error_Message_Box--Active"
-              : "Error_Message_Box Error_Message_Box--Inactive"
-          }
-        >
-          <div className="Error_Message_Box--Container">
-            <p className="Error_Message_Box--Heading">Error!</p>
-            <p className="Error_Message_Box--Message">{errorMessage}</p>
-          </div>
-        </div>
-        {/* Success Message Box */}
-        <div
-          className={
-            success
-              ? "Success_Message_Box Success_Message_Box--Active"
-              : "Success_Message_Box Success_Message_Box--Inactive"
-          }
-        >
-          <div className="Success_Message_Box--Container">
-            <p className="Success_Message_Box--Heading">Success!</p>
-            <p className="Success_Message_Box--Message">{successMessage}</p>
-          </div>
-        </div>
-        {/* Items Filters */}
-        <div className="Items_Filters_Container">
-          <div className="Items_Filters">
-            <div className="Items_Filter_Container">
-              <div
-                className="Items_Filters_Label"
+      </div>
+      {/* Select Wishlist Box */}
+      <div
+        className={
+          showSelectlist
+            ? "Items_Wishlist_Selector--Active"
+            : "Items_Wishlist_Selector"
+        }
+      >
+        <div className="Items_Wishlist_Selector--Tint"></div>
+        <div className="Items_Wishlist_Selector--Container">
+          <div className="Items_Wishlist_Selector--Header_Container">
+            <div className="Items_Wishlist_Selector--Header">
+              <h2 className="Items_Wishlist_Selector--Header_Heading">
+                Select wishlist
+              </h2>
+              <button
+                className="Items_Wishlist_Selector--Header_Button"
                 onClick={() => {
-                  setShowCompany(!showCompany);
+                  setAddListShow(true);
+                  setShowSelectlist(false);
                 }}
               >
-                <p className="Items_Filters_Label--Name">Select Company</p>
-              </div>
-              <div
-                className={
-                  showCompany
-                    ? "Items_Filter--Filter Items_Filter--Filter--Active"
-                    : "Items_Filter--Filter Items_Filter--Filter--Inactive"
-                }
-              >
-                {allCom.map((com, index) => {
-                  return (
-                    <div
-                      className="Items_Filter--Filter_Name_Container"
-                      onClick={() => {
-                        setSelectedCompany(com.company);
-                      }}
-                      key={index}
-                    >
-                      <p className="Items_Filter--Filter_Name">{com.company}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="Items_Filter_Container">
-              <div
-                className="Items_Filters_Label"
-                onClick={() => {
-                  setShowPrice(!showPrice);
-                }}
-              >
-                <p className="Items_Filters_Label--Name">Select Price</p>
-              </div>
-              <div
-                className={
-                  showPrice
-                    ? "Items_Filter--Filter Items_Filter--Filter--Active"
-                    : "Items_Filter--Filter Items_Filter--Filter--Inactive"
-                }
-              >
-                <div
-                  className="Items_Filter--Filter_Name_Container"
-                  onClick={() => {
-                    setLowerPrice(0);
-                    setUpperPrice(15000);
-                  }}
-                >
-                  <p className="Items_Filter_Price">0 to 15,000</p>
-                </div>
-                <div
-                  className="Items_Filter--Filter_Name_Container"
-                  onClick={() => {
-                    setLowerPrice(15001);
-                    setUpperPrice(30000);
-                  }}
-                >
-                  <p className="Items_Filter_Price">15,001 to 30,000</p>
-                </div>
-                <div
-                  className="Items_Filter--Filter_Name_Container"
-                  onClick={() => {
-                    setLowerPrice(30000);
-                    setUpperPrice(45000);
-                  }}
-                >
-                  <p className="Items_Filter_Price">30,001 to 45,000</p>
-                </div>
-                <div
-                  className="Items_Filter--Filter_Name_Container"
-                  onClick={() => {
-                    setLowerPrice(45000);
-                    setUpperPrice(60000);
-                  }}
-                >
-                  <p className="Items_Filter_Price">45,001 to 60,000</p>
-                </div>
-                <div
-                  className="Items_Filter--Filter_Name_Container"
-                  onClick={() => {
-                    setLowerPrice(60000);
-                    setUpperPrice(75000);
-                  }}
-                >
-                  <p className="Items_Filter_Price">60,001 to 75,000</p>
-                </div>
-                <div
-                  className="Items_Filter--Filter_Name_Container"
-                  onClick={() => {
-                    setLowerPrice(75000);
-                    setUpperPrice(0);
-                  }}
-                >
-                  <p className="Items_Filter_Price">75,001 and above</p>
-                </div>
-              </div>
+                Create new list
+              </button>
             </div>
           </div>
-        </div>
-        {/* Actual Items */}
-        <div className="Items_List_Container">
-          <div className="Items_List">
-            {products.map((product, index) => {
-              let mrp = currencyConvert(product.price);
-              let offer_price =
-                product.price - product.price * (product.discount / 100);
-              let offer_price_rounded = Math.round(offer_price * 100) / 100;
-              let offerPriceInt = offer_price_rounded.toString().split(".")[0];
-              let offerPriceDecimal = offer_price_rounded
-                .toString()
-                .split(".")[1].padEnd(2, "0");
-              let offerPriceActual;
-              if (offerPriceDecimal === undefined) {
-                offerPriceActual = currencyConvert(offerPriceInt) + ".00";
-              } else {
-                offerPriceActual =
-                  currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
-              }
-              let data = getProductRatingData(product.id);
-              return (
-                <div key={index} className="Item_Container">
-                  <div className="Item_Image">
-                    <img
-                      src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-                      onClick={() => {
-                        window.open(
-                          `${window.location.origin}/products/product/${product.id}`
-                        );
-                      }}
-                    ></img>
+          <div className="Items_Wishlist_Selector--Lists">
+            {wishlists.length ? (
+              wishlists.map((list, index) => {
+                return (
+                  <div
+                    className="Items_Wishlist_Selector--List"
+                    key={index}
+                    onClick={() => {
+                      setSelectedWistlist(list.wishlistname);
+                      addToWishlist(wishProduct, list.wishlistname);
+                    }}
+                  >
+                    <p className="Items_Wishlist_Selector--Listname">
+                      {list.wishlistname}
+                    </p>
                   </div>
-                  <div className="Item_Details">
-                    <p
-                      className="Item_Name"
-                      onClick={() => {
-                        window.open(
-                          `${window.location.origin}/products/product/${product.id}`
-                        );
-                      }}
-                    >
-                      {product.title}
-                    </p>
-                    <p className="Item_Category">
-                      {product.category} - {product.company}
-                    </p>
-                    <div className="Item_Rating_Top_Star_Container">
-                      <span className="Item_Rating_Top">
-                        {data.actualRating}
-                      </span>
-                      <div className="Item_Rating_Top_Star_Container--Box">
-                        {Array(5)
-                          .fill(0)
-                          .map((_, index) => {
-                            return (
-                              <FaStar
-                                className="Actual_Top_Star_Rating"
-                                key={index}
-                                size={15}
-                                color={
-                                  index <= data.averageStarRating
-                                    ? "orange"
-                                    : "white"
-                                }
-                              />
-                            );
-                          })}
+                );
+              })
+            ) : (
+              <p className="Items_Wishlist_Selector--Lists_Error">
+                No lists to show!
+              </p>
+            )}
+          </div>
+          <div className="Items_Wishlist_Selector--Buttons">
+            {/* <button className="Items_Wishlist_Selector--Buttons_Create">
+                Create new list
+              </button> */}
+            <button
+              className="Items_Wishlist_Selector--Buttons_Cancel"
+              onClick={() => {
+                setShowSelectlist(false);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Success_Message_Box Success_Message_Box--Active"
+            : "Success_Message_Box Success_Message_Box--Inactive"
+        }
+      >
+        <div className="Success_Message_Box--Container">
+          <p className="Success_Message_Box--Heading">Success!</p>
+          <p className="Success_Message_Box--Message">{successMessage}</p>
+        </div>
+      </div>
+      {/* Items Container */}
+      <div className="Items_Container">
+        <div className="Items_Main">
+          {/* Items Filters */}
+          <div className="Items_Filters_Container">
+            <div className="Items_Filters">
+              <div className="Items_Filter_Container">
+                <div
+                  className="Items_Filters_Label"
+                  onClick={() => {
+                    setShowCompany(!showCompany);
+                  }}
+                >
+                  <p className="Items_Filters_Label--Name">Select Company</p>
+                </div>
+                <div
+                  className={
+                    showCompany
+                      ? "Items_Filter--Filter Items_Filter--Filter--Active"
+                      : "Items_Filter--Filter Items_Filter--Filter--Inactive"
+                  }
+                >
+                  {allCom.map((com, index) => {
+                    return (
+                      <div
+                        className="Items_Filter--Filter_Name_Container"
+                        onClick={() => {
+                          setSelectedCompany(com.company);
+                        }}
+                        key={index}
+                      >
+                        <p className="Items_Filter--Filter_Name">
+                          {com.company}
+                        </p>
                       </div>
-                      <span className="Item_Rating_Top">
-                        {data.ratings}{" "}
-                        {data.ratings == 1 ? "rating" : "ratings"}
-                      </span>
-                    </div>
-                    <p className="Item_Price">
-                      <span className="Item_Discount">
-                        -{product.discount}%
-                      </span>{" "}
-                      ₹{offerPriceActual}
-                    </p>
-                    <p className="Item_MRP">
-                      M.R.P: <span className="Item_MRP_Strike">₹{mrp}</span>
-                    </p>
-                    <div className="Item_Buttons">
-                      <button
-                        className="Item_Addtocart_Btn"
-                        onClick={() => {
-                          addToCart(product);
-                        }}
-                      >
-                        Add to cart
-                      </button>
-                      <button
-                        className="Item_Wishlist_Btn"
-                        onClick={() => {
-                          setShowSelectlist(true);
-                          setWishProduct(product);
-                        }}
-                      >
-                        Wish list
-                      </button>
-                    </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="Items_Filter_Container">
+                <div
+                  className="Items_Filters_Label"
+                  onClick={() => {
+                    setShowPrice(!showPrice);
+                  }}
+                >
+                  <p className="Items_Filters_Label--Name">Select Price</p>
+                </div>
+                <div
+                  className={
+                    showPrice
+                      ? "Items_Filter--Filter Items_Filter--Filter--Active"
+                      : "Items_Filter--Filter Items_Filter--Filter--Inactive"
+                  }
+                >
+                  <div
+                    className="Items_Filter--Filter_Name_Container"
+                    onClick={() => {
+                      setLowerPrice(0);
+                      setUpperPrice(15000);
+                    }}
+                  >
+                    <p className="Items_Filter_Price">0 to 15,000</p>
+                  </div>
+                  <div
+                    className="Items_Filter--Filter_Name_Container"
+                    onClick={() => {
+                      setLowerPrice(15001);
+                      setUpperPrice(30000);
+                    }}
+                  >
+                    <p className="Items_Filter_Price">15,001 to 30,000</p>
+                  </div>
+                  <div
+                    className="Items_Filter--Filter_Name_Container"
+                    onClick={() => {
+                      setLowerPrice(30000);
+                      setUpperPrice(45000);
+                    }}
+                  >
+                    <p className="Items_Filter_Price">30,001 to 45,000</p>
+                  </div>
+                  <div
+                    className="Items_Filter--Filter_Name_Container"
+                    onClick={() => {
+                      setLowerPrice(45000);
+                      setUpperPrice(60000);
+                    }}
+                  >
+                    <p className="Items_Filter_Price">45,001 to 60,000</p>
+                  </div>
+                  <div
+                    className="Items_Filter--Filter_Name_Container"
+                    onClick={() => {
+                      setLowerPrice(60000);
+                      setUpperPrice(75000);
+                    }}
+                  >
+                    <p className="Items_Filter_Price">60,001 to 75,000</p>
+                  </div>
+                  <div
+                    className="Items_Filter--Filter_Name_Container"
+                    onClick={() => {
+                      setLowerPrice(75000);
+                      setUpperPrice(0);
+                    }}
+                  >
+                    <p className="Items_Filter_Price">75,001 and above</p>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+          </div>
+          {/* Actual Items */}
+          <div className="Items_List_Container">
+            <div className="Items_List">
+              {products.map((product, index) => {
+                let mrp = currencyConvert(product.price);
+                let offer_price =
+                  product.price - product.price * (product.discount / 100);
+                let offer_price_rounded = Math.round(offer_price * 100) / 100;
+                let offerPriceInt = offer_price_rounded
+                  .toString()
+                  .split(".")[0];
+                let offerPriceDecimal = offer_price_rounded
+                  .toString()
+                  .split(".")[1]
+                  .padEnd(2, "0");
+                let offerPriceActual;
+                if (offerPriceDecimal === undefined) {
+                  offerPriceActual = currencyConvert(offerPriceInt) + ".00";
+                } else {
+                  offerPriceActual =
+                    currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
+                }
+                let data = getProductRatingData(product.id);
+                return (
+                  <div key={index} className="Item_Container">
+                    <div className="Item_Image">
+                      <img
+                        src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                        onClick={() => {
+                          window.open(
+                            `${window.location.origin}/products/product/${product.id}`
+                          );
+                        }}
+                      ></img>
+                    </div>
+                    <div className="Item_Details">
+                      <p
+                        className="Item_Name"
+                        onClick={() => {
+                          window.open(
+                            `${window.location.origin}/products/product/${product.id}`
+                          );
+                        }}
+                      >
+                        {product.title}
+                      </p>
+                      <p className="Item_Category">
+                        {product.category} - {product.company}
+                      </p>
+                      <div className="Item_Rating_Top_Star_Container">
+                        <span className="Item_Rating_Top">
+                          {data.actualRating}
+                        </span>
+                        <div className="Item_Rating_Top_Star_Container--Box">
+                          {Array(5)
+                            .fill(0)
+                            .map((_, index) => {
+                              return (
+                                <FaStar
+                                  className="Actual_Top_Star_Rating"
+                                  key={index}
+                                  size={15}
+                                  color={
+                                    index <= data.averageStarRating
+                                      ? "orange"
+                                      : "white"
+                                  }
+                                />
+                              );
+                            })}
+                        </div>
+                        <span className="Item_Rating_Top">
+                          {data.ratings}{" "}
+                          {data.ratings == 1 ? "rating" : "ratings"}
+                        </span>
+                      </div>
+                      <p className="Item_Price">
+                        <span className="Item_Discount">
+                          -{product.discount}%
+                        </span>{" "}
+                        ₹{offerPriceActual}
+                      </p>
+                      <p className="Item_MRP">
+                        M.R.P: <span className="Item_MRP_Strike">₹{mrp}</span>
+                      </p>
+                      <div className="Item_Buttons">
+                        <button
+                          className="Item_Addtocart_Btn"
+                          onClick={() => {
+                            addToCart(product);
+                          }}
+                        >
+                          Add to cart
+                        </button>
+                        <button
+                          className="Item_Wishlist_Btn"
+                          onClick={() => {
+                            setShowSelectlist(true);
+                            setWishProduct(product);
+                          }}
+                        >
+                          Wish list
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

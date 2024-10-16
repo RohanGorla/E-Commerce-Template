@@ -9,6 +9,8 @@ function Categories() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  /* Get Categories API */
+
   async function getCategories() {
     const response = await axios.get("http://localhost:3000/getallcategories");
     if (response.data.access) {
@@ -27,34 +29,36 @@ function Categories() {
     getCategories();
   }, []);
   return (
-    <div className="Categorues_Container">
-      <div className="Categories_Main">
-        <div
-          className={
-            error
-              ? "Error_Message_Box Error_Message_Box--Active"
-              : "Error_Message_Box Error_Message_Box--Inactive"
-          }
-        >
-          <div className="Error_Message_Box--Container">
-            <p className="Error_Message_Box--Heading">Error!</p>
-            <p className="Error_Message_Box--Message">{errorMessage}</p>
-          </div>
+    <div className="Categories_Page">
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
         </div>
-        {Categories.map((cat, index) => {
-          return (
-            <div key={index} className="Category_Card">
-              <p>{cat.category}</p>
-              <button
-                onClick={() => {
-                  navigate(`items/${cat.category}`);
-                }}
-              >
-                Select
-              </button>
-            </div>
-          );
-        })}
+      </div>
+      <div className="Categories_Container">
+        <div className="Categories_Main">
+          {Categories.map((cat, index) => {
+            return (
+              <div key={index} className="Category_Card">
+                <p>{cat.category}</p>
+                <button
+                  onClick={() => {
+                    navigate(`items/${cat.category}`);
+                  }}
+                >
+                  Select
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

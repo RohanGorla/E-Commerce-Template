@@ -9,10 +9,22 @@
     --Account_Signout_Button: 16px;
 }
 
+.Account_Page {
+    position: relative;
+    height: 100%;
+}
+
 .Account_Container {
+    height: 100%;
+    width: 100%;
+}
+
+.Account_Main {
+    height: 100%;
     max-width: 900px;
+    overflow-y: scroll;
     margin: 0 auto;
-    margin-top: 1em;
+    padding-top: 1em;
 }
 
 .Account_Heading {
@@ -24,6 +36,7 @@
 }
 
 .Account_Useroptions {
+    background-color: rgb(45, 45, 45);
     max-width: 800px;
     margin: 0 auto 2em auto;
     padding: 1.5em;
@@ -33,7 +46,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(45, 45, 45);
 }
 
 .Account_Username {
@@ -62,7 +74,7 @@
     }
 }
 
-.Account_Main {
+.Account_Cards {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5em;
@@ -77,7 +89,6 @@
     border-radius: 15px;
     border: 1px white solid;
     padding: 25px 15px 40px 15px;
-    /* margin: 1em 0em; */
     cursor: pointer;
 }
 

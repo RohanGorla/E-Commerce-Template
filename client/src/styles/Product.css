@@ -32,8 +32,13 @@
     --Product_Reviews--Button: 14px;
 }
 
-.Product_Main_Container {
+.Product_Page {
     position: relative;
+    height: 100%;
+}
+
+.Product_Main_Container {
+    overflow-y: scroll;
     height: 100%;
     width: 100%;
 }
@@ -41,7 +46,6 @@
 .Product_Main {
     max-width: 1400px;
     height: 100%;
-    overflow-y: scroll;
     margin: 0 auto;
     padding: 1em 2em;
     font-optical-sizing: auto;

@@ -77,7 +77,10 @@ function Product() {
       let offer_price = data.price - data.price * (data.discount / 100);
       let offer_price_rounded = Math.round(offer_price * 100) / 100;
       let offerPriceInt = offer_price_rounded.toString().split(".")[0];
-      let offerPriceDecimal = offer_price_rounded.toString().split(".")[1].padEnd(2, "0");
+      let offerPriceDecimal = offer_price_rounded
+        .toString()
+        .split(".")[1]
+        .padEnd(2, "0");
       let offerPriceActual;
       if (offerPriceDecimal === undefined) {
         offerPriceActual = currencyConvert(offerPriceInt) + ".00";
@@ -99,7 +102,7 @@ function Product() {
     }
   }
 
-  /* Wishlist and Cart APIs */
+  /* Wishlist APIs */
 
   async function getWishlists() {
     if (mailId) {
@@ -262,6 +265,8 @@ function Product() {
       navigate("/account");
     }
   }
+
+  /* Cart API */
 
   async function addToCart() {
     if (mailId) {
@@ -627,7 +632,7 @@ function Product() {
   }, []);
 
   return (
-    <div className="Product_Main_Container">
+    <div className="Product_Page">
       {/* Select Wishlist Box */}
       <div
         className={
@@ -971,246 +976,51 @@ function Product() {
           <p className="Success_Message_Box--Message">{successMessage}</p>
         </div>
       </div>
-      {/* Product Main */}
-      <div className="Product_Main">
-        {/* Product Details Section */}
-        <div className="Product_Main--Product">
-          <div className="Product_Main--Product_Images">
-            <div className="Product_Images--Main_Image">
-              <img src={currentUrl}></img>
-            </div>
-            <div className="Product_Images--More_Images">
-              {imageUrls.map((url, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={
-                      url.src == currentUrl
-                        ? "Product_More_Images--Image Product_More_Images--Image--Active"
-                        : "Product_More_Images--Image"
-                    }
-                    onClick={() => {
-                      setCurrentUrl(url.src);
-                    }}
-                  >
-                    <img src={url.src} />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="Product_Main--Product_Details">
-            <p className="Product_Details--Name">{productData?.title}</p>
-            <p className="Product_Details--Category">
-              {productData?.category} - {productData?.company}
-            </p>
-            <div className="Product_Details--Rating">
-              <span className="Product_Details--Actualrating">
-                {actualRating}
-              </span>
-              <div className="Product_Details--Stars">
-                {Array(5)
-                  .fill(0)
-                  .map((_, index) => {
-                    return (
-                      <FaStar
-                        className="Product_Details--Star"
-                        key={index}
-                        size={20}
-                        color={index <= averageStarRating ? "orange" : "white"}
-                      />
-                    );
-                  })}
+      <div className="Product_Main_Container">
+        {/* Product Main */}
+        <div className="Product_Main">
+          {/* Product Details Section */}
+          <div className="Product_Main--Product">
+            <div className="Product_Main--Product_Images">
+              <div className="Product_Images--Main_Image">
+                <img src={currentUrl}></img>
               </div>
-              <span className="Product_Details--Ratingscount">
-                {ratings} ratings
-              </span>
-              <FaHeart
-                size={20}
-                className={
-                  wished
-                    ? "Product_Details--Heart Product_Details--Heart--Wished"
-                    : "Product_Details--Heart"
-                }
-                onClick={() => {
-                  setShowSelectlist(true);
-                }}
-              />
-            </div>
-            <p className="Product_Details--Price">
-              <span className="Product_Details--Discount">
-                -{productData?.discount}%
-              </span>{" "}
-              ₹{productData?.actualPrice}
-            </p>
-            <p className="Product_Details--MRP">
-              M.R.P:{" "}
-              <span className="Product_Details--MRP_Strike">
-                ₹{productData?.mrp}
-              </span>
-            </p>
-            <div className="Product_Details--Address">
-              {address ? (
-                <>
-                  <p>
-                    Delivering to {address?.addressname} - {address?.street}
-                  </p>
-                  <p>{address?.city}</p>
-                </>
-              ) : (
-                <>
-                  <p>No delivery address selected!</p>
-                </>
-              )}
-            </div>
-            <div className="Product_Details--Buttons">
-              <div className="Product_Details--Counter">
-                <span className="Product_Details--Counter--Note">Qty: </span>
-                <button
-                  className="Product_Details_Counter--Decrement"
-                  onClick={() => {
-                    setCount((prev) => {
-                      return prev - 1;
-                    });
-                  }}
-                >
-                  -
-                </button>
-                <input
-                  className="Product_Details_Counter--Input"
-                  type="input"
-                  value={count}
-                  onChange={(e) => {
-                    setCount(e.target.value);
-                  }}
-                ></input>
-                <button
-                  className="Product_Details_Counter--Increment"
-                  onClick={() => {
-                    setCount((prev) => {
-                      return prev + 1;
-                    });
-                  }}
-                >
-                  +
-                </button>
+              <div className="Product_Images--More_Images">
+                {imageUrls.map((url, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={
+                        url.src == currentUrl
+                          ? "Product_More_Images--Image Product_More_Images--Image--Active"
+                          : "Product_More_Images--Image"
+                      }
+                      onClick={() => {
+                        setCurrentUrl(url.src);
+                      }}
+                    >
+                      <img src={url.src} />
+                    </div>
+                  );
+                })}
               </div>
-              <button
-                className="Product_Detail--Button Product_Details--Buttons_Buy"
-                onClick={buyProduct}
-              >
-                Buy now
-              </button>
-              <button
-                className="Product_Detail--Button Product_Details--Buttons_Cart"
-                onClick={() => {
-                  // window.open(`${window.location.origin}/buy/${product}`);
-                  addToCart();
-                }}
-              >
-                Add to cart
-              </button>
-              {/* <FaHeart size={22} className="Product_Details--Heart" /> */}
             </div>
-          </div>
-        </div>
-        {/* Product About Section */}
-        <div className="Product_Main--About_And_Delivery">
-          <div className="Product_Main--About">
-            <h4>About the product</h4>
-            <p>
-              Introducing our latest electronic product, the ProSound Wireless
-              Earbuds—your perfect companion for an immersive audio experience.
-              With sleek design and cutting-edge technology, these earbuds
-              deliver crystal-clear sound and deep bass, ensuring you never miss
-              a beat.
-            </p>
-            <p>
-              When you purchase the ProSound Wireless Earbuds, you'll receive
-              everything you need to get started. Inside the box, you'll find
-              the earbuds themselves, along with a compact charging case that
-              provides up to 20 hours of additional playtime.
-            </p>
-            <p>
-              We've also added a few extras to enhance your experience with the
-              ProSound Wireless Earbuds. Included in the package is a quick
-              start guide to help you set up your earbuds in minutes, along with
-              a warranty card that provides coverage for any manufacturing
-              defects for up to one year.
-            </p>
-            <p>
-              Lastly, the ProSound Wireless Earbuds come with access to our
-              dedicated customer support team, available 24/7 to assist you with
-              any questions or issues.
-            </p>
-          </div>
-          <div className="Product_Main--Delivery">
-            <h4>Shipping details</h4>
-            <h5>Delivery address</h5>
-            {address ? (
-              <div className="Product_Main--Delivery_Address">
-                <p className="Product_Main--Delivery_Address--Info Product_Main--Delivery_Address--Addressname">
-                  {address.addressname}
-                </p>
-                <p className="Product_Main--Delivery_Address--Info">
-                  {address.house}
-                </p>
-                <p className="Product_Main--Delivery_Address--Info">
-                  {address.landmark}
-                </p>
-                <p className="Product_Main--Delivery_Address--Info">
-                  {address.street}
-                </p>
-                <p className="Product_Main--Delivery_Address--Info">
-                  {address.city}, {address.state}
-                </p>
-                <p className="Product_Main--Delivery_Address--Info">
-                  {address.country}
-                </p>
-                <button
-                  onClick={() => {
-                    setShowSelectAddress(true);
-                  }}
-                >
-                  Change Delivery Address
-                </button>
-              </div>
-            ) : (
-              <div className="Product_Main--Delivery_Address--Empty">
-                <p>
-                  No delivery address selected. Please select a delivery
-                  address!
-                </p>
-                <button
-                  onClick={() => {
-                    setShowSelectAddress(true);
-                  }}
-                >
-                  Select Delivery Address
-                </button>
-              </div>
-            )}
-            <h5>Delivery date</h5>
-            <p>{deliveryDateDisplay}</p>
-          </div>
-        </div>
-        {/* Product Reviews And Ratings */}
-        <div className="Product_Main--Reviews">
-          <div className="Product_Reviews--Header">
-            <h4 className="Product_Reviews--Header_Heading">Product Reviews</h4>
-          </div>
-          <div className="Product_Reviews--Main">
-            {/* Product Rating Container */}
-            <div className="Product_Reviews--Rating">
-              {/* Product Average Star Rating Container */}
-              <div className="Product_Reviews--Stars_Container">
-                <div className="Product_Reviews--Stars">
+            <div className="Product_Main--Product_Details">
+              <p className="Product_Details--Name">{productData?.title}</p>
+              <p className="Product_Details--Category">
+                {productData?.category} - {productData?.company}
+              </p>
+              <div className="Product_Details--Rating">
+                <span className="Product_Details--Actualrating">
+                  {actualRating}
+                </span>
+                <div className="Product_Details--Stars">
                   {Array(5)
                     .fill(0)
                     .map((_, index) => {
                       return (
                         <FaStar
-                          className="Product_Reviews--Star"
+                          className="Product_Details--Star"
                           key={index}
                           size={20}
                           color={
@@ -1220,252 +1030,453 @@ function Product() {
                       );
                     })}
                 </div>
-                <p className="Product_Reviews--Actualrating">
-                  {actualRating} out of 5
-                </p>
+                <span className="Product_Details--Ratingscount">
+                  {ratings} ratings
+                </span>
+                <FaHeart
+                  size={20}
+                  className={
+                    wished
+                      ? "Product_Details--Heart Product_Details--Heart--Wished"
+                      : "Product_Details--Heart"
+                  }
+                  onClick={() => {
+                    setShowSelectlist(true);
+                  }}
+                />
               </div>
-              {/* Number Of Ratings */}
-              <p className="Product_Reviews--Ratingscount">
-                {ratings} ratings.
+              <p className="Product_Details--Price">
+                <span className="Product_Details--Discount">
+                  -{productData?.discount}%
+                </span>{" "}
+                ₹{productData?.actualPrice}
               </p>
-              {/* Rating Distribution */}
-              <div className="Product_Reviews--Rating_Distribution_Container">
-                {Array(5)
-                  .fill(0)
-                  .map((_, index) => {
-                    let ratingsCount = getTotalRatings(5 - index);
-                    let ratingsPercentage = 0;
-                    if (ratings != 0) {
-                      ratingsPercentage = Math.floor(
-                        (ratingsCount / ratings) * 100
-                      );
-                    }
-                    return (
-                      <div
-                        key={index}
-                        className="Product_Reviews--Rating_Distribution--Stars"
-                      >
-                        <div>
-                          {Array(5 - index)
-                            .fill(0)
-                            .map((_, index) => {
-                              return (
-                                <FaStar
-                                  key={index}
-                                  className="Product_Reviews--Rating_Distribution--Star"
-                                  color="orange"
-                                />
-                              );
-                            })}
-                        </div>
-                        <p className="Product_Reviews--Rating_Distribution--Percentage">
-                          {ratingsPercentage}%
-                        </p>
-                      </div>
-                    );
-                  })}
+              <p className="Product_Details--MRP">
+                M.R.P:{" "}
+                <span className="Product_Details--MRP_Strike">
+                  ₹{productData?.mrp}
+                </span>
+              </p>
+              <div className="Product_Details--Address">
+                {address ? (
+                  <>
+                    <p>
+                      Delivering to {address?.addressname} - {address?.street}
+                    </p>
+                    <p>{address?.city}</p>
+                  </>
+                ) : (
+                  <>
+                    <p>No delivery address selected!</p>
+                  </>
+                )}
               </div>
-            </div>
-            {/* Product Review Container */}
-            <div className="Product_Reviews--Reviews_Container">
-              {/* Your Own Review Container */}
-              <div
-                className={
-                  showReview
-                    ? "Product_Reviews--Your_Review_Container"
-                    : "Product_Reviews--Your_Review_Container--Inactive"
-                }
-              >
-                {/* If You Donot Have Own Review */}
-                <p
-                  className={
-                    hasReview
-                      ? "Product_Reviews--Your_Review--Note--Inactive"
-                      : "Product_Reviews--Your_Review--Note"
-                  }
-                >
-                  Add your review about this product.
-                </p>
-                {/* If You Have Own Review */}
-                <div
-                  className={
-                    showReview && hasReview
-                      ? "Product_Reviews--Your_Review_Main"
-                      : "Product_Reviews--Your_Review_Main--Inactive"
-                  }
-                >
-                  <p className="Product_Reviews--Your_Name">
-                    {userInfo?.firstname} {userInfo?.lastname}
-                  </p>
-                  <div className="Product_Reviews--Your_Rating--Stars">
-                    {Array(5)
-                      .fill(0)
-                      .map((_, index) => {
-                        return (
-                          <FaStar
-                            key={index}
-                            className="Product_Reviews--Your_Rating--Star"
-                            color={
-                              index <= yourReview.rating - 1
-                                ? "orange"
-                                : "white"
-                            }
-                          />
-                        );
-                      })}
-                  </div>
-                  <p className="Product_Reviews--Your_Review">{review}</p>
-                </div>
-                {/* Add/Edit Your Own Review Buttons Container */}
-                <div
-                  className={
-                    showReview
-                      ? "Product_Reviews--Your_Review--Add_Edit_Button"
-                      : "Product_Reviews--Your_Review--Add_Edit_Button--Inactive"
-                  }
-                >
+              <div className="Product_Details--Buttons">
+                <div className="Product_Details--Counter">
+                  <span className="Product_Details--Counter--Note">Qty: </span>
                   <button
+                    className="Product_Details_Counter--Decrement"
                     onClick={() => {
-                      setShowReview(false);
+                      setCount((prev) => {
+                        return prev - 1;
+                      });
                     }}
                   >
-                    {hasReview ? "Edit review" : "Add review"}
+                    -
+                  </button>
+                  <input
+                    className="Product_Details_Counter--Input"
+                    type="input"
+                    value={count}
+                    onChange={(e) => {
+                      setCount(e.target.value);
+                    }}
+                  ></input>
+                  <button
+                    className="Product_Details_Counter--Increment"
+                    onClick={() => {
+                      setCount((prev) => {
+                        return prev + 1;
+                      });
+                    }}
+                  >
+                    +
                   </button>
                 </div>
+                <button
+                  className="Product_Detail--Button Product_Details--Buttons_Buy"
+                  onClick={buyProduct}
+                >
+                  Buy now
+                </button>
+                <button
+                  className="Product_Detail--Button Product_Details--Buttons_Cart"
+                  onClick={() => {
+                    // window.open(`${window.location.origin}/buy/${product}`);
+                    addToCart();
+                  }}
+                >
+                  Add to cart
+                </button>
+                {/* <FaHeart size={22} className="Product_Details--Heart" /> */}
               </div>
-              {/* Write or Edit Your Own Review Container */}
-              <div
-                className={
-                  showReview
-                    ? "Product_Reviews--Write_Review Product_Reviews--Write_Review--Inactive"
-                    : "Product_Reviews--Write_Review"
-                }
-              >
-                <p className="Product_Reviews--Write_Review--Your_Name">
-                  Reviewing as {userInfo?.firstname} {userInfo?.lastname}
-                </p>
-                {/* Give Your Star Rating Container */}
-                <div className="Product_Reviews--Write_Review--Rating">
-                  <div
-                    className="Product_Reviews--Write_Review--Stars"
-                    onMouseLeave={() => {
-                      setStarHoverIndex(-1);
+            </div>
+          </div>
+          {/* Product About Section */}
+          <div className="Product_Main--About_And_Delivery">
+            <div className="Product_Main--About">
+              <h4>About the product</h4>
+              <p>
+                Introducing our latest electronic product, the ProSound Wireless
+                Earbuds—your perfect companion for an immersive audio
+                experience. With sleek design and cutting-edge technology, these
+                earbuds deliver crystal-clear sound and deep bass, ensuring you
+                never miss a beat.
+              </p>
+              <p>
+                When you purchase the ProSound Wireless Earbuds, you'll receive
+                everything you need to get started. Inside the box, you'll find
+                the earbuds themselves, along with a compact charging case that
+                provides up to 20 hours of additional playtime.
+              </p>
+              <p>
+                We've also added a few extras to enhance your experience with
+                the ProSound Wireless Earbuds. Included in the package is a
+                quick start guide to help you set up your earbuds in minutes,
+                along with a warranty card that provides coverage for any
+                manufacturing defects for up to one year.
+              </p>
+              <p>
+                Lastly, the ProSound Wireless Earbuds come with access to our
+                dedicated customer support team, available 24/7 to assist you
+                with any questions or issues.
+              </p>
+            </div>
+            <div className="Product_Main--Delivery">
+              <h4>Shipping details</h4>
+              <h5>Delivery address</h5>
+              {address ? (
+                <div className="Product_Main--Delivery_Address">
+                  <p className="Product_Main--Delivery_Address--Info Product_Main--Delivery_Address--Addressname">
+                    {address.addressname}
+                  </p>
+                  <p className="Product_Main--Delivery_Address--Info">
+                    {address.house}
+                  </p>
+                  <p className="Product_Main--Delivery_Address--Info">
+                    {address.landmark}
+                  </p>
+                  <p className="Product_Main--Delivery_Address--Info">
+                    {address.street}
+                  </p>
+                  <p className="Product_Main--Delivery_Address--Info">
+                    {address.city}, {address.state}
+                  </p>
+                  <p className="Product_Main--Delivery_Address--Info">
+                    {address.country}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setShowSelectAddress(true);
                     }}
                   >
+                    Change Delivery Address
+                  </button>
+                </div>
+              ) : (
+                <div className="Product_Main--Delivery_Address--Empty">
+                  <p>
+                    No delivery address selected. Please select a delivery
+                    address!
+                  </p>
+                  <button
+                    onClick={() => {
+                      setShowSelectAddress(true);
+                    }}
+                  >
+                    Select Delivery Address
+                  </button>
+                </div>
+              )}
+              <h5>Delivery date</h5>
+              <p>{deliveryDateDisplay}</p>
+            </div>
+          </div>
+          {/* Product Reviews And Ratings */}
+          <div className="Product_Main--Reviews">
+            <div className="Product_Reviews--Header">
+              <h4 className="Product_Reviews--Header_Heading">
+                Product Reviews
+              </h4>
+            </div>
+            <div className="Product_Reviews--Main">
+              {/* Product Rating Container */}
+              <div className="Product_Reviews--Rating">
+                {/* Product Average Star Rating Container */}
+                <div className="Product_Reviews--Stars_Container">
+                  <div className="Product_Reviews--Stars">
                     {Array(5)
                       .fill(0)
                       .map((_, index) => {
                         return (
                           <FaStar
-                            className="Product_Reviews--Write_Review--Star"
+                            className="Product_Reviews--Star"
                             key={index}
                             size={20}
                             color={
-                              index <= starHoverIndex || index <= starSetIndex
-                                ? "orange"
-                                : "white"
+                              index <= averageStarRating ? "orange" : "white"
                             }
-                            onMouseOver={() => {
-                              setStarHoverIndex(index);
-                            }}
-                            onClick={() => {
-                              setStarSetIndex(index);
-                            }}
                           />
                         );
                       })}
                   </div>
+                  <p className="Product_Reviews--Actualrating">
+                    {actualRating} out of 5
+                  </p>
                 </div>
-                {/* Give Your Review Textarea */}
-                <textarea
-                  placeholder="Write your review..."
-                  rows={5}
-                  className="Product_Reviews--Write_Review--Review_Input"
-                  value={review}
-                  onChange={(e) => {
-                    setReview(e.target.value);
-                  }}
-                ></textarea>
-                {/* Add-Edit-Delete Your Review Buttons */}
-                <div className="Product_Reviews--Write_Review--Buttons">
-                  <div className="Product_Reviews--Write_Review--Submit_Cancel_Buttons">
-                    <button
-                      className="Product_Reviews--Write_Review--Buttons--Submit"
-                      onClick={addReview}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      className="Product_Reviews--Write_Review--Buttons--Cancel"
-                      onClick={() => {
-                        setShowReview(true);
-                      }}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                  <div
-                    className={
-                      hasReview
-                        ? "Product_Reviews--Write_Review--Delete_Buttons"
-                        : "Product_Reviews--Write_Review--Delete_Buttons Product_Reviews--Write_Review--Delete_Buttons--Inactive"
-                    }
-                  >
-                    <button
-                      className="Product_Reviews--Write_Review--Buttons--Delete"
-                      onClick={deleteReview}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-              {/* Other People Reviews Container */}
-              <div className="Product_Reviews--Others_Reviews_Container">
-                {reviews.length == 0 ? (
-                  <div className="Product_Reviews--No_Reviews">
-                    <p>
-                      {hasReview
-                        ? "Your's is the first review on this product!"
-                        : "This porduct has no user reviews. Be the first person to review this product!"}
-                    </p>
-                  </div>
-                ) : (
-                  reviews.map((review) => {
-                    return (
-                      <div
-                        key={review.id}
-                        className="Product_Reviews--Others_Review_Container"
-                      >
-                        <p className="Product_Reviews--Others_Review--Name">
-                          {review.username}
-                        </p>
-                        <div className="Product_Reviews--Others_Review--Rating">
-                          <div className="Product_Reviews--Others_Review--Stars">
-                            {Array(5)
+                {/* Number Of Ratings */}
+                <p className="Product_Reviews--Ratingscount">
+                  {ratings} ratings.
+                </p>
+                {/* Rating Distribution */}
+                <div className="Product_Reviews--Rating_Distribution_Container">
+                  {Array(5)
+                    .fill(0)
+                    .map((_, index) => {
+                      let ratingsCount = getTotalRatings(5 - index);
+                      let ratingsPercentage = 0;
+                      if (ratings != 0) {
+                        ratingsPercentage = Math.floor(
+                          (ratingsCount / ratings) * 100
+                        );
+                      }
+                      return (
+                        <div
+                          key={index}
+                          className="Product_Reviews--Rating_Distribution--Stars"
+                        >
+                          <div>
+                            {Array(5 - index)
                               .fill(0)
                               .map((_, index) => {
                                 return (
                                   <FaStar
                                     key={index}
-                                    className="Product_Reviews--Others_Review--Star"
-                                    color={
-                                      index <= review.rating - 1
-                                        ? "orange"
-                                        : "white"
-                                    }
+                                    className="Product_Reviews--Rating_Distribution--Star"
+                                    color="orange"
                                   />
                                 );
                               })}
                           </div>
+                          <p className="Product_Reviews--Rating_Distribution--Percentage">
+                            {ratingsPercentage}%
+                          </p>
                         </div>
-                        <p className="Product_Reviews--Others_Review">
-                          {review.review}
-                        </p>
-                      </div>
-                    );
-                  })
-                )}
+                      );
+                    })}
+                </div>
+              </div>
+              {/* Product Review Container */}
+              <div className="Product_Reviews--Reviews_Container">
+                {/* Your Own Review Container */}
+                <div
+                  className={
+                    showReview
+                      ? "Product_Reviews--Your_Review_Container"
+                      : "Product_Reviews--Your_Review_Container--Inactive"
+                  }
+                >
+                  {/* If You Donot Have Own Review */}
+                  <p
+                    className={
+                      hasReview
+                        ? "Product_Reviews--Your_Review--Note--Inactive"
+                        : "Product_Reviews--Your_Review--Note"
+                    }
+                  >
+                    Add your review about this product.
+                  </p>
+                  {/* If You Have Own Review */}
+                  <div
+                    className={
+                      showReview && hasReview
+                        ? "Product_Reviews--Your_Review_Main"
+                        : "Product_Reviews--Your_Review_Main--Inactive"
+                    }
+                  >
+                    <p className="Product_Reviews--Your_Name">
+                      {userInfo?.firstname} {userInfo?.lastname}
+                    </p>
+                    <div className="Product_Reviews--Your_Rating--Stars">
+                      {Array(5)
+                        .fill(0)
+                        .map((_, index) => {
+                          return (
+                            <FaStar
+                              key={index}
+                              className="Product_Reviews--Your_Rating--Star"
+                              color={
+                                index <= yourReview.rating - 1
+                                  ? "orange"
+                                  : "white"
+                              }
+                            />
+                          );
+                        })}
+                    </div>
+                    <p className="Product_Reviews--Your_Review">{review}</p>
+                  </div>
+                  {/* Add/Edit Your Own Review Buttons Container */}
+                  <div
+                    className={
+                      showReview
+                        ? "Product_Reviews--Your_Review--Add_Edit_Button"
+                        : "Product_Reviews--Your_Review--Add_Edit_Button--Inactive"
+                    }
+                  >
+                    <button
+                      onClick={() => {
+                        setShowReview(false);
+                      }}
+                    >
+                      {hasReview ? "Edit review" : "Add review"}
+                    </button>
+                  </div>
+                </div>
+                {/* Write or Edit Your Own Review Container */}
+                <div
+                  className={
+                    showReview
+                      ? "Product_Reviews--Write_Review Product_Reviews--Write_Review--Inactive"
+                      : "Product_Reviews--Write_Review"
+                  }
+                >
+                  <p className="Product_Reviews--Write_Review--Your_Name">
+                    Reviewing as {userInfo?.firstname} {userInfo?.lastname}
+                  </p>
+                  {/* Give Your Star Rating Container */}
+                  <div className="Product_Reviews--Write_Review--Rating">
+                    <div
+                      className="Product_Reviews--Write_Review--Stars"
+                      onMouseLeave={() => {
+                        setStarHoverIndex(-1);
+                      }}
+                    >
+                      {Array(5)
+                        .fill(0)
+                        .map((_, index) => {
+                          return (
+                            <FaStar
+                              className="Product_Reviews--Write_Review--Star"
+                              key={index}
+                              size={20}
+                              color={
+                                index <= starHoverIndex || index <= starSetIndex
+                                  ? "orange"
+                                  : "white"
+                              }
+                              onMouseOver={() => {
+                                setStarHoverIndex(index);
+                              }}
+                              onClick={() => {
+                                setStarSetIndex(index);
+                              }}
+                            />
+                          );
+                        })}
+                    </div>
+                  </div>
+                  {/* Give Your Review Textarea */}
+                  <textarea
+                    placeholder="Write your review..."
+                    rows={5}
+                    className="Product_Reviews--Write_Review--Review_Input"
+                    value={review}
+                    onChange={(e) => {
+                      setReview(e.target.value);
+                    }}
+                  ></textarea>
+                  {/* Add-Edit-Delete Your Review Buttons */}
+                  <div className="Product_Reviews--Write_Review--Buttons">
+                    <div className="Product_Reviews--Write_Review--Submit_Cancel_Buttons">
+                      <button
+                        className="Product_Reviews--Write_Review--Buttons--Submit"
+                        onClick={addReview}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        className="Product_Reviews--Write_Review--Buttons--Cancel"
+                        onClick={() => {
+                          setShowReview(true);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    <div
+                      className={
+                        hasReview
+                          ? "Product_Reviews--Write_Review--Delete_Buttons"
+                          : "Product_Reviews--Write_Review--Delete_Buttons Product_Reviews--Write_Review--Delete_Buttons--Inactive"
+                      }
+                    >
+                      <button
+                        className="Product_Reviews--Write_Review--Buttons--Delete"
+                        onClick={deleteReview}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {/* Other People Reviews Container */}
+                <div className="Product_Reviews--Others_Reviews_Container">
+                  {reviews.length == 0 ? (
+                    <div className="Product_Reviews--No_Reviews">
+                      <p>
+                        {hasReview
+                          ? "Your's is the first review on this product!"
+                          : "This porduct has no user reviews. Be the first person to review this product!"}
+                      </p>
+                    </div>
+                  ) : (
+                    reviews.map((review) => {
+                      return (
+                        <div
+                          key={review.id}
+                          className="Product_Reviews--Others_Review_Container"
+                        >
+                          <p className="Product_Reviews--Others_Review--Name">
+                            {review.username}
+                          </p>
+                          <div className="Product_Reviews--Others_Review--Rating">
+                            <div className="Product_Reviews--Others_Review--Stars">
+                              {Array(5)
+                                .fill(0)
+                                .map((_, index) => {
+                                  return (
+                                    <FaStar
+                                      key={index}
+                                      className="Product_Reviews--Others_Review--Star"
+                                      color={
+                                        index <= review.rating - 1
+                                          ? "orange"
+                                          : "white"
+                                      }
+                                    />
+                                  );
+                                })}
+                            </div>
+                          </div>
+                          <p className="Product_Reviews--Others_Review">
+                            {review.review}
+                          </p>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
               </div>
             </div>
           </div>

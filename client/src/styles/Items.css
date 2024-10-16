@@ -16,6 +16,11 @@
     --Items_Wishlist_Selector--Lists_Error: 16px;
 }
 
+.Items_Page {
+    position: relative;
+    height: 100%;
+}
+
 .Items_Container {
     height: 100%;
     overflow-y: scroll;
@@ -24,7 +29,6 @@
 .Items_Main {
     max-width: 1900px;
     height: 100%;
-    position: relative;
     margin: 0 auto;
     padding: .5em;
     display: flex;

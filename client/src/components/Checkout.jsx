@@ -339,7 +339,7 @@ function Checkout() {
   }, []);
 
   return (
-    <>
+    <div className="Checkout_Page">
       {/* Error Message Box */}
       <div
         className={
@@ -719,7 +719,7 @@ function Checkout() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
