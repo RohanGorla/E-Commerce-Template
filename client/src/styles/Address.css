@@ -40,7 +40,6 @@
 }
 
 .Address_Main--Header button {
-    font-size: var(--Address_Secondary_Font);
     font-size: var(--Addaddress_Button_Fontsize);
     font-weight: 600;
     padding: .6em 2em;
@@ -51,8 +50,9 @@
 }
 
 .Address_Main--Addresses {
+    outline: 2px dotted white;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
     row-gap: 1.5em;
     column-gap: 1.5em;
     padding: .5em;
@@ -63,7 +63,6 @@
 .Address_Main--Address {
     background-color: rgb(42, 42, 42);
     position: relative;
-    max-width: 420px;
     height: 280px;
     padding: 1em;
     border-style: none;
@@ -107,7 +106,7 @@
     }
 }
 
-/* Add Address Page CSS */
+/*<-- Add Address Page CSS -->*/
 
 /* Add Address Error Box */
 
@@ -137,14 +136,14 @@
 }
 
 .Addaddress_Error--Heading {
-    font-size: var(--Items_Error--Heading);
     font-family: var(--Prdct_Second_Ff);
+    font-size: var(--Items_Error--Heading);
     font-weight: 600;
 }
 
 .Addaddress_Error--Message {
-    font-size: var(--Items_Error--Message);
     font-family: var(--Prdct_Main_Ff);
+    font-size: var(--Items_Error--Message);
 }
 
 /* Add Address Main Container */
