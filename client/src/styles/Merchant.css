@@ -2,7 +2,10 @@
     --Merchant_Main_Font: "Inter", sans-serif;
     --Merchant_Second_Font: "Roboto", sans-serif;
     --Merchant_Header: 40px;
+    --Merchant_Details--Company_Name: 20px;
+    --Merchant_Details--Mail: 16px;
     --Merchant_Section_Name: 25px;
+    --Merchant_Signout--Button: 14px;
     --Merchant_Dashboard--Item--Text: 18px;
     --Merchant_Dashboard--Item--Value: 25px;
 }
@@ -34,6 +37,7 @@
 .Merchant_Dashboard--Section {
     background-color: rgb(25, 25, 25);
     max-width: 1200px;
+    padding: 1em;
     margin: 0em auto;
     border-style: none;
     border-radius: 10px;
@@ -48,7 +52,41 @@
     font-family: var(--Merchant_Main_Font);
     font-size: var(--Merchant_Section_Name);
     letter-spacing: 1px;
-    padding: .5em .5em;
+}
+
+.Merchant_Dashboard_Details_And_Signout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0em 3em;
+}
+
+.Merchant_Details--Company_Name {
+    font-family: var(--Merchant_Second_Font);
+    font-size: var(--Merchant_Details--Company_Name);
+    font-weight: 500;
+    margin-bottom: .5em;
+}
+
+.Merchant_Details--Mail {
+    font-family: var(--Merchant_Second_Font);
+    font-size: var(--Merchant_Details--Mail);
+}
+
+.Merchant_Signout--Button {
+    background-color: rgb(10, 10, 10);
+    color: white;
+    font-family: var(--Merchant_Second_Font);
+    font-size: var(--Merchant_Signout--Button);
+    font-weight: 600;
+    padding: .8em 1.6em;
+    border-style: none;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
 }
 
 .Merchant_Dashboard--Grid {

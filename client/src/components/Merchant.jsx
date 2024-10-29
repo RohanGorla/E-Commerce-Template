@@ -11,6 +11,19 @@ function Merchant() {
         </div>
         <div className="Merchant_Dashboard">
           <div className="Merchant_Dashboard--Section">
+            <div className="Merchant_Dashboard_Details_And_Signout">
+              <div className="Merchant_Details">
+                <p className="Merchant_Details--Company_Name">
+                  Merchant Company
+                </p>
+                <p className="Merchant_Details--Mail">merchant@email.com</p>
+              </div>
+              <div className="Merchant_Signout">
+                <button className="Merchant_Signout--Button">Sign out</button>
+              </div>
+            </div>
+          </div>
+          <div className="Merchant_Dashboard--Section">
             <h2 className="Merchant_Dashboard--Section_Name">Sales Overview</h2>
             <div className="Merchant_Dashboard--Grid">
               <div className="Merchant_Dashboard--Item_Container">
@@ -65,22 +78,22 @@ function Merchant() {
             <div className="Merchant_Dashboard--Grid">
               <div className="Merchant_Dashboard--Item_Container">
                 <div className="Merchant_Dashboard--Item">
-                  <p className="Merchant_Dashboard--Item--Text">High Demand</p>
-                  <p className="Merchant_Dashboard--Item--Value">5</p>
+                  <p className="Merchant_Dashboard--Item--Text">
+                    Total Stock Quantity
+                  </p>
+                  <p className="Merchant_Dashboard--Item--Value">100</p>
+                </div>
+              </div>
+              <div className="Merchant_Dashboard--Item_Container">
+                <div className="Merchant_Dashboard--Item">
+                  <p className="Merchant_Dashboard--Item--Text">Low On Stock</p>
+                  <p className="Merchant_Dashboard--Item--Value">34</p>
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
                 <div className="Merchant_Dashboard--Item">
                   <p className="Merchant_Dashboard--Item--Text">Out Of Stock</p>
                   <p className="Merchant_Dashboard--Item--Value">2</p>
-                </div>
-              </div>
-              <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
-                  <p className="Merchant_Dashboard--Item--Text">
-                    Restock Needed
-                  </p>
-                  <p className="Merchant_Dashboard--Item--Value">34</p>
                 </div>
               </div>
             </div>
