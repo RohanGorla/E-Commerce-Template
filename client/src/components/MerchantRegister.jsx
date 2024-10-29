@@ -9,7 +9,7 @@ function MerchantRegister() {
   const context = useOutletContext();
   const navigate = useNavigate();
 
-  /* Get Register OTP API */
+  /* Get Register Merchant OTP API */
 
   async function addMerchant(e) {
     e.preventDefault();

@@ -20,7 +20,7 @@ function MerchantOtp() {
         sentOTP: context.otp,
       }
     );
-    /* Add User API */
+    /* Add Merchant API */
     if (checkOtpResponse.data.access) {
       let response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/addmerchant`,
@@ -49,7 +49,7 @@ function MerchantOtp() {
       setErrorMsg("Wrong OTP!");
     }
   }
-  
+
   return (
     <div className="Merchant_Register_Main">
       <div

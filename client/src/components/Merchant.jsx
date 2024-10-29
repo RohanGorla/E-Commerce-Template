@@ -3,6 +3,8 @@ import axios from "axios";
 import "../styles/Merchant.css";
 
 function Merchant() {
+  const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
+
   return (
     <div className="Merchant_Page">
       <div className="Merchant_Main">
@@ -17,9 +19,9 @@ function Merchant() {
             <div className="Merchant_Dashboard_Details_And_Signout">
               <div className="Merchant_Details">
                 <p className="Merchant_Details--Company_Name">
-                  Merchant Company
+                  {merchantInfo.company}
                 </p>
-                <p className="Merchant_Details--Mail">merchant@email.com</p>
+                <p className="Merchant_Details--Mail">{merchantInfo.mailId}</p>
               </div>
               <div className="Merchant_Signout">
                 <button className="Merchant_Signout--Button">Sign out</button>

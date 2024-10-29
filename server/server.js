@@ -1018,7 +1018,6 @@ app.post("/getemailchangeotp", (req, res) => {
 app.post("/checkotp", async (req, res) => {
   const enteredOTP = req.body.enteredOTP;
   const sentOTP = req.body.sentOTP;
-  console.log(enteredOTP, sentOTP);
   const compareOTP = await bcrypt.compare(enteredOTP, sentOTP);
   if (compareOTP) {
     res.send({ access: true });
