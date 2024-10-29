@@ -17,7 +17,7 @@ function Account() {
   async function authenticate() {
     if (mailId && token) {
       let response = await axios.post(
-        "http://localhost:3000/authenticateuser",
+        `${import.meta.env.VITE_BASE_URL}/authenticateuser`,
         {
           mail: mailId,
           token: token,

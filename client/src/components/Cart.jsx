@@ -21,7 +21,7 @@ function Cart() {
 
   async function getFromCart() {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/getcartitems", {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getcartitems`, {
         mailId: mailId,
       });
       if (response.data.access) {
@@ -34,7 +34,7 @@ function Cart() {
         /* Get Reviews Of All Cart Products API */
         async function getCartProductReviews() {
           let response = await axios.post(
-            "http://localhost:3000/getallreviews",
+            `${import.meta.env.VITE_BASE_URL}/getallreviews`,
             {
               id: cartProductIds,
             }
@@ -67,7 +67,7 @@ function Cart() {
 
   async function updateCart() {
     let response = await axios.put(
-      "http://localhost:3000/updatecartitemcount",
+      `${import.meta.env.VITE_BASE_URL}/updatecartitemcount`,
       {
         cartData: cart,
         mail: mailId,
@@ -86,7 +86,7 @@ function Cart() {
   }
 
   async function removeFromCart(id) {
-    let response = await axios.delete("http://localhost:3000/removecartitem", {
+    let response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/removecartitem`, {
       data: { id },
     });
     if (response.data.access) {

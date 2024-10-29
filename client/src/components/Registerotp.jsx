@@ -14,7 +14,7 @@ function Registerotp() {
 
   async function checkotp() {
     const checkOtpResponse = await axios.post(
-      "http://localhost:3000/checkotp",
+      `${import.meta.env.VITE_BASE_URL}/checkotp`,
       {
         enteredOTP: OTP,
         sentOTP: context.otp,

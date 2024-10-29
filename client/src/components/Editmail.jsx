@@ -11,6 +11,8 @@ function Editmail() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  /* Edit User Mail API */
+
   async function editmail(e) {
     e.preventDefault();
     if (context.userInfo.mailId === context.newMail) {
@@ -22,7 +24,7 @@ function Editmail() {
       }, 2500);
     } else {
       let otpResponse = await axios.post(
-        "http://localhost:3000/getemailchangeotp",
+        `${import.meta.env.VITE_BASE_URL}/getemailchangeotp`,
         {
           mail: context.newMail,
         }

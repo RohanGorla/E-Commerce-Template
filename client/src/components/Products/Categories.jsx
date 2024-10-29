@@ -12,7 +12,7 @@ function Categories() {
   /* Get Categories API */
 
   async function getCategories() {
-    const response = await axios.get("http://localhost:3000/getallcategories");
+    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/getallcategories`);
     if (response.data.access) {
       const categoryData = response.data.data;
       setCategories(categoryData);

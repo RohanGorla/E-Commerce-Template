@@ -15,6 +15,8 @@ function Editname() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  /* Edit User Name API */
+
   async function editname() {
     if (newFirst.length !== 0) {
       if (userInfo.firstname == newFirst && userInfo.lastname == newLast) {
@@ -25,7 +27,7 @@ function Editname() {
           setError(false);
         }, 2500);
       } else {
-        let response = await axios.put("http://localhost:3000/editusername", {
+        let response = await axios.put(`${import.meta.env.VITE_BASE_URL}/editusername`, {
           firstname: newFirst,
           lastname: newLast,
           usermail: usermail,

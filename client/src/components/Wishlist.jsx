@@ -26,9 +26,12 @@ function Wishlist() {
 
   async function getWishlists() {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/getwishlists", {
-        mailId: mailId,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/getwishlists`,
+        {
+          mailId: mailId,
+        }
+      );
       if (response.data.access) {
         setWishlists(response.data.data);
         setSelectedWistlist(response.data.data[0]?.wishlistname);
@@ -42,15 +45,6 @@ function Wishlist() {
     } else {
       navigate("/account");
     }
-  }
-
-  async function changeWishlist() {
-    const newData = allWishitems.filter((item) => {
-      if (item.wishlistname == selectedWishlist) {
-        return item;
-      }
-    });
-    setWishlist(newData);
   }
 
   async function addwishlist() {
@@ -75,7 +69,7 @@ function Wishlist() {
         }
         if (addListAccess) {
           const response = await axios.post(
-            "http://localhost:3000/addwishlist",
+            `${import.meta.env.VITE_BASE_URL}/addwishlist`,
             {
               mailId: mailId,
               wishlistname: newlist,
@@ -110,9 +104,12 @@ function Wishlist() {
   }
 
   async function deleteWishlist() {
-    let response = await axios.delete("http://localhost:3000/deletewishlist", {
-      data: { list: selectedWishlist, mail: mailId },
-    });
+    let response = await axios.delete(
+      `${import.meta.env.VITE_BASE_URL}/deletewishlist`,
+      {
+        data: { list: selectedWishlist, mail: mailId },
+      }
+    );
     if (response.data.access) {
       getWishlists();
       getFromWish();
@@ -138,9 +135,12 @@ function Wishlist() {
 
   async function getFromWish() {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/getfromwish", {
-        mailId: mailId,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/getfromwish`,
+        {
+          mailId: mailId,
+        }
+      );
       if (response.data.access) {
         const data = response.data.data;
         let productsId = [];
@@ -149,7 +149,7 @@ function Wishlist() {
         });
         async function getReviews() {
           let response = await axios.post(
-            "http://localhost:3000/getallreviews",
+            `${import.meta.env.VITE_BASE_URL}/getallreviews`,
             {
               id: productsId,
             }
@@ -179,9 +179,12 @@ function Wishlist() {
   }
 
   async function removeFromWish(id) {
-    let response = await axios.delete("http://localhost:3000/removefromwish", {
-      data: { productId: id, list: selectedWishlist, mail: mailId },
-    });
+    let response = await axios.delete(
+      `${import.meta.env.VITE_BASE_URL}/removefromwish`,
+      {
+        data: { productId: id, list: selectedWishlist, mail: mailId },
+      }
+    );
     if (response.data.access) {
       setSuccess(true);
       setSuccessMessage(response.data.successMsg);
@@ -205,14 +208,17 @@ function Wishlist() {
   /* Cart API */
 
   async function addToCart(product) {
-    let response = await axios.post("http://localhost:3000/addtocart", {
-      id: product.productid,
-      title: product.title,
-      price: product.price,
-      discount: product.discount,
-      mailId: mailId,
-      count: 1,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/addtocart`,
+      {
+        id: product.productid,
+        title: product.title,
+        price: product.price,
+        discount: product.discount,
+        mailId: mailId,
+        count: 1,
+      }
+    );
     if (response.data.access) {
       setSuccess(true);
       setSuccessMessage(response.data.successMsg);
@@ -233,6 +239,15 @@ function Wishlist() {
   }
 
   /* Useful Functions */
+
+  async function changeWishlist() {
+    const newData = allWishitems.filter((item) => {
+      if (item.wishlistname == selectedWishlist) {
+        return item;
+      }
+    });
+    setWishlist(newData);
+  }
 
   function currencyConvert(amount) {
     let amountString = amount.toString();

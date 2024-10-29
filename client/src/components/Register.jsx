@@ -14,7 +14,7 @@ function Register() {
   async function addUser(e) {
     e.preventDefault();
     let otpResponse = await axios.post(
-      "http://localhost:3000/getemailchangeotp",
+      `${import.meta.env.VITE_BASE_URL}/getemailchangeotp`,
       {
         mail: context.mail,
       }

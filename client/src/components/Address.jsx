@@ -17,7 +17,7 @@ function Address() {
   /* Get Address API */
 
   async function getAddress() {
-    let response = await axios.post("http://localhost:3000/getaddress", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
       mail: mailId,
     });
     if (response.data.access) {
@@ -45,7 +45,7 @@ function Address() {
   /* Update Base Address API */
 
   async function changeBaseAddress(current) {
-    let response = await axios.put("http://localhost:3000/updatebaseaddress", {
+    let response = await axios.put(`${import.meta.env.VITE_BASE_URL}/updatebaseaddress`, {
       address: current,
       mailId: mailId,
     });
@@ -84,7 +84,7 @@ function Address() {
   /* Remove Address API */
 
   async function removeAddress(address) {
-    let response = await axios.delete("http://localhost:3000/deleteaddress", {
+    let response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/deleteaddress`, {
       data: {
         mail: mailId,
         addressname: address.addressname,

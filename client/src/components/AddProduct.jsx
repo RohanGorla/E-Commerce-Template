@@ -17,7 +17,7 @@ function AddProduct() {
   async function handleSubmit(e) {
     e.preventDefault();
     // console.log(file.name, file.type);
-    const response = await axios.post("http://localhost:3000/addproduct", {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addproduct`, {
       title: title,
       price: price,
       discount: discount,
@@ -37,7 +37,7 @@ function AddProduct() {
 
   async function handleCategory(e) {
     e.preventDefault();
-    const response = await axios.post("http://localhost:3000/addcategory", {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addcategory`, {
       category: actCat,
     });
     console.log(response);
@@ -47,7 +47,7 @@ function AddProduct() {
 
   async function handleCompany(e) {
     e.preventDefault();
-    const response = await axios.post("http://localhost:3000/addcompany", {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addcompany`, {
       company: newCompany,
     });
     console.log(response);
@@ -57,7 +57,7 @@ function AddProduct() {
 
   useEffect(() => {
     async function getCatAndCom() {
-      let response = await axios.get("http://localhost:3000/getcatandcom");
+      let response = await axios.get(`${import.meta.env.VITE_BASE_URL}/getcatandcom`);
       console.log(response);
       setAllCat(response.data.cat);
       setAllCom(response.data.com);

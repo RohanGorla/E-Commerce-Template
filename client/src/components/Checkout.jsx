@@ -39,7 +39,7 @@ function Checkout() {
   /* User Authorization API */
 
   async function checkAuthorized() {
-    let response = await axios.post("http://localhost:3000/checkauthorized", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/checkauthorized`, {
       mail: mailId,
       token: token,
     });
@@ -65,7 +65,7 @@ function Checkout() {
   /* Get Cart Products API */
 
   async function getCartItems() {
-    const response = await axios.post("http://localhost:3000/getcartitems", {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getcartitems`, {
       mailId: mailId,
     });
     if (response.data.access) {
@@ -133,7 +133,7 @@ function Checkout() {
   /* Address APIs */
 
   async function getAddress() {
-    let response = await axios.post("http://localhost:3000/getaddress", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
       mail: mailId,
     });
     if (response.data.access) {
@@ -149,7 +149,7 @@ function Checkout() {
   }
 
   async function addDeliveryAddress() {
-    let response = await axios.post("http://localhost:3000/addaddress", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addaddress`, {
       mail: mailId,
       name: addressFullName,
       house: addressHouse,
@@ -204,7 +204,7 @@ function Checkout() {
       }, 3500);
     } else {
       let response = await axios.put(
-        "http://localhost:3000/updatebaseaddress",
+        `${import.meta.env.VITE_BASE_URL}/updatebaseaddress`,
         {
           address: current,
           mailId: mailId,
@@ -237,7 +237,7 @@ function Checkout() {
   /* Order And Payment APIs */
 
   async function placeOrder() {
-    let response = await axios.post("http://localhost:3000/placeorder", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/placeorder`, {
       mail: mailId,
       address: address,
     });
@@ -263,7 +263,7 @@ function Checkout() {
 
   async function openPayment() {
     if (address) {
-      let response = await axios.post("http://localhost:3000/initiatepayment", {
+      let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/initiatepayment`, {
         mail: mailId,
       });
       let amount = Math.round(orderCostNumber * 100);

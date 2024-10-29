@@ -36,7 +36,7 @@ function Items() {
 
   async function getWishlists() {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/getwishlists", {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getwishlists`, {
         mailId: mailId,
       });
       if (response.data.access) {
@@ -74,7 +74,7 @@ function Items() {
         }
         if (addListAccess) {
           const response = await axios.post(
-            "http://localhost:3000/addwishlist",
+            `${import.meta.env.VITE_BASE_URL}/addwishlist`,
             {
               mailId: mailId,
               wishlistname: newlist,
@@ -100,7 +100,7 @@ function Items() {
 
   async function addToWishlist(product, list) {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/addtowish", {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtowish`, {
         id: product.id,
         title: product.title,
         mailId: mailId,
@@ -135,7 +135,7 @@ function Items() {
 
   async function addToCart(product) {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/addtocart", {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtocart`, {
         id: product.id,
         title: product.title,
         price: product.price,
@@ -168,7 +168,7 @@ function Items() {
   /* Product APIs */
 
   async function getProducts() {
-    const response = await axios.post("http://localhost:3000/getproducts", {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getproducts`, {
       category: item,
     });
     if (response.data.access) {
@@ -178,7 +178,7 @@ function Items() {
         productsId.push(product.id);
       });
       async function getReviews() {
-        let response = await axios.post("http://localhost:3000/getallreviews", {
+        let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getallreviews`, {
           id: productsId,
         });
         if (response.data.access) {
@@ -207,7 +207,7 @@ function Items() {
   /* Get Filters APIs */
 
   async function getCompany() {
-    let response = await axios.post("http://localhost:3000/getcompany", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getcompany`, {
       category: item,
     });
     if (response.data.access) {

@@ -20,7 +20,7 @@ function Addaddress() {
   /* Add Address API */
 
   async function addAddress() {
-    let response = await axios.post("http://localhost:3000/addaddress", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addaddress`, {
       mail: mailId,
       name: fullName,
       house: house,

@@ -16,7 +16,7 @@ function Emailotp() {
 
   async function checkotp() {
     const checkOtpResponse = await axios.post(
-      "http://localhost:3000/checkotp",
+      `${import.meta.env.VITE_BASE_URL}/checkotp`,
       {
         enteredOTP: OTP,
         sentOTP: context.otp,
@@ -24,7 +24,7 @@ function Emailotp() {
     );
     /* Edit User Email API */
     if (checkOtpResponse.data.access) {
-      const response = await axios.put("http://localhost:3000/editusermail", {
+      const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/editusermail`, {
         newmail: context.newMail,
         oldmail: userInfo.mailId,
         token: userInfo.token,

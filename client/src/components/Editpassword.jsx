@@ -16,11 +16,13 @@ function Editpassword() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  /* Edit Password API */
+
   async function editpassword() {
     if (newpass.length !== 0) {
       if (newpass === confirm) {
         let response = await axios.put(
-          "http://localhost:3000/edituserpassword",
+          `${import.meta.env.VITE_BASE_URL}/edituserpassword`,
           {
             mail: usermail,
             token: token,

@@ -68,7 +68,7 @@ function Product() {
   /* Product APIs */
 
   async function getProduct() {
-    let response = await axios.post("http://localhost:3000/getproduct", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getproduct`, {
       id: product,
     });
     if (response.data.access) {
@@ -107,7 +107,7 @@ function Product() {
   async function getWishlists() {
     if (mailId) {
       const listsResponse = await axios.post(
-        "http://localhost:3000/getwishlists",
+        `${import.meta.env.VITE_BASE_URL}/getwishlists`,
         {
           mailId: mailId,
         }
@@ -150,7 +150,7 @@ function Product() {
         }
         if (addListAccess) {
           const response = await axios.post(
-            "http://localhost:3000/addwishlist",
+            `${import.meta.env.VITE_BASE_URL}/addwishlist`,
             {
               mailId: mailId,
               wishlistname: newlist,
@@ -183,7 +183,7 @@ function Product() {
 
   async function getWishedInfo() {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/checkwished", {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/checkwished`, {
         mailId: mailId,
         productId: product,
       });
@@ -202,7 +202,7 @@ function Product() {
 
   async function addToWishlist(list) {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/addtowish", {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtowish`, {
         id: productData.id,
         title: productData.title,
         mailId: mailId,
@@ -237,7 +237,7 @@ function Product() {
   async function removeFromWishlist(list) {
     if (mailId) {
       let response = await axios.delete(
-        "http://localhost:3000/removefromwish",
+        `${import.meta.env.VITE_BASE_URL}/removefromwish`,
         {
           data: { productId: productData.id, list: list, mail: mailId },
         }
@@ -270,7 +270,7 @@ function Product() {
 
   async function addToCart() {
     if (mailId) {
-      const response = await axios.post("http://localhost:3000/addtocart", {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtocart`, {
         id: product,
         title: productData.title,
         price: productData.price,
@@ -303,7 +303,7 @@ function Product() {
   /* Address APIs */
 
   async function getAddress() {
-    let response = await axios.post("http://localhost:3000/getaddress", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
       mail: mailId,
     });
     if (response.data.access) {
@@ -315,7 +315,7 @@ function Product() {
 
   async function addDeliveryAddress() {
     if (mailId) {
-      let response = await axios.post("http://localhost:3000/addaddress", {
+      let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addaddress`, {
         mail: mailId,
         name: addressFullName,
         house: addressHouse,
@@ -366,7 +366,7 @@ function Product() {
   async function changeBaseAddress(current) {
     if (mailId) {
       let response = await axios.put(
-        "http://localhost:3000/updatebaseaddress",
+        `${import.meta.env.VITE_BASE_URL}/updatebaseaddress`,
         {
           address: current,
           mailId: mailId,
@@ -403,7 +403,7 @@ function Product() {
   /* Reviews APIs */
 
   async function getReviews() {
-    let response = await axios.post("http://localhost:3000/getreviews", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getreviews`, {
       id: product,
     });
     if (response.data.access) {
@@ -416,7 +416,7 @@ function Product() {
     if (mailId) {
       if (review.length || starSetIndex >= 0) {
         if (hasReview) {
-          let response = await axios.put("http://localhost:3000/editreview", {
+          let response = await axios.put(`${import.meta.env.VITE_BASE_URL}/editreview`, {
             id: product,
             mail: mailId,
             review: review,
@@ -441,7 +441,7 @@ function Product() {
             }, 3500);
           }
         } else {
-          let response = await axios.post("http://localhost:3000/addreview", {
+          let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addreview`, {
             id: product,
             mail: mailId,
             user: username,
@@ -476,7 +476,7 @@ function Product() {
 
   async function deleteReview() {
     if (mailId) {
-      let response = await axios.delete("http://localhost:3000/deletereview", {
+      let response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/deletereview`, {
         data: { id: product, mail: mailId },
       });
       if (response.data.access) {
@@ -507,7 +507,7 @@ function Product() {
 
   async function buyProduct() {
     if (mailId) {
-      let response = await axios.post("http://localhost:3000/buyproduct", {
+      let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/buyproduct`, {
         product: productData,
         count: count,
         mail: userInfo?.mailId,

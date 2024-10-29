@@ -5,7 +5,7 @@ import axios from "axios";
 function Profile() {
   useEffect(() => {
     async function getdetails() {
-      let response = await axios.post("http://localhost:3000/authenticateuser");
+      let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/authenticateuser`);
     }
   }, []);
   return <div></div>;

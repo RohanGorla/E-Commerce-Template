@@ -16,7 +16,7 @@ function Orders() {
   /* Get Orders API */
 
   async function getorders() {
-    let response = await axios.post("http://localhost:3000/getorders", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getorders`, {
       mail: mailId,
     });
     if (response.data.access) {

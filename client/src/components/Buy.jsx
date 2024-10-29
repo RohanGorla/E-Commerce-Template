@@ -36,7 +36,7 @@ function Buy() {
   /* Get Buy Product API */
 
   async function getProduct() {
-    let response = await axios.post("http://localhost:3000/getbuyproduct", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getbuyproduct`, {
       mail: mailId,
     });
     if (response.data.access) {
@@ -113,7 +113,7 @@ function Buy() {
   /* Place Buy Order API */
 
   async function placeBuyOrder() {
-    let response = await axios.post("http://localhost:3000/placebuyorder", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/placebuyorder`, {
       mail: mailId,
       product: productData,
       address: address,
@@ -136,7 +136,7 @@ function Buy() {
   async function openPayment() {
     if (address) {
       let response = await axios.post(
-        "http://localhost:3000/initiatebuypayment",
+        `${import.meta.env.VITE_BASE_URL}/initiatebuypayment`,
         {
           mail: mailId,
         }
@@ -187,14 +187,14 @@ function Buy() {
   /* Address APIs */
 
   async function getAddress() {
-    let response = await axios.post("http://localhost:3000/getaddress", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
       mail: mailId,
     });
     setAddressData(response.data);
   }
 
   async function addDeliveryAddress() {
-    let response = await axios.post("http://localhost:3000/addaddress", {
+    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addaddress`, {
       mail: mailId,
       name: addressFullName,
       house: addressHouse,
@@ -248,7 +248,7 @@ function Buy() {
       }, 3500);
     } else {
       let response = await axios.put(
-        "http://localhost:3000/updatebaseaddress",
+        `${import.meta.env.VITE_BASE_URL}/updatebaseaddress`,
         {
           address: current,
           mailId: mailId,
