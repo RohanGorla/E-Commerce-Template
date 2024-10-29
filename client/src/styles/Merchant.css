@@ -39,6 +39,11 @@
     border-radius: 10px;
 }
 
+.Merchant_Dashboard--Section +
+.Merchant_Dashboard--Section {
+    margin-top: 1em;
+}
+
 .Merchant_Dashboard--Section_Name {
     font-family: var(--Merchant_Main_Font);
     font-size: var(--Merchant_Section_Name);
