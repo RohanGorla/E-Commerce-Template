@@ -1,0 +1,128 @@
+:root {
+    --Main_Font: "Inter", sans-serif;
+    --Main_Fontsize: 15px;
+    --Secondary_Font: "Roboto", sans-serif;
+    --Secondary_Fontsize: 17px;
+    --Button_Fontsize: 15px;
+}
+
+.Merchant_Register_Main {
+    max-width: 650px;
+    margin: 3em auto;
+    background-color: rgb(67, 66, 66);
+    padding: 2em 1.5em;
+    border-radius: 10px;
+}
+
+.Merchant_Register_ErrorMsgBox--visible {
+    background-color: rgb(234, 65, 65);
+    padding: 1em;
+    margin-bottom: 2em;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.Merchant_Register_ErrorMsgBox--invisible {
+    visibility: hidden;
+    height: 0;
+}
+
+.Merchant_Register_ErrorMsgHeading, 
+.Merchant_Register_ErrorMsg {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Secondary_Fontsize);
+}
+
+.Merchant_Register_Notes {
+    margin-bottom: 1.3em;
+    font-family: var(--Secondary_Font);
+}
+
+.Merchant_Register_Companyname,
+.Merchant_Register_Lastname,
+.Merchant_Register_Email,
+.Merchant_Register_Password {
+    margin: 1em 0;
+}
+
+.Merchant_Register_Companyname label,
+.Merchant_Register_Email label,
+.Merchant_Register_Password label {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Secondary_Fontsize);
+    font-weight: 500;
+}
+
+.Merchant_Register_Companyname--Input,
+.Merchant_Register_Email--Input,
+.Merchant_Register_Password--Input {
+    display: block;
+    width: 250px;
+    font-family: var(--Secondary_Font);
+    font-size: var(--Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}
+
+.Merchant_Register_Signup {
+    margin-top: 1em;
+}
+
+.Merchant_Register_Signup input {
+    font-size: var(--Secondary_Font);
+    font-size: var(--Button_Fontsize);
+    font-weight: 500;
+    padding: .5em 1.7em;
+    background-color: gold;
+    border-style: none;
+    border-radius: 4px;
+}
+
+.Merchant_Register_Login {
+    margin-top: 2em;
+}
+
+.Merchant_Register_Login p {
+    margin-bottom: .5em;
+    font-family: var(--Secondary_Font);
+}
+
+.Merchant_Register_Login button {
+    font-size: var(--Secondary_Font);
+    font-size: var(--Button_Fontsize);
+    font-weight: 500;
+    padding: .5em 1.7em;
+    background-color: black;
+    color: white;
+    border-style: none;
+    border-radius: 4px;
+}
+
+.Merchant_Register_Input {
+    margin-bottom: 1em;
+}
+
+.Merchant_Registerotp_Input {
+    display: block;
+    width: 100px;
+    font-family: var(--Secondary_Font);
+    font-size: var(--Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}
+
+.Merchant_Register_Savechanges_Btn {
+    font-size: var(--Secondary_Font);
+    font-size: var(--Button_Fontsize);
+    font-weight: 500;
+    padding: .5em 1.7em;
+    background-color: gold;
+    border-style: none;
+    border-radius: 4px;
+}

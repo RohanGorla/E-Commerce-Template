@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import "../styles/MerchantRegister.css";
 
-function Register() {
+function MerchantRegister() {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const context = useOutletContext();
@@ -41,30 +41,19 @@ function Register() {
         <p className="Merchant_Register_ErrorMsg">{errorMsg}</p>
       </div>
       <div className="Merchant_Register_Notes">
-        <h2>Create Account!</h2>
+        <h2>Create Merchant Account!</h2>
       </div>
       <form className="Merchant_Register_Form" onSubmit={addMerchant}>
-        <div className="Merchant_Register_Firstname">
-          <label>First name</label>
+        <div className="Merchant_Register_Companyname">
+          <label>Company Name</label>
           <input
-            className="Merchant_Register_Firstname--Input"
+            className="Merchant_Register_Companyname--Input"
             type="text"
             required
             onChange={(e) => {
-              context.setFirst(e.target.value);
+              context.setCompanyName(e.target.value);
             }}
-            value={context.first}
-          ></input>
-        </div>
-        <div className="Merchant_Register_Lastname">
-          <label>Last name</label>
-          <input
-            className="Merchant_Register_Lastname--Input"
-            type="text"
-            onChange={(e) => {
-              context.setLast(e.target.value);
-            }}
-            value={context.last}
+            value={context.companyName}
           ></input>
         </div>
         <div className="Merchant_Register_Email">
@@ -95,14 +84,11 @@ function Register() {
           <input type="submit" value="Sign up"></input>
         </div>
       </form>
-      {/* <div>
-    <button onClick={mail && password ? addMerchant : null}>Sign up</button>
-  </div> */}
       <div className="Merchant_Register_Login">
-        <p>Already have an account?</p>
+        <p>Already have a merchant account?</p>
         <button
           onClick={() => {
-            navigate("/account/login");
+            navigate("/merchant/login");
           }}
         >
           Login
@@ -112,4 +98,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default MerchantRegister;
