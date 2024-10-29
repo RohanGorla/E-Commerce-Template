@@ -230,6 +230,28 @@ app.post("/checkauthorized", async (req, res) => {
 
 /* Merchant Account Server Routes */
 
+app.post("/addmerchant", async (req, res) => {
+  const mail = req.body.mail;
+  const company = req.body.company;
+  const password = req.body.password;
+  const passwordHash = await bcrypt.hash(password, 10);
+  const token = await bcrypt.hash(mail, 10);
+  const values = [company, mail, passwordHash, token];
+  db.query(
+    "insert into merchant (company, mailid, password, token) values (?)",
+    [values],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred. Please re-try or refresh the page!",
+        });
+      res.send({ access: true, token: token });
+    }
+  );
+});
+
 app.post("/getregistermerchantotp", (req, res) => {
   const mailId = req.body.mail;
   db.query(
@@ -996,6 +1018,7 @@ app.post("/getemailchangeotp", (req, res) => {
 app.post("/checkotp", async (req, res) => {
   const enteredOTP = req.body.enteredOTP;
   const sentOTP = req.body.sentOTP;
+  console.log(enteredOTP, sentOTP);
   const compareOTP = await bcrypt.compare(enteredOTP, sentOTP);
   if (compareOTP) {
     res.send({ access: true });
