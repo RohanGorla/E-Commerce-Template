@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 function MerchantRegisterBase() {
-  const [otp, setOtp] = useState(0);
+  const [otp, setOtp] = useState("");
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [companyName, setCompanyName] = useState("");

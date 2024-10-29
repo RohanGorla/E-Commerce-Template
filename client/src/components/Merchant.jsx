@@ -6,10 +6,13 @@ function Merchant() {
   return (
     <div className="Merchant_Page">
       <div className="Merchant_Main">
+        {/* Merchant Header */}
         <div className="Merchant_Header">
           <h1 className="Merchant_Header--Title">Merchant Dashboard</h1>
         </div>
+        {/* Merchant Dashboard */}
         <div className="Merchant_Dashboard">
+          {/* Merchant Details Section */}
           <div className="Merchant_Dashboard--Section">
             <div className="Merchant_Dashboard_Details_And_Signout">
               <div className="Merchant_Details">
@@ -23,6 +26,7 @@ function Merchant() {
               </div>
             </div>
           </div>
+          {/* Merchant Sales Info Section */}
           <div className="Merchant_Dashboard--Section">
             <h2 className="Merchant_Dashboard--Section_Name">Sales Overview</h2>
             <div className="Merchant_Dashboard--Grid">
@@ -71,6 +75,7 @@ function Merchant() {
             </div> */}
             </div>
           </div>
+          {/* Merchant Inventory Management Section */}
           <div className="Merchant_Dashboard--Section">
             <h2 className="Merchant_Dashboard--Section_Name">
               Inventory Management
