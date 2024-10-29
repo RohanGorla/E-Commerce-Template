@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Merchant.css";
 
 function Merchant() {
+  const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
+
+  useEffect(() => {
+    if (!merchantInfo?.mailId) {
+      navigate("merchantregister");
+    }
+  }, []);
 
   return (
     <div className="Merchant_Page">
@@ -19,12 +27,20 @@ function Merchant() {
             <div className="Merchant_Dashboard_Details_And_Signout">
               <div className="Merchant_Details">
                 <p className="Merchant_Details--Company_Name">
-                  {merchantInfo.company}
+                  {merchantInfo?.company}
                 </p>
-                <p className="Merchant_Details--Mail">{merchantInfo.mailId}</p>
+                <p className="Merchant_Details--Mail">{merchantInfo?.mailId}</p>
               </div>
               <div className="Merchant_Signout">
-                <button className="Merchant_Signout--Button">Sign out</button>
+                <button
+                  className="Merchant_Signout--Button"
+                  onClick={() => {
+                    localStorage.removeItem("merchantInfo");
+                    navigate("merchantregister");
+                  }}
+                >
+                  Sign out
+                </button>
               </div>
             </div>
           </div>
