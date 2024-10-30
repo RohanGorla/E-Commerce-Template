@@ -32,10 +32,11 @@ import Addaddress from "./components/Addaddress.jsx";
 import Merchant from "./components/Merchant.jsx";
 import MerchantRegisterBase from "./components/MerchantRegisterBase.jsx";
 import MerchantRegister from "./components/MerchantRegister.jsx";
+import MerchantOtp from "./components/MerchantOtp.jsx";
+import MerchantLogin from "./components/MerchantLogin.jsx";
 import AddProduct from "./components/AddProduct.jsx";
 import Profile from "./components/Profile.jsx";
 import "./index.css";
-import MerchantOtp from "./components/MerchantOtp.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -81,6 +82,7 @@ const router = createBrowserRouter(
           <Route path="" element={<MerchantRegister />} />
           <Route path="merchantotp" element={<MerchantOtp />} />
         </Route>
+        <Route path="merchantlogin" element={<MerchantLogin />} />
         <Route path="addproduct" element={<AddProduct />} />
       </Route>
     </>

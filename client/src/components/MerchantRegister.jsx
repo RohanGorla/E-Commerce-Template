@@ -88,7 +88,7 @@ function MerchantRegister() {
         <p>Already have a merchant account?</p>
         <button
           onClick={() => {
-            navigate("/merchant/login");
+            navigate("/merchant/merchantlogin");
           }}
         >
           Login
