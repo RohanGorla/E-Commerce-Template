@@ -1,0 +1,113 @@
+:root {
+    --Main_Font: "Inter", sans-serif;
+    --Main_Fontsize: 15px;
+    --Secondary_Font: "Roboto", sans-serif;
+    --Secondary_Fontsize: 17px;
+    --Button_Fontsize: 15px;
+}
+
+.Merchant_Login_Main {
+    max-width: 650px;
+    margin: 0 auto;
+    background-color: rgb(67, 66, 66);
+    padding: 2em 1.5em;
+    border-radius: 10px;
+    margin-top: 3em;
+}
+
+.Merchant_Login_ErrorMsgBox--visible {
+    background-color: rgb(234, 65, 65);
+    padding: 1em;
+    margin-bottom: 2em;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.Merchant_Login_ErrorMsgBox--invisible {
+    visibility: hidden;
+    height: 0;
+}
+
+.Merchant_Login_ErrorMsgHeading, .Merchant_Login_ErrorMsg {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Secondary_Fontsize);
+}
+
+.Merchant_Login_Notes {
+    margin-bottom: 1.3em;
+    font-family: var(--Secondary_Font);
+}
+
+.Merchant_Login_Email {
+    margin: 1em 0;
+}
+
+.Merchant_Login_Email label {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Secondary_Fontsize);
+    font-weight: 500;
+}
+
+.Merchant_Login_Email--Input {
+    display: block;
+    width: 250px;
+    font-family: var(--Secondary_Font);
+    font-size: var(--Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}
+
+.Merchant_Login_Password {
+    margin: 1em 0;
+}
+
+.Merchant_Login_Password label {
+    font-family: var(--Secondary_Font);
+    font-size: var(--Secondary_Fontsize);
+    font-weight: 500;
+}
+
+.Merchant_Login_Password--Input {
+    display: block;
+    width: 250px;
+    font-family: var(--Secondary_Font);
+    font-size: var(--Main_Fontsize);
+    font-weight: 400;
+    margin-top: .3em;
+    padding: .2em 0 .2em .3em;
+    border-style: none;
+    border-radius: 2px;
+}
+
+.Merchant_Login_Buttons--Login button {
+    font-size: var(--Secondary_Font);
+    font-size: var(--Button_Fontsize);
+    font-weight: 500;
+    padding: .5em 1.7em;
+    background-color: gold;
+    border-style: none;
+    border-radius: 4px;
+}
+
+.Merchant_Login_Buttons--Register {
+    margin-top: 2em;
+}
+
+.Merchant_Login_Buttons--Register p {
+    margin-bottom: .5em;
+    font-family: var(--Secondary_Font);
+}
+
+.Merchant_Login_Buttons--Register button {
+    font-size: var(--Secondary_Font);
+    font-size: var(--Button_Fontsize);
+    font-weight: 500;
+    padding: .5em 1.7em;
+    background-color: black;
+    color: white;
+    border-style: none;
+    border-radius: 4px;
+}

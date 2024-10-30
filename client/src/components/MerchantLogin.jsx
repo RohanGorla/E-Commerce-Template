@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/MerchantLogin.css";
 
 function MerchantLogin() {
   const [email, setEmail] = useState("");
