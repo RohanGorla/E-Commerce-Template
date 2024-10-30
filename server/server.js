@@ -296,7 +296,7 @@ app.post("/getregistermerchantotp", (req, res) => {
   );
 });
 
-app.post("/checkmerchant", async (req, res) => {
+app.post("/authenticatemerchant", async (req, res) => {
   const mail = req.body.mail;
   const password = req.body.password;
   db.query(
@@ -342,6 +342,28 @@ app.post("/checkmerchant", async (req, res) => {
       }
     }
   );
+});
+
+app.post("/checkmerchant", (req, res) => {
+  const mail = req.body.mail;
+  const token = req.body.token;
+  db.query("select token from merchant where mailid = ?", mail, (err, data) => {
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
+    if (data.length) {
+      if (data[0].token == token) {
+        res.send({ access: true });
+      } else {
+        res.send({ access: false });
+      }
+    } else {
+      res.send({ access: false });
+    }
+  });
 });
 
 /* Categories and Companies Server Routes */
