@@ -296,6 +296,54 @@ app.post("/getregistermerchantotp", (req, res) => {
   );
 });
 
+app.post("/checkmerchant", async (req, res) => {
+  const mail = req.body.mail;
+  const password = req.body.password;
+  db.query(
+    "select * from merchant where mailid = ?",
+    mail,
+    async (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      if (data.length) {
+        const actualPassword = data[0].password;
+        const passwordCheck = await bcrypt.compare(password, actualPassword);
+        if (passwordCheck) {
+          const company = data[0].company;
+          const token = await bcrypt.hash(mail, 10);
+          db.query(
+            "update merchant set ? where mailid = ?",
+            [{ token: token }, mail],
+            (err, data) => {
+              if (err)
+                return res.send({
+                  access: false,
+                  errorMsg:
+                    "Some error has occurred! Please try again or refresh the page!",
+                });
+              res.send({ access: true, company, token });
+            }
+          );
+        } else {
+          res.send({
+            access: false,
+            errorMsg: "Password incorrect! Please try again.",
+          });
+        }
+      } else {
+        return res.send({
+          access: false,
+          errorMsg: "Merchant email does not exist!",
+        });
+      }
+    }
+  );
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
