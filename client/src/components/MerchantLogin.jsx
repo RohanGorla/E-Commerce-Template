@@ -12,7 +12,7 @@ function MerchantLogin() {
 
   async function checkMerchant() {
     let response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/checkmerchant`,
+      `${import.meta.env.VITE_BASE_URL}/authenticatemerchant`,
       {
         mail: email,
         password: pass,
@@ -83,7 +83,7 @@ function MerchantLogin() {
             <button
               onClick={
                 email && pass
-                  ? checkUser
+                  ? checkMerchant
                   : () => {
                       setError(true);
                       setErrorMsg("Email or Password cannot be empty!");

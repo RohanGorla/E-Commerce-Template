@@ -7,10 +7,26 @@ function Merchant() {
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
 
-  useEffect(() => {
-    if (!merchantInfo?.mailId) {
-      navigate("merchantregister");
+  async function checkMerchantCredentials() {
+    if (merchantInfo?.mailId && merchantInfo?.token) {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/checkmerchant`,
+        {
+          mail: merchantInfo.mailId,
+          token: merchantInfo.token,
+        }
+      );
+      if (response.data.access) {
+      } else {
+        navigate("/mercahnt/merchantlogin");
+      }
+    } else {
+      navigate("/merchant/merchantlogin");
     }
+  }
+
+  useEffect(() => {
+    checkMerchantCredentials();
   }, []);
 
   return (
