@@ -190,7 +190,7 @@ function Buy() {
     let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
       mail: mailId,
     });
-    setAddressData(response.data);
+    setAddressData(response.data.data);
   }
 
   async function addDeliveryAddress() {

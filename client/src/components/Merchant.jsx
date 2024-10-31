@@ -7,6 +7,8 @@ function Merchant() {
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
 
+  /* Check Merchant Mail And Token Validity */
+
   async function checkMerchantCredentials() {
     if (merchantInfo?.mailId && merchantInfo?.token) {
       const response = await axios.post(

@@ -36,9 +36,12 @@ function Items() {
 
   async function getWishlists() {
     if (mailId) {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getwishlists`, {
-        mailId: mailId,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/getwishlists`,
+        {
+          mailId: mailId,
+        }
+      );
       if (response.data.access) {
         setWishlists(response.data.data);
       } else {
@@ -80,7 +83,7 @@ function Items() {
               wishlistname: newlist,
             }
           );
-          setWishlists(response.data);
+          setWishlists(response.data.data);
           setAddListShow(false);
           setAddlistError(false);
           setaddListErrorMessage("");
@@ -100,14 +103,19 @@ function Items() {
 
   async function addToWishlist(product, list) {
     if (mailId) {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtowish`, {
-        id: product.id,
-        title: product.title,
-        mailId: mailId,
-        price: product.price,
-        discount: product.discount,
-        wishlist: list,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/addtowish`,
+        {
+          id: product.id,
+          title: product.title,
+          mailId: mailId,
+          price: product.price,
+          discount: product.discount,
+          company: product.company,
+          category: product.category,
+          wishlist: list,
+        }
+      );
       if (response.data.access) {
         setError(false);
         setErrorMessage("");
@@ -135,14 +143,19 @@ function Items() {
 
   async function addToCart(product) {
     if (mailId) {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtocart`, {
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        discount: product.discount,
-        mailId: mailId,
-        count: 1,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/addtocart`,
+        {
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          discount: product.discount,
+          company: product.company,
+          category: product.category,
+          mailId: mailId,
+          count: 1,
+        }
+      );
       if (response.data.access) {
         setError(false);
         setErrorMessage("");
@@ -168,9 +181,12 @@ function Items() {
   /* Product APIs */
 
   async function getProducts() {
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getproducts`, {
-      category: item,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getproducts`,
+      {
+        category: item,
+      }
+    );
     if (response.data.access) {
       const data = response.data.data;
       let productsId = [];
@@ -178,9 +194,12 @@ function Items() {
         productsId.push(product.id);
       });
       async function getReviews() {
-        let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getallreviews`, {
-          id: productsId,
-        });
+        let response = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/getallreviews`,
+          {
+            id: productsId,
+          }
+        );
         if (response.data.access) {
           setReviews(response.data.data);
         } else {
@@ -207,9 +226,12 @@ function Items() {
   /* Get Filters APIs */
 
   async function getCompany() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getcompany`, {
-      category: item,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getcompany`,
+      {
+        category: item,
+      }
+    );
     if (response.data.access) {
       setAllCom(response.data.data);
       setError(false);

@@ -215,6 +215,8 @@ function Wishlist() {
         title: product.title,
         price: product.price,
         discount: product.discount,
+        category: product.category,
+        company: product.company,
         mailId: mailId,
         count: 1,
       }
@@ -240,7 +242,7 @@ function Wishlist() {
 
   /* Useful Functions */
 
-  async function changeWishlist() {
+  function changeWishlist() {
     const newData = allWishitems.filter((item) => {
       if (item.wishlistname == selectedWishlist) {
         return item;

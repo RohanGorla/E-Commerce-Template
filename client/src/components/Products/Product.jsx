@@ -68,9 +68,12 @@ function Product() {
   /* Product APIs */
 
   async function getProduct() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getproduct`, {
-      id: product,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getproduct`,
+      {
+        id: product,
+      }
+    );
     if (response.data.access) {
       let data = response.data.data[0];
       let mrp = currencyConvert(data.price);
@@ -183,10 +186,13 @@ function Product() {
 
   async function getWishedInfo() {
     if (mailId) {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/checkwished`, {
-        mailId: mailId,
-        productId: product,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/checkwished`,
+        {
+          mailId: mailId,
+          productId: product,
+        }
+      );
       if (response.data.access) {
         setWished(true);
         let wishedlists = response.data.data.map((list) => {
@@ -202,14 +208,19 @@ function Product() {
 
   async function addToWishlist(list) {
     if (mailId) {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtowish`, {
-        id: productData.id,
-        title: productData.title,
-        mailId: mailId,
-        price: productData.price,
-        discount: productData.discount,
-        wishlist: list,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/addtowish`,
+        {
+          id: productData.id,
+          title: productData.title,
+          mailId: mailId,
+          price: productData.price,
+          discount: productData.discount,
+          company: productData.company,
+          category: productData.category,
+          wishlist: list,
+        }
+      );
       if (response.data.access) {
         setShowSelectlist(false);
         setError(false);
@@ -270,14 +281,19 @@ function Product() {
 
   async function addToCart() {
     if (mailId) {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addtocart`, {
-        id: product,
-        title: productData.title,
-        price: productData.price,
-        discount: productData.discount,
-        count: count,
-        mailId: mailId,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/addtocart`,
+        {
+          id: product,
+          title: productData.title,
+          price: productData.price,
+          discount: productData.discount,
+          company: productData.company,
+          category: productData.category,
+          count: count,
+          mailId: mailId,
+        }
+      );
       if (response.data.access) {
         setSuccess(true);
         setSuccessMessage(response.data.successMsg);
@@ -303,9 +319,12 @@ function Product() {
   /* Address APIs */
 
   async function getAddress() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
-      mail: mailId,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getaddress`,
+      {
+        mail: mailId,
+      }
+    );
     if (response.data.access) {
       setAddressData(response.data.data);
     } else {
@@ -315,16 +334,19 @@ function Product() {
 
   async function addDeliveryAddress() {
     if (mailId) {
-      let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addaddress`, {
-        mail: mailId,
-        name: addressFullName,
-        house: addressHouse,
-        street: addressStreet,
-        landmark: addressLandmark,
-        city: addressCity,
-        state: addressState,
-        country: addressCountry,
-      });
+      let response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/addaddress`,
+        {
+          mail: mailId,
+          name: addressFullName,
+          house: addressHouse,
+          street: addressStreet,
+          landmark: addressLandmark,
+          city: addressCity,
+          state: addressState,
+          country: addressCountry,
+        }
+      );
       if (response.data.access) {
         localStorage.setItem(
           "userInfo",
@@ -403,9 +425,12 @@ function Product() {
   /* Reviews APIs */
 
   async function getReviews() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getreviews`, {
-      id: product,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getreviews`,
+      {
+        id: product,
+      }
+    );
     if (response.data.access) {
       repeater(response);
     }
@@ -416,12 +441,15 @@ function Product() {
     if (mailId) {
       if (review.length || starSetIndex >= 0) {
         if (hasReview) {
-          let response = await axios.put(`${import.meta.env.VITE_BASE_URL}/editreview`, {
-            id: product,
-            mail: mailId,
-            review: review,
-            rating: starSetIndex + 1,
-          });
+          let response = await axios.put(
+            `${import.meta.env.VITE_BASE_URL}/editreview`,
+            {
+              id: product,
+              mail: mailId,
+              review: review,
+              rating: starSetIndex + 1,
+            }
+          );
           if (response.data.access) {
             repeater(response);
             setSuccess(true);
@@ -441,13 +469,16 @@ function Product() {
             }, 3500);
           }
         } else {
-          let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addreview`, {
-            id: product,
-            mail: mailId,
-            user: username,
-            review: review,
-            rating: starSetIndex + 1,
-          });
+          let response = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/addreview`,
+            {
+              id: product,
+              mail: mailId,
+              user: username,
+              review: review,
+              rating: starSetIndex + 1,
+            }
+          );
           if (response.data.access) {
             repeater(response);
             setSuccess(true);
@@ -476,9 +507,12 @@ function Product() {
 
   async function deleteReview() {
     if (mailId) {
-      let response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/deletereview`, {
-        data: { id: product, mail: mailId },
-      });
+      let response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/deletereview`,
+        {
+          data: { id: product, mail: mailId },
+        }
+      );
       if (response.data.access) {
         repeater(response);
         setSuccess(true);
@@ -507,11 +541,14 @@ function Product() {
 
   async function buyProduct() {
     if (mailId) {
-      let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/buyproduct`, {
-        product: productData,
-        count: count,
-        mail: userInfo?.mailId,
-      });
+      let response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/buyproduct`,
+        {
+          product: productData,
+          count: count,
+          mail: userInfo?.mailId,
+        }
+      );
       if (response.data.access) {
         window.open(`${window.location.origin}/buy`);
       } else {
