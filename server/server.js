@@ -373,6 +373,7 @@ app.post("/authenticatemerchant", async (req, res) => {
 app.post("/checkmerchant", (req, res) => {
   const mail = req.body.mail;
   const token = req.body.token;
+  const company = req.body.company;
   db.query("select token from merchant where mailid = ?", mail, (err, data) => {
     if (err)
       return res.send({
@@ -382,7 +383,35 @@ app.post("/checkmerchant", (req, res) => {
       });
     if (data.length) {
       if (data[0].token == token) {
-        res.send({ access: true });
+        let ordersData;
+        let inventoryData;
+        db.query(
+          "select * from orders where company = ?",
+          company,
+          (err, data) => {
+            if (err)
+              return res.send({
+                access: false,
+                errorMsg:
+                  "Some error has occurred! Please try again or refresh the page!",
+              });
+            ordersData = data;
+            db.query(
+              "select * from products where company = ?",
+              company,
+              (err, data) => {
+                if (err)
+                  return res.send({
+                    access: false,
+                    errorMsg:
+                      "Some error has occurred! Please try again or refresh the page!",
+                  });
+                inventoryData = data;
+                res.send({ access: true, ordersData, inventoryData });
+              }
+            );
+          }
+        );
       } else {
         res.send({ access: false });
       }
