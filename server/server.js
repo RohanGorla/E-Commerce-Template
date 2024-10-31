@@ -50,6 +50,32 @@ function random() {
   return crypto.randomBytes(32).toString("hex");
 }
 
+function setcompany() {
+  db.query("select DISTINCT productid from orders", (err, orderdata) => {
+    if (err) return console.log(err);
+    orderdata.forEach((order) => {
+      db.query(
+        "select company from products where id = ?",
+        order.productid,
+        (err, companydata) => {
+          if (err) return console.log(err);
+          const company = companydata[0].company;
+          db.query(
+            "update orders set ? where productid = ?",
+            [{ company: company }, order.productid],
+            (err, data) => {
+              if (err) return console.log(err);
+            }
+          );
+        }
+      );
+    });
+  });
+  console.log("done");
+}
+
+// setcompany();
+
 app.get("/", (req, res) => {
   db.query("select * from userinfo", (err, data) => {
     if (err) return res.send(err);
@@ -808,6 +834,8 @@ app.post("/addtowish", (req, res) => {
     req.body.price,
     req.body.discount,
     req.body.wishlist,
+    req.body.category,
+    req.body.company,
   ];
   db.query(
     "select * from wishlistitems where mailid = ? and wishlistname = ? and productid = ?",
@@ -826,7 +854,7 @@ app.post("/addtowish", (req, res) => {
         });
       } else {
         db.query(
-          "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname) values (?)",
+          "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname, category, company) values (?)",
           [values],
           (err, data) => {
             if (err) {
@@ -894,6 +922,8 @@ app.post("/addtocart", (req, res) => {
   const title = req.body.title;
   const price = req.body.price;
   const discount = req.body.discount;
+  const category = req.body.category;
+  const company = req.body.company;
   const mailId = req.body.mailId;
   const itemCount = req.body.count;
   db.query(
@@ -932,9 +962,18 @@ app.post("/addtocart", (req, res) => {
           );
         }
       } else {
-        const values = [mailId, id, title, price, discount, itemCount];
+        const values = [
+          mailId,
+          id,
+          title,
+          price,
+          discount,
+          category,
+          company,
+          itemCount,
+        ];
         db.query(
-          "insert into cart (mailid, productid, title, price, discount, count) values (?)",
+          "insert into cart (mailid, productid, title, price, discount, category, company, count) values (?)",
           [values],
           (err, data) => {
             if (err) {
@@ -1403,6 +1442,8 @@ app.post("/buyproduct", (req, res) => {
     productData.price,
     productData.discount,
     count,
+    productData.category,
+    productData.company,
   ];
   db.query("select id from buy where mailid = ?", mail, (err, data) => {
     if (err)
@@ -1420,7 +1461,7 @@ app.post("/buyproduct", (req, res) => {
               "Some error has occurred! Please try again or refresh the page!",
           });
         db.query(
-          "insert into buy (mailid, productid, title, price, discount, count) values (?)",
+          "insert into buy (mailid, productid, title, price, discount, count, category, company) values (?)",
           [values],
           (err, data) => {
             if (err)
@@ -1435,7 +1476,7 @@ app.post("/buyproduct", (req, res) => {
       });
     } else {
       db.query(
-        "insert into buy (mailid, productid, title, price, discount, count) values (?)",
+        "insert into buy (mailid, productid, title, price, discount, count, category, company) values (?)",
         [values],
         (err, data) => {
           if (err)
@@ -1513,6 +1554,7 @@ app.post("/placebuyorder", (req, res) => {
     state: address.state,
     country: address.country,
   });
+  const orderStatus = "Order placed";
   let values = [
     mail,
     product.productid,
@@ -1520,10 +1562,13 @@ app.post("/placebuyorder", (req, res) => {
     product.price,
     product.discount,
     product.count,
+    product.category,
+    product.company,
     addressData,
+    orderStatus,
   ];
   db.query(
-    "insert into orders (mailid, productid, title, price, discount, count, address) values (?)",
+    "insert into orders (mailid, productid, title, price, discount, count, category, company, address, order_status) values (?)",
     [values],
     (err, data) => {
       if (err)
@@ -1595,6 +1640,7 @@ app.post("/placeorder", (req, res) => {
     state: req.body.address.state,
     country: req.body.address.country,
   });
+  const order_status = "Order placed";
   db.query("select * from cart where mailid = ?", mail, (err, cartData) => {
     if (err) {
       console.log(err);
@@ -1612,10 +1658,13 @@ app.post("/placeorder", (req, res) => {
         product.price,
         product.discount,
         product.count,
+        product.category,
+        product.company,
         address,
+        order_status,
       ];
       db.query(
-        "insert into orders (mailid, productid, title, price, discount, count, address) values (?)",
+        "insert into orders (mailid, productid, title, price, discount, count, category, company, address, order_status) values (?)",
         [values],
         (err, data) => {
           if (err) {
