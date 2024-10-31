@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Merchant.css";
 
 function Merchant() {
+  const [pendingOrders, setPendingOrders] = useState([]);
+  const [shippedOrders, setShippedOrders] = useState([]);
+  const [finishedOrders, setFinishedOrders] = useState([]);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [totalRevenueCurrency, setTotalRevenueCurrency] = useState("");
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
 
@@ -16,9 +21,42 @@ function Merchant() {
         {
           mail: merchantInfo.mailId,
           token: merchantInfo.token,
+          company: merchantInfo.company,
         }
       );
       if (response.data.access) {
+        console.log("Orders details -> ", response.data.ordersData);
+        let totalRevenue = 0;
+        let totalRevenueCurrency;
+        response.data.ordersData.forEach((order) => {
+          const finalPrice = order.price * (1 - order.discount / 100);
+          totalRevenue += Math.round(finalPrice * 100) / 100;
+          const orderStatus = order.order_status;
+          switch (orderStatus) {
+            case "Order placed":
+              setPendingOrders((prev) => [...prev, order]);
+              break;
+            case "Order shipped":
+              setShippedOrders((prev) => [...prev, order]);
+              break;
+            case "Order delivered":
+              setFinishedOrders((prev) => [...prev, order]);
+              break;
+            default:
+              break;
+          }
+        });
+        if (totalRevenue.toString().split(".").length !== 1) {
+          totalRevenueCurrency =
+            currencyConvert(totalRevenue.toString().split(".")[0]) +
+            "." +
+            totalRevenue.toString().split(".")[1];
+        } else {
+          totalRevenueCurrency = currencyConvert(totalRevenue) + ".00";
+        }
+        setTotalRevenue(totalRevenue);
+        setTotalRevenueCurrency(totalRevenueCurrency);
+        console.log("Inventory details -> ", response.data.inventoryData);
       } else {
         navigate("/mercahnt/merchantlogin");
       }
@@ -27,12 +65,27 @@ function Merchant() {
     }
   }
 
+  /* Useful Functions */
+
+  function currencyConvert(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
+  }
+
   useEffect(() => {
-    checkMerchantCredentials();
+    // checkMerchantCredentials();
   }, []);
 
   return (
-    <div className="Merchant_Page">
+    <div className="Merchant_Page" onClick={checkMerchantCredentials}>
       <div className="Merchant_Main">
         {/* Merchant Header */}
         <div className="Merchant_Header">
@@ -71,7 +124,9 @@ function Merchant() {
                   <p className="Merchant_Dashboard--Item--Text">
                     Pending Orders
                   </p>
-                  <p className="Merchant_Dashboard--Item--Value">10</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    {pendingOrders.length}
+                  </p>
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
@@ -79,7 +134,9 @@ function Merchant() {
                   <p className="Merchant_Dashboard--Item--Text">
                     Shipped Orders
                   </p>
-                  <p className="Merchant_Dashboard--Item--Value">5</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    {shippedOrders.length}
+                  </p>
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
@@ -87,13 +144,9 @@ function Merchant() {
                   <p className="Merchant_Dashboard--Item--Text">
                     Finished Orders
                   </p>
-                  <p className="Merchant_Dashboard--Item--Value">26</p>
-                </div>
-              </div>
-              <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
-                  <p className="Merchant_Dashboard--Item--Text">Total Sales</p>
-                  <p className="Merchant_Dashboard--Item--Value">79</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    {finishedOrders.length}
+                  </p>
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
@@ -101,7 +154,9 @@ function Merchant() {
                   <p className="Merchant_Dashboard--Item--Text">
                     Revenue Generated
                   </p>
-                  <p className="Merchant_Dashboard--Item--Value">₹5,34,798</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    ₹{totalRevenueCurrency}
+                  </p>
                 </div>
               </div>
               {/* <div className="Merchant_Dashboard--Item_Container">
