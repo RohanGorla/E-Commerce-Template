@@ -9,6 +9,10 @@ function Merchant() {
   const [finishedOrders, setFinishedOrders] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalRevenueCurrency, setTotalRevenueCurrency] = useState("");
+  const [totalStocks, setTotalStocks] = useState([]);
+  const [totalStocksQuantity, setTotalStocksQuantity] = useState(0);
+  const [lowStocks, setLowStocks] = useState([]);
+  const [outOfStock, setOutOfStock] = useState([]);
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
 
@@ -57,6 +61,14 @@ function Merchant() {
         setTotalRevenue(totalRevenue);
         setTotalRevenueCurrency(totalRevenueCurrency);
         console.log("Inventory details -> ", response.data.inventoryData);
+        setTotalStocks(response.data.inventoryData);
+        response.data.inventoryData.forEach((product) => {
+          setTotalStocksQuantity((prev) => prev + product.stock_left);
+          const stocksQuantity = product.stock_left;
+          if (stocksQuantity <= product.stock_alert)
+            setLowStocks((prev) => [...prev, product]);
+          if (stocksQuantity === 0) setOutOfStock((prev) => [...prev, product]);
+        });
       } else {
         navigate("/mercahnt/merchantlogin");
       }
@@ -177,19 +189,25 @@ function Merchant() {
                   <p className="Merchant_Dashboard--Item--Text">
                     Total Stock Quantity
                   </p>
-                  <p className="Merchant_Dashboard--Item--Value">100</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    {totalStocksQuantity}
+                  </p>
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
                 <div className="Merchant_Dashboard--Item">
                   <p className="Merchant_Dashboard--Item--Text">Low On Stock</p>
-                  <p className="Merchant_Dashboard--Item--Value">34</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    {lowStocks.length}
+                  </p>
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
                 <div className="Merchant_Dashboard--Item">
                   <p className="Merchant_Dashboard--Item--Text">Out Of Stock</p>
-                  <p className="Merchant_Dashboard--Item--Value">2</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    {outOfStock.length}
+                  </p>
                 </div>
               </div>
             </div>
