@@ -212,6 +212,26 @@ function Merchant() {
               </div>
             </div>
           </div>
+          <div className="Merchant_Dashboard--Section">
+            <h2 className="Merchant_Dashboard--Section_Name">Your Products</h2>
+            <div className="Merchant_Dashboard--Grid">
+              <div className="Merchant_Dashboard--Item_Container">
+                <div className="Merchant_Dashboard--Item">
+                  <p className="Merchant_Dashboard--Item--Text">All Products</p>
+                  <p className="Merchant_Dashboard--Item--Value">
+                    {totalStocks.length}
+                  </p>
+                </div>
+              </div>
+              <div className="Merchant_Dashboard--Item_Container">
+                <div className="Merchant_Dashboard--Item">
+                  <p className="Merchant_Dashboard--Item--Text">
+                    + Add New Product
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
