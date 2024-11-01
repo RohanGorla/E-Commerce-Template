@@ -542,11 +542,14 @@ app.post("/addproduct", async (req, res) => {
     Number(req.body.discount),
     req.body.category,
     req.body.company,
+    Number(req.body.limit),
+    Number(req.body.quantity),
+    Number(req.body.alert),
     // key,
   ];
   db.query(
     // "insert into products (title, price, discount, category, imageTag) values (?)",
-    "insert into products (title, price, discount, category, company) values (?)",
+    "insert into products (title, price, discount, category, company, buy_limit, stock_left, stock_alert) values (?)",
     [values],
     (err, data) => {
       if (err) {
