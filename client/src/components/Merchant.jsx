@@ -224,7 +224,12 @@ function Merchant() {
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    navigate("addproduct");
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">
                     + Add New Product
                   </p>
