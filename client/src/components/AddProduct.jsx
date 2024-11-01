@@ -13,18 +13,27 @@ function AddProduct() {
   const [newCompany, setNewCompany] = useState("");
   const [allCom, setAllCom] = useState([]);
   const [fetch, setFetch] = useState(true);
+  const [buyLimit, setBuyLimit] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [stockAlert, setStockAlert] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
     // console.log(file.name, file.type);
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addproduct`, {
-      title: title,
-      price: price,
-      discount: discount,
-      category: productCat,
-      company: productCom,
-      // type: file.type,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/addproduct`,
+      {
+        title: title,
+        price: price,
+        discount: discount,
+        category: productCat,
+        company: productCom,
+        limit: buyLimit,
+        quantity: quantity,
+        alert: stockAlert,
+        // type: file.type,
+      }
+    );
     console.log(response);
     // const putURL = response.data;
     // await axios.put(putURL, file, { headers: { "Content-Type": file.type } });
@@ -37,9 +46,12 @@ function AddProduct() {
 
   async function handleCategory(e) {
     e.preventDefault();
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addcategory`, {
-      category: actCat,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/addcategory`,
+      {
+        category: actCat,
+      }
+    );
     console.log(response);
     setActCat("");
     setFetch(!fetch);
@@ -47,9 +59,12 @@ function AddProduct() {
 
   async function handleCompany(e) {
     e.preventDefault();
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addcompany`, {
-      company: newCompany,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/addcompany`,
+      {
+        company: newCompany,
+      }
+    );
     console.log(response);
     setNewCompany("");
     setFetch(!fetch);
@@ -57,7 +72,9 @@ function AddProduct() {
 
   useEffect(() => {
     async function getCatAndCom() {
-      let response = await axios.get(`${import.meta.env.VITE_BASE_URL}/getcatandcom`);
+      let response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/getcatandcom`
+      );
       console.log(response);
       setAllCat(response.data.cat);
       setAllCom(response.data.com);
@@ -159,6 +176,36 @@ function AddProduct() {
               );
             })}
           </select>
+        </div>
+        <div style={{ margin: "1em 0" }}>
+          <label style={{ margin: "0 1em" }}>Buy limit</label>
+          <input
+            type="text"
+            value={buyLimit}
+            onChange={(e) => {
+              setBuyLimit(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div style={{ margin: "1em 0" }}>
+          <label style={{ margin: "0 1em" }}>Quantity</label>
+          <input
+            type="text"
+            value={quantity}
+            onChange={(e) => {
+              setQuantity(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div style={{ margin: "1em 0" }}>
+          <label style={{ margin: "0 1em" }}>Stock alert</label>
+          <input
+            type="text"
+            value={stockAlert}
+            onChange={(e) => {
+              setStockAlert(e.target.value);
+            }}
+          ></input>
         </div>
         <div>
           <input type="submit"></input>
