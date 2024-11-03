@@ -93,11 +93,11 @@ function Merchant() {
   }
 
   useEffect(() => {
-    // checkMerchantCredentials();
+    checkMerchantCredentials();
   }, []);
 
   return (
-    <div className="Merchant_Page" onClick={checkMerchantCredentials}>
+    <div className="Merchant_Page">
       <div className="Merchant_Main">
         {/* Merchant Header */}
         <div className="Merchant_Header">
