@@ -421,6 +421,24 @@ app.post("/checkmerchant", (req, res) => {
   });
 });
 
+app.post("/getmerchantorders", (req, res) => {
+  const company = req.body.company;
+  const orderStatus = req.body.orderStatus;
+  db.query(
+    "select * from orders where company = ? and order_status = ?",
+    [company, orderStatus],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      res.send({ access: true, data });
+    }
+  );
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
