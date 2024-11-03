@@ -26,9 +26,6 @@ function MerchantOrders() {
         case "finished":
           orderStatus = "Finished orders";
           break;
-
-        default:
-          break;
       }
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/getmerchantorders`,
@@ -39,6 +36,7 @@ function MerchantOrders() {
       );
       if (response.data.access) {
         setOrders(response.data.data);
+        console.log(response.data.data);
       } else {
         setError(true);
         setErrorMessage(response.data.errorMsg);

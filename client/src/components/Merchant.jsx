@@ -93,11 +93,17 @@ function Merchant() {
   }
 
   useEffect(() => {
-    checkMerchantCredentials();
+    // checkMerchantCredentials();
   }, []);
 
   return (
-    <div className="Merchant_Page">
+    <div
+      className="Merchant_Page"
+      onClick={(e) => {
+        e.stopPropagation();
+        checkMerchantCredentials();
+      }}
+    >
       <div className="Merchant_Main">
         {/* Merchant Header */}
         <div className="Merchant_Header">
@@ -132,7 +138,12 @@ function Merchant() {
             <h2 className="Merchant_Dashboard--Section_Name">Sales Overview</h2>
             <div className="Merchant_Dashboard--Grid">
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    navigate("orders/pending");
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">
                     Pending Orders
                   </p>
@@ -142,7 +153,12 @@ function Merchant() {
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    navigate("orders/shipped");
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">
                     Shipped Orders
                   </p>
@@ -152,7 +168,12 @@ function Merchant() {
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    navigate("orders/finished");
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">
                     Finished Orders
                   </p>
@@ -212,6 +233,7 @@ function Merchant() {
               </div>
             </div>
           </div>
+          {/* Merchant Products Section */}
           <div className="Merchant_Dashboard--Section">
             <h2 className="Merchant_Dashboard--Section_Name">Your Products</h2>
             <div className="Merchant_Dashboard--Grid">
