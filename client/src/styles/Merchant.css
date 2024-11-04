@@ -11,9 +11,12 @@
 }
 
 .Merchant_Page {
+    padding: 1.5em 0em;
+}
+
+.Merchant_Main {
     max-width: 1300px;
     margin: 0em auto;
-    padding: 1.5em 0em;
 }
 
 .Merchant_Header {

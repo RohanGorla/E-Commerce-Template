@@ -10,9 +10,12 @@
 }
 
 .MerchantOrders_Page {
+    padding: 1em 0em;
+}
+
+.MerchantOrders_Main {
     max-width: 1300px;
     margin: 0em auto;
-    padding: 1em 0em;
 }
 
 .MerchantOrders_Header {
