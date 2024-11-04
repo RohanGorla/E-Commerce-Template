@@ -413,10 +413,19 @@ app.post("/checkmerchant", (req, res) => {
           }
         );
       } else {
-        res.send({ access: false });
+        res.send({
+          access: false,
+          errorMsg:
+            "Your credentials have been compromised please login again!",
+          logout: true,
+        });
       }
     } else {
-      res.send({ access: false });
+      res.send({
+        access: false,
+        errorMsg: "Your credentials have been compromised please login again!",
+        logout: true,
+      });
     }
   });
 });
