@@ -2,6 +2,11 @@
     --MerchantOrders_Main_Font: "Inter", sans-serif;
     --MerchantOrders_Second_Font: "Roboto", sans-serif;
     --MerchantOrders_Header: 40px;
+    --MerchantOrders_Name: 19px;
+    --MerchantOrders_Qty: 15px;
+    --MerchantOrders_Address--Heading: 18px;
+    --MerchantOrders_Address: 15px;
+    --MerchantOrders_Button: 15px;
 }
 
 .MerchantOrders_Page {
@@ -29,23 +34,70 @@
     border: 2px solid white;
 }
 
-.MerchantOrders_Orders--Order {
+.MerchantOrders_Order {
+    background-color: rgb(25, 25, 25);
     display: flex;
+    gap: 1em;
+    padding: 1em .5em;
+    border-style: none;
+    border-radius: 8px;
 }
 
-.MerchantOrders_Orders--Order_Image {
+.MerchantOrders_Order +
+.MerchantOrders_Order {
+    margin-top: .5em;
+}
+
+.MerchantOrders_Order_Image {
     width: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.MerchantOrders_Orders--Order_Image img {
+.MerchantOrders_Order_Image img {
     width: 100%;
     max-width: 300px;
 }
 
-.MerchantOrders_Orders--Order_Details {
-    width: 75%;
+.MerchantOrders_Order_Details {
+    width: 65%;
     font-family: var(--MerchantOrders_Main_Font);
+}
+
+.MerchantOrders_Order_Details--Name {
+    font-size: var(--MerchantOrders_Name);
+}
+
+.MerchantOrders_Order_Details--Quantity {
+ font-size: var(--MerchantOrders_Qty);
+ margin: .5em 0em 1em 0em;
+}
+
+.MerchantOrders_Order_Details--Delivery_Address--Heading {
+    font-size: var(--MerchantOrders_Address--Heading);
+}
+
+.MerchantOrders_Order_Details--Delivery_Address--Section {
+    font-size: var(--MerchantOrders_Address);
+    margin: .3em 0em;
+}
+
+.MerchantOrders_Order_Details--Button {
+    font-family: var(--MerchantOrders_Second_Font);
+    font-size: var(--MerchantOrders_Button);
+    font-weight: 600;
+    background-color: white;
+    color: black;
+    margin-top: 1em;
+    padding: .6em 1.6em;
+    border-style: none;
+    border-radius: 4px;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+    }
 }

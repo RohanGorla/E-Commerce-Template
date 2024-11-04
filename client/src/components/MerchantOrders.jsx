@@ -36,10 +36,7 @@ function MerchantOrders() {
         }
       );
       if (response.data.access) {
-        // console.log(response.data.data.address);
-        // response.data.data.address = deliveryAddress;
         setOrders(response.data.data);
-        console.log(response.data.data);
       } else {
         setError(true);
         setErrorMessage(response.data.errorMsg);
@@ -92,24 +89,39 @@ function MerchantOrders() {
             {status.slice(1)} Orders
           </h1>
         </div>
-        <div className="MerchantOrders_Orders--Container">
+        <div className="MerchantOrders_Container">
           {orders.map((order, index) => {
             const deliveryAddress = JSON.parse(order.address);
             return (
-              <div className="MerchantOrders_Orders--Order" key={index}>
-                <div className="MerchantOrders_Orders--Order_Image">
+              <div className="MerchantOrders_Order" key={index}>
+                <div className="MerchantOrders_Order_Image">
                   <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
                 </div>
-                <div className="MerchantOrders_Orders--Order_Details">
-                  <p>{order.title}</p>
-                  <p>{order.price}</p>
-                  <p>{order.count}</p>
-                  <p>Delivery Address:</p>
-                  <p>{deliveryAddress.house}</p>
-                  <p>{deliveryAddress.street}</p>
-                  <p>{deliveryAddress.city}</p>
-                  <p>{deliveryAddress.state}</p>
-                  <p>{deliveryAddress.country}</p>
+                <div className="MerchantOrders_Order_Details">
+                  <p className="MerchantOrders_Order_Details--Name">
+                    {order.title}
+                  </p>
+                  <p className="MerchantOrders_Order_Details--Quantity">
+                    Qty: {order.count}
+                  </p>
+                  <p className="MerchantOrders_Order_Details--Delivery_Address--Heading">
+                    Delivery Address:
+                  </p>
+                  <p className="MerchantOrders_Order_Details--Delivery_Address--Section">
+                    {deliveryAddress.house},
+                  </p>
+                  <p className="MerchantOrders_Order_Details--Delivery_Address--Section">
+                    {deliveryAddress.street},
+                  </p>
+                  <p className="MerchantOrders_Order_Details--Delivery_Address--Section">
+                    {deliveryAddress.city},
+                  </p>
+                  <p className="MerchantOrders_Order_Details--Delivery_Address--Section">
+                    {deliveryAddress.state}, {deliveryAddress.country}.
+                  </p>
+                  <button className="MerchantOrders_Order_Details--Button">
+                    Mark As Shipped
+                  </button>
                 </div>
               </div>
             );
