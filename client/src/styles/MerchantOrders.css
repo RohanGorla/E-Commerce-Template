@@ -101,3 +101,7 @@
         border: 1px solid white;
     }
 }
+
+.MerchantOrders_Order_Details--Button--Inactive {
+    display: none;
+}

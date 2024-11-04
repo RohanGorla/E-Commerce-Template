@@ -22,10 +22,10 @@ function MerchantOrders() {
           orderStatus = "Order placed";
           break;
         case "shipped":
-          orderStatus = "Shipped orders";
+          orderStatus = "Order shipped";
           break;
         case "finished":
-          orderStatus = "Finished orders";
+          orderStatus = "Order finished";
           break;
       }
       const response = await axios.post(
@@ -46,6 +46,33 @@ function MerchantOrders() {
       }
     } else {
       navigate("/merchant/merchantlogin");
+    }
+  }
+
+  async function markAsShipped(id) {
+    const orderId = id;
+    const company = merchantInfo?.company;
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/markasshipped`,
+      {
+        orderId,
+        company,
+      }
+    );
+    if (response.data.access) {
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+      setOrders(response.data.data);
+    } else {
+      console.log(response.data.err);
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
 
@@ -119,7 +146,16 @@ function MerchantOrders() {
                   <p className="MerchantOrders_Order_Details--Delivery_Address--Section">
                     {deliveryAddress.state}, {deliveryAddress.country}.
                   </p>
-                  <button className="MerchantOrders_Order_Details--Button">
+                  <button
+                    className={
+                      status == "pending"
+                        ? "MerchantOrders_Order_Details--Button"
+                        : "MerchantOrders_Order_Details--Button--Inactive"
+                    }
+                    onClick={() => {
+                      markAsShipped(order.id);
+                    }}
+                  >
                     Mark As Shipped
                   </button>
                 </div>
