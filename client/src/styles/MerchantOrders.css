@@ -1,0 +1,51 @@
+:root {
+    --MerchantOrders_Main_Font: "Inter", sans-serif;
+    --MerchantOrders_Second_Font: "Roboto", sans-serif;
+    --MerchantOrders_Header: 40px;
+}
+
+.MerchantOrders_Page {
+    max-width: 1300px;
+    margin: 0em auto;
+    padding: 1em 0em;
+}
+
+.MerchantOrders_Header {
+    background-color: black;
+    position: sticky;
+    top: 0px;
+    padding-bottom: 1.5em;
+}
+
+.MerchantOrders_Header--Title {
+    background-color: rgb(25, 25, 25);
+    font-family: var(--MerchantOrders_Main_Font);
+    font-size: var(--MerchantOrders_Header);
+    text-align: center;
+    letter-spacing: 2px;
+    padding: .7em 0em;
+    border-style: none;
+    border-radius: 9px;
+    border: 2px solid white;
+}
+
+.MerchantOrders_Orders--Order {
+    display: flex;
+}
+
+.MerchantOrders_Orders--Order_Image {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MerchantOrders_Orders--Order_Image img {
+    width: 100%;
+    max-width: 300px;
+}
+
+.MerchantOrders_Orders--Order_Details {
+    width: 75%;
+    font-family: var(--MerchantOrders_Main_Font);
+}

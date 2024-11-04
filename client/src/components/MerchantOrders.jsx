@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../styles/MerchantOrders.css";
 
 function MerchantOrders() {
   const { status } = useParams();
@@ -35,6 +36,8 @@ function MerchantOrders() {
         }
       );
       if (response.data.access) {
+        // console.log(response.data.data.address);
+        // response.data.data.address = deliveryAddress;
         setOrders(response.data.data);
         console.log(response.data.data);
       } else {
@@ -84,7 +87,33 @@ function MerchantOrders() {
       {/* Merchant Orders Section */}
       <div className="MerchantOrders_Main">
         <div className="MerchantOrders_Header">
-          <h1></h1>
+          <h1 className="MerchantOrders_Header--Title">
+            {status[0].toUpperCase()}
+            {status.slice(1)} Orders
+          </h1>
+        </div>
+        <div className="MerchantOrders_Orders--Container">
+          {orders.map((order, index) => {
+            const deliveryAddress = JSON.parse(order.address);
+            return (
+              <div className="MerchantOrders_Orders--Order" key={index}>
+                <div className="MerchantOrders_Orders--Order_Image">
+                  <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                </div>
+                <div className="MerchantOrders_Orders--Order_Details">
+                  <p>{order.title}</p>
+                  <p>{order.price}</p>
+                  <p>{order.count}</p>
+                  <p>Delivery Address:</p>
+                  <p>{deliveryAddress.house}</p>
+                  <p>{deliveryAddress.street}</p>
+                  <p>{deliveryAddress.city}</p>
+                  <p>{deliveryAddress.state}</p>
+                  <p>{deliveryAddress.country}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
