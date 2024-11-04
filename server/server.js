@@ -439,6 +439,43 @@ app.post("/getmerchantorders", (req, res) => {
   );
 });
 
+app.post("/markasshipped", (req, res) => {
+  const orderId = req.body.orderId;
+  const company = req.body.company;
+  db.query(
+    "update orders set ? where id = ?",
+    [{ order_status: "Order shipped" }, orderId],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+          err: err,
+        });
+      db.query(
+        "select * from orders where order_status = 'Order placed' and company = ?",
+        company,
+        (err, data) => {
+          if (err)
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+              err: err,
+            });
+          res.send({
+            access: true,
+            data,
+            successMsg:
+              "Order status has been successfully updated to Shipped!",
+          });
+        }
+      );
+    }
+  );
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
