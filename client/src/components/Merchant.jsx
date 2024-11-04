@@ -13,6 +13,8 @@ function Merchant() {
   const [totalStocksQuantity, setTotalStocksQuantity] = useState(0);
   const [lowStocks, setLowStocks] = useState([]);
   const [outOfStock, setOutOfStock] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
 
@@ -54,7 +56,7 @@ function Merchant() {
           totalRevenueCurrency =
             currencyConvert(totalRevenue.toString().split(".")[0]) +
             "." +
-            totalRevenue.toString().split(".")[1];
+            totalRevenue.toString().split(".")[1].padEnd(2, "0");
         } else {
           totalRevenueCurrency = currencyConvert(totalRevenue) + ".00";
         }
@@ -70,7 +72,12 @@ function Merchant() {
           if (stocksQuantity === 0) setOutOfStock((prev) => [...prev, product]);
         });
       } else {
-        navigate("/mercahnt/merchantlogin");
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+          if (response.data.logout) navigate("/merchant/merchantlogin");
+        }, 3500);
       }
     } else {
       navigate("/merchant/merchantlogin");
@@ -104,6 +111,19 @@ function Merchant() {
         checkMerchantCredentials();
       }}
     >
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
       <div className="Merchant_Main">
         {/* Merchant Header */}
         <div className="Merchant_Header">
