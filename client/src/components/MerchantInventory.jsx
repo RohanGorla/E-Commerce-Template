@@ -9,6 +9,7 @@ function MerchantInventory() {
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const [inventoryType, setInventoryType] = useState("");
   const [inventoryData, setInventoryData] = useState([]);
+  const [showStockEditor, setShowStockEditor] = useState(false);
 
   async function getInventory() {
     if (merchantInfo.mailId && merchantInfo.company) {
@@ -75,21 +76,41 @@ function MerchantInventory() {
           {inventoryData.map((product, index) => {
             return (
               <div key={index} className="MerchantInventory--Product">
-                <p className="MerchantInventory--Product_Name">
-                  {product.title}
-                </p>
-                <p className="MerchantInventory--Product_Quantity">
-                  {product.stock_left}
-                </p>
-                <button
-                  className={
-                    inventoryType == "Your Inventory"
-                      ? "MerchantInventory--Add_Stock_Button--Inactive"
-                      : "MerchantInventory--Add_Stock_Button"
-                  }
-                >
-                  Restock Item
-                </button>
+                <div className="MerchantInventory--Product_Image">
+                  <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                </div>
+                <div className="MerchantInventory--Product_Details">
+                  <p className="MerchantInventory--Product_Name">
+                    {product.title}
+                  </p>
+                  <p className="MerchantInventory--Product_Quantity">
+                    Current stock quantity: {product.stock_left}
+                  </p>
+                  <button
+                    className={
+                      showStockEditor
+                        ? "MerchantInventory--Restock_Button--Inactive"
+                        : inventoryType == "Your Inventory"
+                        ? "MerchantInventory--Restock_Button--Inactive"
+                        : "MerchantInventory--Restock_Button"
+                    }
+                    onClick={() => {
+                      setShowStockEditor(true);
+                    }}
+                  >
+                    Restock Item
+                  </button>
+                  <div
+                    className={
+                      showStockEditor
+                        ? "MerchantInventory--StockEditor"
+                        : "MerchantInventory--StockEditor--Inactive"
+                    }
+                  >
+                    <label>New Stock Quantity</label>
+                    <input type="text" value={product.stock_left}></input>
+                  </div>
+                </div>
               </div>
             );
           })}

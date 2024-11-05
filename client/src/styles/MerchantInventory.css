@@ -2,10 +2,21 @@
     --MerchantInventory_Main_Font: "Inter", sans-serif;
     --MerchantInventory_Second_Font: "Roboto", sans-serif;
     --MerchantInventory_Header: 40px;
+    --MerchantInventory_Name: 19px;
 }
 
 .MerchantInventory_Page {
     padding: 1em 0em;
+}
+
+.MerchantInventory_Editor {
+    background-color: rgb(0, 0, 0, .7);
+    position: fixed;
+    z-index: 5;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
 }
 
 .MerchantInventory_Container {
@@ -32,7 +43,37 @@
     border: 2px solid white;
 }
 
+.MerchantInventory--Product {
+    background-color: rgb(25, 25, 25);
+    display: flex;
+    gap: 1em;
+    padding: 1em .5em;
+    border-style: none;
+    border-radius: 8px;
+}
 
-.MerchantInventory--Add_Stock_Button--Inactive {
+.MerchantInventory--Product_Image {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MerchantInventory--Product_Image img {
+    width: 100%;
+}
+
+.MerchantInventory--Product_Details {
+    width: 60%;
+    font-family: var(--MerchantInventory_Main_Font);
+}
+
+.MerchantInventory--Product_Name {
+    font-size: var(--MerchantInventory_Name);
+    font-weight: 500;
+}
+
+.MerchantInventory--Restock_Button--Inactive,
+.MerchantInventory--StockEditor--Inactive {
     display: none;
 }
