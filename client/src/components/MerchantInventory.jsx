@@ -8,9 +8,10 @@ function MerchantInventory() {
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const [inventoryType, setInventoryType] = useState("");
+  const [inventoryData, setInventoryData] = useState([]);
 
   async function getInventory() {
-    if (merchantInfo.mailid && merchantInfo.company) {
+    if (merchantInfo.mailId && merchantInfo.company) {
       const company = merchantInfo.company;
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/getinventory`,
@@ -19,6 +20,27 @@ function MerchantInventory() {
           inventoryType,
         }
       );
+      if (response.data.access) {
+        const allInventory = response.data.data;
+        console.log(allInventory);
+        switch (inventoryType) {
+          case "Your Inventory":
+            setInventoryData(allInventory);
+            break;
+          case "Low On Stock":
+            const lowStock = allInventory.filter((product) => {
+              if (product.stock_left <= product.stock_alert) return product;
+            });
+            setInventoryData(lowStock);
+            break;
+          case "Out Of Stock":
+            const outOfStock = allInventory.filter((product) => {
+              if (product.stock_left == 0) return product;
+            });
+            setInventoryData(outOfStock);
+            break;
+        }
+      }
     } else {
       navigate("/merchant/merchantlogin");
     }
@@ -49,7 +71,29 @@ function MerchantInventory() {
         <div className="MerchantInventory_Header">
           <h1 className="MerchantInventory_Header--Title">{inventoryType}</h1>
         </div>
-        <div className="MerchantInventory_Main"></div>
+        <div className="MerchantInventory_Main">
+          {inventoryData.map((product, index) => {
+            return (
+              <div key={index} className="MerchantInventory--Product">
+                <p className="MerchantInventory--Product_Name">
+                  {product.title}
+                </p>
+                <p className="MerchantInventory--Product_Quantity">
+                  {product.stock_left}
+                </p>
+                <button
+                  className={
+                    inventoryType == "Your Inventory"
+                      ? "MerchantInventory--Add_Stock_Button--Inactive"
+                      : "MerchantInventory--Add_Stock_Button"
+                  }
+                >
+                  Restock Item
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -31,3 +31,8 @@
     border-radius: 9px;
     border: 2px solid white;
 }
+
+
+.MerchantInventory--Add_Stock_Button--Inactive {
+    display: none;
+}
