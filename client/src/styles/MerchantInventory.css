@@ -1,0 +1,33 @@
+:root {
+    --MerchantInventory_Main_Font: "Inter", sans-serif;
+    --MerchantInventory_Second_Font: "Roboto", sans-serif;
+    --MerchantInventory_Header: 40px;
+}
+
+.MerchantInventory_Page {
+    padding: 1em 0em;
+}
+
+.MerchantInventory_Container {
+    max-width: 1300px;
+    margin: 0em auto;
+}
+
+.MerchantInventory_Header {
+    background-color: black;
+    position: sticky;
+    top: 0px;
+    padding-bottom: 1.5em;
+}
+
+.MerchantInventory_Header--Title {
+    background-color: rgb(25, 25, 25);
+    font-family: var(--MerchantInventory_Main_Font);
+    font-size: var(--MerchantInventory_Header);
+    text-align: center;
+    letter-spacing: 2px;
+    padding: .7em 0em;
+    border-style: none;
+    border-radius: 9px;
+    border: 2px solid white;
+}

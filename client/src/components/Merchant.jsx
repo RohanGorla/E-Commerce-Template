@@ -232,7 +232,12 @@ function Merchant() {
             </h2>
             <div className="Merchant_Dashboard--Grid">
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    window.open(`${window.location.origin}/merchant/inventory/allinventory`);
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">
                     Total Stock Quantity
                   </p>
@@ -242,7 +247,12 @@ function Merchant() {
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    window.open(`${window.location.origin}/merchant/inventory/lowstock`);
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">Low On Stock</p>
                   <p className="Merchant_Dashboard--Item--Value">
                     {lowStocks.length}
@@ -250,7 +260,12 @@ function Merchant() {
                 </div>
               </div>
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    window.open(`${window.location.origin}/merchant/inventory/outofstock`);
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">Out Of Stock</p>
                   <p className="Merchant_Dashboard--Item--Value">
                     {outOfStock.length}
