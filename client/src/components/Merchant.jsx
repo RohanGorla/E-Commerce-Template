@@ -161,7 +161,9 @@ function Merchant() {
                 <div
                   className="Merchant_Dashboard--Item"
                   onClick={() => {
-                    navigate("orders/pending");
+                    window.open(
+                      `${window.location.origin}/merchant/orders/pending`
+                    );
                   }}
                 >
                   <p className="Merchant_Dashboard--Item--Text">
@@ -176,7 +178,9 @@ function Merchant() {
                 <div
                   className="Merchant_Dashboard--Item"
                   onClick={() => {
-                    navigate("orders/shipped");
+                    window.open(
+                      `${window.location.origin}/merchant/orders/shipped`
+                    );
                   }}
                 >
                   <p className="Merchant_Dashboard--Item--Text">
@@ -191,7 +195,9 @@ function Merchant() {
                 <div
                   className="Merchant_Dashboard--Item"
                   onClick={() => {
-                    navigate("orders/finished");
+                    window.open(
+                      `${window.location.origin}/merchant/orders/finished`
+                    );
                   }}
                 >
                   <p className="Merchant_Dashboard--Item--Text">
