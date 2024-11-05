@@ -116,7 +116,28 @@ function MerchantOrders() {
             {status.slice(1)} Orders
           </h1>
         </div>
-        <div className="MerchantOrders_Container">
+        <div
+          className={
+            orders.length
+              ? "MerchantOrders_Empty_Container--Inactive"
+              : "MerchantOrders_Empty_Container"
+          }
+        >
+          <div className="MerchantOrders_Empty">
+            <p className="MerchantOrders_Empty--Header">No {status} orders!</p>
+            <p className="MerchantOrders_Empty--Text">
+              Your {status} orders list is empty for now. As orders transition
+              to {status} status, they'll appear here automatically.
+            </p>
+          </div>
+        </div>
+        <div
+          className={
+            orders.length
+              ? "MerchantOrders_Container"
+              : "MerchantOrders_Container--Inactive"
+          }
+        >
           {orders.map((order, index) => {
             const deliveryAddress = JSON.parse(order.address);
             return (

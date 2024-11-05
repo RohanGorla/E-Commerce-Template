@@ -2,6 +2,8 @@
     --MerchantOrders_Main_Font: "Inter", sans-serif;
     --MerchantOrders_Second_Font: "Roboto", sans-serif;
     --MerchantOrders_Header: 40px;
+    --MerchantOrders_Empty--Header: 22px;
+    --MerchantOrders_Empty--Text: 17px;
     --MerchantOrders_Name: 19px;
     --MerchantOrders_Qty: 15px;
     --MerchantOrders_Address--Heading: 18px;
@@ -35,6 +37,35 @@
     border-style: none;
     border-radius: 9px;
     border: 2px solid white;
+}
+
+.MerchantOrders_Container--Inactive,
+.MerchantOrders_Empty_Container--Inactive {
+    display: none;
+}
+
+.MerchantOrders_Empty {
+    background-color: rgb(25, 25, 25);
+    max-width: 700px;
+    margin: 0em auto;
+    margin-top: 3em;
+    padding: 1em 2em;
+    border-style: none;
+    border: 2px solid white;
+    border-radius: 8px;
+}
+
+.MerchantOrders_Empty--Header {
+    font-family: var(--MerchantOrders_Second_Font);
+    font-size: var(--MerchantOrders_Empty--Header);
+    font-weight: 600;
+    margin-bottom: .7em;
+}
+
+.MerchantOrders_Empty--Text {
+    font-family: var(--MerchantOrders_Main_Font);
+    font-size: var(--MerchantOrders_Empty--Text);
+    letter-spacing: .5px;
 }
 
 .MerchantOrders_Order {
