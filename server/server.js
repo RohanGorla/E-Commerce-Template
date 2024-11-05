@@ -485,6 +485,19 @@ app.post("/markasshipped", (req, res) => {
   );
 });
 
+app.post("/getinventory", (req, res) => {
+  const company = req.body.company;
+  db.query("select * from products where company = ?", company, (err, data) => {
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
+    res.send({ access: true, data });
+  });
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
