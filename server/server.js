@@ -498,6 +498,27 @@ app.post("/getinventory", (req, res) => {
   });
 });
 
+app.post("/updateinventory", (req, res) => {
+  const productId = req.body.id;
+  const stockValue = req.body.stockValue;
+  db.query(
+    "update products set ? where id = ?",
+    [{ stock_left: stockValue }, productId],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      res.send({
+        access: true,
+        successMsg: "Product inventory has been updated successfully!",
+      });
+    }
+  );
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
