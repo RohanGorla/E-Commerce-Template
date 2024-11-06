@@ -3,6 +3,8 @@
     --MerchantInventory_Second_Font: "Roboto", sans-serif;
     --MerchantInventory_Header: 40px;
     --MerchantInventory_Name: 19px;
+    --MerchantInventory_Quantity: 16px;
+    --MerchantInventory_Button: 15px;
 }
 
 .MerchantInventory_Page {
@@ -46,8 +48,8 @@
 .MerchantInventory--Product {
     background-color: rgb(25, 25, 25);
     display: flex;
-    gap: 1em;
-    padding: 1em .5em;
+    gap: 2em;
+    padding: 1em;
     border-style: none;
     border-radius: 8px;
 }
@@ -71,6 +73,53 @@
 .MerchantInventory--Product_Name {
     font-size: var(--MerchantInventory_Name);
     font-weight: 500;
+}
+
+.MerchantInventory--Product_Quantity {
+    font-size: var(--MerchantInventory_Quantity);
+    margin: .7em 0em;
+}
+
+.MerchantInventory--Restock_Button {
+    font-family: var(--MerchantInventory_Second_Font);
+    font-size: var(--MerchantInventory_Button);
+    font-weight: 600;
+    background-color: white;
+    color: black;
+    padding: .6em 1.6em;
+    border-style: none;
+    border-radius: 4px;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+    }
+}
+
+.MerchantInventory--StockEditor {
+
+}
+
+.MerchantInventory--StockEditor label {
+    display: block;
+    font-size: var(--MerchantInventory--StockEditor);
+    font-weight: 500;
+    margin-bottom: .4em;
+    cursor: pointer;
+}
+
+.MerchantInventory--StockEditor--Input_And_Confirm {
+    display: flex;
+    align-items: center;
+}
+
+.MerchantInventory--StockEditor input {
+    font-size: var(--MerchantInventory--StockEditor);
+    width: 130px;
+    padding: .25em .2em .25em .4em;
+    cursor: pointer;
 }
 
 .MerchantInventory--Restock_Button--Inactive,

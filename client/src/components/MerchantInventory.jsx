@@ -10,6 +10,8 @@ function MerchantInventory() {
   const [inventoryType, setInventoryType] = useState("");
   const [inventoryData, setInventoryData] = useState([]);
   const [showStockEditor, setShowStockEditor] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState(0);
+  const [stockValue, setStockValue] = useState(0);
 
   async function getInventory() {
     if (merchantInfo.mailId && merchantInfo.company) {
@@ -44,6 +46,19 @@ function MerchantInventory() {
       }
     } else {
       navigate("/merchant/merchantlogin");
+    }
+  }
+
+  async function updateProductStock(id) {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/updateinventory`,
+      {
+        id,
+        stockValue,
+      }
+    );
+    if (response.data.access) {
+
     }
   }
 
@@ -96,6 +111,7 @@ function MerchantInventory() {
                     }
                     onClick={() => {
                       setShowStockEditor(true);
+                      setStockValue(product.stock_left);
                     }}
                   >
                     Restock Item
@@ -107,8 +123,28 @@ function MerchantInventory() {
                         : "MerchantInventory--StockEditor--Inactive"
                     }
                   >
-                    <label>New Stock Quantity</label>
-                    <input type="text" value={product.stock_left}></input>
+                    <label htmlFor="stockInput">New Stock Quantity:</label>
+                    <div className="MerchantInventory--StockEditor--Input_And_Confirm">
+                      <input
+                        id="stockInput"
+                        type="number"
+                        value={stockValue}
+                        onChange={(e) => {
+                          if (e.target.value <= 0) {
+                            setStockValue(0);
+                          } else {
+                            setStockValue(e.target.value);
+                          }
+                        }}
+                      ></input>
+                      <button
+                        onClick={() => {
+                          updateProductStock(product.id);
+                        }}
+                      >
+                        Confirm
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
