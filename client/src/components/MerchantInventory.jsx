@@ -28,7 +28,6 @@ function MerchantInventory() {
       );
       if (response.data.access) {
         const allInventory = response.data.data;
-        console.log(allInventory);
         filterInventoryData(allInventory);
       }
     } else {
@@ -37,29 +36,31 @@ function MerchantInventory() {
   }
 
   async function updateProductStock(id) {
-    const company = merchantInfo.company;
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/updateinventory`,
-      {
-        id,
-        stockValue,
-        company,
+    if (merchantInfo.company) {
+      const company = merchantInfo.company;
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/updateinventory`,
+        {
+          id,
+          stockValue,
+          company,
+        }
+      );
+      if (response.data.access) {
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3500);
+        filterInventoryData(response.data.data);
+      } else {
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
       }
-    );
-    if (response.data.access) {
-      setSuccess(true);
-      setSuccessMessage(response.data.successMsg);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 3500);
-      filterInventoryData(response.data.data);
-    } else {
-      setError(true);
-      setErrorMessage(response.data.errorMsg);
-      setTimeout(() => {
-        setError(false);
-      }, 3500);
-    }
+    } else navigate("/merchant/merchantlogin");
   }
 
   function filterInventoryData(allInventory) {
@@ -151,8 +152,6 @@ function MerchantInventory() {
                     className={
                       currentProduct == product.id
                         ? showStockEditor
-                          ? "MerchantInventory--Restock_Button--Inactive"
-                          : inventoryType == "Your Inventory"
                           ? "MerchantInventory--Restock_Button--Inactive"
                           : "MerchantInventory--Restock_Button"
                         : "MerchantInventory--Restock_Button"

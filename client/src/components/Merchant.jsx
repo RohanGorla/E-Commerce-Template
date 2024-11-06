@@ -235,7 +235,9 @@ function Merchant() {
                 <div
                   className="Merchant_Dashboard--Item"
                   onClick={() => {
-                    window.open(`${window.location.origin}/merchant/inventory/allinventory`);
+                    window.open(
+                      `${window.location.origin}/merchant/inventory/allinventory`
+                    );
                   }}
                 >
                   <p className="Merchant_Dashboard--Item--Text">
@@ -250,7 +252,9 @@ function Merchant() {
                 <div
                   className="Merchant_Dashboard--Item"
                   onClick={() => {
-                    window.open(`${window.location.origin}/merchant/inventory/lowstock`);
+                    window.open(
+                      `${window.location.origin}/merchant/inventory/lowstock`
+                    );
                   }}
                 >
                   <p className="Merchant_Dashboard--Item--Text">Low On Stock</p>
@@ -263,7 +267,9 @@ function Merchant() {
                 <div
                   className="Merchant_Dashboard--Item"
                   onClick={() => {
-                    window.open(`${window.location.origin}/merchant/inventory/outofstock`);
+                    window.open(
+                      `${window.location.origin}/merchant/inventory/outofstock`
+                    );
                   }}
                 >
                   <p className="Merchant_Dashboard--Item--Text">Out Of Stock</p>
@@ -290,7 +296,9 @@ function Merchant() {
                 <div
                   className="Merchant_Dashboard--Item"
                   onClick={() => {
-                    navigate("addproduct");
+                    window.open(
+                      `${window.location.origin}/merchant/addproduct`
+                    );
                   }}
                 >
                   <p className="Merchant_Dashboard--Item--Text">
