@@ -98,8 +98,9 @@
     }
 }
 
-.MerchantInventory--StockEditor {
-
+.MerchantInventory--StockEditor--Input_And_Confirm {
+    display: flex;
+    align-items: center;
 }
 
 .MerchantInventory--StockEditor label {
@@ -110,16 +111,30 @@
     cursor: pointer;
 }
 
-.MerchantInventory--StockEditor--Input_And_Confirm {
-    display: flex;
-    align-items: center;
-}
-
 .MerchantInventory--StockEditor input {
     font-size: var(--MerchantInventory--StockEditor);
     width: 130px;
     padding: .25em .2em .25em .4em;
     cursor: pointer;
+}
+
+.MerchantInventory--StockEditor button {
+    font-family: var(--MerchantInventory_Second_Font);
+    font-size: var(--MerchantInventory_Button);
+    font-weight: 600;
+    background-color: white;
+    color: black;
+    margin-left: 1em;
+    padding: .4em 1.4em;
+    border-style: none;
+    border-radius: 4px;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+    }
 }
 
 .MerchantInventory--Restock_Button--Inactive,
