@@ -12,6 +12,10 @@ function MerchantInventory() {
   const [showStockEditor, setShowStockEditor] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(0);
   const [stockValue, setStockValue] = useState(0);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   async function getInventory() {
     if (merchantInfo.mailId && merchantInfo.company) {
@@ -58,7 +62,17 @@ function MerchantInventory() {
       }
     );
     if (response.data.access) {
-
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    } else {
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
 
@@ -83,6 +97,33 @@ function MerchantInventory() {
         getInventory();
       }}
     >
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Success_Message_Box Success_Message_Box--Active"
+            : "Success_Message_Box Success_Message_Box--Inactive"
+        }
+      >
+        <div className="Success_Message_Box--Container">
+          <p className="Success_Message_Box--Heading">Success!</p>
+          <p className="Success_Message_Box--Message">{successMessage}</p>
+        </div>
+      </div>
+      {/* Merchant Inventory Box */}
       <div className="MerchantInventory_Container">
         <div className="MerchantInventory_Header">
           <h1 className="MerchantInventory_Header--Title">{inventoryType}</h1>
