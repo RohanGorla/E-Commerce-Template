@@ -122,6 +122,7 @@
     font-family: var(--MerchantInventory_Second_Font);
     font-size: var(--MerchantInventory_Button);
     font-weight: 600;
+    letter-spacing: .3px;
     background-color: white;
     color: black;
     margin-left: 1em;

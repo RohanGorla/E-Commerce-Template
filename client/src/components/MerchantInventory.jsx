@@ -24,29 +24,12 @@ function MerchantInventory() {
         `${import.meta.env.VITE_BASE_URL}/getinventory`,
         {
           company,
-          inventoryType,
         }
       );
       if (response.data.access) {
         const allInventory = response.data.data;
         console.log(allInventory);
-        switch (inventoryType) {
-          case "Your Inventory":
-            setInventoryData(allInventory);
-            break;
-          case "Low On Stock":
-            const lowStock = allInventory.filter((product) => {
-              if (product.stock_left <= product.stock_alert) return product;
-            });
-            setInventoryData(lowStock);
-            break;
-          case "Out Of Stock":
-            const outOfStock = allInventory.filter((product) => {
-              if (product.stock_left == 0) return product;
-            });
-            setInventoryData(outOfStock);
-            break;
-        }
+        filterInventoryData(allInventory);
       }
     } else {
       navigate("/merchant/merchantlogin");
@@ -54,11 +37,13 @@ function MerchantInventory() {
   }
 
   async function updateProductStock(id) {
+    const company = merchantInfo.company;
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/updateinventory`,
       {
         id,
         stockValue,
+        company,
       }
     );
     if (response.data.access) {
@@ -67,6 +52,7 @@ function MerchantInventory() {
       setTimeout(() => {
         setSuccess(false);
       }, 3500);
+      filterInventoryData(response.data.data);
     } else {
       setError(true);
       setErrorMessage(response.data.errorMsg);
@@ -75,6 +61,30 @@ function MerchantInventory() {
       }, 3500);
     }
   }
+
+  function filterInventoryData(allInventory) {
+    switch (inventoryType) {
+      case "Your Inventory":
+        setInventoryData(allInventory);
+        break;
+      case "Low On Stock":
+        const lowStock = allInventory.filter((product) => {
+          if (product.stock_left <= product.stock_alert) return product;
+        });
+        setInventoryData(lowStock);
+        break;
+      case "Out Of Stock":
+        const outOfStock = allInventory.filter((product) => {
+          if (product.stock_left == 0) return product;
+        });
+        setInventoryData(outOfStock);
+        break;
+    }
+  }
+
+  useEffect(() => {
+    getInventory();
+  }, [inventoryType]);
 
   useEffect(() => {
     switch (type) {
@@ -91,12 +101,7 @@ function MerchantInventory() {
   }, []);
 
   return (
-    <div
-      className="MerchantInventory_Page"
-      onClick={() => {
-        getInventory();
-      }}
-    >
+    <div className="MerchantInventory_Page">
       {/* Error Message Box */}
       <div
         className={
@@ -144,23 +149,28 @@ function MerchantInventory() {
                   </p>
                   <button
                     className={
-                      showStockEditor
-                        ? "MerchantInventory--Restock_Button--Inactive"
-                        : inventoryType == "Your Inventory"
-                        ? "MerchantInventory--Restock_Button--Inactive"
+                      currentProduct == product.id
+                        ? showStockEditor
+                          ? "MerchantInventory--Restock_Button--Inactive"
+                          : inventoryType == "Your Inventory"
+                          ? "MerchantInventory--Restock_Button--Inactive"
+                          : "MerchantInventory--Restock_Button"
                         : "MerchantInventory--Restock_Button"
                     }
                     onClick={() => {
                       setShowStockEditor(true);
                       setStockValue(product.stock_left);
+                      setCurrentProduct(product.id);
                     }}
                   >
                     Restock Item
                   </button>
                   <div
                     className={
-                      showStockEditor
-                        ? "MerchantInventory--StockEditor"
+                      currentProduct == product.id
+                        ? showStockEditor
+                          ? "MerchantInventory--StockEditor"
+                          : "MerchantInventory--StockEditor--Inactive"
                         : "MerchantInventory--StockEditor--Inactive"
                     }
                   >
@@ -181,6 +191,7 @@ function MerchantInventory() {
                       <button
                         onClick={() => {
                           updateProductStock(product.id);
+                          setShowStockEditor(false);
                         }}
                       >
                         Confirm
