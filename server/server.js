@@ -501,6 +501,7 @@ app.post("/getinventory", (req, res) => {
 app.post("/updateinventory", (req, res) => {
   const productId = req.body.id;
   const stockValue = req.body.stockValue;
+  const company = req.body.company;
   db.query(
     "update products set ? where id = ?",
     [{ stock_left: stockValue }, productId],
@@ -511,10 +512,23 @@ app.post("/updateinventory", (req, res) => {
           errorMsg:
             "Some error has occurred! Please try again or refresh the page!",
         });
-      res.send({
-        access: true,
-        successMsg: "Product inventory has been updated successfully!",
-      });
+      db.query(
+        "select * from products where company = ?",
+        company,
+        (err, data) => {
+          if (err)
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+            });
+          res.send({
+            access: true,
+            data,
+            successMsg: "Product inventory has been updated successfully!",
+          });
+        }
+      );
     }
   );
 });
