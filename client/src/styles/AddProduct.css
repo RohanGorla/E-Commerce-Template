@@ -1,0 +1,99 @@
+:root {
+    --AddProduct_Main_Font: "Inter", sans-serif;
+    --AddProduct_Second_Font: "Roboto", sans-serif;
+    --AddProduct_Section_Heading: 30px;
+    --AddProduct_Details_Label: 18px;
+    --AddProduct_Details_Input: 16px;
+}
+
+.AddProduct_Page {
+    padding: 1em 0em;
+}
+
+.AddProduct_Container {
+    max-width: 1300px;
+    margin: 0em auto;
+}
+
+.AddProduct_Header {
+    background-color: black;
+    position: sticky;
+    top: 0px;
+    padding-bottom: 1.5em;
+}
+
+.AddProduct_Header--Title {
+    background-color: rgb(25, 25, 25);
+    font-family: var(--MerchantInventory_Main_Font);
+    font-size: var(--MerchantInventory_Header);
+    text-align: center;
+    letter-spacing: 2px;
+    padding: .7em 0em;
+    border-style: none;
+    border-radius: 9px;
+    border: 2px solid white;
+}
+
+.AddProduct_Section {
+    background-color: rgb(25, 25, 25);
+    padding: 1em;
+    border-style: none;
+    border-radius: 8px;
+}
+
+.AddProduct_Section h2 {
+    font-family: var(--MerchantInventory_Main_Font);
+    font-size: var(--AddProduct_Section_Heading);
+    margin-bottom: .5em;
+}
+
+.AddProduct_Section--Field label {
+    font-family: var(--AddProduct_Second_Font);
+    font-size: var(--AddProduct_Details_Label);
+    font-weight: 500;
+    letter-spacing: .8px;
+    display: block;
+    margin-bottom: .3em;
+}
+
+.AddProduct_Section--Field input {
+    font-family: var(--AddProduct_Main_Font);
+    font-size: var(--AddProduct_Details_Input);
+    padding: .2em .2em .2em .4em;
+}
+
+.AddProduct_Section--Field textarea {
+    font-size: var(--AddProduct_Details_Input);
+    line-height: 1.3;
+    display: block;
+    resize: vertical;
+    width: 90%;
+    max-width: 500px;
+    padding: .3em .3em .2em .5em;
+}
+
+.AddProduct--Basic_Details {
+    display: flex;
+    gap: 2em;
+    margin-bottom: 1em;
+}
+
+.AddProduct--Basic_Details--Primary {
+    width: 50%;
+}
+
+.AddProduct_Category_And_Company {
+    display: flex;
+    column-gap: 2em;
+}
+
+.AddProduct_Category_And_Company
+.AddProduct_Section--Field {
+    margin: 0em;
+}
+
+.AddProduct_Section--Field {
+    margin-bottom: 2em;
+}
+
+
