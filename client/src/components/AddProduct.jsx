@@ -7,7 +7,7 @@ function AddProduct() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [priceCurrency, setPriceCurrency] = useState("0");
+  const [priceCurrency, setPriceCurrency] = useState("");
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState(0);
   const [finalPriceCurrency, setFinalPriceCurrency] = useState("0.00");
@@ -18,9 +18,12 @@ function AddProduct() {
   const [newCompany, setNewCompany] = useState("");
   const [allCom, setAllCom] = useState([]);
   const [fetch, setFetch] = useState(true);
-  const [buyLimit, setBuyLimit] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [stockAlert, setStockAlert] = useState("");
+  const [buyLimit, setBuyLimit] = useState(0);
+  const [buyLimitString, setBuyLimitString] = useState("0");
+  const [stockQuantity, setStockQuantity] = useState(0);
+  const [stockQuantityString, setStockQuantityString] = useState("0");
+  const [stockAlert, setStockAlert] = useState(0);
+  const [stockAlertString, setStockAlertString] = useState("0");
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
@@ -189,7 +192,7 @@ function AddProduct() {
                       const priceInteger = currencyToAmountConvertor(
                         e.target.value
                       );
-                      if (Number(priceInteger)) {
+                      if (!isNaN(priceInteger)) {
                         const priceCurrencyString =
                           amountToCurrencyConvertor(priceInteger);
                         setPriceCurrency(priceCurrencyString);
@@ -198,6 +201,7 @@ function AddProduct() {
                       }
                     }}
                     value={priceCurrency}
+                    placeholder="Product price in INR"
                   ></input>
                 </div>
                 {/* Product Discount Field */}
@@ -275,33 +279,57 @@ function AddProduct() {
               <div className="AddProduct_Section--Field">
                 <label>Buy Limit Per Customer</label>
                 <input
-                  type="number"
-                  value={buyLimit}
+                  type="text"
                   onChange={(e) => {
-                    setBuyLimit(e.target.value);
+                    const buyLimitInteger = currencyToAmountConvertor(
+                      e.target.value
+                    );
+                    if (!isNaN(buyLimitInteger)) {
+                      const buyLimitString =
+                        amountToCurrencyConvertor(buyLimitInteger);
+                      setBuyLimitString(buyLimitString);
+                      setBuyLimit(buyLimitInteger);
+                    }
                   }}
+                  value={buyLimitString}
                 ></input>
               </div>
               {/* Product Initial Stock Field */}
               <div className="AddProduct_Section--Field">
-                <label>Initial Stock Quantity</label>
+                <label>Stock Quantity</label>
                 <input
                   type="number"
-                  value={quantity}
                   onChange={(e) => {
-                    setQuantity(e.target.value);
+                    const initialStockInteger = currencyToAmountConvertor(
+                      e.target.value
+                    );
+                    if (!isNaN(initialStockInteger)) {
+                      const initialStockString =
+                        amountToCurrencyConvertor(initialStockInteger);
+                      setStockQuantityString(initialStockString);
+                      setStockQuantity(initialStockInteger);
+                    }
                   }}
+                  value={stockQuantityString}
                 ></input>
               </div>
               {/* Product Stock Alert */}
               <div className="AddProduct_Section--Field">
-                <label>Stock alert</label>
+                <label>Low Stock Alert</label>
                 <input
                   type="number"
-                  value={stockAlert}
                   onChange={(e) => {
-                    setStockAlert(e.target.value);
+                    const stockAlertInteger = currencyToAmountConvertor(
+                      e.target.value
+                    );
+                    if (!isNaN(stockAlertInteger)) {
+                      const stockAlertString =
+                        amountToCurrencyConvertor(stockAlertInteger);
+                      setStockAlertString(stockAlertString);
+                      setStockAlert(stockAlertInteger);
+                    }
                   }}
+                  value={stockAlert}
                 ></input>
               </div>
             </div>
