@@ -7,8 +7,10 @@ function AddProduct() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [priceCurrency, setPriceCurrency] = useState("");
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
+  const [finalPriceCurrency, setFinalPriceCurrency] = useState("");
   const [productCat, setProductCat] = useState("");
   const [productCom, setProductCom] = useState("");
   const [actCat, setActCat] = useState("");
@@ -72,7 +74,14 @@ function AddProduct() {
     setFetch(!fetch);
   }
 
-  function currencyConvert(amount) {
+  function currencyToAmountConvertor(currencyString) {
+    let currencyArray = currencyString.split(",");
+    let amountString = currencyArray.join("");
+    let amountInteger = Number(amountString);
+    return amountInteger;
+  }
+
+  function amountToCurrencyConvertor(amount) {
     let amountString = amount.toString();
     let amountArray = amountString.split("").reverse();
     let iterator = Math.floor(amountArray.length / 2);
@@ -150,11 +159,17 @@ function AddProduct() {
                 <div className="AddProduct_Section--Field">
                   <label>Price</label>
                   <input
-                    type="number"
+                    type="text"
                     onChange={(e) => {
-                      setPrice(e.target.value);
+                      const priceInteger = currencyToAmountConvertor(
+                        e.target.value
+                      );
+                      const priceCurrencyString =
+                        amountToCurrencyConvertor(priceInteger);
+                      setPriceCurrency(priceCurrencyString);
+                      setPrice(priceInteger);
                     }}
-                    value={price}
+                    value={priceCurrency}
                   ></input>
                 </div>
                 {/* Product Discount Field */}
@@ -172,7 +187,7 @@ function AddProduct() {
                 <div className="AddProduct_Section--Field">
                   <label>Final Price</label>
                   <input
-                    type="number"
+                    type="text"
                     onChange={(e) => {
                       setFinalPrice(e.target.value);
                     }}
