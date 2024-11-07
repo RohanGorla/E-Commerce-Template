@@ -189,11 +189,13 @@ function AddProduct() {
                       const priceInteger = currencyToAmountConvertor(
                         e.target.value
                       );
-                      const priceCurrencyString =
-                        amountToCurrencyConvertor(priceInteger);
-                      setPriceCurrency(priceCurrencyString);
-                      setPrice(priceInteger);
-                      calculateFinalPrice(priceInteger, discount);
+                      if (Number(priceInteger)) {
+                        const priceCurrencyString =
+                          amountToCurrencyConvertor(priceInteger);
+                        setPriceCurrency(priceCurrencyString);
+                        setPrice(priceInteger);
+                        calculateFinalPrice(priceInteger, discount);
+                      }
                     }}
                     value={priceCurrency}
                   ></input>
