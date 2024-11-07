@@ -6,11 +6,11 @@ function AddProduct() {
   const [file, setFile] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [priceCurrency, setPriceCurrency] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [finalPrice, setFinalPrice] = useState("");
-  const [finalPriceCurrency, setFinalPriceCurrency] = useState("");
+  const [price, setPrice] = useState(0);
+  const [priceCurrency, setPriceCurrency] = useState("0");
+  const [discount, setDiscount] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [finalPriceCurrency, setFinalPriceCurrency] = useState("0.00");
   const [productCat, setProductCat] = useState("");
   const [productCom, setProductCom] = useState("");
   const [actCat, setActCat] = useState("");
@@ -72,6 +72,32 @@ function AddProduct() {
     console.log(response);
     setNewCompany("");
     setFetch(!fetch);
+  }
+
+  function calculateFinalPrice(price, discount) {
+    const finalPriceValue =
+      Math.round(price * (1 - discount / 100) * 100) / 100;
+    setFinalPrice(finalPriceValue);
+    let finalPriceInteger;
+    let finalPriceDecimal;
+    if (finalPriceValue.toString().split(".").length !== 2) {
+      finalPriceInteger = amountToCurrencyConvertor(
+        finalPriceValue.toString().split(".")[0]
+      );
+      finalPriceDecimal = "00";
+    } else {
+      finalPriceInteger = amountToCurrencyConvertor(
+        finalPriceValue.toString().split(".")[0]
+      );
+      finalPriceDecimal = finalPriceValue
+        .toString()
+        .split(".")[1]
+        .padEnd(2, "0");
+    }
+    const finalPriceCurrencyString =
+      finalPriceInteger + "." + finalPriceDecimal;
+    console.log(finalPriceValue, finalPriceCurrencyString);
+    setFinalPriceCurrency(finalPriceCurrencyString);
   }
 
   function currencyToAmountConvertor(currencyString) {
@@ -168,6 +194,7 @@ function AddProduct() {
                         amountToCurrencyConvertor(priceInteger);
                       setPriceCurrency(priceCurrencyString);
                       setPrice(priceInteger);
+                      calculateFinalPrice(priceInteger, discount);
                     }}
                     value={priceCurrency}
                   ></input>
@@ -179,6 +206,7 @@ function AddProduct() {
                     type="number"
                     onChange={(e) => {
                       setDiscount(e.target.value);
+                      calculateFinalPrice(price, e.target.value);
                     }}
                     value={discount}
                   ></input>
@@ -186,19 +214,7 @@ function AddProduct() {
                 {/* Product Final Price Field */}
                 <div className="AddProduct_Section--Field">
                   <label>Final Price</label>
-                  <input
-                    type="text"
-                    onChange={(e) => {
-                      const finalPriceInteger = currencyToAmountConvertor(
-                        e.target.value
-                      );
-                      const finalPriceCurrencyString =
-                        amountToCurrencyConvertor(finalPriceInteger);
-                      setFinalPriceCurrency(finalPriceCurrencyString);
-                      setFinalPrice(finalPriceInteger);
-                    }}
-                    value={finalPriceCurrency}
-                  ></input>
+                  <input type="text" value={finalPriceCurrency} readOnly></input>
                 </div>
                 {/* Product Category And Company Field */}
                 <div className="AddProduct_Category_And_Company">
