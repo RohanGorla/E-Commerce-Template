@@ -96,4 +96,20 @@
     margin-bottom: 2em;
 }
 
-
+.AddProduct_Section--Submit input {
+    font-family: var(--MerchantInventory_Main_Font);
+    font-size: var(--AddProduct_Submit);
+    font-weight: 500;
+    background-color: white;
+    color: black;
+    padding: .6em 1.6em;
+    border-style: none;
+    border-radius: 6px;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+    }
+}

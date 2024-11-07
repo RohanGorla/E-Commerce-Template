@@ -72,6 +72,19 @@ function AddProduct() {
     setFetch(!fetch);
   }
 
+  function currencyConvert(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
+  }
+
   useEffect(() => {
     async function getCatAndCom() {
       let response = await axios.get(
