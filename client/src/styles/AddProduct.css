@@ -84,7 +84,7 @@
 
 .AddProduct_Category_And_Company {
     display: flex;
-    column-gap: 2em;
+    column-gap: 3em;
 }
 
 .AddProduct_Category_And_Company

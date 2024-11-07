@@ -189,9 +189,15 @@ function AddProduct() {
                   <input
                     type="text"
                     onChange={(e) => {
-                      setFinalPrice(e.target.value);
+                      const finalPriceInteger = currencyToAmountConvertor(
+                        e.target.value
+                      );
+                      const finalPriceCurrencyString =
+                        amountToCurrencyConvertor(finalPriceInteger);
+                      setFinalPriceCurrency(finalPriceCurrencyString);
+                      setFinalPrice(finalPriceInteger);
                     }}
-                    value={finalPrice}
+                    value={finalPriceCurrency}
                   ></input>
                 </div>
                 {/* Product Category And Company Field */}
