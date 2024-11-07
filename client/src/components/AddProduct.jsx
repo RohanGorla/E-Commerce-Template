@@ -93,6 +93,8 @@ function AddProduct() {
         <div className="AddProduct_Main">
           {/* Product Details Form */}
           <form className="AddProduct_Section" onSubmit={handleSubmitProduct}>
+            {/* Product Basic Details */}
+            <h2>Product Basic Details</h2>
             <div className="AddProduct--Basic_Details">
               <div className="AddProduct--Basic_Details--Primary">
                 {/* Product Images Field */}
@@ -207,7 +209,10 @@ function AddProduct() {
                 </div>
               </div>
             </div>
+            {/* Product Stock Details */}
+            <h2>Product Stock Details</h2>
             <div className="AddProduct--Stock_Details">
+              {/* Product Buy Limit Field */}
               <div className="AddProduct_Section--Field">
                 <label>Buy Limit Per Customer</label>
                 <input
@@ -218,6 +223,7 @@ function AddProduct() {
                   }}
                 ></input>
               </div>
+              {/* Product Initial Stock Field */}
               <div className="AddProduct_Section--Field">
                 <label>Initial Stock Quantity</label>
                 <input
@@ -228,6 +234,7 @@ function AddProduct() {
                   }}
                 ></input>
               </div>
+              {/* Product Stock Alert */}
               <div className="AddProduct_Section--Field">
                 <label>Stock alert</label>
                 <input
