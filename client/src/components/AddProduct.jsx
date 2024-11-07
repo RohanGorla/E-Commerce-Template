@@ -8,7 +8,7 @@ function AddProduct() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [priceCurrency, setPriceCurrency] = useState("0");
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState(0);
   const [finalPriceCurrency, setFinalPriceCurrency] = useState("0.00");
   const [productCat, setProductCat] = useState("");
@@ -96,7 +96,6 @@ function AddProduct() {
     }
     const finalPriceCurrencyString =
       finalPriceInteger + "." + finalPriceDecimal;
-    console.log(finalPriceValue, finalPriceCurrencyString);
     setFinalPriceCurrency(finalPriceCurrencyString);
   }
 
@@ -203,18 +202,26 @@ function AddProduct() {
                 <div className="AddProduct_Section--Field">
                   <label>Discount</label>
                   <input
-                    type="number"
+                    type="text"
                     onChange={(e) => {
-                      setDiscount(e.target.value);
-                      calculateFinalPrice(price, e.target.value);
+                      const discountValue = Math.round(Number(e.target.value));
+                      if (discountValue <= 100) {
+                        setDiscount(discountValue);
+                        calculateFinalPrice(price, discountValue);
+                      }
                     }}
                     value={discount}
+                    placeholder="Discount in %"
                   ></input>
                 </div>
                 {/* Product Final Price Field */}
                 <div className="AddProduct_Section--Field">
                   <label>Final Price</label>
-                  <input type="text" value={finalPriceCurrency} readOnly></input>
+                  <input
+                    type="text"
+                    value={finalPriceCurrency}
+                    readOnly
+                  ></input>
                 </div>
                 {/* Product Category And Company Field */}
                 <div className="AddProduct_Category_And_Company">
