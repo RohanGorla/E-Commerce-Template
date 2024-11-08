@@ -14,9 +14,12 @@ function AddProduct() {
   const [productCat, setProductCat] = useState("");
   const [productCom, setProductCom] = useState("");
   const [actCat, setActCat] = useState("");
-  const [allCat, setAllCat] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
+  const [showCategories, setShowCategories] = useState(false);
+  const [categorySearch, setCategorySearch] = useState("");
+  const [categorySearchResult, setCategorySearchResult] = useState([]);
   const [newCompany, setNewCompany] = useState("");
-  const [allCom, setAllCom] = useState([]);
+  const [allCompanies, setAllCompanies] = useState([]);
   const [fetch, setFetch] = useState(true);
   const [buyLimit, setBuyLimit] = useState(0);
   const [buyLimitString, setBuyLimitString] = useState("0");
@@ -36,7 +39,7 @@ function AddProduct() {
         category: productCat,
         company: productCom,
         limit: buyLimit,
-        quantity: quantity,
+        quantity: stockQuantity,
         alert: stockAlert,
         // type: file.type,
       }
@@ -77,6 +80,8 @@ function AddProduct() {
     setFetch(!fetch);
   }
 
+  /* Final Price Calculator */
+
   function calculateFinalPrice(price, discount) {
     const finalPriceValue =
       Math.round(price * (1 - discount / 100) * 100) / 100;
@@ -102,6 +107,8 @@ function AddProduct() {
     setFinalPriceCurrency(finalPriceCurrencyString);
   }
 
+  /* Currency - Amount Convertor Functions */
+
   function currencyToAmountConvertor(currencyString) {
     let currencyArray = currencyString.split(",");
     let amountString = currencyArray.join("");
@@ -124,12 +131,13 @@ function AddProduct() {
 
   useEffect(() => {
     async function getCatAndCom() {
-      let response = await axios.get(
+      const response = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/getcatandcom`
       );
-      console.log(response);
-      setAllCat(response.data.cat);
-      setAllCom(response.data.com);
+      if (response.data.access) {
+        setAllCategories(response.data.categoryData);
+        setAllCompanies(response.data.companyData);
+      }
     }
     getCatAndCom();
   }, [fetch]);
@@ -230,10 +238,72 @@ function AddProduct() {
                   ></input>
                 </div>
                 {/* Product Category And Company Field */}
-                <div className="AddProduct_Category_And_Company">
+                <div className="AddProduct_Category">
                   <div className="AddProduct_Section--Field">
                     <label>Category</label>
-                    <select
+                    <input
+                      type="text"
+                      onFocus={() => {
+                        setShowCategories(true);
+                        let categorySearchResuts;
+                        if (categorySearch.length) {
+                          categorySearchResuts = allCategories.filter(
+                            (category) => {
+                              if (category.category.includes(categorySearch))
+                                return category;
+                            }
+                          );
+                        } else {
+                          categorySearchResuts = allCategories;
+                        }
+                        setCategorySearchResult(categorySearchResuts);
+                      }}
+                      onBlur={() => {
+                        setShowCategories(false);
+                      }}
+                      onChange={(e) => {
+                        setCategorySearch(e.target.value);
+                        let categorySearchResuts;
+                        if (e.target.value.length) {
+                          categorySearchResuts = allCategories.filter(
+                            (category) => {
+                              if (category.category.includes(e.target.value))
+                                return category;
+                            }
+                          );
+                        } else {
+                          categorySearchResuts = allCategories;
+                        }
+                        setCategorySearchResult(categorySearchResuts);
+                      }}
+                      value={categorySearch}
+                      placeholder="Set Product Category"
+                    ></input>
+                    <div
+                      className={
+                        showCategories
+                          ? "AddProduct_Category_Select"
+                          : "AddProduct_Category_Select--Inactive"
+                      }
+                    >
+                      {categorySearchResult.length ? (
+                        categorySearchResult.map((category, index) => {
+                          return (
+                            <div
+                              key={index}
+                              className="AddProduct_Category_Option"
+                            >
+                              <p>{category.category}</p>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="AddProduct_Category_Option">
+                          <p>No Search Results</p>
+                        </div>
+                      )}
+                    </div>
+                    {/* <select
                       onChange={(e) => {
                         setProductCat(e.target.value);
                       }}
@@ -248,9 +318,9 @@ function AddProduct() {
                           </option>
                         );
                       })}
-                    </select>
+                    </select> */}
                   </div>
-                  <div className="AddProduct_Section--Field">
+                  {/* <div className="AddProduct_Section--Field">
                     <label>Company</label>
                     <select
                       onChange={(e) => {
@@ -268,7 +338,7 @@ function AddProduct() {
                         );
                       })}
                     </select>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -298,7 +368,7 @@ function AddProduct() {
               <div className="AddProduct_Section--Field">
                 <label>Stock Quantity</label>
                 <input
-                  type="number"
+                  type="text"
                   onChange={(e) => {
                     const initialStockInteger = currencyToAmountConvertor(
                       e.target.value
@@ -317,7 +387,7 @@ function AddProduct() {
               <div className="AddProduct_Section--Field">
                 <label>Low Stock Alert</label>
                 <input
-                  type="number"
+                  type="text"
                   onChange={(e) => {
                     const stockAlertInteger = currencyToAmountConvertor(
                       e.target.value
@@ -329,10 +399,11 @@ function AddProduct() {
                       setStockAlert(stockAlertInteger);
                     }
                   }}
-                  value={stockAlert}
+                  value={stockAlertString}
                 ></input>
               </div>
             </div>
+            {/* Product Submit Button */}
             <div className="AddProduct_Section--Submit">
               <input type="submit" value="Add Product"></input>
             </div>
