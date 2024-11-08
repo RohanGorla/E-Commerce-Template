@@ -47,6 +47,10 @@
     margin-bottom: .5em;
 }
 
+.AddProduct_Section--Field {
+    margin-bottom: 2em;
+}
+
 .AddProduct_Section--Field label {
     font-family: var(--AddProduct_Second_Font);
     font-size: var(--AddProduct_Details_Label);
@@ -82,18 +86,38 @@
     width: 50%;
 }
 
-.AddProduct_Category_And_Company {
-    display: flex;
-    column-gap: 3em;
-}
-
-.AddProduct_Category_And_Company
+.AddProduct_Category
 .AddProduct_Section--Field {
     margin: 0em;
+    position: relative;
 }
 
-.AddProduct_Section--Field {
-    margin-bottom: 2em;
+.AddProduct_Category_Select {
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
+    margin-top: .2em;
+    padding: 0em .2em;
+}
+
+.AddProduct_Category_Select--Inactive {
+    display: none;
+}
+
+.AddProduct_Category_Option {
+    font-family: var(--MerchantInventory_Main_Font);
+    background-color: rgb(25, 25, 25);
+    margin: .3em 0em;
+    padding: .5em;
+    border-style: none;
+    border-radius: 6px;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
 }
 
 .AddProduct_Section--Submit input {
