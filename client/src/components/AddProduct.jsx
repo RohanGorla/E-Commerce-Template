@@ -11,7 +11,7 @@ function AddProduct() {
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState(0);
   const [finalPriceCurrency, setFinalPriceCurrency] = useState("0.00");
-  const [productCat, setProductCat] = useState("");
+  const [category, setCategory] = useState("");
   const [productCom, setProductCom] = useState("");
   const [actCat, setActCat] = useState("");
   const [allCategories, setAllCategories] = useState([]);
@@ -27,6 +27,7 @@ function AddProduct() {
   const [stockQuantityString, setStockQuantityString] = useState("0");
   const [stockAlert, setStockAlert] = useState(0);
   const [stockAlertString, setStockAlertString] = useState("0");
+  console.log(categorySearch, category);
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
@@ -36,7 +37,7 @@ function AddProduct() {
         title: title,
         price: price,
         discount: discount,
-        category: productCat,
+        category: category,
         company: productCom,
         limit: buyLimit,
         quantity: stockQuantity,
@@ -51,7 +52,7 @@ function AddProduct() {
     setTitle("");
     setPrice("");
     setDiscount("");
-    setProductCat("");
+    setCategory("");
   }
 
   async function handleCategory(e) {
@@ -237,7 +238,7 @@ function AddProduct() {
                     readOnly
                   ></input>
                 </div>
-                {/* Product Category And Company Field */}
+                {/* Product Category Field */}
                 <div className="AddProduct_Category">
                   <div className="AddProduct_Section--Field">
                     <label>Category</label>
@@ -260,7 +261,9 @@ function AddProduct() {
                         setCategorySearchResult(categorySearchResuts);
                       }}
                       onBlur={() => {
-                        setShowCategories(false);
+                        setTimeout(() => {
+                          setShowCategories(false);
+                        }, 70);
                       }}
                       onChange={(e) => {
                         setCategorySearch(e.target.value);
@@ -288,12 +291,24 @@ function AddProduct() {
                           : "AddProduct_Category_Select--Inactive"
                       }
                     >
+                      <div className="AddProduct_Category_Option">
+                        <p>
+                          Add New Category{" "}
+                          <span className="AddProduct_Category_Option--Plus_Symbol">
+                            +
+                          </span>
+                        </p>
+                      </div>
                       {categorySearchResult.length ? (
                         categorySearchResult.map((category, index) => {
                           return (
                             <div
                               key={index}
                               className="AddProduct_Category_Option"
+                              onClick={() => {
+                                setCategory(category.category);
+                                setCategorySearch(category.category);
+                              }}
                             >
                               <p>{category.category}</p>
                             </div>

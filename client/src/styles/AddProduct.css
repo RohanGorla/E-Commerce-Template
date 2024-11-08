@@ -4,6 +4,7 @@
     --AddProduct_Section_Heading: 30px;
     --AddProduct_Details_Label: 18px;
     --AddProduct_Details_Input: 16px;
+    --AddProduct_Category_Plus_Symbol: 18px;
 }
 
 .AddProduct_Page {
@@ -118,6 +119,11 @@
         background-color: white;
         color: black;
     }
+}
+
+.AddProduct_Category_Option--Plus_Symbol {
+    font-size: var(--AddProduct_Category_Plus_Symbol);
+    font-weight: 600;
 }
 
 .AddProduct_Section--Submit input {
