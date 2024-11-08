@@ -549,16 +549,24 @@ app.get("/getallcategories", async (req, res) => {
 });
 
 app.get("/getcatandcom", async (req, res) => {
-  let catData;
-  let comData;
-  db.query("select distinct category from Category", (err, data) => {
-    if (err) return res.send(err);
-    catData = data;
-    db.query("select distinct company from company", (err, data) => {
-      if (err) return res.send(err);
-      comData = data;
-      console.log(catData, comData);
-      res.send({ cat: catData, com: comData });
+  let categoryData;
+  let companyData;
+  db.query("select distinct category from Category", (err, catData) => {
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg: "Some error has occurred. Please re-try or refresh the page!",
+      });
+    categoryData = catData;
+    db.query("select distinct company from company", (err, compData) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred. Please re-try or refresh the page!",
+        });
+      companyData = compData;
+      res.send({ access: true, categoryData, companyData });
     });
   });
 });
