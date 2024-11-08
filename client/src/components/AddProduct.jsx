@@ -241,6 +241,7 @@ function AddProduct() {
                 <div className="AddProduct_Category">
                   <div className="AddProduct_Section--Field">
                     <label>Category</label>
+                    {/* Category Search */}
                     <input
                       type="text"
                       onFocus={() => {
@@ -279,6 +280,7 @@ function AddProduct() {
                       value={categorySearch}
                       placeholder="Set Product Category"
                     ></input>
+                    {/* Category Options */}
                     <div
                       className={
                         showCategories
@@ -303,42 +305,7 @@ function AddProduct() {
                         </div>
                       )}
                     </div>
-                    {/* <select
-                      onChange={(e) => {
-                        setProductCat(e.target.value);
-                      }}
-                    >
-                      <option value="Select category" hidden>
-                        Select category
-                      </option>
-                      {allCat.map((cat, index) => {
-                        return (
-                          <option value={cat.ctegory} key={index}>
-                            {cat.category}
-                          </option>
-                        );
-                      })}
-                    </select> */}
                   </div>
-                  {/* <div className="AddProduct_Section--Field">
-                    <label>Company</label>
-                    <select
-                      onChange={(e) => {
-                        setProductCom(e.target.value);
-                      }}
-                    >
-                      <option value="Select company" hidden>
-                        Select company
-                      </option>
-                      {allCom.map((com, index) => {
-                        return (
-                          <option value={com.company} key={index}>
-                            {com.company}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div> */}
                 </div>
               </div>
             </div>
