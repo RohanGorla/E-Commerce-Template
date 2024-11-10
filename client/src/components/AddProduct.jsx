@@ -18,6 +18,7 @@ function AddProduct() {
   const [showCategories, setShowCategories] = useState(false);
   const [categorySearch, setCategorySearch] = useState("");
   const [categorySearchResult, setCategorySearchResult] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
   const [newCompany, setNewCompany] = useState("");
   const [allCompanies, setAllCompanies] = useState([]);
   const [fetch, setFetch] = useState(true);
@@ -27,7 +28,6 @@ function AddProduct() {
   const [stockQuantityString, setStockQuantityString] = useState("0");
   const [stockAlert, setStockAlert] = useState(0);
   const [stockAlertString, setStockAlertString] = useState("0");
-  console.log(categorySearch, category);
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
@@ -320,6 +320,21 @@ function AddProduct() {
                         </div>
                       )}
                     </div>
+                  </div>
+                </div>
+                {/* Add New Category Field */}
+                <div className="AddProduct_AddNewCategory">
+                  <div className="AddProduct_Section--Field">
+                    <label>Add New Category</label>
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setNewCategory(e.target.value);
+                      }}
+                      value={newCategory}
+                      placeholder="Enter New Category..."
+                    ></input>
+                    <button>Add</button>
                   </div>
                 </div>
               </div>
