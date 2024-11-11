@@ -126,6 +126,30 @@
     font-weight: 600;
 }
 
+.AddProduct_Category--Inactive,
+.AddProduct_AddNewCategory--Inactive {
+    display: none;
+}
+
+.AddProduct_AddNewCategory--Button button {
+    font-family: var(--AddProduct_Main_Font);
+    font-size: var(--AddProduct_Submit);
+    font-weight: 500;
+    background-color: white;
+    color: black;
+    margin-top: .5em;
+    padding: .3em 1.3em;
+    border-style: none;
+    border-radius: 6px;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+    }
+}
+
 .AddProduct_Section--Submit input {
     font-family: var(--MerchantInventory_Main_Font);
     font-size: var(--AddProduct_Submit);
