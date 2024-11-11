@@ -18,6 +18,7 @@ function AddProduct() {
   const [showCategories, setShowCategories] = useState(false);
   const [categorySearch, setCategorySearch] = useState("");
   const [categorySearchResult, setCategorySearchResult] = useState([]);
+  const [showAddCategory, setShowAddCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [newCompany, setNewCompany] = useState("");
   const [allCompanies, setAllCompanies] = useState([]);
@@ -144,7 +145,12 @@ function AddProduct() {
   }, [fetch]);
 
   return (
-    <div className="AddProduct_Page">
+    <div
+      className="AddProduct_Page"
+      onClick={() => {
+        setShowCategories(false);
+      }}
+    >
       <div className="AddProduct_Container">
         <div className="AddProduct_Header">
           <h1 className="AddProduct_Header--Title">Add Your Product</h1>
@@ -239,13 +245,20 @@ function AddProduct() {
                   ></input>
                 </div>
                 {/* Product Category Field */}
-                <div className="AddProduct_Category">
+                <div
+                  className={
+                    showAddCategory
+                      ? "AddProduct_Category--Inactive"
+                      : "AddProduct_Category"
+                  }
+                >
                   <div className="AddProduct_Section--Field">
                     <label>Category</label>
                     {/* Category Search */}
                     <input
                       type="text"
-                      onFocus={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setShowCategories(true);
                         let categorySearchResuts;
                         if (categorySearch.length) {
@@ -259,11 +272,6 @@ function AddProduct() {
                           categorySearchResuts = allCategories;
                         }
                         setCategorySearchResult(categorySearchResuts);
-                      }}
-                      onBlur={() => {
-                        setTimeout(() => {
-                          setShowCategories(false);
-                        }, 70);
                       }}
                       onChange={(e) => {
                         setCategorySearch(e.target.value);
@@ -291,7 +299,12 @@ function AddProduct() {
                           : "AddProduct_Category_Select--Inactive"
                       }
                     >
-                      <div className="AddProduct_Category_Option">
+                      <div
+                        className="AddProduct_Category_Option"
+                        onClick={() => {
+                          setShowAddCategory(true);
+                        }}
+                      >
                         <p>
                           Add New Category{" "}
                           <span className="AddProduct_Category_Option--Plus_Symbol">
@@ -323,7 +336,13 @@ function AddProduct() {
                   </div>
                 </div>
                 {/* Add New Category Field */}
-                <div className="AddProduct_AddNewCategory">
+                <div
+                  className={
+                    showAddCategory
+                      ? "AddProduct_AddNewCategory"
+                      : "AddProduct_AddNewCategory--Inactive"
+                  }
+                >
                   <div className="AddProduct_Section--Field">
                     <label>Add New Category</label>
                     <input
@@ -334,7 +353,15 @@ function AddProduct() {
                       value={newCategory}
                       placeholder="Enter New Category..."
                     ></input>
-                    <button>Add</button>
+                    <div className="AddProduct_AddNewCategory--Button">
+                      <button
+                        onClick={() => {
+                          setShowAddCategory(false);
+                        }}
+                      >
+                        Add
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
