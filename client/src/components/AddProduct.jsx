@@ -29,6 +29,10 @@ function AddProduct() {
   const [stockQuantityString, setStockQuantityString] = useState("0");
   const [stockAlert, setStockAlert] = useState(0);
   const [stockAlertString, setStockAlertString] = useState("0");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
@@ -151,6 +155,33 @@ function AddProduct() {
         setShowCategories(false);
       }}
     >
+      {/* Error Message Box */}
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
+      {/* Success Message Box */}
+      <div
+        className={
+          success
+            ? "Success_Message_Box Success_Message_Box--Active"
+            : "Success_Message_Box Success_Message_Box--Inactive"
+        }
+      >
+        <div className="Success_Message_Box--Container">
+          <p className="Success_Message_Box--Heading">Success!</p>
+          <p className="Success_Message_Box--Message">{successMessage}</p>
+        </div>
+      </div>
+      {/* Add Category */}
       <div className="AddProduct_Container">
         <div className="AddProduct_Header">
           <h1 className="AddProduct_Header--Title">Add Your Product</h1>
@@ -366,16 +397,8 @@ function AddProduct() {
                     ></input>
                     <div className="AddProduct_AddNewCategory--Button">
                       <button
-                        onClick={() => {
-                          allCategories.forEach((category) => {
-                            if (
-                              category.category.toLowerCase() ===
-                              newCategory.toLowerCase()
-                            ) {
-                              console.log(category.category);
-                            }
-                          });
-                          setShowAddCategory(false);
+                        onClick={(e) => {
+                          e.preventDefault();
                         }}
                       >
                         Add
