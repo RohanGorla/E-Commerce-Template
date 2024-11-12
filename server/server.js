@@ -594,12 +594,16 @@ app.post("/addcategory", async (req, res) => {
     "insert into category (category) values (?)",
     [category],
     (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.send(err);
-      }
-      console.log(data);
-      res.send("done");
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      res.send({
+        access: true,
+        successMsg: "New category has been added successfully!",
+      });
     }
   );
 });
