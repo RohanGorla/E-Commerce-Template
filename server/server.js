@@ -662,8 +662,10 @@ app.post("/addproduct", async (req, res) => {
   // Adding values to DB
   const values = [
     req.body.title,
+    req.body.description,
     Number(req.body.price),
     Number(req.body.discount),
+    Number(req.body.final),
     req.body.category,
     req.body.company,
     Number(req.body.limit),
@@ -673,7 +675,7 @@ app.post("/addproduct", async (req, res) => {
   ];
   db.query(
     // "insert into products (title, price, discount, category, imageTag) values (?)",
-    "insert into products (title, price, discount, category, company, buy_limit, stock_left, stock_alert) values (?)",
+    "insert into products (title, description, price, discount, final_price, category, company, buy_limit, stock_left, stock_alert) values (?)",
     [values],
     (err, data) => {
       if (err) {
