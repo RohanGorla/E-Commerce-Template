@@ -253,10 +253,13 @@ function AddProduct() {
                   }
                 >
                   <div className="AddProduct_Section--Field">
-                    <label>Category</label>
+                    <label htmlFor="AddProduct_Category--Search">
+                      Category
+                    </label>
                     {/* Category Search */}
                     <input
                       type="text"
+                      id="AddProduct_Category--Search"
                       onClick={(e) => {
                         e.stopPropagation();
                         setShowCategories(true);
@@ -264,7 +267,11 @@ function AddProduct() {
                         if (categorySearch.length) {
                           categorySearchResuts = allCategories.filter(
                             (category) => {
-                              if (category.category.includes(categorySearch))
+                              if (
+                                category.category
+                                  .toLowerCase()
+                                  .startsWith(categorySearch.toLowerCase())
+                              )
                                 return category;
                             }
                           );
@@ -279,7 +286,11 @@ function AddProduct() {
                         if (e.target.value.length) {
                           categorySearchResuts = allCategories.filter(
                             (category) => {
-                              if (category.category.includes(e.target.value))
+                              if (
+                                category.category
+                                  .toLowerCase()
+                                  .startsWith(e.target.value.toLowerCase())
+                              )
                                 return category;
                             }
                           );
@@ -356,6 +367,14 @@ function AddProduct() {
                     <div className="AddProduct_AddNewCategory--Button">
                       <button
                         onClick={() => {
+                          allCategories.forEach((category) => {
+                            if (
+                              category.category.toLowerCase() ===
+                              newCategory.toLowerCase()
+                            ) {
+                              console.log(category.category);
+                            }
+                          });
                           setShowAddCategory(false);
                         }}
                       >

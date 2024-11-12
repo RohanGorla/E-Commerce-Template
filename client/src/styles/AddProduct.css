@@ -57,14 +57,14 @@
     font-size: var(--AddProduct_Details_Label);
     font-weight: 500;
     letter-spacing: .8px;
-    display: block;
-    margin-bottom: .3em;
 }
 
 .AddProduct_Section--Field input {
     font-family: var(--AddProduct_Main_Font);
     font-size: var(--AddProduct_Details_Input);
     padding: .2em .2em .2em .4em;
+    display: block;
+    margin-top: .3em;
 }
 
 .AddProduct_Section--Field textarea {
