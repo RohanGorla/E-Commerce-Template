@@ -60,6 +60,60 @@ function AddProduct() {
     setCategory("");
   }
 
+  async function addNewCategory(e) {
+    e.preventDefault();
+    if (newCategory.length) {
+      let categoryExists = false;
+      for (let i = 0; i < allCategories.length; i++) {
+        if (allCategories[i].toLowerCase() === newCategory.toLowerCase()) {
+          categoryExists = true;
+          break;
+        }
+      }
+      if (!categoryExists) {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/addcategory`,
+          {
+            category: newCategory,
+          }
+        );
+        if (response.data.access) {
+          setError(false);
+          setErrorMessage("");
+          setSuccess(true);
+          setSuccessMessage(response.data.successMsg);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 3500);
+        } else {
+          setSuccess(false);
+          setSuccessMessage("");
+          setError(true);
+          setErrorMessage(response.data.errorMsg);
+          setTimeout(() => {
+            setError(false);
+          }, 3500);
+        }
+      } else {
+        setSuccess(false);
+        setSuccessMessage("");
+        setError(true);
+        setErrorMessage("This category already exists!");
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage("Category cannot be an empty string!");
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
   async function handleCategory(e) {
     e.preventDefault();
     const response = await axios.post(
@@ -396,13 +450,7 @@ function AddProduct() {
                       placeholder="Enter New Category..."
                     ></input>
                     <div className="AddProduct_AddNewCategory--Button">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                        }}
-                      >
-                        Add
-                      </button>
+                      <button onClick={addNewCategory}>Add</button>
                     </div>
                   </div>
                 </div>
