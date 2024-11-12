@@ -522,21 +522,8 @@ function AddProduct() {
               <input type="submit" value="Add Product"></input>
             </div>
           </form>
-          <p>Add Category</p>
-          <form onSubmit={handleCategory}>
-            <div>
-              <label>Category</label>
-              <input
-                type="text"
-                onChange={(e) => {
-                  setActCat(e.target.value);
-                }}
-                value={actCat}
-              ></input>
-            </div>
-            <input type="submit"></input>
-          </form>
-          <p>Add Company</p>
+          {/* For Development Purpose */}
+          {/* <p>Add Company</p>
           <form onSubmit={handleCompany}>
             <div>
               <label>Company</label>
@@ -549,7 +536,7 @@ function AddProduct() {
               ></input>
             </div>
             <input type="submit"></input>
-          </form>
+          </form> */}
         </div>
       </div>
     </div>
