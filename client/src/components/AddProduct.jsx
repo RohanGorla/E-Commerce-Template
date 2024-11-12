@@ -13,7 +13,6 @@ function AddProduct() {
   const [finalPriceCurrency, setFinalPriceCurrency] = useState("0.00");
   const [category, setCategory] = useState("");
   const [productCom, setProductCom] = useState("");
-  const [actCat, setActCat] = useState("");
   const [allCategories, setAllCategories] = useState([]);
   const [showCategories, setShowCategories] = useState(false);
   const [categorySearch, setCategorySearch] = useState("");
@@ -33,17 +32,21 @@ function AddProduct() {
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
+    const company = merchantInfo?.company;
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/addproduct`,
       {
         title: title,
+        description: description,
         price: price,
         discount: discount,
+        final: finalPrice,
         category: category,
-        company: productCom,
+        company: company,
         limit: buyLimit,
         quantity: stockQuantity,
         alert: stockAlert,
@@ -53,11 +56,11 @@ function AddProduct() {
     console.log(response);
     // const putURL = response.data;
     // await axios.put(putURL, file, { headers: { "Content-Type": file.type } });
-    setFile("");
-    setTitle("");
-    setPrice("");
-    setDiscount("");
-    setCategory("");
+    // setFile("");
+    // setTitle("");
+    // setPrice("");
+    // setDiscount("");
+    // setCategory("");
   }
 
   async function addNewCategory(e) {
@@ -85,6 +88,9 @@ function AddProduct() {
           setTimeout(() => {
             setSuccess(false);
           }, 3500);
+          setShowAddCategory(false);
+          setCategory(newCategory);
+          setCategorySearch(newCategory);
         } else {
           setSuccess(false);
           setSuccessMessage("");
@@ -112,19 +118,6 @@ function AddProduct() {
         setError(false);
       }, 3500);
     }
-  }
-
-  async function handleCategory(e) {
-    e.preventDefault();
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/addcategory`,
-      {
-        category: actCat,
-      }
-    );
-    console.log(response);
-    setActCat("");
-    setFetch(!fetch);
   }
 
   async function handleCompany(e) {
