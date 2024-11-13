@@ -68,7 +68,7 @@ function AddProduct() {
     if (newCategory.length) {
       let categoryExists = false;
       for (let i = 0; i < allCategories.length; i++) {
-        if (allCategories[i].toLowerCase() === newCategory.toLowerCase()) {
+        if (allCategories[i].category.toLowerCase() === newCategory.toLowerCase()) {
           categoryExists = true;
           break;
         }
