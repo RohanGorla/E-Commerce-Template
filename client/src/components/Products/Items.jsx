@@ -613,14 +613,15 @@ function Items() {
                   .split(".")[0];
                 let offerPriceDecimal = offer_price_rounded
                   .toString()
-                  .split(".")[1]
-                  .padEnd(2, "0");
+                  .split(".")[1];
                 let offerPriceActual;
                 if (offerPriceDecimal === undefined) {
                   offerPriceActual = currencyConvert(offerPriceInt) + ".00";
                 } else {
                   offerPriceActual =
-                    currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
+                    currencyConvert(offerPriceInt) +
+                    "." +
+                    offerPriceDecimal.padEnd(2, "0");
                 }
                 let data = getProductRatingData(product.id);
                 return (
