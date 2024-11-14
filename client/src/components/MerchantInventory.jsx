@@ -135,72 +135,84 @@ function MerchantInventory() {
           <h1 className="MerchantInventory_Header--Title">{inventoryType}</h1>
         </div>
         <div className="MerchantInventory_Main">
-          {inventoryData.map((product, index) => {
-            return (
-              <div key={index} className="MerchantInventory--Product">
-                <div className="MerchantInventory--Product_Image">
-                  <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
-                </div>
-                <div className="MerchantInventory--Product_Details">
-                  <p className="MerchantInventory--Product_Name">
-                    {product.title}
-                  </p>
-                  <p className="MerchantInventory--Product_Quantity">
-                    Current stock quantity: {product.stock_left}
-                  </p>
-                  <button
-                    className={
-                      currentProduct == product.id
-                        ? showStockEditor
-                          ? "MerchantInventory--Restock_Button--Inactive"
+          {inventoryData.length ? (
+            inventoryData.map((product, index) => {
+              return (
+                <div key={index} className="MerchantInventory--Product">
+                  <div className="MerchantInventory--Product_Image">
+                    <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                  </div>
+                  <div className="MerchantInventory--Product_Details">
+                    <p className="MerchantInventory--Product_Name">
+                      {product.title}
+                    </p>
+                    <p className="MerchantInventory--Product_Quantity">
+                      Current stock quantity: {product.stock_left}
+                    </p>
+                    <button
+                      className={
+                        currentProduct == product.id
+                          ? showStockEditor
+                            ? "MerchantInventory--Restock_Button--Inactive"
+                            : "MerchantInventory--Restock_Button"
                           : "MerchantInventory--Restock_Button"
-                        : "MerchantInventory--Restock_Button"
-                    }
-                    onClick={() => {
-                      setShowStockEditor(true);
-                      setStockValue(product.stock_left);
-                      setCurrentProduct(product.id);
-                    }}
-                  >
-                    Restock Item
-                  </button>
-                  <div
-                    className={
-                      currentProduct == product.id
-                        ? showStockEditor
-                          ? "MerchantInventory--StockEditor"
+                      }
+                      onClick={() => {
+                        setShowStockEditor(true);
+                        setStockValue(product.stock_left);
+                        setCurrentProduct(product.id);
+                      }}
+                    >
+                      Restock Item
+                    </button>
+                    <div
+                      className={
+                        currentProduct == product.id
+                          ? showStockEditor
+                            ? "MerchantInventory--StockEditor"
+                            : "MerchantInventory--StockEditor--Inactive"
                           : "MerchantInventory--StockEditor--Inactive"
-                        : "MerchantInventory--StockEditor--Inactive"
-                    }
-                  >
-                    <label htmlFor="stockInput">New Stock Quantity:</label>
-                    <div className="MerchantInventory--StockEditor--Input_And_Confirm">
-                      <input
-                        id="stockInput"
-                        type="number"
-                        value={stockValue}
-                        onChange={(e) => {
-                          if (e.target.value <= 0) {
-                            setStockValue(0);
-                          } else {
-                            setStockValue(e.target.value);
-                          }
-                        }}
-                      ></input>
-                      <button
-                        onClick={() => {
-                          updateProductStock(product.id);
-                          setShowStockEditor(false);
-                        }}
-                      >
-                        Confirm
-                      </button>
+                      }
+                    >
+                      <label htmlFor="stockInput">New Stock Quantity:</label>
+                      <div className="MerchantInventory--StockEditor--Input_And_Confirm">
+                        <input
+                          id="stockInput"
+                          type="number"
+                          value={stockValue}
+                          onChange={(e) => {
+                            if (e.target.value <= 0) {
+                              setStockValue(0);
+                            } else {
+                              setStockValue(e.target.value);
+                            }
+                          }}
+                        ></input>
+                        <button
+                          onClick={() => {
+                            updateProductStock(product.id);
+                            setShowStockEditor(false);
+                          }}
+                        >
+                          Confirm
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="MerchantInventory--Empty">
+              <p className="MerchantInventory--Empty--Header">
+                {inventoryType} products list empty!
+              </p>
+              <p className="MerchantInventory--Empty--Note">
+                There are currently no products in the '{inventoryType}' list.
+                Check back later or update your inventory to see changes here.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

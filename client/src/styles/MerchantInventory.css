@@ -5,6 +5,7 @@
     --MerchantInventory_Name: 19px;
     --MerchantInventory_Quantity: 16px;
     --MerchantInventory_Button: 15px;
+    --MerchantInventory--Empty: 18px;
 }
 
 .MerchantInventory_Page {
@@ -131,4 +132,21 @@
 .MerchantInventory--Restock_Button--Inactive,
 .MerchantInventory--StockEditor--Inactive {
     display: none;
+}
+
+.MerchantInventory--Empty {
+    font-family: var(--MerchantInventory_Main_Font);
+    background-color: rgb(25, 25, 25);
+    max-width: 700px;
+    margin: 0em auto;
+    padding: 1em 2em;
+    border-style: none;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.MerchantInventory--Empty--Header {
+    font-size: var(--MerchantInventory--Empty);
+    font-weight: 600;
+    margin-bottom: .5em;
 }
