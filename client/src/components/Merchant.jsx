@@ -285,7 +285,12 @@ function Merchant() {
             <h2 className="Merchant_Dashboard--Section_Name">Your Products</h2>
             <div className="Merchant_Dashboard--Grid">
               <div className="Merchant_Dashboard--Item_Container">
-                <div className="Merchant_Dashboard--Item">
+                <div
+                  className="Merchant_Dashboard--Item"
+                  onClick={() => {
+                    window.open(`${window.location.origin}/merchant/products`);
+                  }}
+                >
                   <p className="Merchant_Dashboard--Item--Text">All Products</p>
                   <p className="Merchant_Dashboard--Item--Value">
                     {totalStocks.length}
