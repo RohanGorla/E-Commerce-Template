@@ -31,3 +31,23 @@
     border-radius: 9px;
     border: 2px solid white;
 }
+
+.MerchantProducts--Product {
+    display: flex;
+    gap: 1em;
+}
+
+.MerchantProducts--Product_Image {
+    width: 25%;
+    max-width: 250px;
+}
+
+.MerchantProducts--Product_Image img {
+    max-width: 100%;
+}
+
+.MerchantProducts--Product_Details {
+    font-family: var(--MerchantProducts_Main_Font);
+    width: 60%;
+}
+

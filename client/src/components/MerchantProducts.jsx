@@ -83,10 +83,11 @@ function MerchantProducts() {
         </div>
         <div className="MerchantProducts_Main">
           {merchantProducts.map((product, index) => {
-            let finalPriceCurrency;
             const priceCurrency = currencyConvertor(product.price);
+            let finalPriceCurrency;
             if (product.final_price.toString().split(".").length !== 2) {
-              finalPriceCurrency = currencyConvertor(product.final_price) + '.00';
+              finalPriceCurrency =
+                currencyConvertor(product.final_price) + ".00";
             } else {
               finalPriceCurrency =
                 currencyConvertor(Math.round(product.final_price)) +
@@ -95,9 +96,27 @@ function MerchantProducts() {
             }
 
             return (
-              <div key={index}>
-                <p>{priceCurrency}</p>
-                <p>{finalPriceCurrency}</p>
+              <div key={index} className="MerchantProducts--Product">
+                <div className="MerchantProducts--Product_Image">
+                  <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                </div>
+                <div className="MerchantProducts--Product_Details">
+                  <p className="MerchantProducts--Product_Name">
+                    {product.title}
+                  </p>
+                  <p className="MerchantProducts--Product_Category">
+                    <span>{product.category}</span> - {product.company}
+                  </p>
+                  <p className="MerchantProducts--Product_MRP">
+                    ₹{priceCurrency}
+                  </p>
+                  <p className="MerchantProducts--Product_FinalPrice">
+                    <span>-{product.discount}%</span> ₹{finalPriceCurrency}
+                  </p>
+                  <p className="MerchantProducts--Product_Stock">
+                    In stock: {product.stock_left}
+                  </p>
+                </div>
               </div>
             );
           })}
