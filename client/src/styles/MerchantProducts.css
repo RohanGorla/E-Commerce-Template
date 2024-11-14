@@ -2,6 +2,13 @@
     --MerchantProducts_Main_Font: "Inter", sans-serif;
     --MerchantProducts_Second_Font: "Roboto", sans-serif;
     --MerchantProducts_Header: 40px;
+    --MerchantProducts_Name: 19px;
+    --MerchantProducts_Category: 16px;
+    --MerchantProducts_Discount: 14px;
+    --MerchantProducts_FinalPrice: 19px;
+    --MerchantProducts_MRP: 14px;
+    --MerchantProducts_Stock: 16px;
+    --MerchantProducts_Button: 15px;
 }
 
 .MerchantProducts_Page {
@@ -51,3 +58,41 @@
     width: 60%;
 }
 
+.MerchantProducts--Product_Name {
+    font-size: var(--MerchantProducts_Name);
+    font-weight: 500;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.MerchantProducts--Product_Category {
+    font-size: var(--MerchantProducts_Category);
+    margin-top: .5em;
+    margin-bottom: .7em;
+}
+
+.MerchantProducts--Product_Discount {
+    font-size: var(--MerchantProducts_Discount);
+}
+
+.MerchantProducts--Product_FinalPrice {
+    font-size: var(--MerchantProducts_FinalPrice);
+    letter-spacing: .7px;
+}
+
+.MerchantProducts--Product_MRP {
+    font-size: var(--MerchantProducts_MRP);
+    text-decoration: line-through;
+    letter-spacing: .7px;
+}
+
+.MerchantProducts--Product_Stock {
+    font-size: var(--MerchantProducts_Stock);
+    margin-top: .5em;
+    margin-bottom: .8em;
+}

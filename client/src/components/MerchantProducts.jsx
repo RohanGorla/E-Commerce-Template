@@ -107,11 +107,14 @@ function MerchantProducts() {
                   <p className="MerchantProducts--Product_Category">
                     <span>{product.category}</span> - {product.company}
                   </p>
-                  <p className="MerchantProducts--Product_MRP">
-                    ₹{priceCurrency}
-                  </p>
                   <p className="MerchantProducts--Product_FinalPrice">
-                    <span>-{product.discount}%</span> ₹{finalPriceCurrency}
+                    <span className="MerchantProducts--Product_Discount">
+                      -{product.discount}%
+                    </span>{" "}
+                    ₹{finalPriceCurrency}
+                  </p>
+                  <p className="MerchantProducts--Product_MRP">
+                    M.R.P: ₹{priceCurrency}
                   </p>
                   <p className="MerchantProducts--Product_Stock">
                     In stock: {product.stock_left}
