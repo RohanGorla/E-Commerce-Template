@@ -645,6 +645,21 @@ app.post("/getproducts", (req, res) => {
   );
 });
 
+app.post("/getmerchantproducts", (req, res) => {
+  const company = req.body.company;
+  db.query("select * from products where company = ?", company, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
+    }
+    res.send({ access: true, data });
+  });
+});
+
 app.post("/getproduct", (req, res) => {
   const id = req.body.id;
   db.query("select * from products where id = ?", id, (err, data) => {
