@@ -20,13 +20,25 @@ function MerchantProducts() {
     );
     if (response.data.access) {
       setMerchantProducts(response.data.data);
-      console.log(response.data.data);
     } else {
       setSuccess(false);
       setSuccessMessage("");
       setError(true);
       setErrorMessage(response.data.errorMsg);
     }
+  }
+
+  function currencyConvertor(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
   }
 
   useEffect(() => {
@@ -69,7 +81,27 @@ function MerchantProducts() {
         <div className="MerchantProducts_Header">
           <h1 className="MerchantProducts_Header--Title">Your Products</h1>
         </div>
-        <div className="MerchantProducts_Main"></div>
+        <div className="MerchantProducts_Main">
+          {merchantProducts.map((product, index) => {
+            let finalPriceCurrency;
+            const priceCurrency = currencyConvertor(product.price);
+            if (product.final_price.toString().split(".").length !== 2) {
+              finalPriceCurrency = currencyConvertor(product.final_price) + '.00';
+            } else {
+              finalPriceCurrency =
+                currencyConvertor(Math.round(product.final_price)) +
+                "." +
+                product.final_price.toString().split(".")[1].padEnd(2, "0");
+            }
+
+            return (
+              <div key={index}>
+                <p>{priceCurrency}</p>
+                <p>{finalPriceCurrency}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
