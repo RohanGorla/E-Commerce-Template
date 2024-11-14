@@ -40,13 +40,25 @@
 }
 
 .MerchantProducts--Product {
+    background-color: rgb(25, 25, 25);
     display: flex;
-    gap: 1em;
+    gap: 2em;
+    padding: 1em;
+    border-style: none;
+    border-radius: 8px;
+}
+
+.MerchantProducts--Product +
+.MerchantProducts--Product {
+    margin-top: 1em;
 }
 
 .MerchantProducts--Product_Image {
     width: 25%;
     max-width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .MerchantProducts--Product_Image img {
@@ -73,7 +85,7 @@
 .MerchantProducts--Product_Category {
     font-size: var(--MerchantProducts_Category);
     margin-top: .5em;
-    margin-bottom: .7em;
+    margin-bottom: 1em;
 }
 
 .MerchantProducts--Product_Discount {
@@ -93,6 +105,24 @@
 
 .MerchantProducts--Product_Stock {
     font-size: var(--MerchantProducts_Stock);
-    margin-top: .5em;
-    margin-bottom: .8em;
+    font-weight: 600;
+    margin: .7em 0em;
+}
+
+.MerchantProducts--Product_EditButton {
+    font-family: var(--MerchantProducts_Second_Font);
+    font-size: var(--MerchantProducts_Button);
+    font-weight: 600;
+    background-color: white;
+    color: black;
+    padding: .6em 1.6em;
+    border-style: none;
+    border-radius: 4px;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+    }
 }

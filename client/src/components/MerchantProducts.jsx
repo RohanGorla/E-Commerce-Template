@@ -119,6 +119,7 @@ function MerchantProducts() {
                   <p className="MerchantProducts--Product_Stock">
                     In stock: {product.stock_left}
                   </p>
+                  <button className="MerchantProducts--Product_EditButton">Edit Product Details</button>
                 </div>
               </div>
             );
