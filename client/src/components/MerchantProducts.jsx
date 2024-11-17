@@ -122,7 +122,9 @@ function MerchantProducts() {
                   <button
                     className="MerchantProducts--Product_EditButton"
                     onClick={() => {
-                      window.open('');
+                      window.open(
+                        `${window.location.origin}/merchant/editproduct/${product.id}`
+                      );
                     }}
                   >
                     Edit Product Details
