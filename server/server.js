@@ -669,7 +669,7 @@ app.post("/getproduct", (req, res) => {
         errorMsg:
           "Some error has occurred! Please try again or refresh the page!",
       });
-    res.send({ access: true, data: data });
+    res.send({ access: true, data });
   });
 });
 

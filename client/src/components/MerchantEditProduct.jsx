@@ -1,12 +1,43 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function MerchantEditProduct() {
-  const { productid } = useParams();
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const { productid } = useParams();
+  const navigate = useNavigate();
+  const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
+  const merchantMail = merchantInfo.mailId;
+
+  async function getProductDetails() {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getproduct`,
+      { id: productid }
+    );
+    if (response.data.access) {
+      console.log(response.data.data);
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
+  useEffect(() => {
+    if (merchantMail) {
+      getProductDetails();
+    } else {
+      navigate("/merchant/merchantlogin");
+    }
+  }, []);
+
   return (
     <div className="AddProduct_Page">
       {/* Error Message Box */}
