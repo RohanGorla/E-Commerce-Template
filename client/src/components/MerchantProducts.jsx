@@ -25,6 +25,9 @@ function MerchantProducts() {
       setSuccessMessage("");
       setError(true);
       setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
 
@@ -48,6 +51,7 @@ function MerchantProducts() {
       navigate("/merchant/merchantlogin");
     }
   }, []);
+
   return (
     <div className="MerchantProducts_Page">
       {/* Error Message Box */}
