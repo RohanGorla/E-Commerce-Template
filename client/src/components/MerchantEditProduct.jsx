@@ -7,6 +7,7 @@ function MerchantEditProduct() {
   const [productDetails, setProductDetails] = useState([]);
   const [file, setFile] = useState();
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -27,6 +28,7 @@ function MerchantEditProduct() {
       const productDetails = response.data.data[0];
       setProductDetails(productDetails);
       setTitle(productDetails.title);
+      setDescription(productDetails.description);
     } else {
       setSuccess(false);
       setSuccessMessage("");
@@ -115,6 +117,18 @@ function MerchantEditProduct() {
                     value={title}
                     onChange={(e) => {
                       setTitle(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+                {/* Edit Product Description Field */}
+                <div className="AddProduct_Section--Field">
+                  <label>Description</label>
+                  <textarea
+                    placeholder="Product description..."
+                    rows={4}
+                    value={description}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
                     }}
                   ></textarea>
                 </div>
