@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "../styles/AddProduct.css";
 
 function MerchantEditProduct() {
+  const [productDetails, setProductDetails] = useState([]);
+  const [file, setFile] = useState();
+  const [title, setTitle] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -12,13 +16,17 @@ function MerchantEditProduct() {
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const merchantMail = merchantInfo.mailId;
 
+  /* Get Product Details API */
+
   async function getProductDetails() {
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/getproduct`,
       { id: productid }
     );
     if (response.data.access) {
-      console.log(response.data.data);
+      const productDetails = response.data.data[0];
+      setProductDetails(productDetails);
+      setTitle(productDetails.title);
     } else {
       setSuccess(false);
       setSuccessMessage("");
@@ -28,6 +36,12 @@ function MerchantEditProduct() {
         setError(false);
       }, 3500);
     }
+  }
+
+  /* Submit Edited Product Details API */
+
+  async function handleSubmitProductEdit(e) {
+    e.preventDefault();
   }
 
   useEffect(() => {
@@ -66,8 +80,52 @@ function MerchantEditProduct() {
           <p className="Success_Message_Box--Message">{successMessage}</p>
         </div>
       </div>
+      {/* Edit Product */}
       <div className="AddProduct_Container">
-        <div></div>
+        {/* Edit Product Page Header */}
+        <div className="AddProduct_Header">
+          <h1 className="AddProduct_Header--Title">Add Your Product</h1>
+        </div>
+        <div className="AddProduct_Main">
+          {/* Edit Product Details Form */}
+          <form
+            className="AddProduct_Section"
+            onSubmit={handleSubmitProductEdit}
+          >
+            {/* Edit Product Basic Details */}
+            <h2>Product Basic Details</h2>
+            <div className="AddProduct--Basic_Details">
+              <div className="AddProduct--Basic_Details--Primary">
+                {/* Edit Product Images Field */}
+                <div className="AddProduct_Section--Field">
+                  <label>Photo</label>
+                  <input
+                    type="file"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                    }}
+                  ></input>
+                </div>
+                {/* Edit Product Title Field */}
+                <div className="AddProduct_Section--Field">
+                  <label>Title</label>
+                  <textarea
+                    placeholder="Product name..."
+                    rows={2}
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            {/* Edit Product Submit Button */}
+            <div className="AddProduct_Section--Submit">
+              <input type="submit" value="Add Product"></input>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

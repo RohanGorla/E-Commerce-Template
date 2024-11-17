@@ -228,8 +228,9 @@ function AddProduct() {
           <p className="Success_Message_Box--Message">{successMessage}</p>
         </div>
       </div>
-      {/* Add Category */}
+      {/* Add Product */}
       <div className="AddProduct_Container">
+      {/* Product Page Header */}
         <div className="AddProduct_Header">
           <h1 className="AddProduct_Header--Title">Add Your Product</h1>
         </div>
