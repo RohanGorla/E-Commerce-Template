@@ -314,6 +314,23 @@ function MerchantEditProduct() {
                       }
                     }}
                   ></input>
+                  <div className="AddProduct_Image_Display">
+                    <div className="AddProduct_Image_Display--Image">
+                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    </div>
+                    <div className="AddProduct_Image_Display--Image">
+                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    </div>
+                    <div className="AddProduct_Image_Display--Image">
+                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    </div>
+                    <div className="AddProduct_Image_Display--Image">
+                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    </div>
+                    <div className="AddProduct_Image_Display--Image">
+                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    </div>
+                  </div>
                 </div>
                 {/* Edit Product Title Field */}
                 <div className="AddProduct_Section--Field">

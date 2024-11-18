@@ -76,6 +76,7 @@
     width: 90%;
     max-width: 500px;
     padding: .3em .3em .2em .5em;
+    margin-top: .3em;
 }
 
 .AddProduct--Basic_Details {
@@ -113,8 +114,26 @@
     }
 }
 
+.AddProduct_Image_Display {
+    background-color: black;
+    width: 90%;
+    max-width: 550px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 5px;
+    padding: .8em .5em;
+    border-style: none;
+    border: 2px solid white;
+    border-radius: 6px;
+    margin-top: .6em;
+}
+
 .AddProduct_Image_Display--Image {
-    
+    width: 100%;
+}
+
+.AddProduct_Image_Display--Image img {
+    max-width: 100%;
 }
 
 .AddProduct_Category
