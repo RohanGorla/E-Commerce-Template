@@ -11,6 +11,8 @@ function MerchantEditProduct() {
   const [price, setPrice] = useState(0);
   const [priceCurrency, setPriceCurrency] = useState("");
   const [discount, setDiscount] = useState("");
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [finalPriceCurrency, setFinalPriceCurrency] = useState("0.00");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -32,6 +34,10 @@ function MerchantEditProduct() {
       setProductDetails(productDetails);
       setTitle(productDetails.title);
       setDescription(productDetails.description);
+      setPrice(productDetails.price);
+      setPriceCurrency(amountToCurrencyConvertor(productDetails.price));
+      setDiscount(productDetails.discount);
+      calculateFinalPrice(productDetails.price, productDetails.discount);
     } else {
       setSuccess(false);
       setSuccessMessage("");
@@ -47,6 +53,38 @@ function MerchantEditProduct() {
 
   async function handleSubmitProductEdit(e) {
     e.preventDefault();
+  }
+
+  function calculateFinalPrice(price, discount) {
+    const finalPriceValue =
+      Math.round(price * (1 - discount / 100) * 100) / 100;
+    setFinalPrice(finalPriceValue);
+    let finalPriceInteger;
+    let finalPriceDecimal;
+    if (finalPriceValue.toString().split(".").length !== 2) {
+      finalPriceInteger = amountToCurrencyConvertor(
+        finalPriceValue.toString().split(".")[0]
+      );
+      finalPriceDecimal = "00";
+    } else {
+      finalPriceInteger = amountToCurrencyConvertor(
+        finalPriceValue.toString().split(".")[0]
+      );
+      finalPriceDecimal = finalPriceValue
+        .toString()
+        .split(".")[1]
+        .padEnd(2, "0");
+    }
+    const finalPriceCurrencyString =
+      finalPriceInteger + "." + finalPriceDecimal;
+    setFinalPriceCurrency(finalPriceCurrencyString);
+  }
+
+  function currencyToAmountConvertor(currencyString) {
+    let currencyArray = currencyString.split(",");
+    let amountString = currencyArray.join("");
+    let amountInteger = Number(amountString);
+    return amountInteger;
   }
 
   function amountToCurrencyConvertor(amount) {
@@ -164,6 +202,7 @@ function MerchantEditProduct() {
                           amountToCurrencyConvertor(priceInteger);
                         setPriceCurrency(priceCurrencyString);
                         setPrice(priceInteger);
+                        calculateFinalPrice(priceInteger, discount);
                       }
                     }}
                     value={priceCurrency}
@@ -179,10 +218,20 @@ function MerchantEditProduct() {
                       const discountValue = Math.round(Number(e.target.value));
                       if (discountValue <= 100) {
                         setDiscount(discountValue);
+                        calculateFinalPrice(price, discountValue);
                       }
                     }}
                     value={discount}
                     placeholder="Discount in %"
+                  ></input>
+                </div>
+                {/* Edit Product Final Price Field */}
+                <div className="AddProduct_Section--Field">
+                  <label>Final Price</label>
+                  <input
+                    type="text"
+                    value={finalPriceCurrency}
+                    readOnly
                   ></input>
                 </div>
               </div>
