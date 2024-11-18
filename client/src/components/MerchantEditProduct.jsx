@@ -5,7 +5,7 @@ import "../styles/AddProduct.css";
 
 function MerchantEditProduct() {
   const [productDetails, setProductDetails] = useState([]);
-  const [file, setFile] = useState();
+  const [files, setFiles] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -76,7 +76,7 @@ function MerchantEditProduct() {
     }
   }
 
-  /* Get Categories API */
+  /* Get All Categories API */
 
   async function getAllCategories() {
     const response = await axios.get(
@@ -159,7 +159,7 @@ function MerchantEditProduct() {
 
   /* Submit Edited Product Details API */
 
-  async function handleSubmitProductEdit(e) {
+  async function handleEditProduct(e) {
     e.preventDefault();
     const response = await axios.put(
       `${import.meta.env.VITE_BASE_URL}/updateproduct`,
@@ -283,21 +283,35 @@ function MerchantEditProduct() {
         </div>
         <div className="AddProduct_Main">
           {/* Edit Product Details Form */}
-          <form
-            className="AddProduct_Section"
-            onSubmit={handleSubmitProductEdit}
-          >
+          <form className="AddProduct_Section" onSubmit={handleEditProduct}>
             {/* Edit Product Basic Details */}
             <h2>Product Basic Details</h2>
             <div className="AddProduct--Basic_Details">
               <div className="AddProduct--Basic_Details--Primary">
                 {/* Edit Product Images Field */}
                 <div className="AddProduct_Section--Field">
-                  <label>Photo</label>
+                  <label>Images</label>
+                  <label
+                    htmlFor="AddProduct_Photo_Select"
+                    id="AddProduct_Photo_Select--Label"
+                  >
+                    Upload Images
+                  </label>
                   <input
+                    id="AddProduct_Photo_Select"
                     type="file"
+                    accept="image/*"
+                    multiple
                     onChange={(e) => {
-                      setFile(e.target.files[0]);
+                      if (e.target.files.length > 5) {
+                        setError(true);
+                        setErrorMessage("You can only select upto 5 images!");
+                        setTimeout(() => {
+                          setError(false);
+                        }, 3500);
+                      } else {
+                        setFiles(e.target.files);
+                      }
                     }}
                   ></input>
                 </div>

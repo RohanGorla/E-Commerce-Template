@@ -3,6 +3,7 @@
     --AddProduct_Second_Font: "Roboto", sans-serif;
     --AddProduct_Section_Heading: 30px;
     --AddProduct_Details_Label: 18px;
+    --AddProduct_Photo_Select--Label: 14px;
     --AddProduct_Details_Input: 16px;
     --AddProduct_Category_Plus_Symbol: 18px;
 }
@@ -85,6 +86,35 @@
 
 .AddProduct--Basic_Details--Primary {
     width: 50%;
+}
+
+#AddProduct_Photo_Select {
+    display: none;
+}
+
+#AddProduct_Photo_Select--Label {
+    font-size: var(--AddProduct_Photo_Select--Label);
+    font-weight: 600;
+    letter-spacing: .4px;
+    background-color: white;
+    color: black;
+    display: block;
+    width: fit-content;
+    padding: .4em .6em;
+    margin-top: .5em;
+    border-style: none;
+    border: 2px solid black;
+    border-radius: 6px;
+    cursor: pointer;
+    &:hover {
+        background-color: black;
+        color: white;
+        border: 2px solid white;
+    }
+}
+
+.AddProduct_Image_Display--Image {
+    
 }
 
 .AddProduct_Category
