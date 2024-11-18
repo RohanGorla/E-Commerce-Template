@@ -20,6 +20,7 @@ function MerchantEditProduct() {
   const [categorySearchResult, setCategorySearchResult] = useState([]);
   const [category, setCategory] = useState("");
   const [newCategory, setNewCategory] = useState("");
+  const [company, setCompany] = useState("");
   const [buyLimit, setBuyLimit] = useState(0);
   const [buyLimitString, setBuyLimitString] = useState("0");
   const [stockQuantity, setStockQuantity] = useState(0);
@@ -53,6 +54,7 @@ function MerchantEditProduct() {
       calculateFinalPrice(productDetails.price, productDetails.discount);
       setCategory(productDetails.category);
       setCategorySearch(productDetails.category);
+      setCompany(productDetails.company);
       setBuyLimit(productDetails.buy_limit);
       setBuyLimitString(amountToCurrencyConvertor(productDetails.buy_limit));
       setStockQuantity(productDetails.stock_left);
@@ -159,6 +161,31 @@ function MerchantEditProduct() {
 
   async function handleSubmitProductEdit(e) {
     e.preventDefault();
+    const response = await axios.put(
+      `${import.meta.env.VITE_BASE_URL}/updateproduct`,
+      {
+        id: productid,
+        title: title,
+        description: description,
+        price: price,
+        discount: discount,
+        final: finalPrice,
+        category: category,
+        company: company,
+        limit: buyLimit,
+        quantity: stockQuantity,
+        alert: stockAlert,
+      }
+    );
+    if (response.data.access) {
+      setError(false);
+      setErrorMessage("");
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
+    }
   }
 
   function calculateFinalPrice(price, discount) {
@@ -536,7 +563,7 @@ function MerchantEditProduct() {
             </div>
             {/* Edit Product Submit Button */}
             <div className="AddProduct_Section--Submit">
-              <input type="submit" value="Add Product"></input>
+              <input type="submit" value="Edit Product"></input>
             </div>
           </form>
         </div>
