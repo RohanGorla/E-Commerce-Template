@@ -68,7 +68,9 @@ function AddProduct() {
     if (newCategory.length) {
       let categoryExists = false;
       for (let i = 0; i < allCategories.length; i++) {
-        if (allCategories[i].category.toLowerCase() === newCategory.toLowerCase()) {
+        if (
+          allCategories[i].category.toLowerCase() === newCategory.toLowerCase()
+        ) {
           categoryExists = true;
           break;
         }
@@ -91,6 +93,7 @@ function AddProduct() {
           setShowAddCategory(false);
           setCategory(newCategory);
           setCategorySearch(newCategory);
+          setAllCategories(response.data.data);
         } else {
           setSuccess(false);
           setSuccessMessage("");
@@ -230,7 +233,7 @@ function AddProduct() {
       </div>
       {/* Add Product */}
       <div className="AddProduct_Container">
-      {/* Product Page Header */}
+        {/* Product Page Header */}
         <div className="AddProduct_Header">
           <h1 className="AddProduct_Header--Title">Add Your Product</h1>
         </div>
