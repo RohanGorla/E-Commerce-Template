@@ -20,6 +20,8 @@ function MerchantEditProduct() {
   const [categorySearchResult, setCategorySearchResult] = useState([]);
   const [category, setCategory] = useState("");
   const [newCategory, setNewCategory] = useState("");
+  const [buyLimit, setBuyLimit] = useState(0);
+  const [buyLimitString, setBuyLimitString] = useState("0");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -47,6 +49,8 @@ function MerchantEditProduct() {
       calculateFinalPrice(productDetails.price, productDetails.discount);
       setCategory(productDetails.category);
       setCategorySearch(productDetails.category);
+      setBuyLimit(productDetails.buy_limit);
+      setBuyLimitString(amountToCurrencyConvertor(productDetails.buy_limit));
     } else {
       setSuccess(false);
       setSuccessMessage("");
@@ -455,6 +459,29 @@ function MerchantEditProduct() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            {/* Edit Product Stock Details */}
+            <h2>Product Stock Details</h2>
+            <div className="AddProduct--Stock_Details">
+              {/* Edit Product Buy Limit Field */}
+              <div className="AddProduct_Section--Field">
+                <label>Buy Limit Per Customer</label>
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    const buyLimitInteger = currencyToAmountConvertor(
+                      e.target.value
+                    );
+                    if (!isNaN(buyLimitInteger)) {
+                      const buyLimitString =
+                        amountToCurrencyConvertor(buyLimitInteger);
+                      setBuyLimitString(buyLimitString);
+                      setBuyLimit(buyLimitInteger);
+                    }
+                  }}
+                  value={buyLimitString}
+                ></input>
               </div>
             </div>
             {/* Edit Product Submit Button */}
