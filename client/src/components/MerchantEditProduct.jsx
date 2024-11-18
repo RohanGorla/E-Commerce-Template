@@ -10,6 +10,7 @@ function MerchantEditProduct() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [priceCurrency, setPriceCurrency] = useState("");
+  const [discount, setDiscount] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -167,6 +168,21 @@ function MerchantEditProduct() {
                     }}
                     value={priceCurrency}
                     placeholder="Product price in INR"
+                  ></input>
+                </div>
+                {/* Edit Product Discount Field */}
+                <div className="AddProduct_Section--Field">
+                  <label>Discount</label>
+                  <input
+                    type="text"
+                    onChange={(e) => {
+                      const discountValue = Math.round(Number(e.target.value));
+                      if (discountValue <= 100) {
+                        setDiscount(discountValue);
+                      }
+                    }}
+                    value={discount}
+                    placeholder="Discount in %"
                   ></input>
                 </div>
               </div>
