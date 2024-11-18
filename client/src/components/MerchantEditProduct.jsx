@@ -19,6 +19,7 @@ function MerchantEditProduct() {
   const [categorySearch, setCategorySearch] = useState("");
   const [categorySearchResult, setCategorySearchResult] = useState([]);
   const [category, setCategory] = useState("");
+  const [newCategory, setNewCategory] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -70,6 +71,68 @@ function MerchantEditProduct() {
       setSuccessMessage("");
       setError(true);
       setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
+  /* Add New Category API */
+
+  async function addNewCategory(e) {
+    e.preventDefault();
+    if (newCategory.length) {
+      let categoryExists = false;
+      for (let i = 0; i < allCategories.length; i++) {
+        if (
+          allCategories[i].category.toLowerCase() === newCategory.toLowerCase()
+        ) {
+          categoryExists = true;
+          break;
+        }
+      }
+      if (!categoryExists) {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/addcategory`,
+          {
+            category: newCategory,
+          }
+        );
+        if (response.data.access) {
+          setError(false);
+          setErrorMessage("");
+          setSuccess(true);
+          setSuccessMessage(response.data.successMsg);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 3500);
+          setShowAddCategory(false);
+          setCategory(newCategory);
+          setCategorySearch(newCategory);
+          setAllCategories(response.data.data);
+        } else {
+          setSuccess(false);
+          setSuccessMessage("");
+          setError(true);
+          setErrorMessage(response.data.errorMsg);
+          setTimeout(() => {
+            setError(false);
+          }, 3500);
+        }
+      } else {
+        setSuccess(false);
+        setSuccessMessage("");
+        setError(true);
+        setErrorMessage("This category already exists!");
+        setTimeout(() => {
+          setError(false);
+        }, 3500);
+      }
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage("Category cannot be an empty string!");
       setTimeout(() => {
         setError(false);
       }, 3500);
@@ -366,6 +429,29 @@ function MerchantEditProduct() {
                           <p>No Search Results</p>
                         </div>
                       )}
+                    </div>
+                  </div>
+                </div>
+                {/* Add New Category Field */}
+                <div
+                  className={
+                    showAddCategory
+                      ? "AddProduct_AddNewCategory"
+                      : "AddProduct_AddNewCategory--Inactive"
+                  }
+                >
+                  <div className="AddProduct_Section--Field">
+                    <label>Add New Category</label>
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        setNewCategory(e.target.value);
+                      }}
+                      value={newCategory}
+                      placeholder="Enter New Category..."
+                    ></input>
+                    <div className="AddProduct_AddNewCategory--Button">
+                      <button onClick={addNewCategory}>Add</button>
                     </div>
                   </div>
                 </div>
