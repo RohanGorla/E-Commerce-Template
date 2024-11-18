@@ -14,6 +14,7 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { access } from "fs";
 import Razorpay from "razorpay";
+import { disconnect } from "process";
 
 const app = express();
 app.use(express.json());
@@ -729,6 +730,39 @@ app.post("/addproduct", async (req, res) => {
   const url = await getSignedUrl(s3, command);
   console.log(url);
   res.send(url); */
+});
+
+app.put("/updateproduct", async (req, res) => {
+  db.query(
+    "update products set ? where id = ?",
+    [
+      {
+        title: req.body.title,
+        description: req.body.description,
+        price: Number(req.body.price),
+        discount: Number(req.body.discount),
+        final_price: Number(req.body.final),
+        category: req.body.category,
+        company: req.body.company,
+        buy_limit: Number(req.body.limit),
+        stock_left: Number(req.body.quantity),
+        stock_alert: Number(req.body.alert),
+      },
+      req.body.id,
+    ],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      res.send({
+        access: true,
+        successMsg: "Product details have been updated successfully!",
+      });
+    }
+  );
 });
 
 /* Reviews and Ratings Routes */
