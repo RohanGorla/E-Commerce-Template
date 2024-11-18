@@ -599,12 +599,21 @@ app.post("/addcategory", async (req, res) => {
           errorMsg:
             "Some error has occurred! Please try again or refresh the page!",
         });
-      res.send({
-        access: true,
-        successMsg: "New category has been added successfully!",
-      });
     }
   );
+  db.query("select * from category", (err, data) => {
+    if (err)
+      return res.send({
+        access: false,
+        errorMsg:
+          "Some error has occurred! Please try again or refresh the page!",
+      });
+    res.send({
+      access: true,
+      data,
+      successMsg: "New category has been added successfully!",
+    });
+  });
 });
 
 app.post("/addcompany", async (req, res) => {
