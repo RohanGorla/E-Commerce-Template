@@ -536,15 +536,14 @@ app.post("/updateinventory", (req, res) => {
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
-  db.query("select * from category", (err, categoryData) => {
+  db.query("select * from category", (err, data) => {
     if (err) {
-      console.log(err);
       return res.send({
         access: false,
         errorMsg: "Some error has occurred. Please re-try or refresh the page!",
       });
     }
-    res.send({ access: true, data: categoryData });
+    res.send({ access: true, data });
   });
 });
 

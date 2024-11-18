@@ -13,6 +13,12 @@ function MerchantEditProduct() {
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState(0);
   const [finalPriceCurrency, setFinalPriceCurrency] = useState("0.00");
+  const [showAddCategory, setShowAddCategory] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
+  const [allCategories, setAllCategories] = useState([]);
+  const [categorySearch, setCategorySearch] = useState("");
+  const [categorySearchResult, setCategorySearchResult] = useState([]);
+  const [category, setCategory] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -38,6 +44,27 @@ function MerchantEditProduct() {
       setPriceCurrency(amountToCurrencyConvertor(productDetails.price));
       setDiscount(productDetails.discount);
       calculateFinalPrice(productDetails.price, productDetails.discount);
+      setCategory(productDetails.category);
+      setCategorySearch(productDetails.category);
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
+  }
+
+  /* Get Categories API */
+
+  async function getAllCategories() {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BASE_URL}/getallcategories`
+    );
+    if (response.data.access) {
+      setAllCategories(response.data.data);
     } else {
       setSuccess(false);
       setSuccessMessage("");
@@ -103,13 +130,19 @@ function MerchantEditProduct() {
   useEffect(() => {
     if (merchantMail) {
       getProductDetails();
+      getAllCategories();
     } else {
       navigate("/merchant/merchantlogin");
     }
   }, []);
 
   return (
-    <div className="AddProduct_Page">
+    <div
+      className="AddProduct_Page"
+      onClick={() => {
+        setShowCategories(false);
+      }}
+    >
       {/* Error Message Box */}
       <div
         className={
@@ -140,7 +173,7 @@ function MerchantEditProduct() {
       <div className="AddProduct_Container">
         {/* Edit Product Page Header */}
         <div className="AddProduct_Header">
-          <h1 className="AddProduct_Header--Title">Add Your Product</h1>
+          <h1 className="AddProduct_Header--Title">Edit Your Product</h1>
         </div>
         <div className="AddProduct_Main">
           {/* Edit Product Details Form */}
@@ -233,6 +266,108 @@ function MerchantEditProduct() {
                     value={finalPriceCurrency}
                     readOnly
                   ></input>
+                </div>
+                {/* Edit Product Category Field */}
+                <div
+                  className={
+                    showAddCategory
+                      ? "AddProduct_Category--Inactive"
+                      : "AddProduct_Category"
+                  }
+                >
+                  <div className="AddProduct_Section--Field">
+                    <label htmlFor="AddProduct_Category--Search">
+                      Category
+                    </label>
+                    {/* Category Search */}
+                    <input
+                      type="text"
+                      id="AddProduct_Category--Search"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowCategories(true);
+                        let categorySearchResuts;
+                        if (categorySearch.length) {
+                          categorySearchResuts = allCategories.filter(
+                            (category) => {
+                              if (
+                                category.category
+                                  .toLowerCase()
+                                  .startsWith(categorySearch.toLowerCase())
+                              )
+                                return category;
+                            }
+                          );
+                        } else {
+                          categorySearchResuts = allCategories;
+                        }
+                        setCategorySearchResult(categorySearchResuts);
+                      }}
+                      onChange={(e) => {
+                        setCategorySearch(e.target.value);
+                        let categorySearchResuts;
+                        if (e.target.value.length) {
+                          categorySearchResuts = allCategories.filter(
+                            (category) => {
+                              if (
+                                category.category
+                                  .toLowerCase()
+                                  .startsWith(e.target.value.toLowerCase())
+                              )
+                                return category;
+                            }
+                          );
+                        } else {
+                          categorySearchResuts = allCategories;
+                        }
+                        setCategorySearchResult(categorySearchResuts);
+                      }}
+                      value={categorySearch}
+                      placeholder="Set Product Category"
+                    ></input>
+                    {/* Category Options */}
+                    <div
+                      className={
+                        showCategories
+                          ? "AddProduct_Category_Select"
+                          : "AddProduct_Category_Select--Inactive"
+                      }
+                    >
+                      <div
+                        className="AddProduct_Category_Option"
+                        onClick={() => {
+                          setShowAddCategory(true);
+                        }}
+                      >
+                        <p>
+                          Add New Category{" "}
+                          <span className="AddProduct_Category_Option--Plus_Symbol">
+                            +
+                          </span>
+                        </p>
+                      </div>
+                      {categorySearchResult.length ? (
+                        categorySearchResult.map((category, index) => {
+                          return (
+                            <div
+                              key={index}
+                              className="AddProduct_Category_Option"
+                              onClick={() => {
+                                setCategory(category.category);
+                                setCategorySearch(category.category);
+                              }}
+                            >
+                              <p>{category.category}</p>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="AddProduct_Category_Option">
+                          <p>No Search Results</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
