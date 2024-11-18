@@ -22,6 +22,8 @@ function MerchantEditProduct() {
   const [newCategory, setNewCategory] = useState("");
   const [buyLimit, setBuyLimit] = useState(0);
   const [buyLimitString, setBuyLimitString] = useState("0");
+  const [stockQuantity, setStockQuantity] = useState(0);
+  const [stockQuantityString, setStockQuantityString] = useState("0");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -51,6 +53,10 @@ function MerchantEditProduct() {
       setCategorySearch(productDetails.category);
       setBuyLimit(productDetails.buy_limit);
       setBuyLimitString(amountToCurrencyConvertor(productDetails.buy_limit));
+      setStockQuantity(productDetails.stock_left);
+      setStockQuantityString(
+        amountToCurrencyConvertor(productDetails.stock_left)
+      );
     } else {
       setSuccess(false);
       setSuccessMessage("");
@@ -481,6 +487,25 @@ function MerchantEditProduct() {
                     }
                   }}
                   value={buyLimitString}
+                ></input>
+              </div>
+              {/* Edit Product Initial Stock Field */}
+              <div className="AddProduct_Section--Field">
+                <label>Stock Quantity</label>
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    const initialStockInteger = currencyToAmountConvertor(
+                      e.target.value
+                    );
+                    if (!isNaN(initialStockInteger)) {
+                      const initialStockString =
+                        amountToCurrencyConvertor(initialStockInteger);
+                      setStockQuantityString(initialStockString);
+                      setStockQuantity(initialStockInteger);
+                    }
+                  }}
+                  value={stockQuantityString}
                 ></input>
               </div>
             </div>
