@@ -8,6 +8,8 @@ function MerchantEditProduct() {
   const [file, setFile] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [priceCurrency, setPriceCurrency] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -44,6 +46,19 @@ function MerchantEditProduct() {
 
   async function handleSubmitProductEdit(e) {
     e.preventDefault();
+  }
+
+  function amountToCurrencyConvertor(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
   }
 
   useEffect(() => {
@@ -131,6 +146,28 @@ function MerchantEditProduct() {
                       setDescription(e.target.value);
                     }}
                   ></textarea>
+                </div>
+              </div>
+              <div className="AddProduct--Basic_Details--Secondary">
+                {/* Edit Product Price Field */}
+                <div className="AddProduct_Section--Field">
+                  <label>Price</label>
+                  <input
+                    type="text"
+                    onChange={(e) => {
+                      const priceInteger = currencyToAmountConvertor(
+                        e.target.value
+                      );
+                      if (!isNaN(priceInteger)) {
+                        const priceCurrencyString =
+                          amountToCurrencyConvertor(priceInteger);
+                        setPriceCurrency(priceCurrencyString);
+                        setPrice(priceInteger);
+                      }
+                    }}
+                    value={priceCurrency}
+                    placeholder="Product price in INR"
+                  ></input>
                 </div>
               </div>
             </div>
