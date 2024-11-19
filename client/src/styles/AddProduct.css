@@ -161,6 +161,10 @@
     align-items: center;
 }
 
+.AddProduct_Image_Display--Select--Inactive {
+    display: none;
+}
+
 .AddProduct_Category
 .AddProduct_Section--Field {
     margin: 0em;

@@ -35,6 +35,7 @@ function MerchantEditProduct() {
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const merchantMail = merchantInfo.mailId;
+  console.log(files);
 
   /* Get Product Details API */
 
@@ -290,21 +291,23 @@ function MerchantEditProduct() {
               <div className="AddProduct--Basic_Details--Primary">
                 {/* Edit Product Images Field */}
                 <div className="AddProduct_Section--Field">
-                  <label>Images</label>
+                  <label>Upload images</label>
                   <input
                     id="AddProduct_Photo_Select"
                     type="file"
                     accept="image/*"
                     multiple
                     onChange={(e) => {
-                      if (e.target.files.length > 5) {
+                      if (e.target.files.length + files.length > 5) {
                         setError(true);
                         setErrorMessage("You can only select upto 5 images!");
                         setTimeout(() => {
                           setError(false);
                         }, 3500);
                       } else {
-                        setFiles(e.target.files);
+                        setFiles((prev) => {
+                          return [...prev, ...e.target.files];
+                        });
                       }
                     }}
                   ></input>
@@ -319,7 +322,13 @@ function MerchantEditProduct() {
                         </div>
                       );
                     })}
-                    <div className="AddProduct_Image_Display--Select">
+                    <div
+                      className={
+                        files.length < 5
+                          ? "AddProduct_Image_Display--Select"
+                          : "AddProduct_Image_Display--Select--Inactive"
+                      }
+                    >
                       <label htmlFor="AddProduct_Photo_Select">+ Add</label>
                     </div>
                   </div>
