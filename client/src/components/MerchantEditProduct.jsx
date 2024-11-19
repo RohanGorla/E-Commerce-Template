@@ -5,7 +5,7 @@ import "../styles/AddProduct.css";
 
 function MerchantEditProduct() {
   const [productDetails, setProductDetails] = useState([]);
-  const [files, setFiles] = useState();
+  const [files, setFiles] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -309,21 +309,16 @@ function MerchantEditProduct() {
                     }}
                   ></input>
                   <div className="AddProduct_Image_Display">
-                    <div className="AddProduct_Image_Display--Image">
-                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
-                    </div>
-                    <div className="AddProduct_Image_Display--Image">
-                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
-                    </div>
-                    <div className="AddProduct_Image_Display--Image">
-                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
-                    </div>
-                    <div className="AddProduct_Image_Display--Image">
-                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
-                    </div>
-                    <div className="AddProduct_Image_Display--Image">
-                      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
-                    </div>
+                    {Array.from(files).map((_, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="AddProduct_Image_Display--Image"
+                        >
+                          <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                        </div>
+                      );
+                    })}
                     <div className="AddProduct_Image_Display--Select">
                       <label htmlFor="AddProduct_Photo_Select">+ Add</label>
                     </div>
