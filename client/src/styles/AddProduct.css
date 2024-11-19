@@ -58,6 +58,7 @@
     font-size: var(--AddProduct_Details_Label);
     font-weight: 500;
     letter-spacing: .8px;
+    cursor: pointer;
 }
 
 .AddProduct_Section--Field input {
@@ -74,7 +75,7 @@
     display: block;
     resize: vertical;
     width: 90%;
-    max-width: 500px;
+    max-width: 550px;
     padding: .3em .3em .2em .5em;
     margin-top: .3em;
 }
@@ -130,10 +131,34 @@
 
 .AddProduct_Image_Display--Image {
     width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .AddProduct_Image_Display--Image img {
     max-width: 100%;
+    max-height: 100%;
+}
+
+.AddProduct_Image_Display--Select {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: none;
+    border-radius: 6px;
+    border: 2px dashed white;
+}
+
+.AddProduct_Image_Display--Select label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .AddProduct_Category

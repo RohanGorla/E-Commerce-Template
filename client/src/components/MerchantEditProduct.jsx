@@ -291,12 +291,6 @@ function MerchantEditProduct() {
                 {/* Edit Product Images Field */}
                 <div className="AddProduct_Section--Field">
                   <label>Images</label>
-                  <label
-                    htmlFor="AddProduct_Photo_Select"
-                    id="AddProduct_Photo_Select--Label"
-                  >
-                    Upload Images
-                  </label>
                   <input
                     id="AddProduct_Photo_Select"
                     type="file"
@@ -329,6 +323,9 @@ function MerchantEditProduct() {
                     </div>
                     <div className="AddProduct_Image_Display--Image">
                       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    </div>
+                    <div className="AddProduct_Image_Display--Select">
+                      <label htmlFor="AddProduct_Photo_Select">+ Add</label>
                     </div>
                   </div>
                 </div>
