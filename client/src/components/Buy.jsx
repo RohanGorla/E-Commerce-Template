@@ -4,6 +4,7 @@ import "../styles/Buy.css";
 
 function Buy() {
   const [productData, setProductData] = useState({});
+  const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
   const [addressData, setAddressData] = useState([]);
   const [showSelectAddress, setShowSelectAddress] = useState(false);
   const [showAddAddress, setShowAddAddress] = useState(false);
@@ -36,9 +37,12 @@ function Buy() {
   /* Get Buy Product API */
 
   async function getProduct() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getbuyproduct`, {
-      mail: mailId,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getbuyproduct`,
+      {
+        mail: mailId,
+      }
+    );
     if (response.data.access) {
       let data = response.data.data[0];
       let cost = data.price * (1 - data.discount / 100);
@@ -100,6 +104,12 @@ function Buy() {
       setProductTotal(totalCurrency);
       setProductPrice(priceCurrency);
       setProductData(data);
+      let delDt = new Date(data.delivery_date);
+      let delDtStr = delDt.toDateString();
+      let delDtDisplay = `${delDtStr.split(" ")[0]}, ${
+        delDtStr.split(" ")[1]
+      } ${delDtStr.split(" ")[2]}, ${delDtStr.split(" ")[3]}`;
+      setDeliveryDateDisplay(delDtDisplay);
     } else {
       setSuccess(false);
       setError(true);
@@ -113,11 +123,14 @@ function Buy() {
   /* Place Buy Order API */
 
   async function placeBuyOrder() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/placebuyorder`, {
-      mail: mailId,
-      product: productData,
-      address: address,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/placebuyorder`,
+      {
+        mail: mailId,
+        product: productData,
+        address: address,
+      }
+    );
     if (response.data.access) {
       sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
       setTimeout(() => {
@@ -187,23 +200,29 @@ function Buy() {
   /* Address APIs */
 
   async function getAddress() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
-      mail: mailId,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getaddress`,
+      {
+        mail: mailId,
+      }
+    );
     setAddressData(response.data.data);
   }
 
   async function addDeliveryAddress() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addaddress`, {
-      mail: mailId,
-      name: addressFullName,
-      house: addressHouse,
-      street: addressStreet,
-      landmark: addressLandmark,
-      city: addressCity,
-      state: addressState,
-      country: addressCountry,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/addaddress`,
+      {
+        mail: mailId,
+        name: addressFullName,
+        house: addressHouse,
+        street: addressStreet,
+        landmark: addressLandmark,
+        city: addressCity,
+        state: addressState,
+        country: addressCountry,
+      }
+    );
     if (response.data.access) {
       localStorage.setItem(
         "userInfo",
@@ -591,6 +610,14 @@ function Buy() {
                         Change Delivery Address
                       </button>
                     </div>
+                  </div>
+                  <div className="Buy_Info_Details--DeliveryDate">
+                    <h3 className="Buy_Info_DeliveryDate--Heading">
+                      Delivery Date
+                    </h3>
+                    <p className="Buy_Info_DeliveryDate--Date">
+                      {deliveryDateDisplay}
+                    </p>
                   </div>
                   <div className="Buy_Info_Details--Order">
                     <h3 className="Buy_Info_Order--Heading">Payment Summary</h3>
