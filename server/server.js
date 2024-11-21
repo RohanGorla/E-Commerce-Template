@@ -1693,7 +1693,7 @@ app.post("/buyproduct", (req, res) => {
       });
     } else {
       db.query(
-        "insert into buy (mailid, productid, title, price, discount, count, category, company) values (?)",
+        "insert into buy (mailid, productid, title, price, discount, count, category, company, delivery_date) values (?)",
         [values],
         (err, data) => {
           if (err)
