@@ -4,6 +4,7 @@ import "../styles/Buy.css";
 
 function Buy() {
   const [productData, setProductData] = useState({});
+  const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
   const [addressData, setAddressData] = useState([]);
   const [showSelectAddress, setShowSelectAddress] = useState(false);
@@ -104,11 +105,17 @@ function Buy() {
       setProductTotal(totalCurrency);
       setProductPrice(priceCurrency);
       setProductData(data);
-      let delDt = new Date(data.delivery_date);
-      let delDtStr = delDt.toDateString();
+      let todayDate = new Date();
+      let deliveryDate = new Date(
+        todayDate.getFullYear(),
+        todayDate.getMonth(),
+        todayDate.getDate() + 7
+      );
+      let delDtStr = deliveryDate.toDateString();
       let delDtDisplay = `${delDtStr.split(" ")[0]}, ${
         delDtStr.split(" ")[1]
       } ${delDtStr.split(" ")[2]}, ${delDtStr.split(" ")[3]}`;
+      setDeliveryDate(deliveryDate);
       setDeliveryDateDisplay(delDtDisplay);
     } else {
       setSuccess(false);
@@ -581,6 +588,14 @@ function Buy() {
                   <h2>Order Details</h2>
                 </div>
                 <div className="Buy_Info--Details">
+                  <div className="Buy_Info_Details--DeliveryDate">
+                    <h3 className="Buy_Info_DeliveryDate--Heading">
+                      Delivery Date
+                    </h3>
+                    <p className="Buy_Info_DeliveryDate--Date">
+                      {deliveryDateDisplay}
+                    </p>
+                  </div>
                   <div className="Buy_Info_Details--Address">
                     <h3 className="Buy_Info_Address--Heading">
                       Delivery Address
@@ -610,14 +625,6 @@ function Buy() {
                         Change Delivery Address
                       </button>
                     </div>
-                  </div>
-                  <div className="Buy_Info_Details--DeliveryDate">
-                    <h3 className="Buy_Info_DeliveryDate--Heading">
-                      Delivery Date
-                    </h3>
-                    <p className="Buy_Info_DeliveryDate--Date">
-                      {deliveryDateDisplay}
-                    </p>
                   </div>
                   <div className="Buy_Info_Details--Order">
                     <h3 className="Buy_Info_Order--Heading">Payment Summary</h3>
