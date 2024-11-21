@@ -1650,6 +1650,7 @@ app.post("/buyproduct", (req, res) => {
   let productData = req.body.product;
   let mail = req.body.mail;
   let count = req.body.count;
+  let deliveryDate = req.body.deliveryDate;
   let values = [
     mail,
     productData.id,
@@ -1659,6 +1660,7 @@ app.post("/buyproduct", (req, res) => {
     count,
     productData.category,
     productData.company,
+    deliveryDate
   ];
   db.query("select id from buy where mailid = ?", mail, (err, data) => {
     if (err)
@@ -1676,7 +1678,7 @@ app.post("/buyproduct", (req, res) => {
               "Some error has occurred! Please try again or refresh the page!",
           });
         db.query(
-          "insert into buy (mailid, productid, title, price, discount, count, category, company) values (?)",
+          "insert into buy (mailid, productid, title, price, discount, count, category, company, delivery_date) values (?)",
           [values],
           (err, data) => {
             if (err)
