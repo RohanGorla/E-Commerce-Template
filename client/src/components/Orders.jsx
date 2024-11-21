@@ -16,11 +16,15 @@ function Orders() {
   /* Get Orders API */
 
   async function getorders() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getorders`, {
-      mail: mailId,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getorders`,
+      {
+        mail: mailId,
+      }
+    );
     if (response.data.access) {
-      setOrders(response.data.data);
+      const ordersData = response.data.data;
+      setOrders(ordersData);
     } else {
       setError(true);
       setErrorMessage(response.data.errorMsg);
@@ -43,6 +47,15 @@ function Orders() {
     }
     let finalAmount = amountArray.reverse().join("");
     return finalAmount;
+  }
+
+  function deliveryDateCalculator(date) {
+    const deliveryDate = new Date(date);
+    const deliveryDateString = deliveryDate.toDateString();
+    const deliveryDateDisplay = `${deliveryDateString.split(" ")[0]}, ${
+      deliveryDateString.split(" ")[1]
+    } ${deliveryDateString.split(" ")[2]}, ${deliveryDateString.split(" ")[3]}`;
+    return deliveryDateDisplay;
   }
 
   useEffect(() => {
@@ -82,6 +95,7 @@ function Orders() {
               let cost = order.price - (order.price * order.discount) / 100;
               let orderTotal = order.count * cost;
               let orderCurrency;
+              const deliveryDate = deliveryDateCalculator(order.delivery_date);
               if (cost.toString().split(".").length === 1) {
                 if (orderTotal > 500) {
                   orderCurrency = currencyConvert(orderTotal) + ".00";
@@ -145,7 +159,7 @@ function Orders() {
                       Order total: ₹{orderCurrency}
                     </p>
                     <p className="Orders_Main--Order_Delivery--Date">
-                      Arriving on `Delivery date`
+                      Arriving on {deliveryDate}
                     </p>
                     <div className="Orders_Main--Order_Delivery--Address_Container">
                       <div
