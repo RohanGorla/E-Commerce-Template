@@ -605,23 +605,16 @@ function Items() {
             <div className="Items_List">
               {products.map((product, index) => {
                 let mrp = currencyConvert(product.price);
-                let offer_price =
-                  product.price - product.price * (product.discount / 100);
-                let offer_price_rounded = Math.round(offer_price * 100) / 100;
-                let offerPriceInt = offer_price_rounded
-                  .toString()
-                  .split(".")[0];
-                let offerPriceDecimal = offer_price_rounded
-                  .toString()
-                  .split(".")[1];
-                let offerPriceActual;
-                if (offerPriceDecimal === undefined) {
-                  offerPriceActual = currencyConvert(offerPriceInt) + ".00";
+                let offer_price;
+                if (product.final_price.toString().split(".").length < 2) {
+                  offer_price = currencyConvert(product.final_price) + ".00";
                 } else {
-                  offerPriceActual =
-                    currencyConvert(offerPriceInt) +
+                  offer_price =
+                    currencyConvert(
+                      product.final_price.toString().split(".")[0]
+                    ) +
                     "." +
-                    offerPriceDecimal.padEnd(2, "0");
+                    product.final_price.toString().split(".")[1].padEnd(2, "0");
                 }
                 let data = getProductRatingData(product.id);
                 return (
@@ -681,7 +674,7 @@ function Items() {
                         <span className="Item_Discount">
                           -{product.discount}%
                         </span>{" "}
-                        ₹{offerPriceActual}
+                        ₹{offer_price}
                       </p>
                       <p className="Item_MRP">
                         M.R.P: <span className="Item_MRP_Strike">₹{mrp}</span>
