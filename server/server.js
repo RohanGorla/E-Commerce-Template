@@ -1660,7 +1660,7 @@ app.post("/buyproduct", (req, res) => {
     count,
     productData.category,
     productData.company,
-    deliveryDate
+    deliveryDate,
   ];
   db.query("select id from buy where mailid = ?", mail, (err, data) => {
     if (err)
@@ -1762,6 +1762,7 @@ app.post("/placebuyorder", (req, res) => {
   let mail = req.body.mail;
   let product = req.body.product;
   let address = req.body.address;
+  let deliveryDate = req.body.deliveryDate;
   let addressData = JSON.stringify({
     addressname: address.addressname,
     house: address.house,
@@ -1782,10 +1783,11 @@ app.post("/placebuyorder", (req, res) => {
     product.category,
     product.company,
     addressData,
+    deliveryDate,
     orderStatus,
   ];
   db.query(
-    "insert into orders (mailid, productid, title, price, discount, count, category, company, address, order_status) values (?)",
+    "insert into orders (mailid, productid, title, price, discount, count, category, company, address, delivery_date, order_status) values (?)",
     [values],
     (err, data) => {
       if (err)

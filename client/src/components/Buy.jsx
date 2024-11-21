@@ -136,6 +136,7 @@ function Buy() {
         mail: mailId,
         product: productData,
         address: address,
+        deliveryDate,
       }
     );
     if (response.data.access) {
