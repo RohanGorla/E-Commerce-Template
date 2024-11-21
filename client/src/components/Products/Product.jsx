@@ -546,6 +546,7 @@ function Product() {
           product: productData,
           count: count,
           mail: userInfo?.mailId,
+          deliveryDate,
         }
       );
       if (response.data.access) {
