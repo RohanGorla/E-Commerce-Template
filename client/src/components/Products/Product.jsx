@@ -80,16 +80,15 @@ function Product() {
       let offer_price = data.price - data.price * (data.discount / 100);
       let offer_price_rounded = Math.round(offer_price * 100) / 100;
       let offerPriceInt = offer_price_rounded.toString().split(".")[0];
-      let offerPriceDecimal = offer_price_rounded
-        .toString()
-        .split(".")[1]
-        .padEnd(2, "0");
+      let offerPriceDecimal = offer_price_rounded.toString().split(".")[1];
       let offerPriceActual;
       if (offerPriceDecimal === undefined) {
         offerPriceActual = currencyConvert(offerPriceInt) + ".00";
       } else {
         offerPriceActual =
-          currencyConvert(offerPriceInt) + "." + offerPriceDecimal;
+          currencyConvert(offerPriceInt) +
+          "." +
+          offerPriceDecimal.padEnd(2, "0");
       }
       data.mrp = mrp;
       data.actualPrice = offerPriceActual;
@@ -1163,31 +1162,7 @@ function Product() {
           <div className="Product_Main--About_And_Delivery">
             <div className="Product_Main--About">
               <h4>About the product</h4>
-              <p>
-                Introducing our latest electronic product, the ProSound Wireless
-                Earbuds—your perfect companion for an immersive audio
-                experience. With sleek design and cutting-edge technology, these
-                earbuds deliver crystal-clear sound and deep bass, ensuring you
-                never miss a beat.
-              </p>
-              <p>
-                When you purchase the ProSound Wireless Earbuds, you'll receive
-                everything you need to get started. Inside the box, you'll find
-                the earbuds themselves, along with a compact charging case that
-                provides up to 20 hours of additional playtime.
-              </p>
-              <p>
-                We've also added a few extras to enhance your experience with
-                the ProSound Wireless Earbuds. Included in the package is a
-                quick start guide to help you set up your earbuds in minutes,
-                along with a warranty card that provides coverage for any
-                manufacturing defects for up to one year.
-              </p>
-              <p>
-                Lastly, the ProSound Wireless Earbuds come with access to our
-                dedicated customer support team, available 24/7 to assist you
-                with any questions or issues.
-              </p>
+              <p>{productData.description}</p>
             </div>
             <div className="Product_Main--Delivery">
               <h4>Shipping details</h4>

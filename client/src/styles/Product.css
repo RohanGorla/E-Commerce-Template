@@ -639,7 +639,6 @@
     align-items: center;
     cursor: pointer;
     &:hover {
-        /* color: rgb(220, 30, 30); */
         color: red;
     }
 }
@@ -657,10 +656,11 @@
 }
 
 .Product_Main--About {
-    /* outline: 2px dotted blue; */
     width: 70%;
     padding: 1em 2em;
     padding-left: 0em;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .Product_Main--About h4,
@@ -671,11 +671,11 @@
 .Product_Main--About p {
     font-size: var(--Product_Details--About_And_Delivery_Info);
     font-family: var(--Product_Details--Side_Font);
+    line-height: 2;
     margin: 1em 0;
 }
 
 .Product_Main--Delivery {
-    /* outline: 2px white dotted; */
     background-color: rgb(44, 44, 44);
     width: 30%;
     padding: 1em;
