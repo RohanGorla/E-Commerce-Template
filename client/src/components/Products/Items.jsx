@@ -447,9 +447,6 @@ function Items() {
             )}
           </div>
           <div className="Items_Wishlist_Selector--Buttons">
-            {/* <button className="Items_Wishlist_Selector--Buttons_Create">
-                Create new list
-              </button> */}
             <button
               className="Items_Wishlist_Selector--Buttons_Cancel"
               onClick={() => {
