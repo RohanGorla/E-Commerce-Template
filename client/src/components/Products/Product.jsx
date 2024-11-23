@@ -77,18 +77,15 @@ function Product() {
     if (response.data.access) {
       let data = response.data.data[0];
       let mrp = currencyConvert(data.price);
-      let offer_price = data.price - data.price * (data.discount / 100);
-      let offer_price_rounded = Math.round(offer_price * 100) / 100;
-      let offerPriceInt = offer_price_rounded.toString().split(".")[0];
-      let offerPriceDecimal = offer_price_rounded.toString().split(".")[1];
+      let final_price = data.final_price;
       let offerPriceActual;
-      if (offerPriceDecimal === undefined) {
-        offerPriceActual = currencyConvert(offerPriceInt) + ".00";
+      if (final_price.toString().split(".").length < 2) {
+        offerPriceActual = currencyConvert(final_price) + ".00";
       } else {
         offerPriceActual =
-          currencyConvert(offerPriceInt) +
+          currencyConvert(final_price.toString().split(".")[0]) +
           "." +
-          offerPriceDecimal.padEnd(2, "0");
+          final_price.toString().split(".")[1].padEnd(2, "0");
       }
       data.mrp = mrp;
       data.actualPrice = offerPriceActual;
