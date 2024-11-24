@@ -1679,7 +1679,7 @@ app.post("/buyproduct", (req, res) => {
               "Some error has occurred! Please try again or refresh the page!",
           });
         db.query(
-          "insert into buy (mailid, productid, title, price, discount, count, category, company, delivery_date) values (?)",
+          "insert into buy (mailid, productid, title, price, discount, final_price, count, category, company, delivery_date) values (?)",
           [values],
           (err, data) => {
             if (err)
@@ -1694,7 +1694,7 @@ app.post("/buyproduct", (req, res) => {
       });
     } else {
       db.query(
-        "insert into buy (mailid, productid, title, price, discount, count, category, company, delivery_date) values (?)",
+        "insert into buy (mailid, productid, title, price, discount, final_price, count, category, company, delivery_date) values (?)",
         [values],
         (err, data) => {
           if (err)
