@@ -46,7 +46,7 @@ function Buy() {
     );
     if (response.data.access) {
       let data = response.data.data[0];
-      let cost = data.price * (1 - data.discount / 100);
+      let cost = data.final_price;
       let total = cost * data.count;
       let priceCurrency;
       let totalCurrency;
