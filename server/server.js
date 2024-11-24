@@ -1657,6 +1657,7 @@ app.post("/buyproduct", (req, res) => {
     productData.title,
     productData.price,
     productData.discount,
+    productData.final_price,
     count,
     productData.category,
     productData.company,
