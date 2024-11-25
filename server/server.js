@@ -100,7 +100,7 @@ function setcategory() {
 }
 
 function setFinalPrice() {
-  db.query("select * from wishlistitems", (err, data) => {
+  db.query("select * from cart", (err, data) => {
     if (err) {
       console.log(err);
       return;
@@ -110,7 +110,7 @@ function setFinalPrice() {
         Math.round((row.price - (row.price * row.discount) / 100) * 100) / 100;
       const id = row.id;
       db.query(
-        "update wishlistitems set ? where id = ?",
+        "update cart set ? where id = ?",
         [{ final_price: final_price }, id],
         (err, data) => {
           if (err) return err;
@@ -1101,6 +1101,7 @@ app.post("/addtowish", (req, res) => {
     req.body.wishlist,
     req.body.category,
     req.body.company,
+    req.body.final_price,
   ];
   db.query(
     "select * from wishlistitems where mailid = ? and wishlistname = ? and productid = ?",
@@ -1119,7 +1120,7 @@ app.post("/addtowish", (req, res) => {
         });
       } else {
         db.query(
-          "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname, category, company) values (?)",
+          "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname, category, company, final_price) values (?)",
           [values],
           (err, data) => {
             if (err) {
