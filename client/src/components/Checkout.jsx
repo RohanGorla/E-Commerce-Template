@@ -39,10 +39,13 @@ function Checkout() {
   /* User Authorization API */
 
   async function checkAuthorized() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/checkauthorized`, {
-      mail: mailId,
-      token: token,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/checkauthorized`,
+      {
+        mail: mailId,
+        token: token,
+      }
+    );
     if (response.data.access) {
       getCartItems();
     } else {
@@ -65,48 +68,35 @@ function Checkout() {
   /* Get Cart Products API */
 
   async function getCartItems() {
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getcartitems`, {
-      mailId: mailId,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getcartitems`,
+      {
+        mailId: mailId,
+      }
+    );
     if (response.data.access) {
       setCartData(response.data.data);
       let count = 0;
       let totalCost = 0;
       response.data.data.forEach((product) => {
-        let cost = product.price - (product.price * product.discount) / 100;
+        let cost = product.final_price;
         count += Number(product.count);
         totalCost += product.count * cost;
       });
       let totalCostCurrency;
       let orderCostCurrency;
       if (totalCost.toString().split(".").length === 1) {
-        totalCostCurrency =
-          currencyConvert(
-            (Math.round(totalCost * 100) / 100).toString().split(".")[0]
-          ) + ".00";
-        orderCostCurrency =
-          currencyConvert(
-            (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[0]
-          ) + ".00";
+        totalCostCurrency = currencyConvert(totalCost) + ".00";
+        orderCostCurrency = currencyConvert(totalCost + 20) + ".00";
       } else {
         totalCostCurrency =
-          currencyConvert(
-            (Math.round(totalCost * 100) / 100).toString().split(".")[0]
-          ) +
+          currencyConvert(totalCost) +
           "." +
-          (Math.round(totalCost * 100) / 100)
-            .toString()
-            .split(".")[1]
-            .padEnd(2, "0");
+          totalCost.toString().split(".")[1].padEnd(2, "0");
         orderCostCurrency =
-          currencyConvert(
-            (Math.round((totalCost + 20) * 100) / 100).toString().split(".")[0]
-          ) +
+          currencyConvert(totalCost + 20) +
           "." +
-          (Math.round((totalCost + 20) * 100) / 100)
-            .toString()
-            .split(".")[1]
-            .padEnd(2, "0");
+          (totalCost + 20).toString().split(".")[1].padEnd(2, "0");
       }
       if (totalCost > 500) {
         setOrderTotal(totalCostCurrency);
@@ -133,9 +123,12 @@ function Checkout() {
   /* Address APIs */
 
   async function getAddress() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
-      mail: mailId,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getaddress`,
+      {
+        mail: mailId,
+      }
+    );
     if (response.data.access) {
       setAddressData(response.data.data);
     } else {
@@ -149,16 +142,19 @@ function Checkout() {
   }
 
   async function addDeliveryAddress() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/addaddress`, {
-      mail: mailId,
-      name: addressFullName,
-      house: addressHouse,
-      street: addressStreet,
-      landmark: addressLandmark,
-      city: addressCity,
-      state: addressState,
-      country: addressCountry,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/addaddress`,
+      {
+        mail: mailId,
+        name: addressFullName,
+        house: addressHouse,
+        street: addressStreet,
+        landmark: addressLandmark,
+        city: addressCity,
+        state: addressState,
+        country: addressCountry,
+      }
+    );
     if (response.data.access) {
       localStorage.setItem(
         "userInfo",
@@ -237,10 +233,13 @@ function Checkout() {
   /* Order And Payment APIs */
 
   async function placeOrder() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/placeorder`, {
-      mail: mailId,
-      address: address,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/placeorder`,
+      {
+        mail: mailId,
+        address: address,
+      }
+    );
     if (response.data.access) {
       sessionStorage.setItem("order", JSON.stringify({ orderPlaced: true }));
       setTimeout(() => {
@@ -263,9 +262,12 @@ function Checkout() {
 
   async function openPayment() {
     if (address) {
-      let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/initiatepayment`, {
-        mail: mailId,
-      });
+      let response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/initiatepayment`,
+        {
+          mail: mailId,
+        }
+      );
       let amount = Math.round(orderCostNumber * 100);
       if (response.data.access) {
         const options = {
