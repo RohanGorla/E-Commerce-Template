@@ -52,7 +52,7 @@ function random() {
 }
 
 function setcompany() {
-  db.query("select DISTINCT productid from orders", (err, orderdata) => {
+  db.query("select DISTINCT productid from wishlistitems", (err, orderdata) => {
     if (err) return console.log(err);
     orderdata.forEach((order) => {
       db.query(
@@ -62,7 +62,7 @@ function setcompany() {
           if (err) return console.log(err);
           const company = companydata[0].company;
           db.query(
-            "update orders set ? where productid = ?",
+            "update wishlistitems set ? where productid = ?",
             [{ company: company }, order.productid],
             (err, data) => {
               if (err) return console.log(err);
@@ -75,7 +75,57 @@ function setcompany() {
   console.log("done");
 }
 
+function setcategory() {
+  db.query("select DISTINCT productid from wishlistitems", (err, orderdata) => {
+    if (err) return console.log(err);
+    orderdata.forEach((order) => {
+      db.query(
+        "select category from products where id = ?",
+        order.productid,
+        (err, categorydata) => {
+          if (err) return console.log(err);
+          const category = categorydata[0].category;
+          db.query(
+            "update wishlistitems set ? where productid = ?",
+            [{ category: category }, order.productid],
+            (err, data) => {
+              if (err) return console.log(err);
+            }
+          );
+        }
+      );
+    });
+  });
+  console.log("done");
+}
+
+function setFinalPrice() {
+  db.query("select * from wishlistitems", (err, data) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    data.forEach((row) => {
+      const final_price =
+        Math.round((row.price - (row.price * row.discount) / 100) * 100) / 100;
+      const id = row.id;
+      db.query(
+        "update wishlistitems set ? where id = ?",
+        [{ final_price: final_price }, id],
+        (err, data) => {
+          if (err) return err;
+          console.log("done");
+        }
+      );
+    });
+  });
+}
+
+// setFinalPrice();
+
 // setcompany();
+
+// setcategory();
 
 app.get("/", (req, res) => {
   db.query("select * from userinfo", (err, data) => {
