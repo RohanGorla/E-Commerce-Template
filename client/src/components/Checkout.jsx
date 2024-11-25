@@ -83,6 +83,7 @@ function Checkout() {
         count += Number(product.count);
         totalCost += product.count * cost;
       });
+      totalCost = Math.round(totalCost * 100) / 100;
       let totalCostCurrency;
       let orderCostCurrency;
       if (totalCost.toString().split(".").length === 1) {
@@ -90,11 +91,11 @@ function Checkout() {
         orderCostCurrency = currencyConvert(totalCost + 20) + ".00";
       } else {
         totalCostCurrency =
-          currencyConvert(totalCost) +
+          currencyConvert(totalCost.toString().split(".")[0]) +
           "." +
           totalCost.toString().split(".")[1].padEnd(2, "0");
         orderCostCurrency =
-          currencyConvert(totalCost + 20) +
+          currencyConvert((totalCost + 20).toString().split(".")[0]) +
           "." +
           (totalCost + 20).toString().split(".")[1].padEnd(2, "0");
       }
@@ -585,29 +586,21 @@ function Checkout() {
                 {cartData.map((product, index) => {
                   let totalPrice;
                   let actualPrice;
-                  let price =
-                    product.price - (product.price * product.discount) / 100;
+                  let price = product.final_price;
                   if (price.toString().split(".").length === 1) {
                     actualPrice = currencyConvert(price) + ".00";
                     totalPrice = currencyConvert(price * product.count) + ".00";
                   } else {
                     actualPrice =
-                      currencyConvert(
-                        (Math.round(price * 100) / 100).toString().split(".")[0]
-                      ) +
+                      currencyConvert(price.toString().split(".")[0]) +
                       "." +
-                      (Math.round(price * 100) / 100)
-                        .toString()
-                        .split(".")[1]
-                        .padEnd(2, "0");
+                      price.toString().split(".")[1].padEnd(2, "0");
                     totalPrice =
                       currencyConvert(
-                        (Math.round(price * product.count * 100) / 100)
-                          .toString()
-                          .split(".")[0]
+                        (price * product.count).toString().split(".")[0]
                       ) +
                       "." +
-                      (Math.round(price * product.count * 100) / 100)
+                      (price * product.count)
                         .toString()
                         .split(".")[1]
                         .padEnd(2, "0");
