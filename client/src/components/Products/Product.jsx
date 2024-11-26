@@ -214,6 +214,7 @@ function Product() {
           discount: productData.discount,
           company: productData.company,
           category: productData.category,
+          final_price: product.final_price,
           wishlist: list,
         }
       );
