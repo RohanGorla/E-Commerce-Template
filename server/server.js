@@ -1192,6 +1192,7 @@ app.post("/addtocart", (req, res) => {
   const company = req.body.company;
   const mailId = req.body.mailId;
   const itemCount = req.body.count;
+  const finalPrice = req.body.final_price;
   db.query(
     "select count from cart where productid = ? and mailid = ?",
     [id, mailId],
@@ -1237,9 +1238,10 @@ app.post("/addtocart", (req, res) => {
           category,
           company,
           itemCount,
+          finalPrice,
         ];
         db.query(
-          "insert into cart (mailid, productid, title, price, discount, category, company, count) values (?)",
+          "insert into cart (mailid, productid, title, price, discount, category, company, count, final_price) values (?)",
           [values],
           (err, data) => {
             if (err) {
