@@ -214,7 +214,7 @@ function Product() {
           discount: productData.discount,
           company: productData.company,
           category: productData.category,
-          final_price: product.final_price,
+          final_price: productData.final_price,
           wishlist: list,
         }
       );
@@ -287,6 +287,7 @@ function Product() {
           discount: productData.discount,
           company: productData.company,
           category: productData.category,
+          final_price: productData.final_price,
           count: count,
           mailId: mailId,
         }
