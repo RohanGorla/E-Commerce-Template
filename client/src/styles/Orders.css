@@ -115,6 +115,15 @@
     margin-bottom: .3em;
 }
 
+.Orders_Main--Order_Status {
+    font-size: var(--Orders_Main--Order_Delivery--Date);
+    margin-bottom: .3em;
+}
+
+.Orders_Main--Order_Status--Status {
+    font-weight: 600;
+}
+
 .Orders_Main--Order_Delivery--Date {
     font-size: var(--Orders_Main--Order_Delivery--Date);
     margin-bottom: .5em;

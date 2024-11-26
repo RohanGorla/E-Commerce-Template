@@ -92,7 +92,7 @@ function Orders() {
           <div className="Orders_Main--Orders">
             {orders.map((order, index) => {
               let address = JSON.parse(order.address);
-              let cost = order.price - (order.price * order.discount) / 100;
+              let cost = order.final_price;
               let orderTotal = order.count * cost;
               let orderCurrency;
               const deliveryDate = deliveryDateCalculator(order.delivery_date);
@@ -157,6 +157,12 @@ function Orders() {
                     </p>
                     <p className="Orders_Main--Order_Total">
                       Order total: ₹{orderCurrency}
+                    </p>
+                    <p className="Orders_Main--Order_Status">
+                      Order status -{" "}
+                      <span className="Orders_Main--Order_Status--Status">
+                        {order.order_status}
+                      </span>
                     </p>
                     <p className="Orders_Main--Order_Delivery--Date">
                       Arriving on {deliveryDate}

@@ -100,7 +100,7 @@ function setcategory() {
 }
 
 function setFinalPrice() {
-  db.query("select * from cart", (err, data) => {
+  db.query("select * from orders", (err, data) => {
     if (err) {
       console.log(err);
       return;
@@ -110,7 +110,7 @@ function setFinalPrice() {
         Math.round((row.price - (row.price * row.discount) / 100) * 100) / 100;
       const id = row.id;
       db.query(
-        "update cart set ? where id = ?",
+        "update orders set ? where id = ?",
         [{ final_price: final_price }, id],
         (err, data) => {
           if (err) return err;
