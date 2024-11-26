@@ -153,6 +153,7 @@ function Items() {
           discount: product.discount,
           company: product.company,
           category: product.category,
+          final_price: product.final_price,
           mailId: mailId,
           count: 1,
         }
