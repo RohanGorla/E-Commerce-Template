@@ -21,37 +21,44 @@ function Cart() {
 
   async function getFromCart() {
     if (mailId) {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getcartitems`, {
-        mailId: mailId,
-      });
-      if (response.data.access) {
-        const cartData = response.data.data;
-        let cartProductIds = [];
-        cartData?.map((product) => {
-          cartProductIds.push(product.productid);
-        });
-
-        /* Get Reviews Of All Cart Products API */
-        async function getCartProductReviews() {
-          let response = await axios.post(
-            `${import.meta.env.VITE_BASE_URL}/getallreviews`,
-            {
-              id: cartProductIds,
-            }
-          );
-          if (response.data.access) {
-            setReviews(response.data.data);
-          } else {
-            setSuccess(false);
-            setError(true);
-            setErrorMessage(response.data.errorMsg);
-            setTimeout(() => {
-              setError(false);
-            }, 3500);
-          }
-          setCart(cartData);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/getcartitems`,
+        {
+          mailId: mailId,
         }
-        getCartProductReviews();
+      );
+      if (response.data.access) {
+        if (response.data.data.length) {
+          const cartData = response.data.data;
+          let cartProductIds = [];
+          cartData?.map((product) => {
+            cartProductIds.push(product.productid);
+          });
+
+          /* Get Reviews Of All Cart Products API */
+          async function getCartProductReviews() {
+            let response = await axios.post(
+              `${import.meta.env.VITE_BASE_URL}/getallreviews`,
+              {
+                id: cartProductIds,
+              }
+            );
+            if (response.data.access) {
+              setReviews(response.data.data);
+            } else {
+              setSuccess(false);
+              setError(true);
+              setErrorMessage(response.data.errorMsg);
+              setTimeout(() => {
+                setError(false);
+              }, 3500);
+            }
+            setCart(cartData);
+          }
+          getCartProductReviews();
+        } else {
+          setCart([]);
+        }
       } else {
         setSuccess(false);
         setError(true);
@@ -86,9 +93,12 @@ function Cart() {
   }
 
   async function removeFromCart(id) {
-    let response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/removecartitem`, {
-      data: { id },
-    });
+    let response = await axios.delete(
+      `${import.meta.env.VITE_BASE_URL}/removecartitem`,
+      {
+        data: { id },
+      }
+    );
     if (response.data.access) {
       setError(false);
       setSuccess(true);
