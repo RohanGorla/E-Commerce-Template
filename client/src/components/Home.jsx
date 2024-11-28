@@ -6,7 +6,7 @@ import "../styles/Home.css";
 function Home() {
   const [products, setProducts] = useState([]);
 
-  async function getMostBought() {
+  async function getProducts() {
     const response = await axios.get(
       `${import.meta.env.VITE_BASE_URL}/gethomeproducts`
     );
@@ -27,7 +27,7 @@ function Home() {
         </div>
       </div>
       <div className="Home_Main">
-        <button onClick={getMostBought}>get products</button>
+        <button onClick={getProducts}>get products</button>
       </div>
     </div>
   );

@@ -121,6 +121,44 @@ function setFinalPrice() {
   });
 }
 
+function setTotalSales() {
+  db.query("select productid, count from orders", (err, data) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    data.forEach((order) => {
+      db.query(
+        "select (total_sales) from products where id = ?",
+        [order.productid],
+        (err, data) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          if (data.length) {
+            console.log(data);
+            console.log(data[0].total_sales, order.count);
+            const sales = data[0].total_sales + order.count;
+            db.query(
+              "update products set ? where id = ?",
+              [{ total_sales: sales }, order.productid],
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              }
+            );
+          }
+        }
+      );
+    });
+  });
+}
+
+// setTotalSales();
+
 // setFinalPrice();
 
 // setcompany();
@@ -1873,7 +1911,32 @@ app.post("/placebuyorder", (req, res) => {
             errorMsg:
               "Some error has occurred! Please try again or refresh the page!",
           });
-        res.send({ access: true });
+        db.query(
+          "select (total_sales) from products where id = ?",
+          [product.productid],
+          (err, data) => {
+            if (err)
+              return res.send({
+                access: false,
+                errorMsg:
+                  "Some error has occurred! Please try again or refresh the page!",
+              });
+            let sales = data[0].total_sales + product.count;
+            db.query(
+              "update products set ? where id = ?",
+              [{ total_sales: sales }, product.productid],
+              (err, data) => {
+                if (err)
+                  return res.send({
+                    access: false,
+                    errorMsg:
+                      "Some error has occurred! Please try again or refresh the page!",
+                  });
+                res.send({ access: true });
+              }
+            );
+          }
+        );
       });
     }
   );
