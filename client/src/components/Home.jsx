@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import BGImg from "../assets/lady_bg_2.jpg";
+import bg from "../assets/homepagebg.js";
 import "../styles/Home.css";
 
 function Home() {
@@ -37,7 +37,7 @@ function Home() {
           <button>Shop now</button>
         </div>
         <div className="Home_BG--Image">
-          <img src={BGImg}></img>
+          <img src={`data:image/jpeg;base64,${bg}`}></img>
         </div>
       </div>
     </div>
