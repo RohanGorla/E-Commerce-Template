@@ -771,7 +771,8 @@ app.post("/getproduct", (req, res) => {
 });
 
 app.get("/gethomeproducts", (req, res) => {
-  let moreDiscount;
+  let mostDiscount;
+  let mostBought;
   db.query(
     "select * from products order by discount desc limit 5",
     (err, data) => {
@@ -781,7 +782,20 @@ app.get("/gethomeproducts", (req, res) => {
           errorMsg:
             "Some error has occurred! Please try again or refresh the page!",
         });
-      moreDiscount = data;
+      mostDiscount = data;
+    }
+  );
+  db.query(
+    "select * from products order by total_sales desc limit 5",
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      mostBought = data;
+      res.send({ access: true, mostDiscount, mostBought });
     }
   );
 });
