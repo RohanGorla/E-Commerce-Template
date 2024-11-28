@@ -499,8 +499,10 @@ function Items() {
               </div>
               <div className="Items_Applied_Filters--Filter">
                 <p>
-                  {lowerPrice
+                  {upperPrice
                     ? `${lowerPriceFilter} - ${upperPriceFilter}`
+                    : lowerPrice
+                    ? `75,001 and above`
                     : ``}
                 </p>
               </div>
@@ -559,8 +561,8 @@ function Items() {
                     className="Items_Filter--Filter_Name_Container"
                     onClick={() => {
                       setLowerPrice(0);
-                      setLowerPriceFilter("0");
                       setUpperPrice(15000);
+                      setLowerPriceFilter("0");
                       setUpperPriceFilter(currencyConvert(15000));
                     }}
                   >
@@ -583,7 +585,7 @@ function Items() {
                       setLowerPrice(30001);
                       setUpperPrice(45000);
                       setLowerPriceFilter(currencyConvert(30001));
-                      setUpperPriceFilter(currencyConvert(30000));
+                      setUpperPriceFilter(currencyConvert(45000));
                     }}
                   >
                     <p className="Items_Filter_Price">30,001 to 45,000</p>
@@ -615,8 +617,6 @@ function Items() {
                     onClick={() => {
                       setLowerPrice(75001);
                       setUpperPrice(0);
-                      setLowerPriceFilter(currencyConvert(75001));
-                      setUpperPriceFilter('and above');
                     }}
                   >
                     <p className="Items_Filter_Price">75,001 and above</p>
