@@ -1,19 +1,33 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BGImg from "../assets/lady_bg_2.jpg";
 import "../styles/Home.css";
 
 function Home() {
-  const [products, setProducts] = useState([]);
+  const [mostBought, setMostBought] = useState([]);
+  const [mostDiscount, setMostDiscount] = useState([]);
+  const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   async function getProducts() {
     const response = await axios.get(
       `${import.meta.env.VITE_BASE_URL}/gethomeproducts`
     );
     if (response.data.access) {
-      setProducts(response.data.data);
+      setMostDiscount(response.data.mostDiscount);
+      setMostBought(response.data.mostBought);
     }
   }
+
+  useEffect(() => {
+    if (userInfo.mailId) {
+      getProducts();
+    } else {
+      navigate("/account/login");
+    }
+  }, []);
+
   return (
     <div className="Home_Page">
       <div className="Home_Header">
@@ -25,9 +39,6 @@ function Home() {
         <div className="Home_BG--Image">
           <img src={BGImg}></img>
         </div>
-      </div>
-      <div className="Home_Main">
-        <button onClick={getProducts}>get products</button>
       </div>
     </div>
   );
