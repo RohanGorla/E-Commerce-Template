@@ -14,15 +14,13 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 2em 0em;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
 .Category_Card {
     background-color: rgb(45, 45, 45);
     font-family: var(--Category_Main_Font);
-    width: 320px;
     display: flex;
     flex-direction: column;
     justify-content: center;
