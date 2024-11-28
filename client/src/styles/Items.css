@@ -338,7 +338,7 @@
 
 .Items_Filter--Filter--Active {
     background-color: #242424;
-    max-height: 600px;
+    max-height: 300px;
 }
 
 .Items_Filter--Filter_Name_Container {
@@ -346,6 +346,10 @@
     padding: .5em 0em;
     margin: .3em 0em;
     background-color: rgb(24, 23, 23);
+    cursor: pointer;
+    &:hover {
+        color: red;
+    }
 }
 
 /* Actual Items List Container */

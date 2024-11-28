@@ -17,6 +17,8 @@ function Items() {
   const [selectedCompany, setSelectedCompany] = useState("");
   const [lowerPrice, setLowerPrice] = useState("");
   const [upperPrice, setUpperPrice] = useState("");
+  const [lowerPriceFilter, setLowerPriceFilter] = useState("");
+  const [upperPriceFilter, setUpperPriceFilter] = useState("");
   const [allCat, setAllCat] = useState([]);
   const [allCom, setAllCom] = useState([]);
   const [showSelectlist, setShowSelectlist] = useState(false);
@@ -491,6 +493,18 @@ function Items() {
         <div className="Items_Main">
           {/* Items Filters */}
           <div className="Items_Filters_Container">
+            <div className="Items_Applied_Filters">
+              <div className="Items_Applied_Filters--Filter">
+                <p>{selectedCompany}</p>
+              </div>
+              <div className="Items_Applied_Filters--Filter">
+                <p>
+                  {lowerPrice
+                    ? `${lowerPriceFilter} - ${upperPriceFilter}`
+                    : ``}
+                </p>
+              </div>
+            </div>
             <div className="Items_Filters">
               <div className="Items_Filter_Container">
                 <div
@@ -545,7 +559,9 @@ function Items() {
                     className="Items_Filter--Filter_Name_Container"
                     onClick={() => {
                       setLowerPrice(0);
+                      setLowerPriceFilter("0");
                       setUpperPrice(15000);
+                      setUpperPriceFilter(currencyConvert(15000));
                     }}
                   >
                     <p className="Items_Filter_Price">0 to 15,000</p>
@@ -555,6 +571,8 @@ function Items() {
                     onClick={() => {
                       setLowerPrice(15001);
                       setUpperPrice(30000);
+                      setLowerPriceFilter(currencyConvert(15001));
+                      setUpperPriceFilter(currencyConvert(30000));
                     }}
                   >
                     <p className="Items_Filter_Price">15,001 to 30,000</p>
@@ -562,8 +580,10 @@ function Items() {
                   <div
                     className="Items_Filter--Filter_Name_Container"
                     onClick={() => {
-                      setLowerPrice(30000);
+                      setLowerPrice(30001);
                       setUpperPrice(45000);
+                      setLowerPriceFilter(currencyConvert(30001));
+                      setUpperPriceFilter(currencyConvert(30000));
                     }}
                   >
                     <p className="Items_Filter_Price">30,001 to 45,000</p>
@@ -571,8 +591,10 @@ function Items() {
                   <div
                     className="Items_Filter--Filter_Name_Container"
                     onClick={() => {
-                      setLowerPrice(45000);
+                      setLowerPrice(45001);
                       setUpperPrice(60000);
+                      setLowerPriceFilter(currencyConvert(45001));
+                      setUpperPriceFilter(currencyConvert(60000));
                     }}
                   >
                     <p className="Items_Filter_Price">45,001 to 60,000</p>
@@ -580,8 +602,10 @@ function Items() {
                   <div
                     className="Items_Filter--Filter_Name_Container"
                     onClick={() => {
-                      setLowerPrice(60000);
+                      setLowerPrice(60001);
                       setUpperPrice(75000);
+                      setLowerPriceFilter(currencyConvert(60001));
+                      setUpperPriceFilter(currencyConvert(75000));
                     }}
                   >
                     <p className="Items_Filter_Price">60,001 to 75,000</p>
@@ -589,8 +613,10 @@ function Items() {
                   <div
                     className="Items_Filter--Filter_Name_Container"
                     onClick={() => {
-                      setLowerPrice(75000);
+                      setLowerPrice(75001);
                       setUpperPrice(0);
+                      setLowerPriceFilter(currencyConvert(75001));
+                      setUpperPriceFilter('and above');
                     }}
                   >
                     <p className="Items_Filter_Price">75,001 and above</p>
