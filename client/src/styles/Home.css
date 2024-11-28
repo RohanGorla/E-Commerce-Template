@@ -9,6 +9,39 @@
     position: relative;
 }
 
+.Home_Title {
+    position: absolute;
+    top: 100px;
+    left: 200px;
+}
+
+.Home_Title h1 {
+    font-family: var(--Home_Main_Font);
+    font-size: var(--Home_Store_Name);
+}
+
+.Home_Title p {
+    font-family: var(--Home_Main_Font);
+    font-size: var(--Home_Store_Quote);
+}
+
+.Home_Title button {
+    background-color: black;
+    color: white;
+    font-family: var(--Home_Main_Font);
+    font-size: var(--Home_Shop_Now_Button);
+    font-weight: 600;
+    padding: .6em 1.4em;
+    border-style: none;
+    border-radius: 7px;
+    margin-top: 1em;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+}
+
 .Home_BG--Image {
     max-width: 100dvw;
 }
