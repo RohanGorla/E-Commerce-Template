@@ -495,16 +495,18 @@ function Items() {
           <div className="Items_Filters_Container">
             <div className="Items_Applied_Filters">
               <div className="Items_Applied_Filters--Filter">
-                <p>{selectedCompany}</p>
+                <span>{selectedCompany}</span>
+                <span className="Items_Applied_Filters--Remove_Filter">X</span>
               </div>
               <div className="Items_Applied_Filters--Filter">
-                <p>
+                <span>
                   {upperPrice
                     ? `${lowerPriceFilter} - ${upperPriceFilter}`
                     : lowerPrice
                     ? `75,001 and above`
                     : ``}
-                </p>
+                </span>
+                <span className="Items_Applied_Filters--Remove_Filter">X</span>
               </div>
             </div>
             <div className="Items_Filters">

@@ -6,6 +6,7 @@
     --Prdct_Disc_Fs: 13px;
     --Prdct_Pric_Fs: 20px;
     --Prdct_MRP_Fs: 13px;
+    --Prdct_Applied_Filter: 14px;
     --Prdct_Fltr_Fs: 15px;
     --Prdct_WishlistHeading_Fs: 22px; 
     --Prdct_WishlistName_Fs: 16px;
@@ -288,6 +289,28 @@
 }
 
 /* Items Filters */
+
+.Items_Applied_Filters--Filter {
+    background-color: black;
+    width: fit-content;
+    margin-bottom: .5em;
+    padding: .5em 1em;
+    border-style: none;
+    border-radius: 7px;
+}
+
+.Items_Applied_Filters--Filter span {
+    font-family: var(--Prdct_Second_Ff);
+    font-size: var(--Prdct_Applied_Filter);
+}
+
+.Items_Applied_Filters--Remove_Filter {
+    margin-left: 1.2em;
+    cursor: pointer;
+    &:hover {
+        color: red;
+    }
+}
 
 .Items_Filters_Container {
     width: 20%;
