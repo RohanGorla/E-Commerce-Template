@@ -732,6 +732,22 @@ app.post("/getproduct", (req, res) => {
   });
 });
 
+app.get("/gethomeproducts", (req, res) => {
+  let moreDiscount;
+  db.query(
+    "select * from products order by discount desc limit 5",
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      moreDiscount = data;
+    }
+  );
+});
+
 app.post("/addproduct", async (req, res) => {
   // Adding values to DB
   const values = [
