@@ -326,6 +326,8 @@ function Items() {
               return product;
             }
           }
+        } else {
+          return product;
         }
       }
     });
@@ -494,11 +496,30 @@ function Items() {
           {/* Items Filters */}
           <div className="Items_Filters_Container">
             <div className="Items_Applied_Filters">
-              <div className="Items_Applied_Filters--Filter">
+              <div
+                className={
+                  selectedCompany
+                    ? "Items_Applied_Filters--Filter"
+                    : "Items_Applied_Filters--Filter--Inactive"
+                }
+              >
                 <span>{selectedCompany}</span>
-                <span className="Items_Applied_Filters--Remove_Filter">X</span>
+                <span
+                  className="Items_Applied_Filters--Remove_Filter"
+                  onClick={() => {
+                    setSelectedCompany("");
+                  }}
+                >
+                  X
+                </span>
               </div>
-              <div className="Items_Applied_Filters--Filter">
+              <div
+                className={
+                  lowerPrice || upperPrice
+                    ? "Items_Applied_Filters--Filter"
+                    : "Items_Applied_Filters--Filter--Inactive"
+                }
+              >
                 <span>
                   {upperPrice
                     ? `${lowerPriceFilter} - ${upperPriceFilter}`
@@ -506,7 +527,15 @@ function Items() {
                     ? `75,001 and above`
                     : ``}
                 </span>
-                <span className="Items_Applied_Filters--Remove_Filter">X</span>
+                <span
+                  className="Items_Applied_Filters--Remove_Filter"
+                  onClick={() => {
+                    setLowerPrice(0);
+                    setUpperPrice(0);
+                  }}
+                >
+                  X
+                </span>
               </div>
             </div>
             <div className="Items_Filters">

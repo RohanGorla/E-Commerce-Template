@@ -299,6 +299,10 @@
     border-radius: 7px;
 }
 
+.Items_Applied_Filters--Filter--Inactive {
+    display: none;
+}
+
 .Items_Applied_Filters--Filter span {
     font-family: var(--Prdct_Second_Ff);
     font-size: var(--Prdct_Applied_Filter);
