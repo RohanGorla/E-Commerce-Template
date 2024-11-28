@@ -1,0 +1,18 @@
+:root {
+    --Home_Main_Font: "Inter", sans-serif;
+    --Home_Store_Name: 80px;
+    --Home_Store_Quote: 20px;
+    --Home_Shop_Now_Button: 18px;
+}
+
+.Home_Header {
+    position: relative;
+}
+
+.Home_BG--Image {
+    max-width: 100dvw;
+}
+
+.Home_BG--Image img {
+    width: 100%;
+}
