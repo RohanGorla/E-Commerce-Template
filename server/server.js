@@ -2027,6 +2027,31 @@ app.post("/placeorder", (req, res) => {
                 "Some error has occurred! Please try again or refresh the page!",
             });
           }
+          db.query(
+            "select (total_sales) from products where id = ?",
+            [product.productid],
+            (err, data) => {
+              if (err)
+                return res.send({
+                  access: false,
+                  errorMsg:
+                    "Some error has occurred! Please try again or refresh the page!",
+                });
+              let sales = data[0].total_sales + product.count;
+              db.query(
+                "update products set ? where id = ?",
+                [{ total_sales: sales }, product.productid],
+                (err, data) => {
+                  if (err)
+                    return res.send({
+                      access: false,
+                      errorMsg:
+                        "Some error has occurred! Please try again or refresh the page!",
+                    });
+                }
+              );
+            }
+          );
         }
       );
     });
