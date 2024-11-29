@@ -75,7 +75,34 @@ function Home() {
             })}
           </div>
         </div>
-        <div className="Home_Products_Section"></div>
+        <div className="Home_Products_Section">
+        <h2>Most Bought</h2>
+          <div className="Home_Products_Container">
+            {mostBought.map((product, index) => {
+              return (
+                <div key={index} className="Home_Product">
+                  <div className="Home_Product--Image">
+                    <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                  </div>
+                  <div className="Home_Product--Details">
+                    <p className="Home_Product--Name">{product.title}</p>
+                    <p className="Home_Product--Price">
+                      ₹{product.final_price}
+                    </p>
+                    <div>
+                      <span className="Home_Product--Discount">
+                        -{product.discount}%
+                      </span>
+                      <span className="Home_Product--MRP">
+                        M.R.P: ₹{product.price}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
