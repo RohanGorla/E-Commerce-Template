@@ -20,6 +20,19 @@ function Home() {
     }
   }
 
+  function currencyConvert(amount) {
+    let amountString = amount.toString();
+    let amountArray = amountString.split("").reverse();
+    let iterator = Math.floor(amountArray.length / 2);
+    let k = 3;
+    for (let j = 0; j < iterator - 1; j++) {
+      amountArray.splice(k, 0, ",");
+      k += 3;
+    }
+    let finalAmount = amountArray.reverse().join("");
+    return finalAmount;
+  }
+
   useEffect(() => {
     if (userInfo.mailId) {
       getProducts();
@@ -51,6 +64,18 @@ function Home() {
           <h2>Best Offers</h2>
           <div className="Home_Products_Container">
             {mostDiscount.map((product, index) => {
+              let final_price;
+              if (product.final_price.toString().split(".").length !== 2) {
+                final_price = currencyConvert(product.final_price) + ".00";
+              } else {
+                final_price =
+                  currencyConvert(
+                    product.final_price.toString().split(".")[0]
+                  ) +
+                  "." +
+                  product.final_price.toString().split(".")[1].padEnd(2, "0");
+              }
+              const price = currencyConvert(product.price);
               return (
                 <div key={index} className="Home_Product">
                   <div className="Home_Product--Image">
@@ -58,16 +83,12 @@ function Home() {
                   </div>
                   <div className="Home_Product--Details">
                     <p className="Home_Product--Name">{product.title}</p>
-                    <p className="Home_Product--Price">
-                      ₹{product.final_price}
-                    </p>
+                    <p className="Home_Product--Price">₹{final_price}</p>
                     <div>
                       <span className="Home_Product--Discount">
                         -{product.discount}%
                       </span>
-                      <span className="Home_Product--MRP">
-                        M.R.P: ₹{product.price}
-                      </span>
+                      <span className="Home_Product--MRP">M.R.P: ₹{price}</span>
                     </div>
                   </div>
                 </div>
@@ -79,6 +100,18 @@ function Home() {
           <h2>Most Bought</h2>
           <div className="Home_Products_Container">
             {mostBought.map((product, index) => {
+              let final_price;
+              if (product.final_price.toString().split(".").length !== 2) {
+                final_price = currencyConvert(product.final_price) + ".00";
+              } else {
+                final_price =
+                  currencyConvert(
+                    product.final_price.toString().split(".")[0]
+                  ) +
+                  "." +
+                  product.final_price.toString().split(".")[1].padEnd(2, "0");
+              }
+              const price = currencyConvert(product.price);
               return (
                 <div key={index} className="Home_Product">
                   <div className="Home_Product--Image">
@@ -86,16 +119,12 @@ function Home() {
                   </div>
                   <div className="Home_Product--Details">
                     <p className="Home_Product--Name">{product.title}</p>
-                    <p className="Home_Product--Price">
-                      ₹{product.final_price}
-                    </p>
+                    <p className="Home_Product--Price">₹{final_price}</p>
                     <div>
                       <span className="Home_Product--Discount">
                         -{product.discount}%
                       </span>
-                      <span className="Home_Product--MRP">
-                        M.R.P: ₹{product.price}
-                      </span>
+                      <span className="Home_Product--MRP">M.R.P: ₹{price}</span>
                     </div>
                   </div>
                 </div>
