@@ -76,7 +76,7 @@ function Home() {
           </div>
         </div>
         <div className="Home_Products_Section">
-        <h2>Most Bought</h2>
+          <h2>Most Bought</h2>
           <div className="Home_Products_Container">
             {mostBought.map((product, index) => {
               return (

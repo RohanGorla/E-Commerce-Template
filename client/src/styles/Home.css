@@ -67,6 +67,14 @@
     border-style: none;
     border-radius: 8px;
     margin-top: 2em;
+    &:hover {
+        .Home_Products_Container::-webkit-scrollbar-thumb {
+            background-color: rgb(15, 15, 15);
+            border-style: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+    }
 }
 
 .Home_Products_Section h2 {
@@ -81,6 +89,18 @@
     overflow-x: scroll;
 }
 
+.Home_Products_Container::-webkit-scrollbar {
+    height: 10px;
+    visibility: hidden;
+}
+
+.Home_Products_Container::-webkit-scrollbar-thumb {
+    background-color: rgb(45, 45, 45);
+    border-style: none;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
 .Home_Product {
     background-color: black;
     flex-shrink: 0;
@@ -88,6 +108,7 @@
     border-style: none;
     border-radius: 8px;
     padding: 1em;
+    margin-bottom: 1em;
 }
 
 .Home_Product +
