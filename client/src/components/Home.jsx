@@ -79,10 +79,26 @@ function Home() {
               return (
                 <div key={index} className="Home_Product">
                   <div className="Home_Product--Image">
-                    <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    <img
+                      src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                      onClick={() => {
+                        window.open(
+                          `${window.location.origin}/products/product/${product.id}`
+                        );
+                      }}
+                    ></img>
                   </div>
                   <div className="Home_Product--Details">
-                    <p className="Home_Product--Name">{product.title}</p>
+                    <p
+                      className="Home_Product--Name"
+                      onClick={() => {
+                        window.open(
+                          `${window.location.origin}/products/product/${product.id}`
+                        );
+                      }}
+                    >
+                      {product.title}
+                    </p>
                     <p className="Home_Product--Price">₹{final_price}</p>
                     <div>
                       <span className="Home_Product--Discount">
@@ -115,10 +131,26 @@ function Home() {
               return (
                 <div key={index} className="Home_Product">
                   <div className="Home_Product--Image">
-                    <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    <img
+                      src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                      onClick={() => {
+                        window.open(
+                          `${window.location.origin}/products/product/${product.id}`
+                        );
+                      }}
+                    ></img>
                   </div>
                   <div className="Home_Product--Details">
-                    <p className="Home_Product--Name">{product.title}</p>
+                    <p
+                      className="Home_Product--Name"
+                      onClick={() => {
+                        window.open(
+                          `${window.location.origin}/products/product/${product.id}`
+                        );
+                      }}
+                    >
+                      {product.title}
+                    </p>
                     <p className="Home_Product--Price">₹{final_price}</p>
                     <div>
                       <span className="Home_Product--Discount">
