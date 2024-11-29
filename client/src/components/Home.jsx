@@ -34,11 +34,35 @@ function Home() {
         <div className="Home_Title">
           <h1>E-Commerce Store</h1>
           <p>For all your needs and more!</p>
-          <button>Shop now</button>
+          <button
+            onClick={() => {
+              navigate("/products");
+            }}
+          >
+            Shop now
+          </button>
         </div>
         <div className="Home_BG--Image">
           <img src={`data:image/jpeg;base64,${bg}`}></img>
         </div>
+      </div>
+      <div className="Home_Main">
+        <div className="Home_Products_Section">
+          <h2>Best Offers</h2>
+          <div className="Home_Products_Container">
+            {mostDiscount.map((product, index) => {
+              return (
+                <div key={index} className="Home_Product">
+                  <div className="Home_Product--Image">
+                    <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                  </div>
+                  <div className="Home_Product--Details"></div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="Home_Products_Section"></div>
       </div>
     </div>
   );
