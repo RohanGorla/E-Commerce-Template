@@ -525,8 +525,22 @@ function MerchantEditProduct() {
                       value={newCategory}
                       placeholder="Enter New Category..."
                     ></input>
-                    <div className="AddProduct_AddNewCategory--Button">
-                      <button onClick={addNewCategory}>Add</button>
+                    <div className="AddProduct_AddNewCategory--Buttons">
+                      <button
+                        className="AddProduct_AddNewCategory--Cancel_Button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowAddCategory(false);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="AddProduct_AddNewCategory--Add_Button"
+                        onClick={addNewCategory}
+                      >
+                        Add
+                      </button>
                     </div>
                   </div>
                 </div>
