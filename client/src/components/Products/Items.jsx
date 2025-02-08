@@ -732,9 +732,20 @@ function Items() {
                         </span>{" "}
                         ₹{offer_price}
                       </p>
-                      <p className="Item_MRP">
-                        M.R.P: <span className="Item_MRP_Strike">₹{mrp}</span>
-                      </p>
+                      <div className="Item_MRP_And_Stock_Left">
+                        <p className="Item_MRP">
+                          M.R.P: <span className="Item_MRP_Strike">₹{mrp}</span>
+                        </p>
+                        <p
+                          className={
+                            product.stock_left < 10
+                              ? "Item_Stock_Left"
+                              : "Item_Stock_Left--Inactive"
+                          }
+                        >
+                          Only {product.stock_left} left in stock!
+                        </p>
+                      </div>
                       <div className="Item_Buttons">
                         <button
                           className="Item_Addtocart_Btn"
