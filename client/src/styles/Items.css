@@ -1,508 +1,521 @@
 :root {
-    --Prdct_Main_Ff: "Inter", sans-serif;
-    --Prdct_Second_Ff: "Roboto", sans-serif;
-    --Prdct_Name_Fs: 20px;
-    --Prdct_Comp_Fs: 13px;
-    --Prdct_Disc_Fs: 13px;
-    --Prdct_Pric_Fs: 20px;
-    --Prdct_MRP_Fs: 13px;
-    --Prdct_Applied_Filter: 14px;
-    --Prdct_Fltr_Fs: 15px;
-    --Prdct_WishlistHeading_Fs: 22px; 
-    --Prdct_WishlistName_Fs: 16px;
-    --Prdct_Btn_Fs: 15px;
-    --Prdct_WishlistBtn_Fs: 14px;
-    --Items_Error--Heading: 20px;
-    --Items_Error--Message: 16px;
-    --Items_Wishlist_Selector--Lists_Error: 16px;
+  --Prdct_Main_Ff: "Inter", sans-serif;
+  --Prdct_Second_Ff: "Roboto", sans-serif;
+  --Prdct_Name_Fs: 20px;
+  --Prdct_Comp_Fs: 13px;
+  --Prdct_Disc_Fs: 13px;
+  --Prdct_Pric_Fs: 20px;
+  --Prdct_MRP_Fs: 13px;
+  --Prdct_Applied_Filter: 14px;
+  --Prdct_Fltr_Fs: 15px;
+  --Prdct_WishlistHeading_Fs: 22px;
+  --Prdct_WishlistName_Fs: 16px;
+  --Prdct_Btn_Fs: 15px;
+  --Prdct_WishlistBtn_Fs: 14px;
+  --Items_Error--Heading: 20px;
+  --Items_Error--Message: 16px;
+  --Items_Wishlist_Selector--Lists_Error: 16px;
 }
 
 .Items_Page {
-    position: relative;
-    height: 100%;
+  position: relative;
+  height: 100%;
 }
 
 .Items_Container {
-    height: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .Items_Main {
-    max-width: 1900px;
-    height: 100%;
-    margin: 0 auto;
-    padding: .5em;
-    display: flex;
+  max-width: 1900px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0.5em;
+  display: flex;
 }
 
 /* Add Wishlist Box */
 
 .Items_AddNewList_Container {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Items_AddNewList_Container--Inactive {
-    display: none;
+  display: none;
 }
 
 .Items_AddNewList--Tint {
-    background-color: black;
-    position: absolute;
-    z-index: 2;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    opacity: .8;
+  background-color: black;
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
 }
 
 .Items_AddNewList {
-    background-color: rgb(64, 64, 64);
-    position: relative;
-    z-index: 3;
-    width: 700px;
-    padding: 2em 4em;
-    border-style: none;
-    border-radius: 10px;
-    border: solid 1.5px white;
+  background-color: rgb(64, 64, 64);
+  position: relative;
+  z-index: 3;
+  width: 700px;
+  padding: 2em 4em;
+  border-style: none;
+  border-radius: 10px;
+  border: solid 1.5px white;
 }
 
 .Items_AddNewList--Header,
 .Items_AddNewList--Error {
-    background-color: rgb(25, 25, 25);
-    padding: 1.4em .7em;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
+  background-color: rgb(25, 25, 25);
+  padding: 1.4em 0.7em;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
 }
 
 .Items_AddNewList--Error {
-    background-color: rgb(197, 61, 61);
-    margin-top: .5em;
+  background-color: rgb(197, 61, 61);
+  margin-top: 0.5em;
 }
 
 .Items_AddNewList--Error--Inactive {
-    display: none;
+  display: none;
 }
 
 .Items_AddNewList--Header_Heading,
 .Items_AddNewList--Error_Heading {
-    font-size: var(--Wish_AddNewList--Header_Heading);
-    font-family: var(--Prdct_Main_Ff);
-    font-weight: 700;
-    margin-bottom: .2em;
+  font-size: var(--Wish_AddNewList--Header_Heading);
+  font-family: var(--Prdct_Main_Ff);
+  font-weight: 700;
+  margin-bottom: 0.2em;
 }
 
 .Items_AddNewList--Header_Note,
 .Items_AddNewList--Error_Note {
-    font-size: var(--Wish_AddNewList--Header_Note);
-    font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Wish_AddNewList--Header_Note);
+  font-family: var(--Prdct_Second_Ff);
 }
 
 .Items_AddNewList--Input {
-    background-color: rgb(25, 25, 25);
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
-    margin-top: 1.3em;
-    padding: 1.4em 2.7em;
+  background-color: rgb(25, 25, 25);
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
+  margin-top: 1.3em;
+  padding: 1.4em 2.7em;
 }
 
 .Items_AddNewList--Input label {
-    font-size: var(--Wish_AddNewList_Input--Label);
-    font-family: var(--Prdct_Second_Ff);
-    font-weight: 500;
-    display: block;
-    margin-bottom: .3em;
+  font-size: var(--Wish_AddNewList_Input--Label);
+  font-family: var(--Prdct_Second_Ff);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.3em;
 }
 
 .Items_AddNewList--Input input {
-    font-size: var(--Wish_AddNewList_Input);
-    font-family: var(--Prdct_Second_Ff);
-    padding: .3em .2em .2em .4em;
-    margin-bottom: 1em;
-    border-style: none;
+  font-size: var(--Wish_AddNewList_Input);
+  font-family: var(--Prdct_Second_Ff);
+  padding: 0.3em 0.2em 0.2em 0.4em;
+  margin-bottom: 1em;
+  border-style: none;
 }
 
 .Items_AddNewList--Input_Buttons button {
-    font-size: var(--Wish_AddNewList_Buttons);
-    font-family: var(--Prdct_Second_Ff);
-    font-weight: 500;
-    padding: .4em .8em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: var(--Wish_AddNewList_Buttons);
+  font-family: var(--Prdct_Second_Ff);
+  font-weight: 500;
+  padding: 0.4em 0.8em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .Items_AddNewList--Buttons_Cancel {
-    background-color: rgb(248, 66, 66);
-    color: white;
+  background-color: rgb(248, 66, 66);
+  color: white;
 }
 
 .Items_AddNewList--Buttons_Create {
-    background-color: goldenrod;
-    color: black;
-    margin-left: .5em;
+  background-color: goldenrod;
+  color: black;
+  margin-left: 0.5em;
 }
 
 /* Wishlist Selector Container */
 
 .Items_Wishlist_Selector {
-    display: none;
+  display: none;
 }
 
 .Items_Wishlist_Selector--Active {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Items_Wishlist_Selector--Tint {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    opacity: .8;
-    background-color: black;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  background-color: black;
 }
 
 .Items_Wishlist_Selector--Container {
-    background-color: #242424;
-    position: absolute;
-    z-index: 1;
-    width: 400px;
-    height: 500px;
-    display: grid;
-    grid-template-areas: 'WS_Header'
-                         'WS_Lists'
-                         'WS_Button';
-    grid-template-rows: 90px 1fr 50px;
-    border-style: none;
-    border: 2px solid white;
-    border-radius: 8px;
+  background-color: #242424;
+  position: absolute;
+  z-index: 1;
+  width: 400px;
+  height: 500px;
+  display: grid;
+  grid-template-areas:
+    "WS_Header"
+    "WS_Lists"
+    "WS_Button";
+  grid-template-rows: 90px 1fr 50px;
+  border-style: none;
+  border: 2px solid white;
+  border-radius: 8px;
 }
 
 .Items_Wishlist_Selector--Header_Container {
-    grid-area: WS_Header;
-    padding: 1em;
+  grid-area: WS_Header;
+  padding: 1em;
 }
 
 .Items_Wishlist_Selector--Header {
-    background-color: rgb(25, 25, 25);
-    padding: 1em;
-    border-style: none;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: rgb(25, 25, 25);
+  padding: 1em;
+  border-style: none;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Items_Wishlist_Selector--Header_Heading {
-    font-size: var(--Prdct_WishlistHeading_Fs);
-    font-family: var(--Prdct_Main_Ff);
-    /* text-align: center; */
+  font-size: var(--Prdct_WishlistHeading_Fs);
+  font-family: var(--Prdct_Main_Ff);
+  /* text-align: center; */
 }
 
 .Items_Wishlist_Selector--Header_Button {
-    background-color: goldenrod;
-    font-size: var(--Prdct_WishlistBtn_Fs);
-    font-family: var(--Prdct_Second_Ff);
-    font-weight: 600;
-    padding: .6em 1em;
-    border-style: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.03) scaleY(1.04);
-    }
+  background-color: goldenrod;
+  font-size: var(--Prdct_WishlistBtn_Fs);
+  font-family: var(--Prdct_Second_Ff);
+  font-weight: 600;
+  padding: 0.6em 1em;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.03) scaleY(1.04);
+  }
 }
 
 .Items_Wishlist_Selector--Lists {
-    grid-area: WS_Lists;
-    overflow-y: scroll;
-    padding: .5em 2em;
+  grid-area: WS_Lists;
+  overflow-y: scroll;
+  padding: 0.5em 2em;
 }
 
 .Items_Wishlist_Selector--List {
-    background-color: rgb(24, 23, 23);
-    /* text-align: center; */
-    width: 100%;
-    padding: 1em;
-    border-radius: 7px;
-    cursor: pointer;
-    &:hover {
-        color: red;
-    }
+  background-color: rgb(24, 23, 23);
+  /* text-align: center; */
+  width: 100%;
+  padding: 1em;
+  border-radius: 7px;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 }
 
-.Items_Wishlist_Selector--List +
-.Items_Wishlist_Selector--List {
-    margin-top: .5em;
+.Items_Wishlist_Selector--List + .Items_Wishlist_Selector--List {
+  margin-top: 0.5em;
 }
 
 .Items_Wishlist_Selector--Listname {
-    font-size: var(--Prdct_WishlistName_Fs);
-    font-family: var(--Prdct_Main_Ff);
+  font-size: var(--Prdct_WishlistName_Fs);
+  font-family: var(--Prdct_Main_Ff);
 }
 
 .Items_Wishlist_Selector--Lists_Error {
-    font-family: var(--Prdct_Second_Ff);
-    font-size: var(--Items_Wishlist_Selector--Lists_Error);
-    font-weight: 500;
-    text-align: center;
+  font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Items_Wishlist_Selector--Lists_Error);
+  font-weight: 500;
+  text-align: center;
 }
 
 .Items_Wishlist_Selector--Buttons {
-    grid-area: WS_Button;
-    padding: .3em 2em;
-    cursor: pointer;
+  grid-area: WS_Button;
+  padding: 0.3em 2em;
+  cursor: pointer;
 }
 
 .Items_Wishlist_Selector--Buttons_Cancel {
-    background-color: black;
-    color: white;
-    font-size: var(--Prdct_WishlistBtn_Fs);
-    font-family: var(--Prdct_Second_Ff);
-    font-weight: 600;
-    padding: .7em 1em;
-    border-style: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.03) scaleY(1.04);
-        color: red;
-    }
+  background-color: black;
+  color: white;
+  font-size: var(--Prdct_WishlistBtn_Fs);
+  font-family: var(--Prdct_Second_Ff);
+  font-weight: 600;
+  padding: 0.7em 1em;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.03) scaleY(1.04);
+    color: red;
+  }
 }
 
 /* Items Filters */
 
 .Items_Applied_Filters--Filter {
-    background-color: black;
-    width: fit-content;
-    margin-bottom: .5em;
-    padding: .5em 1em;
-    border-style: none;
-    border-radius: 7px;
+  background-color: black;
+  width: fit-content;
+  margin-bottom: 0.5em;
+  padding: 0.5em 1em;
+  border-style: none;
+  border-radius: 7px;
 }
 
 .Items_Applied_Filters--Filter--Inactive {
-    display: none;
+  display: none;
 }
 
 .Items_Applied_Filters--Filter span {
-    font-family: var(--Prdct_Second_Ff);
-    font-size: var(--Prdct_Applied_Filter);
+  font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Prdct_Applied_Filter);
 }
 
 .Items_Applied_Filters--Remove_Filter {
-    margin-left: 1.2em;
-    cursor: pointer;
-    &:hover {
-        color: red;
-    }
+  margin-left: 1.2em;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 }
 
 .Items_Filters_Container {
-    width: 20%;
-    height: 100%;
-    padding: 1em;
-    margin-right: .5em;
-    border-radius: 10px;
-    background-color: rgb(24, 23, 23);
+  width: 20%;
+  height: 100%;
+  padding: 1em;
+  margin-right: 0.5em;
+  border-radius: 10px;
+  background-color: rgb(24, 23, 23);
 }
 
 .Items_Filters {
-    height: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .Items_Filters_Label {
-    padding: .5em 1em;
-    background-color: #242424;
+  padding: 0.5em 1em;
+  background-color: #242424;
 }
 
-.Items_Filter_Container +
-.Items_Filter_Container {
-    margin-top: 1em;
+.Items_Filter_Container + .Items_Filter_Container {
+  margin-top: 1em;
 }
 
 .Items_Filter_Container {
-    font-size: var(--Prdct_Fltr_Fs);
-    font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Prdct_Fltr_Fs);
+  font-family: var(--Prdct_Second_Ff);
 }
 
 .Items_Filters_Label--Name {
-    padding: .5em 0em;
-    background-color: rgb(24, 23, 23);
-    text-align: center;
-    cursor: pointer;
+  padding: 0.5em 0em;
+  background-color: rgb(24, 23, 23);
+  text-align: center;
+  cursor: pointer;
 }
 
 .Items_Filter--Filter {
-    overflow-y: scroll;
-    transition: all .3s ease-in-out;
-    padding: 0em 1em;
+  overflow-y: scroll;
+  transition: all 0.3s ease-in-out;
+  padding: 0em 1em;
 }
 
 .Items_Filter--Filter--Inactive {
-    background-color: #242424;
-    max-height: 0px;
+  background-color: #242424;
+  max-height: 0px;
 }
 
 .Items_Filter--Filter--Active {
-    background-color: #242424;
-    max-height: 300px;
+  background-color: #242424;
+  max-height: 300px;
 }
 
 .Items_Filter--Filter_Name_Container {
-    text-align: center;
-    padding: .5em 0em;
-    margin: .3em 0em;
-    background-color: rgb(24, 23, 23);
-    cursor: pointer;
-    &:hover {
-        color: red;
-    }
+  text-align: center;
+  padding: 0.5em 0em;
+  margin: 0.3em 0em;
+  background-color: rgb(24, 23, 23);
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 }
 
 /* Actual Items List Container */
 
 .Items_List_Container {
-    width: 80%;
-    padding: 1em;
-    background-color: rgb(24, 23, 23);
-    border-radius: 10px;
+  width: 80%;
+  padding: 1em;
+  background-color: rgb(24, 23, 23);
+  border-radius: 10px;
 }
 
 .Items_List {
-    height: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .Item_Container {
-    display: flex;
-    background-color: #242424;
-    height: 300px;
-    border-radius: 10px;
+  display: flex;
+  background-color: #242424;
+  height: 300px;
+  border-radius: 10px;
 }
 
 .Item_Container + .Item_Container {
-    margin-top: 1em;
+  margin-top: 1em;
 }
 
 .Item_Image {
-    width: 25%;
-    margin: 0em 1.3em;
-    display: flex;
-    align-items: center;
+  width: 25%;
+  margin: 0em 1.3em;
+  display: flex;
+  align-items: center;
 }
 
 .Item_Image img {
-    max-width: 100%;
-    height: 220px;
-    cursor: pointer;
+  max-width: 100%;
+  height: 220px;
+  cursor: pointer;
 }
 
 .Item_Details {
-    width: 60%;
-    height: 100%;
-    position: relative;
-    padding: 1em 0;
+  width: 60%;
+  height: 100%;
+  position: relative;
+  padding: 1em 0;
 }
 
 .Item_Name {
-    line-height: 1.6;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: var(--Prdct_Name_Fs);
-    font-family: var(--Prdct_Main_Ff);
-    cursor: pointer;
-    &:hover {
-        color: orangered;
-    }
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--Prdct_Name_Fs);
+  font-family: var(--Prdct_Main_Ff);
+  cursor: pointer;
+  &:hover {
+    color: orangered;
+  }
 }
 
 .Item_Category {
-    margin: .7em 0 .5em 0;
-    font-size: var(--Prdct_Comp_Fs);
-    font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Prdct_Comp_Fs);
+  font-family: var(--Prdct_Second_Ff);
+  margin: 0.7em 0 0.5em 0;
 }
 
 .Item_Rating_Top_Star_Container {
-    display: flex;
-    align-items: center;
-    margin: 1em 0em 1em 0em;
+  display: flex;
+  align-items: center;
+  margin: 1em 0em 1em 0em;
 }
 
 .Item_Rating_Top {
-    font-family: var(--Prdct_Second_Ff)
+  font-family: var(--Prdct_Second_Ff);
 }
 
 .Item_Rating_Top_Star_Container--Box {
-    margin-left: .5em;
-    margin-right: 1em;
+  margin-left: 0.5em;
+  margin-right: 1em;
 }
 
-.Actual_Top_Star_Rating +
-.Actual_Top_Star_Rating {
-    margin-left: .2em;
+.Actual_Top_Star_Rating + .Actual_Top_Star_Rating {
+  margin-left: 0.2em;
 }
 
 .Item_Price {
-    font-size: var(--Prdct_Pric_Fs);
-    font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Prdct_Pric_Fs);
+  font-family: var(--Prdct_Second_Ff);
 }
 
 .Item_Discount {
-    font-size: var(--Prdct_Disc_Fs);
-    font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Prdct_Disc_Fs);
+  font-family: var(--Prdct_Second_Ff);
+}
+
+.Item_MRP_And_Stock_Left {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin: 0.5em 0em;
 }
 
 .Item_MRP {
-    margin: .5em 0em;
-    font-size: var(--Prdct_MRP_Fs);
-    font-family: var(--Prdct_Second_Ff);
+  font-size: var(--Prdct_MRP_Fs);
+  font-family: var(--Prdct_Second_Ff);
 }
 
 .Item_MRP_Strike {
-    text-decoration: line-through;
+  text-decoration: line-through;
+}
+
+.Item_Stock_Left {
+  font-family: var(--Prdct_Second_Ff);
+  color: rgb(246, 69, 69);
+}
+
+.Item_Stock_Left--Inactive {
+  display: none;
 }
 
 .Item_Buttons {
-    margin-top: 1em;
-    position: absolute;
-    bottom: 20px;
-    left: 0px;
+  margin-top: 1em;
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
 }
 
 .Item_Buttons button {
-    font-size: var(--Prdct_Btn_Fs);
-    font-family: var(--Prdct_Second_Ff);
-    padding: .5em .8em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: var(--Prdct_Btn_Fs);
+  font-family: var(--Prdct_Second_Ff);
+  padding: 0.5em 0.8em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .Item_Addtocart_Btn {
-    background-color: goldenrod;
-    margin-right: 1em;
+  background-color: goldenrod;
+  margin-right: 1em;
 }
