@@ -1,812 +1,823 @@
 :root {
-    --Product_Details--Main_Font: "Roboto", sans-serif;
-    --Product_Details--Side_Font: "Inter", sans-serif;
-    --Product_Wishlist_Heading: 22px;
-    --Product_Wishlist_Button: 14px;
-    --Product_Wishlist_Name: 16px;
-    --Product_Wishlist_Selector--Lists_Error: 16px;
-    --Product_Add_Address--Label: 16px;
-    --Product_Add_Address--Input: 15px;
-    --Product_Select_Address--Header_Heading: 24px;
-    --Product_Select_Address--Name: 18px;
-    --Product_Select_Address--Button: 16px;
-    --Product_Select_Address--Empty--Note: 16px;
-    --Product_Details--Name: 25px;
-    --Product_Details--Discount: 15px;
-    --Product_Details--Category: 15px;
-    --Product_Details--Rating: 16px;
-    --Product_Details--Mrp: 15px;
-    --Product_Details--FinalPrice: 23px;
-    --Product_Details--Address: 15px;
-    --Product_Details_Counter: 18px;
-    --Product_Details--Counter--Note: 16px;
-    --Product_Details--Button: 16px;
-    --Product_Details--About_And_Delivery_Title: 28px;
-    --Product_Details--About_And_Delivery_Info: 17px;
-    --Product_Main--Delivery--SubHeading: 20px;
-    --Product_Main--Delivery_Address--Addressname: 18px;
-    --Product_Main--Delivery_Address--Button: 14px;
-    --Product_Reviews--Header_Heading: 28px;
-    --Product_Reviews--Review--Note: 16px;
-    --Product_Reviews--Reviewer_Name: 18px;
-    --Product_Reviews--Button: 14px;
+  --Product_Details--Main_Font: "Roboto", sans-serif;
+  --Product_Details--Side_Font: "Inter", sans-serif;
+  --Product_Wishlist_Heading: 22px;
+  --Product_Wishlist_Button: 14px;
+  --Product_Wishlist_Name: 16px;
+  --Product_Wishlist_Selector--Lists_Error: 16px;
+  --Product_Add_Address--Label: 16px;
+  --Product_Add_Address--Input: 15px;
+  --Product_Select_Address--Header_Heading: 24px;
+  --Product_Select_Address--Name: 18px;
+  --Product_Select_Address--Button: 16px;
+  --Product_Select_Address--Empty--Note: 16px;
+  --Product_Details--Name: 25px;
+  --Product_Details--Discount: 15px;
+  --Product_Details--Category: 15px;
+  --Product_Details--Rating: 16px;
+  --Product_Details--Mrp: 15px;
+  --Product_Details--FinalPrice: 23px;
+  --Product_Details--Address: 15px;
+  --Product_Details_Counter: 18px;
+  --Product_Details--Counter--Note: 16px;
+  --Product_Details--Button: 16px;
+  --Product_Details--About_And_Delivery_Title: 28px;
+  --Product_Details--About_And_Delivery_Info: 17px;
+  --Product_Main--Delivery--SubHeading: 20px;
+  --Product_Main--Delivery_Address--Addressname: 18px;
+  --Product_Main--Delivery_Address--Button: 14px;
+  --Product_Reviews--Header_Heading: 28px;
+  --Product_Reviews--Review--Note: 16px;
+  --Product_Reviews--Reviewer_Name: 18px;
+  --Product_Reviews--Button: 14px;
 }
 
 .Product_Page {
-    position: relative;
-    height: 100%;
+  position: relative;
+  height: 100%;
 }
 
 .Product_Main_Container {
-    overflow-y: scroll;
-    height: 100%;
-    width: 100%;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
 }
 
 .Product_Main {
-    max-width: 1400px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 1em 2em;
-    font-optical-sizing: auto;
-    font-style: normal;
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 1em 2em;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 /* Select Wishlist Container */
 
 .Product_Wishlist_Selector {
-    display: none;
+  display: none;
 }
 
 .Product_Wishlist_Selector--Active {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Product_Wishlist_Selector--Tint {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    opacity: .8;
-    background-color: black;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  background-color: black;
 }
 
 .Product_Wishlist_Selector--Container {
-    background-color: #242424;
-    position: absolute;
-    z-index: 1;
-    width: 400px;
-    height: 500px;
-    display: grid;
-    grid-template-areas: 'WS_Header'
-                         'WS_Lists'
-                         'WS_Button';
-    grid-template-rows: 90px 1fr 50px;
-    border-style: none;
-    border: 2px solid white;
-    border-radius: 8px;
+  background-color: #242424;
+  position: absolute;
+  z-index: 1;
+  width: 400px;
+  height: 500px;
+  display: grid;
+  grid-template-areas:
+    "WS_Header"
+    "WS_Lists"
+    "WS_Button";
+  grid-template-rows: 90px 1fr 50px;
+  border-style: none;
+  border: 2px solid white;
+  border-radius: 8px;
 }
 
 .Product_Wishlist_Selector--Header_Container {
-    grid-area: WS_Header;
-    padding: 1em;
+  grid-area: WS_Header;
+  padding: 1em;
 }
 
 .Product_Wishlist_Selector--Header {
-    background-color: rgb(25, 25, 25);
-    padding: 1em;
-    border-style: none;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: rgb(25, 25, 25);
+  padding: 1em;
+  border-style: none;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Product_Wishlist_Selector--Header_Heading {
-    font-size: var(--Product_Wishlist_Heading);
-    font-family: var(--Product_Details--Main_Font);
-    /* text-align: center; */
+  font-size: var(--Product_Wishlist_Heading);
+  font-family: var(--Product_Details--Main_Font);
+  /* text-align: center; */
 }
 
 .Product_Wishlist_Selector--Header_Button {
-    background-color: goldenrod;
-    font-size: var(--Product_Wishlist_Button);
-    font-family: var(--Product_Details--Side_Font);
-    font-weight: 600;
-    padding: .6em 1em;
-    border-style: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.03) scaleY(1.04);
-    }
+  background-color: goldenrod;
+  font-size: var(--Product_Wishlist_Button);
+  font-family: var(--Product_Details--Side_Font);
+  font-weight: 600;
+  padding: 0.6em 1em;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.03) scaleY(1.04);
+  }
 }
 
 .Product_Wishlist_Selector--Lists {
-    grid-area: WS_Lists;
-    overflow-y: scroll;
-    padding: .5em 2em;
+  grid-area: WS_Lists;
+  overflow-y: scroll;
+  padding: 0.5em 2em;
 }
 
 .Product_Wishlist_Selector--List {
-    background-color: rgb(24, 23, 23);
-    /* text-align: center; */
-    width: 100%;
-    padding: 1em;
-    border-radius: 7px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-        .Product_Wishlist_Selector--Listname {
-            color: red;
-        }        
+  background-color: rgb(24, 23, 23);
+  /* text-align: center; */
+  width: 100%;
+  padding: 1em;
+  border-radius: 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    .Product_Wishlist_Selector--Listname {
+      color: red;
     }
+  }
 }
 
-.Product_Wishlist_Selector--List +
-.Product_Wishlist_Selector--List {
-    margin-top: .5em;
+.Product_Wishlist_Selector--List + .Product_Wishlist_Selector--List {
+  margin-top: 0.5em;
 }
 
 .Product_Wishlist_Selector--Listname {
-    font-size: var(--Product_Wishlist_Name);
-    font-family: var(--Product_Details--Main_Font);
+  font-size: var(--Product_Wishlist_Name);
+  font-family: var(--Product_Details--Main_Font);
 }
 
 .Product_Wishlist_Selector--Heart--Wished {
-    color: red;
+  color: red;
 }
 
 .Product_Wishlist_Selector--Heart--Notwished {
-    color: rgb(160, 160, 160);
+  color: rgb(160, 160, 160);
 }
 
 .Product_Wishlist_Selector--Lists_Error {
-    font-family: var(--Product_Details--Side_Font);
-    font-size: var(--Product_Wishlist_Selector--Lists_Error);
-    font-weight: 500;
-    text-align: center;
+  font-family: var(--Product_Details--Side_Font);
+  font-size: var(--Product_Wishlist_Selector--Lists_Error);
+  font-weight: 500;
+  text-align: center;
 }
 
 .Product_Wishlist_Selector--Buttons {
-    grid-area: WS_Button;
-    padding: .3em 2em;
-    cursor: pointer;
+  grid-area: WS_Button;
+  padding: 0.3em 2em;
+  cursor: pointer;
 }
 
 .Product_Wishlist_Selector--Buttons_Cancel {
-    background-color: black;
-    color: white;
-    font-size: var(--Product_Wishlist_Button);
-    font-family: var(--Product_Details--Side_Font);
-    font-weight: 600;
-    padding: .7em 1em;
-    border-style: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.03) scaleY(1.04);
-        color: red;
-    }
+  background-color: black;
+  color: white;
+  font-size: var(--Product_Wishlist_Button);
+  font-family: var(--Product_Details--Side_Font);
+  font-weight: 600;
+  padding: 0.7em 1em;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.03) scaleY(1.04);
+    color: red;
+  }
 }
 
 /* Add And Select Address Boxes */
 
 .Product_Add_Address,
 .Product_Select_Address {
-    font-family: var(--Product_Details--Main_Font);
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: var(--Product_Details--Main_Font);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Product_Order_Placed--Inactive,
 .Product_Add_Address--Inactive,
 .Product_Select_Address--Inactive {
-    display: none;
+  display: none;
 }
 
 .Product_Add_Address--Tint,
 .Product_Select_Address--Tint {
-    position: absolute;
-    z-index: 2;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: .8;
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.8;
 }
 
 .Product_Add_Address--Container,
 .Product_Select_Address--Address_Container {
-    background-color: rgb(35, 35, 35);
-    position: relative;
-    z-index: 3;
-    width: 400px;
-    height: 600px;
-    padding: 1em;
-    border-style: none;
-    border-radius: 9px;
-    border: 2px solid white;
+  background-color: rgb(35, 35, 35);
+  position: relative;
+  z-index: 3;
+  width: 400px;
+  height: 600px;
+  padding: 1em;
+  border-style: none;
+  border-radius: 9px;
+  border: 2px solid white;
 }
 
 .Product_Add_Address--Header h3,
 .Product_Select_Address--Header h3 {
-    font-size: var(--Product_Select_Address--Header_Heading);
+  font-size: var(--Product_Select_Address--Header_Heading);
 }
 
 .Product_Select_Address--Header button {
-    font-size: var(--Product_Select_Address--Button);
-    font-weight: 600;
-    background-color: goldenrod;
-    padding: .5em 1.5em;
-    border-style: none;
-    border-radius: 5px;
-    margin-top: .5em;
-    cursor: pointer;
+  font-size: var(--Product_Select_Address--Button);
+  font-weight: 600;
+  background-color: goldenrod;
+  padding: 0.5em 1.5em;
+  border-style: none;
+  border-radius: 5px;
+  margin-top: 0.5em;
+  cursor: pointer;
 }
 
 .Product_Add_Address--Subcontainer,
 .Product_Select_Address--Address_Subcontainer {
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
 }
 
 .Product_Add_Address--Header {
-    background-color: rgb(35, 35, 35);
-    position: sticky;
-    top: 0px;
-    padding: .2em 0em .5em 0em;
+  background-color: rgb(35, 35, 35);
+  position: sticky;
+  top: 0px;
+  padding: 0.2em 0em 0.5em 0em;
 }
 
-.Product_Add_Address--Portion +
-.Product_Add_Address--Portion {
-    margin-top: 1em;
+.Product_Add_Address--Portion + .Product_Add_Address--Portion {
+  margin-top: 1em;
 }
 
 .Product_Add_Address--Portion label {
-    font-size: var(--Product_Add_Address--Label);
-    display: block;
+  font-size: var(--Product_Add_Address--Label);
+  display: block;
 }
 
 .Product_Add_Address--Portion input {
-    font-size: var(--Product_Add_Address--Input);
-    width: 250px;
-    margin-top: .3em;
-    padding: .3em .2em .2em .3em;
+  font-size: var(--Product_Add_Address--Input);
+  width: 250px;
+  margin-top: 0.3em;
+  padding: 0.3em 0.2em 0.2em 0.3em;
 }
 
 .Product_Add_Address--Portion button {
-    font-size: var(--Product_Select_Address--Button);
-    font-weight: 600;
-    background-color: goldenrod;
-    padding: .5em 2em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: var(--Product_Select_Address--Button);
+  font-weight: 600;
+  background-color: goldenrod;
+  padding: 0.5em 2em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .Product_Select_Address--Header {
-    background-color: rgb(35, 35, 35);
-    position: sticky;
-    top: 0px;
-    padding: .5em 0em 1em 0em;
+  background-color: rgb(35, 35, 35);
+  position: sticky;
+  top: 0px;
+  padding: 0.5em 0em 1em 0em;
 }
 
 .Close--Product_Add_Address,
 .Close--Product_Select_Address {
-    position: absolute;
-    z-index: 3;
-    top: 1.5em;
-    right: 1.5em;
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-    &:hover {
-        .Close--Product_Add_Address--Cross::after,
-        .Close--Product_Select_Address--Cross::after {
-            background-color: red;
-        }
-        .Close--Product_Add_Address--Cross::before,
-        .Close--Product_Select_Address--Cross::before {
-            background-color: red;
-        }
+  position: absolute;
+  z-index: 3;
+  top: 1.5em;
+  right: 1.5em;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  &:hover {
+    .Close--Product_Add_Address--Cross::after,
+    .Close--Product_Select_Address--Cross::after {
+      background-color: red;
     }
+    .Close--Product_Add_Address--Cross::before,
+    .Close--Product_Select_Address--Cross::before {
+      background-color: red;
+    }
+  }
 }
 
 .Close--Product_Add_Address--Cross,
 .Close--Product_Select_Address--Cross {
-    position: relative;
-    width: 28px;
-    height: 28px;
-    z-index: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Close--Product_Add_Address--Cross::after,
 .Close--Product_Select_Address--Cross::after {
-    background-color: white;
-    position: absolute;
-    display: block;
-    content: "";
-    width: 20px;
-    height: 3px;
-    margin: 0em auto;
-    transform: rotate(-45deg);
+  background-color: white;
+  position: absolute;
+  display: block;
+  content: "";
+  width: 20px;
+  height: 3px;
+  margin: 0em auto;
+  transform: rotate(-45deg);
 }
 
 .Close--Product_Add_Address--Cross::before,
 .Close--Product_Select_Address--Cross::before {
-    background-color: white;
-    position: absolute;
-    display: block;
-    content: "";
-    width: 20px;
-    height: 3px;
-    margin: 0em auto;
-    transform: rotate(45deg);
+  background-color: white;
+  position: absolute;
+  display: block;
+  content: "";
+  width: 20px;
+  height: 3px;
+  margin: 0em auto;
+  transform: rotate(45deg);
 }
 
 .Product_Select_Address--Address {
-    background-color: black;
-    padding: 1em;
-    border-style: none;
-    border-radius: 7px;
-    border: 1px solid white;
+  background-color: black;
+  padding: 1em;
+  border-style: none;
+  border-radius: 7px;
+  border: 1px solid white;
 }
 
-.Product_Select_Address--Address +
-.Product_Select_Address--Address {
-    margin-top: 1em;
+.Product_Select_Address--Address + .Product_Select_Address--Address {
+  margin-top: 1em;
 }
 
 .Product_Select_Address--Address p {
-    margin: .3em 0em;
+  margin: 0.3em 0em;
 }
 
 .Product_Select_Address--Name {
-    font-size: var(--Product_Select_Address--Name);
-    font-weight: 600;
+  font-size: var(--Product_Select_Address--Name);
+  font-weight: 600;
 }
 
 .Product_Select_Address--Button {
-    margin-top: 1em;
-    display: flex;
-    justify-content: center;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
 }
 
 .Product_Select_Address--Button button {
-    background-color: rgb(246, 195, 77);
-    font-size: var(--Product_Select_Address--Button);
-    font-weight: 600;
-    padding: .5em 1.5em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-        background-color: goldenrod;
-        transform: scaleX(1.01) scaleY(1.02);
-    }
+  background-color: rgb(246, 195, 77);
+  font-size: var(--Product_Select_Address--Button);
+  font-weight: 600;
+  padding: 0.5em 1.5em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: goldenrod;
+    transform: scaleX(1.01) scaleY(1.02);
+  }
 }
 
 .Product_Select_Address--Empty {
-    margin-top: 2em;
+  margin-top: 2em;
 }
 
 .Product_Select_Address--Empty--Note {
-    font-size: var(--Product_Select_Address--Empty--Note);
-    margin-bottom: .7em;
+  font-size: var(--Product_Select_Address--Empty--Note);
+  margin-bottom: 0.7em;
 }
 
 .Product_Select_Address--Empty--Button {
-    background-color: black;
-    color: white;
-    font-size: var(--Product_Select_Address--Button);
-    font-weight: 600;
-    padding: .65em 2em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-        background-color: rgb(210, 209, 209);
-        color: black;
-        transform: scaleX(1.01) scaleY(1.02);
-        border-radius: 7px;
-    }
+  background-color: black;
+  color: white;
+  font-size: var(--Product_Select_Address--Button);
+  font-weight: 600;
+  padding: 0.65em 2em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(210, 209, 209);
+    color: black;
+    transform: scaleX(1.01) scaleY(1.02);
+    border-radius: 7px;
+  }
 }
 
 .Product_Main--Product {
-    display: flex;
+  display: flex;
 }
 
 /* Product Images */
 
 .Product_Main--Product_Images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Product_Images--Main_Image {
-    width: 500px;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 500px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Product_Images--Main_Image img {
-    display: block;
-    width: 100%;
-    max-height: 100%;
+  display: block;
+  width: 100%;
+  max-height: 100%;
 }
 
 .Product_Images--More_Images {
-    display: flex;
-    justify-content: center;
-    margin-top: 2em;
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
 }
 
 .Product_More_Images--Image {
-    width: 80px;
-    height: 60px;
-    margin: 0 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  width: 80px;
+  height: 60px;
+  margin: 0 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .Product_More_Images--Image--Active {
-    padding: .3em;
-    border: 2px solid orangered;
-    border-radius: 5px;
+  padding: 0.3em;
+  border: 2px solid orangered;
+  border-radius: 5px;
 }
 
 .Product_More_Images--Image img {
-    max-width: 90%;
+  max-width: 90%;
 }
 
 /* Product Details */
 
 .Product_Main--Product_Details {
-    padding: 2em 4em;
+  padding: 2em 4em;
 }
 
 .Product_Details--Name {
-    font-size: var(--Product_Details--Name);
-    font-family: var(--Product_Details--Main_Font);
-    line-height: 1.3;
+  font-size: var(--Product_Details--Name);
+  font-family: var(--Product_Details--Main_Font);
+  line-height: 1.3;
 }
 
 .Product_Details--Category {
-    font-size: var(--Product_Details--Category);
-    font-family: var(--Product_Details--Main_Font);
-    margin: .5em 0 .8em 0;
+  font-size: var(--Product_Details--Category);
+  font-family: var(--Product_Details--Main_Font);
+  margin: 0.5em 0 0.8em 0;
 }
 
 /* Product Rating Display */
 
 .Product_Details--Rating {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
 }
 
 .Product_Details--Actualrating,
 .Product_Details--Ratingscount {
-    font-size: var(--Product_Details--Rating);
-    font-family: var(--Product_Details--Main_Font);
+  font-size: var(--Product_Details--Rating);
+  font-family: var(--Product_Details--Main_Font);
 }
 
 .Product_Details--Stars {
-    margin-left: .5em;
-    margin-right: 1em;
+  margin-left: 0.5em;
+  margin-right: 1em;
 }
 
-.Product_Details--Star +
-.Product_Details--Star {
-    margin-left: .2em;
+.Product_Details--Star + .Product_Details--Star {
+  margin-left: 0.2em;
 }
 
 .Product_Details--Price {
-    font-size: var(--Product_Details--FinalPrice);
-    font-family: var(--Product_Details--Side_Font);
-    margin-bottom: .3em;
+  font-size: var(--Product_Details--FinalPrice);
+  font-family: var(--Product_Details--Side_Font);
+  margin-bottom: 0.3em;
 }
 
 .Product_Details--Discount {
-    font-size: var(--Product_Details--Discount);
-    font-weight: 400;
+  font-size: var(--Product_Details--Discount);
+  font-weight: 400;
+}
+
+.Product_Details--MRP_And_Stock_Left {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }
 
 .Product_Details--MRP {
-    font-size: var(--Product_Details--Mrp);
-    font-family: var(--Product_Details--Side_Font);
-    font-weight: 300;
+  font-size: var(--Product_Details--Mrp);
+  font-family: var(--Product_Details--Side_Font);
+  font-weight: 300;
 }
 
 .Product_Details--MRP_Strike {
-    text-decoration: line-through;
+  text-decoration: line-through;
+}
+
+.Product_Details--Stock_Left {
+  font-size: var(--Product_Details--Mrp);
+  font-family: var(--Product_Details--Side_Font);
+  color: rgb(250, 70, 70);
+}
+
+.Product_Details--Stock_Left--Inactive {
+  display: none;
 }
 
 .Product_Details--Address {
-    margin: 1em 0;
+  margin: 1em 0;
 }
 
 .Product_Details--Address p {
-    font-size: var(--Product_Details--Address);
-    font-family: var(--Product_Details--Side_Font);
-    font-weight: 300;
+  font-size: var(--Product_Details--Address);
+  font-family: var(--Product_Details--Side_Font);
+  font-weight: 300;
 }
 
 /* Buy & Add To Cart Buttons */
 
 .Product_Details--Buttons {
-    margin: 1em 0;
+  margin: 1em 0;
 }
 
 .Product_Details--Counter {
-    margin-bottom: 1em;
-    display: flex;
-    align-items: center;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
 }
 
 .Product_Details--Counter--Note {
-    font-family: var(--Product_Details--Main_Font);
-    font-size: var(--Product_Details--Counter--Note);
-    margin-right: .7em;
+  font-family: var(--Product_Details--Main_Font);
+  font-size: var(--Product_Details--Counter--Note);
+  margin-right: 0.7em;
 }
 
 .Product_Details_Counter--Decrement,
 .Product_Details_Counter--Increment {
-    background-color: rgb(189, 188, 188);
-    font-size: var(--Product_Details_Counter);
-    font-family: var(--Cart_Main_Font);
-    padding: .1em;
-    border-style: none;
-    width: 25px;
-    height: 25px;
+  background-color: rgb(189, 188, 188);
+  font-size: var(--Product_Details_Counter);
+  font-family: var(--Cart_Main_Font);
+  padding: 0.1em;
+  border-style: none;
+  width: 25px;
+  height: 25px;
 }
 
 .Product_Details_Counter--Decrement {
-    border-top-left-radius: 7px;
-    border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
 }
 
 .Product_Details_Counter--Increment {
-    border-top-right-radius: 7px;
-    border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
 }
 
 .Product_Details_Counter--Input {
-    text-align: center;
-    height: 25px;
-    width: 30px;
-    padding: .1em;
+  text-align: center;
+  height: 25px;
+  width: 30px;
+  padding: 0.1em;
 }
 
 .Product_Details--Buttons .Product_Detail--Button {
-    background-color: goldenrod;
-    font-size: var(--Product_Details--Button);
-    font-family: var(--Product_Details--Side_Font);
-    font-weight: 700;
-    padding: .6em 2.5em;
-    border-style: none;
-    border: 2px solid transparent;
-    border-radius: 7px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.04) scaleY(1.07);
-        transition: all .05s ease-in-out;
-        background-color: white;
-        color: goldenrod;
-        border: 2px goldenrod solid;
-    }
+  background-color: goldenrod;
+  font-size: var(--Product_Details--Button);
+  font-family: var(--Product_Details--Side_Font);
+  font-weight: 700;
+  padding: 0.6em 2.5em;
+  border-style: none;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.04) scaleY(1.07);
+    transition: all 0.05s ease-in-out;
+    background-color: white;
+    color: goldenrod;
+    border: 2px goldenrod solid;
+  }
 }
 
 .Product_Details--Buttons_Buy {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 
 .Product_Details--Heart {
-    color: rgb(160, 160, 160);
-    margin-left: 1em;
-    height: 100%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-        color: red;
-    }
+  color: rgb(160, 160, 160);
+  margin-left: 1em;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 }
 
 .Product_Details--Heart--Wished {
-    color: red;
+  color: red;
 }
 
 /* Product About And Delivery Details */
 
 .Product_Main--About_And_Delivery {
-    font-family: var(--Product_Details--Main_Font);
-    margin-top: 3em;
-    display: flex;
+  font-family: var(--Product_Details--Main_Font);
+  margin-top: 3em;
+  display: flex;
 }
 
 .Product_Main--About {
-    width: 70%;
-    padding: 1em 2em;
-    padding-left: 0em;
-    max-height: 400px;
-    overflow-y: scroll;
+  width: 70%;
+  padding: 1em 2em;
+  padding-left: 0em;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 
 .Product_Main--About h4,
 .Product_Main--Delivery h4 {
-    font-size: var(--Product_Details--About_And_Delivery_Title);
+  font-size: var(--Product_Details--About_And_Delivery_Title);
 }
 
 .Product_Main--About p {
-    font-size: var(--Product_Details--About_And_Delivery_Info);
-    font-family: var(--Product_Details--Side_Font);
-    line-height: 2;
-    margin: 1em 0;
+  font-size: var(--Product_Details--About_And_Delivery_Info);
+  font-family: var(--Product_Details--Side_Font);
+  line-height: 2;
+  margin: 1em 0;
 }
 
 .Product_Main--Delivery {
-    background-color: rgb(44, 44, 44);
-    width: 30%;
-    padding: 1em;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
+  background-color: rgb(44, 44, 44);
+  width: 30%;
+  padding: 1em;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
 }
 
 .Product_Main--Delivery h5 {
-    font-size: var(--Product_Main--Delivery--SubHeading);
-    margin: .3em 0em;
+  font-size: var(--Product_Main--Delivery--SubHeading);
+  margin: 0.3em 0em;
 }
 
 .Product_Main--Delivery p {
-    font-size: var(--Product_Details--About_And_Delivery_Info);
+  font-size: var(--Product_Details--About_And_Delivery_Info);
 }
 
-.Product_Main--Delivery_Address--Info +
-.Product_Main--Delivery_Address--Info {
-    margin-top: .4em;
+.Product_Main--Delivery_Address--Info + .Product_Main--Delivery_Address--Info {
+  margin-top: 0.4em;
 }
 
 .Product_Main--Delivery_Address--Addressname {
-    font-size: var(--Product_Main--Delivery_Address--Addressname);
-    font-weight: 600;
+  font-size: var(--Product_Main--Delivery_Address--Addressname);
+  font-weight: 600;
 }
 
 .Product_Main--Delivery_Address button {
-    font-size: var(--Product_Main--Delivery_Address--Button);
-    background-color: goldenrod;
-    font-weight: 600;
-    margin: .6em 0em;
-    padding: .7em 2em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: var(--Product_Main--Delivery_Address--Button);
+  background-color: goldenrod;
+  font-weight: 600;
+  margin: 0.6em 0em;
+  padding: 0.7em 2em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .Product_Main--Delivery_Address--Empty {
-    margin: 1em 0em;
+  margin: 1em 0em;
 }
 
 .Product_Main--Delivery_Address--Empty p {
-    margin-bottom: .3em;
+  margin-bottom: 0.3em;
 }
 
 .Product_Main--Delivery_Address--Empty button {
-    font-size: var(--Product_Main--Delivery_Address--Button);
-    background-color: goldenrod;
-    font-weight: 600;
-    margin: .6em 0em;
-    padding: .7em 2em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: var(--Product_Main--Delivery_Address--Button);
+  background-color: goldenrod;
+  font-weight: 600;
+  margin: 0.6em 0em;
+  padding: 0.7em 2em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* Product Reviews Container */
 
 .Product_Main--Reviews {
-    margin-top: 3em;
+  margin-top: 3em;
 }
 
 .Product_Reviews--Header {
-    margin-bottom: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 .Product_Reviews--Header h4 {
-    font-family: var(--Product_Details--Main_Font);
-    font-size: var(--Product_Reviews--Header_Heading);
+  font-family: var(--Product_Details--Main_Font);
+  font-size: var(--Product_Reviews--Header_Heading);
 }
 
 .Product_Reviews--Main {
-    font-family: var(--Product_Details--Main_Font);
-    display: flex;
+  font-family: var(--Product_Details--Main_Font);
+  display: flex;
 }
 
 /* Product Reviews - Ratings */
 
 .Product_Reviews--Rating {
-    width: 30%;
+  width: 30%;
 }
 
 .Product_Reviews--Stars_Container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .Product_Reviews--Stars {
-    width: fit-content;
+  width: fit-content;
 }
 
-.Product_Reviews--Star +
-.Product_Reviews--Star {
-    margin-left: .3em;
+.Product_Reviews--Star + .Product_Reviews--Star {
+  margin-left: 0.3em;
 }
 
 .Product_Reviews--Actualrating {
-    font-size: var(--Product_Details--Rating);
-    margin-top: .3em;
-    margin-left: 1em;
+  font-size: var(--Product_Details--Rating);
+  margin-top: 0.3em;
+  margin-left: 1em;
 }
 
 .Product_Reviews--Ratingscount {
-    font-size: var(--Product_Details--Rating);
-    margin: .5em 0 1em 0;
+  font-size: var(--Product_Details--Rating);
+  margin: 0.5em 0 1em 0;
 }
 
 .Product_Reviews--Rating_Distribution--Stars {
-    background-color: rgb(44, 44, 44);
-    max-width: 200px;
-    padding: .3em .5em;
-    border-style: none;
-    border: 1px solid white;
-    border-radius: 7px;
-    display: flex;
-    justify-content: space-between;
+  background-color: rgb(44, 44, 44);
+  max-width: 200px;
+  padding: 0.3em 0.5em;
+  border-style: none;
+  border: 1px solid white;
+  border-radius: 7px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.Product_Reviews--Rating_Distribution--Stars + 
-.Product_Reviews--Rating_Distribution--Stars {
-    margin-top: .5em;   
+.Product_Reviews--Rating_Distribution--Stars
+  + .Product_Reviews--Rating_Distribution--Stars {
+  margin-top: 0.5em;
 }
 
-.Product_Reviews--Rating_Distribution--Star +
-.Product_Reviews--Rating_Distribution--Star {
-    margin-left: .2em;
+.Product_Reviews--Rating_Distribution--Star
+  + .Product_Reviews--Rating_Distribution--Star {
+  margin-left: 0.2em;
 }
 
 .Product_Reviews--Rating_Distribution--Percentage {
-    font-size: var(--Product_Details--Rating);
+  font-size: var(--Product_Details--Rating);
 }
 
 .Product_Reviews--Your_Review_Container--Inactive,
@@ -815,184 +826,181 @@
 .Product_Reviews--Your_Review--Add_Edit_Button--Inactive,
 .Product_Reviews--Write_Review--Inactive,
 .Product_Reviews--Write_Review--Delete_Buttons--Inactive {
-    display: none;
+  display: none;
 }
 
 /* Product Reviews - Reviews */
 
 .Product_Reviews--Reviews_Container {
-    width: 70%;
+  width: 70%;
 }
 
 /* Product Your Own Review Display */
 
 .Product_Reviews--Your_Review_Container {
-    background-color: rgb(44, 44, 44);
-    padding: 1em .5em;
-    max-width: 700px;
-    border-style: none;
-    border-radius: 7px;
-    border: 1px white solid;
+  background-color: rgb(44, 44, 44);
+  padding: 1em 0.5em;
+  max-width: 700px;
+  border-style: none;
+  border-radius: 7px;
+  border: 1px white solid;
 }
 
 .Product_Reviews--Your_Review--Note {
-    font-size: var(--Product_Reviews--Review--Note);
+  font-size: var(--Product_Reviews--Review--Note);
 }
 
 .Product_Reviews--Your_Name {
-    font-size: var(--Product_Reviews--Reviewer_Name);
-    margin-bottom: .2em;
+  font-size: var(--Product_Reviews--Reviewer_Name);
+  margin-bottom: 0.2em;
 }
 
 .Product_Reviews--Your_Rating--Stars {
-    margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
-.Product_Reviews--Your_Rating--Star +
-.Product_Reviews--Your_Rating--Star {
-    margin-left: .3em;
+.Product_Reviews--Your_Rating--Star + .Product_Reviews--Your_Rating--Star {
+  margin-left: 0.3em;
 }
 
 .Product_Reviews--Your_Review {
-    font-size: var(--Product_Reviews--Review--Note);
+  font-size: var(--Product_Reviews--Review--Note);
 }
 
 .Product_Reviews--Your_Review--Add_Edit_Button {
-    margin-top: .8em;
+  margin-top: 0.8em;
 }
 
 .Product_Reviews--Your_Review--Add_Edit_Button button {
-    background-color: black;
-    color: white;
-    font-size: var(--Product_Reviews--Button);
-    font-weight: 600;
-    padding: .8em 1.5em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-        color: red;
-    }
+  background-color: black;
+  color: white;
+  font-size: var(--Product_Reviews--Button);
+  font-weight: 600;
+  padding: 0.8em 1.5em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 }
 
 /* Write or Edit Your Own Review */
 
 .Product_Reviews--Write_Review {
-    background-color: rgb(44, 44, 44);
-    padding: 1em .5em;
-    max-width: 700px;
-    border-style: none;
-    border-radius: 7px;
-    border: 1px white solid;
+  background-color: rgb(44, 44, 44);
+  padding: 1em 0.5em;
+  max-width: 700px;
+  border-style: none;
+  border-radius: 7px;
+  border: 1px white solid;
 }
 
 .Product_Reviews--Write_Review--Your_Name {
-    font-size: var(--Product_Reviews--Reviewer_Name);
-    margin-bottom: .5em;
+  font-size: var(--Product_Reviews--Reviewer_Name);
+  margin-bottom: 0.5em;
 }
 
 .Product_Reviews--Write_Review--Rating {
-    margin-bottom: .7em;
+  margin-bottom: 0.7em;
 }
 
 .Product_Reviews--Write_Review--Stars {
-    width: fit-content;
+  width: fit-content;
 }
 
-.Product_Reviews--Write_Review--Star +
-.Product_Reviews--Write_Review--Star {
-    margin-left: .3em;
+.Product_Reviews--Write_Review--Star + .Product_Reviews--Write_Review--Star {
+  margin-left: 0.3em;
 }
 
 .Product_Reviews--Write_Review--Star {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .Product_Reviews--Write_Review--Review_Input {
-    display: block;
-    resize: vertical;
-    width: 90%;
-    font-size: var(--Product_Reviews--Review--Note);
-    padding: .3em .3em .2em .5em;
-    border-radius: 5px;
-    border-style: none;
+  display: block;
+  resize: vertical;
+  width: 90%;
+  font-size: var(--Product_Reviews--Review--Note);
+  padding: 0.3em 0.3em 0.2em 0.5em;
+  border-radius: 5px;
+  border-style: none;
 }
 
 .Product_Reviews--Write_Review--Buttons {
-    margin-top: 1em;
-    width: 90%;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
+  margin-top: 1em;
+  width: 90%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .Product_Reviews--Write_Review--Buttons button {
-    font-size: var(--Product_Reviews--Button);
-    font-weight: 600;
-    padding: .7em 1.5em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.04) scaleY(1.07);
-    }
+  font-size: var(--Product_Reviews--Button);
+  font-weight: 600;
+  padding: 0.7em 1.5em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.04) scaleY(1.07);
+  }
 }
 
 .Product_Reviews--Write_Review--Buttons--Submit {
-    background-color: goldenrod;
-    color: black;
-    margin-right: 1em;
+  background-color: goldenrod;
+  color: black;
+  margin-right: 1em;
 }
 
 .Product_Reviews--Write_Review--Buttons--Cancel {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 
 .Product_Reviews--Write_Review--Buttons--Delete {
-    background-color: rgb(190, 4, 4);
-    color: white;
+  background-color: rgb(190, 4, 4);
+  color: white;
 }
 
 /* Other People Reviews */
 
 .Product_Reviews--Others_Reviews_Container {
-    margin-top: 1em;
-    padding: 1em .5em;
-    max-width: 700px;
-    background-color: rgb(44, 44, 44);
-    border-style: none;
-    border-radius: 7px;
-    border: 1px white solid
+  margin-top: 1em;
+  padding: 1em 0.5em;
+  max-width: 700px;
+  background-color: rgb(44, 44, 44);
+  border-style: none;
+  border-radius: 7px;
+  border: 1px white solid;
 }
 
 .Product_Reviews--No_Reviews p {
-    font-size: var(--Product_Reviews--Review--Note);
+  font-size: var(--Product_Reviews--Review--Note);
 }
 
-.Product_Reviews--Others_Review_Container +
-.Product_Reviews--Others_Review_Container {
-    margin-top: 1.5em;
+.Product_Reviews--Others_Review_Container
+  + .Product_Reviews--Others_Review_Container {
+  margin-top: 1.5em;
 }
 
 .Product_Reviews--Others_Review--Name {
-    font-size: var(--Product_Reviews--Reviewer_Name);
-    margin-bottom: .3em;
+  font-size: var(--Product_Reviews--Reviewer_Name);
+  margin-bottom: 0.3em;
 }
 
 .Product_Reviews--Others_Review--Rating {
-    margin: .2em 0em;
+  margin: 0.2em 0em;
 }
 
 .Product_Reviews--Others_Review--Stars {
-    width: fit-content;
+  width: fit-content;
 }
 
-.Product_Reviews--Others_Review--Star +
-.Product_Reviews--Others_Review--Star {
-    margin-left: .3em;
+.Product_Reviews--Others_Review--Star + .Product_Reviews--Others_Review--Star {
+  margin-left: 0.3em;
 }
 
 .Product_Reviews--Others_Review {
-    font-size: var(--Product_Reviews--Review--Note);
+  font-size: var(--Product_Reviews--Review--Note);
 }
