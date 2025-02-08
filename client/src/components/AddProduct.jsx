@@ -3,7 +3,7 @@ import axios from "axios";
 import "../styles/AddProduct.css";
 
 function AddProduct() {
-  const [file, setFile] = useState();
+  const [files, setFiles] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -50,13 +50,14 @@ function AddProduct() {
         limit: buyLimit,
         quantity: stockQuantity,
         alert: stockAlert,
-        // type: file.type,
+        // type: files.type,
       }
     );
     console.log(response);
     // const putURL = response.data;
-    // await axios.put(putURL, file, { headers: { "Content-Type": file.type } });
-    // setFile("");
+    /* USE FOR LOOP TO ITERATE OVER ALL IMAGES */
+    // await axios.put(putURL, files, { headers: { "Content-Type": files.type } });
+    // setFiles("");
     // setTitle("");
     // setPrice("");
     // setDiscount("");
@@ -249,8 +250,20 @@ function AddProduct() {
                   <label>Photo</label>
                   <input
                     type="file"
+                    accept="images/*"
+                    multiple
                     onChange={(e) => {
-                      setFile(e.target.files[0]);
+                      if (e.target.files.length + files.length > 5) {
+                        setError(true);
+                        setErrorMessage("You can only select upto 5 images!");
+                        setTimeout(() => {
+                          setError(false);
+                        }, 3500);
+                      } else {
+                        setFiles((prev) => {
+                          return [...prev, ...e.target.files];
+                        });
+                      }
                     }}
                   ></input>
                 </div>
