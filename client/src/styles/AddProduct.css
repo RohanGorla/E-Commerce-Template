@@ -1,247 +1,263 @@
 :root {
-    --AddProduct_Main_Font: "Inter", sans-serif;
-    --AddProduct_Second_Font: "Roboto", sans-serif;
-    --AddProduct_Section_Heading: 30px;
-    --AddProduct_Details_Label: 18px;
-    --AddProduct_Photo_Select--Label: 14px;
-    --AddProduct_Details_Input: 16px;
-    --AddProduct_Category_Plus_Symbol: 18px;
+  --AddProduct_Main_Font: "Inter", sans-serif;
+  --AddProduct_Second_Font: "Roboto", sans-serif;
+  --AddProduct_Section_Heading: 30px;
+  --AddProduct_Details_Label: 18px;
+  --AddProduct_Photo_Select--Label: 14px;
+  --AddProduct_Details_Input: 16px;
+  --AddProduct_Category_Plus_Symbol: 18px;
 }
 
 .AddProduct_Page {
-    padding: 1em 0em;
+  padding: 1em 0em;
 }
 
 .AddProduct_Container {
-    max-width: 1300px;
-    margin: 0em auto;
+  max-width: 1300px;
+  margin: 0em auto;
 }
 
 .AddProduct_Header {
-    background-color: black;
-    position: sticky;
-    top: 0px;
-    padding-bottom: 1.5em;
+  background-color: black;
+  position: sticky;
+  top: 0px;
+  padding-bottom: 1.5em;
 }
 
 .AddProduct_Header--Title {
-    background-color: rgb(25, 25, 25);
-    font-family: var(--MerchantInventory_Main_Font);
-    font-size: var(--MerchantInventory_Header);
-    text-align: center;
-    letter-spacing: 2px;
-    padding: .7em 0em;
-    border-style: none;
-    border-radius: 9px;
-    border: 2px solid white;
+  background-color: rgb(25, 25, 25);
+  font-family: var(--MerchantInventory_Main_Font);
+  font-size: var(--MerchantInventory_Header);
+  text-align: center;
+  letter-spacing: 2px;
+  padding: 0.7em 0em;
+  border-style: none;
+  border-radius: 9px;
+  border: 2px solid white;
 }
 
 .AddProduct_Section {
-    background-color: rgb(25, 25, 25);
-    padding: 1em;
-    border-style: none;
-    border-radius: 8px;
+  background-color: rgb(25, 25, 25);
+  padding: 1em;
+  border-style: none;
+  border-radius: 8px;
 }
 
 .AddProduct_Section h2 {
-    font-family: var(--MerchantInventory_Main_Font);
-    font-size: var(--AddProduct_Section_Heading);
-    margin-bottom: .5em;
+  font-family: var(--MerchantInventory_Main_Font);
+  font-size: var(--AddProduct_Section_Heading);
+  margin-bottom: 0.5em;
 }
 
 .AddProduct_Section--Field {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
 .AddProduct_Section--Field label {
-    font-family: var(--AddProduct_Second_Font);
-    font-size: var(--AddProduct_Details_Label);
-    font-weight: 500;
-    letter-spacing: .8px;
-    cursor: pointer;
+  font-family: var(--AddProduct_Second_Font);
+  font-size: var(--AddProduct_Details_Label);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  cursor: pointer;
 }
 
 .AddProduct_Section--Field input {
-    font-family: var(--AddProduct_Main_Font);
-    font-size: var(--AddProduct_Details_Input);
-    padding: .2em .2em .2em .4em;
-    display: block;
-    margin-top: .3em;
+  font-family: var(--AddProduct_Main_Font);
+  font-size: var(--AddProduct_Details_Input);
+  padding: 0.2em 0.2em 0.2em 0.4em;
+  display: block;
+  margin-top: 0.3em;
 }
 
 .AddProduct_Section--Field textarea {
-    font-size: var(--AddProduct_Details_Input);
-    line-height: 1.3;
-    display: block;
-    resize: vertical;
-    width: 90%;
-    max-width: 550px;
-    padding: .3em .3em .2em .5em;
-    margin-top: .3em;
+  font-size: var(--AddProduct_Details_Input);
+  line-height: 1.3;
+  display: block;
+  resize: vertical;
+  width: 90%;
+  max-width: 550px;
+  padding: 0.3em 0.3em 0.2em 0.5em;
+  margin-top: 0.3em;
 }
 
 .AddProduct--Basic_Details {
-    display: flex;
-    gap: 2em;
-    margin-bottom: 1em;
+  display: flex;
+  gap: 2em;
+  margin-bottom: 1em;
 }
 
 .AddProduct--Basic_Details--Primary {
-    width: 50%;
+  width: 50%;
 }
 
 #AddProduct_Photo_Select {
-    display: none;
+  display: none;
 }
 
 #AddProduct_Photo_Select--Label {
-    font-size: var(--AddProduct_Photo_Select--Label);
-    font-weight: 600;
-    letter-spacing: .4px;
-    background-color: white;
-    color: black;
-    display: block;
-    width: fit-content;
-    padding: .4em .6em;
-    margin-top: .5em;
-    border-style: none;
-    border: 2px solid black;
-    border-radius: 6px;
-    cursor: pointer;
-    &:hover {
-        background-color: black;
-        color: white;
-        border: 2px solid white;
-    }
+  font-size: var(--AddProduct_Photo_Select--Label);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  background-color: white;
+  color: black;
+  display: block;
+  width: fit-content;
+  padding: 0.4em 0.6em;
+  margin-top: 0.5em;
+  border-style: none;
+  border: 2px solid black;
+  border-radius: 6px;
+  cursor: pointer;
+  &:hover {
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+  }
 }
 
 .AddProduct_Image_Display {
-    background-color: black;
-    width: 90%;
-    max-width: 550px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 5px;
-    padding: .8em .5em;
-    border-style: none;
-    border: 2px solid white;
-    border-radius: 6px;
-    margin-top: .6em;
+  background-color: black;
+  width: 90%;
+  max-width: 550px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 5px;
+  padding: 0.8em 0.5em;
+  border-style: none;
+  border: 2px solid white;
+  border-radius: 6px;
+  margin-top: 0.6em;
 }
 
 .AddProduct_Image_Display--Image {
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .AddProduct_Image_Display--Image img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .AddProduct_Image_Display--Select {
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-style: none;
-    border-radius: 6px;
-    border: 2px dashed white;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: none;
+  border-radius: 6px;
+  border: 2px dashed white;
 }
 
 .AddProduct_Image_Display--Select label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .AddProduct_Image_Display--Select--Inactive {
-    display: none;
+  display: none;
 }
 
-.AddProduct_Category
-.AddProduct_Section--Field {
-    margin: 0em;
-    position: relative;
+.AddProduct_Category .AddProduct_Section--Field {
+  margin: 0em;
+  position: relative;
 }
 
 .AddProduct_Category_Select {
-    position: absolute;
-    background-color: black;
-    width: 100%;
-    max-height: 300px;
-    overflow-y: scroll;
-    margin-top: .2em;
-    padding: 0em .2em;
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: scroll;
+  margin-top: 0.2em;
+  padding: 0em 0.2em;
+  border-style: none;
+  border-radius: 10px;
+  border: 2px solid white;
 }
 
 .AddProduct_Category_Select--Inactive {
-    display: none;
+  display: none;
 }
 
 .AddProduct_Category_Option {
-    font-family: var(--MerchantInventory_Main_Font);
-    background-color: rgb(25, 25, 25);
-    margin: .3em 0em;
-    padding: .5em;
-    border-style: none;
-    border-radius: 6px;
-    cursor: pointer;
-    &:hover {
-        background-color: white;
-        color: black;
-    }
+  font-family: var(--MerchantInventory_Main_Font);
+  background-color: rgb(25, 25, 25);
+  margin: 0.3em 0em;
+  padding: 0.5em;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+  &:hover {
+    background-color: white;
+    color: black;
+  }
 }
 
 .AddProduct_Category_Option--Plus_Symbol {
-    font-size: var(--AddProduct_Category_Plus_Symbol);
-    font-weight: 600;
+  font-size: var(--AddProduct_Category_Plus_Symbol);
+  font-weight: 600;
 }
 
 .AddProduct_Category--Inactive,
 .AddProduct_AddNewCategory--Inactive {
-    display: none;
+  display: none;
 }
 
-.AddProduct_AddNewCategory--Button button {
-    font-family: var(--AddProduct_Main_Font);
-    font-size: var(--AddProduct_Submit);
-    font-weight: 500;
-    background-color: white;
-    color: black;
-    margin-top: .5em;
-    padding: .3em 1.3em;
-    border-style: none;
-    border-radius: 6px;
-    border: 1px solid black;
-    cursor: pointer;
-    &:hover {
-        background-color: black;
-        color: white;
-        border: 1px solid white;
-    }
+.AddProduct_AddNewCategory--Buttons button {
+  font-family: var(--AddProduct_Main_Font);
+  font-size: var(--AddProduct_Submit);
+  font-weight: 500;
+  margin-top: 0.5em;
+  padding: 0.3em 1.3em;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.AddProduct_AddNewCategory--Cancel_Button {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  margin-right: 0.5em;
+  &:hover {
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+  }
+}
+
+.AddProduct_AddNewCategory--Add_Button {
+  background-color: goldenrod;
+  color: black;
+  border: 2px solid black;
+  &:hover {
+    background-color: black;
+    color: goldenrod;
+    border: 2px solid goldenrod;
+  }
 }
 
 .AddProduct_Section--Submit input {
-    font-family: var(--MerchantInventory_Main_Font);
-    font-size: var(--AddProduct_Submit);
-    font-weight: 500;
-    background-color: white;
-    color: black;
-    padding: .6em 1.6em;
-    border-style: none;
-    border-radius: 6px;
-    border: 1px solid black;
-    cursor: pointer;
-    &:hover {
-        background-color: black;
-        color: white;
-        border: 1px solid white;
-    }
+  font-family: var(--MerchantInventory_Main_Font);
+  font-size: var(--AddProduct_Submit);
+  font-weight: 500;
+  background-color: white;
+  color: black;
+  padding: 0.6em 1.6em;
+  border-style: none;
+  border-radius: 6px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:hover {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+  }
 }
