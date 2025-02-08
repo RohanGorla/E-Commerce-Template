@@ -1087,12 +1087,23 @@ function Product() {
                 </span>{" "}
                 ₹{productData?.actualPrice}
               </p>
-              <p className="Product_Details--MRP">
-                M.R.P:{" "}
-                <span className="Product_Details--MRP_Strike">
-                  ₹{productData?.mrp}
-                </span>
-              </p>
+              <div className="Product_Details--MRP_And_Stock_Left">
+                <p className="Product_Details--MRP">
+                  M.R.P:{" "}
+                  <span className="Product_Details--MRP_Strike">
+                    ₹{productData?.mrp}
+                  </span>
+                </p>
+                <p
+                  className={
+                    productData?.stock_left < 10
+                      ? "Product_Details--Stock_Left"
+                      : "Product_Details--Stock_Left--Inactive"
+                  }
+                >
+                  Only {productData?.stock_left} left in stock!
+                </p>
+              </div>
               <div className="Product_Details--Address">
                 {address ? (
                   <>
