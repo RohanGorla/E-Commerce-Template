@@ -247,8 +247,9 @@ function AddProduct() {
               <div className="AddProduct--Basic_Details--Primary">
                 {/* Product Images Field */}
                 <div className="AddProduct_Section--Field">
-                  <label>Photo</label>
+                  <label>Product images:</label>
                   <input
+                    id="AddProduct_Photo_Select"
                     type="file"
                     accept="images/*"
                     multiple
@@ -266,6 +267,27 @@ function AddProduct() {
                       }
                     }}
                   ></input>
+                  <div className="AddProduct_Image_Display">
+                    {Array.from(files).map((_, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="AddProduct_Image_Display--Image"
+                        >
+                          <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                        </div>
+                      );
+                    })}
+                    <div
+                      className={
+                        files.length < 5
+                          ? "AddProduct_Image_Display--Select"
+                          : "AddProduct_Image_Display--Select--Inactive"
+                      }
+                    >
+                      <label htmlFor="AddProduct_Photo_Select">+ Add</label>
+                    </div>
+                  </div>
                 </div>
                 {/* Product Title Field */}
                 <div className="AddProduct_Section--Field">
