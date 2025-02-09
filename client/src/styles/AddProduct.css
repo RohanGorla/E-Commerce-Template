@@ -3,7 +3,6 @@
   --AddProduct_Second_Font: "Roboto", sans-serif;
   --AddProduct_Section_Heading: 30px;
   --AddProduct_Details_Label: 18px;
-  --AddProduct_Photo_Select--Label: 14px;
   --AddProduct_Details_Input: 16px;
   --AddProduct_Category_Plus_Symbol: 18px;
 }
@@ -90,29 +89,8 @@
   width: 50%;
 }
 
-#AddProduct_Photo_Select {
+#AddProduct_Image_Select {
   display: none;
-}
-
-#AddProduct_Photo_Select--Label {
-  font-size: var(--AddProduct_Photo_Select--Label);
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  background-color: white;
-  color: black;
-  display: block;
-  width: fit-content;
-  padding: 0.4em 0.6em;
-  margin-top: 0.5em;
-  border-style: none;
-  border: 2px solid black;
-  border-radius: 6px;
-  cursor: pointer;
-  &:hover {
-    background-color: black;
-    color: white;
-    border: 2px solid white;
-  }
 }
 
 .AddProduct_Image_Display {
@@ -130,11 +108,25 @@
 }
 
 .AddProduct_Image_Display--Image {
+  position: relative;
   width: 100%;
   height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.AddProduct_Image_Display--Image_Remove {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: black;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 }
 
 .AddProduct_Image_Display--Image img {
