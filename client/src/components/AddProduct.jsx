@@ -249,9 +249,9 @@ function AddProduct() {
                 <div className="AddProduct_Section--Field">
                   <label>Product images:</label>
                   <input
-                    id="AddProduct_Photo_Select"
+                    id="AddProduct_Image_Select"
                     type="file"
-                    accept="images/*"
+                    accept="image/*"
                     multiple
                     onChange={(e) => {
                       if (e.target.files.length + files.length > 5) {
@@ -285,7 +285,7 @@ function AddProduct() {
                           : "AddProduct_Image_Display--Select--Inactive"
                       }
                     >
-                      <label htmlFor="AddProduct_Photo_Select">+ Add</label>
+                      <label htmlFor="AddProduct_Image_Select">+ Add</label>
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { MdDeleteForever } from "react-icons/md";
 import "../styles/AddProduct.css";
 
 function MerchantEditProduct() {
@@ -291,9 +292,9 @@ function MerchantEditProduct() {
               <div className="AddProduct--Basic_Details--Primary">
                 {/* Edit Product Images Field */}
                 <div className="AddProduct_Section--Field">
-                  <label>Upload images</label>
+                  <label>Product images</label>
                   <input
-                    id="AddProduct_Photo_Select"
+                    id="AddProduct_Image_Select"
                     type="file"
                     accept="image/*"
                     multiple
@@ -318,6 +319,7 @@ function MerchantEditProduct() {
                           key={index}
                           className="AddProduct_Image_Display--Image"
                         >
+                          <MdDeleteForever className="AddProduct_Image_Display--Image_Remove" />
                           <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
                         </div>
                       );
@@ -329,7 +331,7 @@ function MerchantEditProduct() {
                           : "AddProduct_Image_Display--Select--Inactive"
                       }
                     >
-                      <label htmlFor="AddProduct_Photo_Select">+ Add</label>
+                      <label htmlFor="AddProduct_Image_Select">+ Add</label>
                     </div>
                   </div>
                 </div>
