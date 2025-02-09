@@ -51,7 +51,7 @@ function Items() {
         setErrorMessage(response.data.errorMsg);
       }
     } else {
-      navigate("/account");
+      // navigate("/account");
     }
   }
 
@@ -145,40 +145,36 @@ function Items() {
   /* Cart API */
 
   async function addToCart(product) {
-    if (mailId) {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/addtocart`,
-        {
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          discount: product.discount,
-          company: product.company,
-          category: product.category,
-          final_price: product.final_price,
-          mailId: mailId,
-          count: 1,
-        }
-      );
-      if (response.data.access) {
-        setError(false);
-        setErrorMessage("");
-        setSuccess(true);
-        setSuccessMessage(response.data.successMsg);
-        setTimeout(() => {
-          setSuccess(false);
-        }, 3500);
-      } else {
-        setSuccess(false);
-        setSuccessMessage("");
-        setError(true);
-        setErrorMessage(response.data.errorMsg);
-        setTimeout(() => {
-          setError(false);
-        }, 3500);
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/addtocart`,
+      {
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        discount: product.discount,
+        company: product.company,
+        category: product.category,
+        final_price: product.final_price,
+        mailId: mailId,
+        count: 1,
       }
+    );
+    if (response.data.access) {
+      setError(false);
+      setErrorMessage("");
+      setSuccess(true);
+      setSuccessMessage(response.data.successMsg);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3500);
     } else {
-      navigate("/account");
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
     }
   }
 
@@ -750,6 +746,7 @@ function Items() {
                         <button
                           className="Item_Addtocart_Btn"
                           onClick={() => {
+                            if (!userInfo) navigate("/account/login");
                             addToCart(product);
                           }}
                         >
@@ -758,6 +755,7 @@ function Items() {
                         <button
                           className="Item_Wishlist_Btn"
                           onClick={() => {
+                            if (!userInfo) navigate("/account/login");
                             setShowSelectlist(true);
                             setWishProduct(product);
                           }}

@@ -538,7 +538,7 @@ function Product() {
   /* Buy APIs */
 
   async function buyProduct() {
-    if (mailId) {
+    if (userInfo) {
       let response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/buyproduct`,
         {
@@ -558,7 +558,7 @@ function Product() {
         }, 3500);
       }
     } else {
-      navigate("/account");
+      navigate("/account/login");
     }
   }
 
