@@ -8,7 +8,6 @@ function Home() {
   const [mostBought, setMostBought] = useState([]);
   const [mostDiscount, setMostDiscount] = useState([]);
   const navigate = useNavigate();
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   async function getProducts() {
     const response = await axios.get(
@@ -34,11 +33,7 @@ function Home() {
   }
 
   useEffect(() => {
-    if (userInfo.mailId) {
-      getProducts();
-    } else {
-      navigate("/account/login");
-    }
+    getProducts();
   }, []);
 
   return (
