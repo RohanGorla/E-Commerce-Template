@@ -160,6 +160,16 @@ function AddProduct() {
       });
       imageKeys.push(response.data[i].key);
     }
+    if (!imageTags?.length)
+      sessionStorage.setItem("EComImageTags", JSON.stringify(imageKeys));
+    else {
+      const previousList = JSON.parse(imageTags);
+      sessionStorage.setItem(
+        "EComImageTags",
+        JSON.stringify([...previousList, ...imageKeys])
+      );
+    }
+    sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(true));
   }
 
   /* Final Price Calculator */
