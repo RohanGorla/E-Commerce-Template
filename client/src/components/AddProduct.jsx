@@ -170,6 +170,14 @@ function AddProduct() {
       );
     }
     sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(true));
+    getImageUrls(imageKeys);
+  }
+
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys }
+    );
   }
 
   /* Final Price Calculator */
