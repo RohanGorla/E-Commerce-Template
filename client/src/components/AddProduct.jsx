@@ -187,6 +187,18 @@ function AddProduct() {
       `${import.meta.env.VITE_BASE_URL}/deleteimages`,
       { data: { imageTags: [image.imageTag] } }
     );
+    const updateImageUrls = imageUrls.filter(
+      (url) => url.imageTag !== image.imageTag
+    );
+    setImageUrls(updateImageUrls);
+    const imageTagsList = JSON.parse(imageTags);
+    const updatedImageTagsList = imageTagsList.filter(
+      (imageTag) => imageTag !== image.imageTag
+    );
+    sessionStorage.setItem(
+      "EComImageTags",
+      JSON.stringify(updatedImageTagsList)
+    );
   }
 
   /* Final Price Calculator */
