@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { MdDeleteForever } from "react-icons/md";
 import "../styles/AddProduct.css";
 
 function AddProduct() {
-  const [files, setFiles] = useState([]);
+  const [newFiles, setNewFiles] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -57,7 +59,7 @@ function AddProduct() {
     // const putURL = response.data;
     /* USE FOR LOOP TO ITERATE OVER ALL IMAGES */
     // await axios.put(putURL, files, { headers: { "Content-Type": files.type } });
-    // setFiles("");
+    // setNewFiles("");
     // setTitle("");
     // setPrice("");
     // setDiscount("");
@@ -254,33 +256,34 @@ function AddProduct() {
                     accept="image/*"
                     multiple
                     onChange={(e) => {
-                      if (e.target.files.length + files.length > 5) {
+                      if (e.target.files.length + imageUrls.length > 5) {
                         setError(true);
                         setErrorMessage("You can only select upto 5 images!");
                         setTimeout(() => {
                           setError(false);
                         }, 3500);
                       } else {
-                        setFiles((prev) => {
-                          return [...prev, ...e.target.files];
-                        });
+                        setNewFiles(e.target.files);
                       }
                     }}
                   ></input>
                   <div className="AddProduct_Image_Display">
-                    {Array.from(files).map((_, index) => {
+                    {imageUrls.map((image, index) => {
                       return (
                         <div
                           key={index}
                           className="AddProduct_Image_Display--Image"
                         >
-                          <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                          <MdDeleteForever
+                            className="AddProduct_Image_Display--Image_Remove"
+                          />
+                          <img src={image.imageUrl}></img>
                         </div>
                       );
                     })}
                     <div
                       className={
-                        files.length < 5
+                        imageUrls.length < 5
                           ? "AddProduct_Image_Display--Select"
                           : "AddProduct_Image_Display--Select--Inactive"
                       }
