@@ -267,6 +267,11 @@ function AddProduct() {
     if (newFiles.length) handleImageUpload();
   }, [newFiles]);
 
+  useEffect(() => {
+    sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(false));
+    sessionStorage.setItem("EComImageTags", JSON.stringify([]));
+  }, []);
+
   return (
     <div
       className="AddProduct_Page"
