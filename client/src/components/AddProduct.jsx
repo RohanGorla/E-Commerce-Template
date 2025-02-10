@@ -182,6 +182,13 @@ function AddProduct() {
     setImageUrls((prev) => [...prev, ...getUrls]);
   }
 
+  async function handleImageDelete(image) {
+    const response = await axios.delete(
+      `${import.meta.env.VITE_BASE_URL}/deleteimages`,
+      { data: { imageTags: [image.imageTag] } }
+    );
+  }
+
   /* Final Price Calculator */
 
   function calculateFinalPrice(price, discount) {
@@ -321,7 +328,10 @@ function AddProduct() {
                           key={index}
                           className="AddProduct_Image_Display--Image"
                         >
-                          <MdDeleteForever className="AddProduct_Image_Display--Image_Remove" />
+                          <MdDeleteForever
+                            onClick={() => handleImageDelete(image)}
+                            className="AddProduct_Image_Display--Image_Remove"
+                          />
                           <img src={image.imageUrl}></img>
                         </div>
                       );
