@@ -14,6 +14,7 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { access } from "fs";
 import Razorpay from "razorpay";
+import { v4 } from "uuid";
 import { disconnect } from "process";
 
 const app = express();
@@ -881,6 +882,26 @@ app.put("/updateproduct", async (req, res) => {
       });
     }
   );
+});
+
+app.post("/generateputurls", async (req, res) => {
+  const { imagesData } = req.body;
+  for (let i = 0; i < imagesData.length; i++) {
+    const imageId = v4();
+    const key = `E-Commerce/${imagesData[i].imageName}-${imageId}.${
+      imagesData[i].imageType.split("/")[1]
+    }`;
+    const params = {
+      Bucket: bucketName,
+      Key: key,
+      ContentType: imagesData[i].imageType,
+    };
+    const command = new PutObjectCommand(params);
+    const url = await getSignedUrl(s3, command);
+    imagesData[i].key = key;
+    imagesData[i].url = url;
+  }
+  res.send(imagesData);
 });
 
 /* Reviews and Ratings Routes */
