@@ -178,6 +178,8 @@ function AddProduct() {
       `${import.meta.env.VITE_BASE_URL}/generategeturls`,
       { imageKeys }
     );
+    const getUrls = getUrlResponse.data;
+    setImageUrls((prev) => [...prev, ...getUrls]);
   }
 
   /* Final Price Calculator */
