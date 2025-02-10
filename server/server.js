@@ -904,6 +904,21 @@ app.post("/generateputurls", async (req, res) => {
   res.send(imagesData);
 });
 
+app.post("/generategeturls", async (req, res) => {
+  const { imageKeys } = req.body;
+  const imageUrls = [];
+  for (let i = 0; i < imageKeys.length; i++) {
+    const getObjectParams = {
+      Bucket: bucketName,
+      Key: imageKeys[i],
+    };
+    const command = new GetObjectCommand(getObjectParams);
+    const url = await getSignedUrl(s3, command, { expiresIn: 86400 });
+    imageUrls.push({ imageTag: imageKeys[i], imageUrl: url });
+  }
+  res.send(imageUrls);
+});
+
 /* Reviews and Ratings Routes */
 
 app.post("/getreviews", (req, res) => {
