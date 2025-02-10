@@ -270,6 +270,18 @@ function AddProduct() {
   useEffect(() => {
     sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(false));
     sessionStorage.setItem("EComImageTags", JSON.stringify([]));
+    window.addEventListener("beforeunload", () => {
+      const editedOrAdded = JSON.parse(
+        sessionStorage.getItem("EComAddOrEditProduct")
+      );
+      const imageTagsList = JSON.parse(sessionStorage.getItem("EComImageTags"));
+      if (editedOrAdded && imageTagsList.length) {
+        navigator.sendBeacon(
+          `${import.meta.env.VITE_BASE_URL}/deleteimages`,
+          JSON.stringify({ imageTags: imageTagsList })
+        );
+      }
+    });
   }, []);
 
   return (
