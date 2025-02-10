@@ -919,6 +919,19 @@ app.post("/generategeturls", async (req, res) => {
   res.send(imageUrls);
 });
 
+app.delete("/deleteimages", async (req, res) => {
+  const { imageTags } = req.body;
+  for (let i = 0; i < imageTags.length; i++) {
+    const params = {
+      Bucket: bucketName,
+      Key: imageTags[i],
+    };
+    const command = new DeleteObjectCommand(params);
+    const deleteOldPictureResponse = await s3.send(command);
+  }
+  res.send("Images deleted!");
+});
+
 /* Reviews and Ratings Routes */
 
 app.post("/getreviews", (req, res) => {
