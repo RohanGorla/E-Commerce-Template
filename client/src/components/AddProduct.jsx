@@ -139,6 +139,19 @@ function AddProduct() {
     setFetch(!fetch);
   }
 
+  async function handleImageUpload() {
+    const imagesData = [];
+    for (let i = 0; i < newFiles.length; i++) {
+      const imageName = newFiles[i]?.name.split(".")[0] || "productImage";
+      const imageType = newFiles[i]?.type;
+      imagesData.push({ imageName, imageType });
+    }
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generateputurls`,
+      { imagesData }
+    );
+  }
+
   /* Final Price Calculator */
 
   function calculateFinalPrice(price, discount) {
@@ -200,6 +213,10 @@ function AddProduct() {
     }
     getCatAndCom();
   }, [fetch]);
+
+  useEffect(() => {
+    if (newFiles.length) handleImageUpload();
+  }, [newFiles]);
 
   return (
     <div
@@ -274,9 +291,7 @@ function AddProduct() {
                           key={index}
                           className="AddProduct_Image_Display--Image"
                         >
-                          <MdDeleteForever
-                            className="AddProduct_Image_Display--Image_Remove"
-                          />
+                          <MdDeleteForever className="AddProduct_Image_Display--Image_Remove" />
                           <img src={image.imageUrl}></img>
                         </div>
                       );
