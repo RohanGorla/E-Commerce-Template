@@ -19,6 +19,7 @@ import { disconnect } from "process";
 
 const app = express();
 app.use(express.json());
+app.use(express.text());
 app.use(cors());
 const PORT = process.env.PORT;
 
@@ -802,7 +803,8 @@ app.get("/gethomeproducts", (req, res) => {
 });
 
 app.post("/addproduct", async (req, res) => {
-  // Adding values to DB
+  const imageTags = JSON.stringify(req.body.imageTags);
+  const totalSales = 0;
   const values = [
     req.body.title,
     req.body.description,
@@ -814,41 +816,25 @@ app.post("/addproduct", async (req, res) => {
     Number(req.body.limit),
     Number(req.body.quantity),
     Number(req.body.alert),
-    // key,
+    totalSales,
+    imageTags,
   ];
   db.query(
-    // "insert into products (title, price, discount, category, imageTag) values (?)",
-    "insert into products (title, description, price, discount, final_price, category, company, buy_limit, stock_left, stock_alert) values (?)",
+    "insert into products (title, description, price, discount, final_price, category, company, buy_limit, stock_left, stock_alert, total_sales, imageTags) values (?)",
     [values],
     (err, data) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log("insert into products data ->", data);
-      res.send(
-        data
-      ); /* Remove this when adding image to bucket to send url to client but not this data */
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      res.send({
+        access: true,
+        successMsg: "Your product has been added successfully!",
+      });
     }
   );
-
-  // Adding photo to S3 bucket and sending putobject-signed-url to client
-
-  /* const code = random();
-  const type = req.body.type.split("/")[1];
-  const key = code + "." + type;
-  console.log(key);
-
-  const params = {
-    Bucket: bucketName,
-    Key: key,
-    ContentType: req.body.type,
-  };
-
-  const command = new PutObjectCommand(params);
-  const url = await getSignedUrl(s3, command);
-  console.log(url);
-  res.send(url); */
 });
 
 app.put("/updateproduct", async (req, res) => {
