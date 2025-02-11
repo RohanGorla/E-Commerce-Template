@@ -37,6 +37,7 @@ function MerchantEditProduct() {
   const { productid } = useParams();
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
+  const imageTagsList = sessionStorage.getItem("EComImageTags");
   const merchantMail = merchantInfo.mailId;
 
   /* Get Product Details API */
@@ -194,7 +195,7 @@ function MerchantEditProduct() {
       }, 3500);
     }
   }
-  
+
   async function handleImageUpload() {
     const imagesData = [];
     for (let i = 0; i < newFiles.length; i++) {
@@ -206,7 +207,7 @@ function MerchantEditProduct() {
       `${import.meta.env.VITE_BASE_URL}/generateputurls`,
       { imagesData }
     );
-    const imageKeys = [];
+    const newImageKeys = [];
     for (let i = 0; i < response.data.length; i++) {
       const url = response.data[i].url;
       const file = newFiles[i];
@@ -214,8 +215,21 @@ function MerchantEditProduct() {
       const putResponse = await axios.put(url, file, {
         headers: { "Content-Type": contentType },
       });
-      imageKeys.push(response.data[i].key);
+      newImageKeys.push(response.data[i].key);
     }
+    if (!imageTags?.length)
+      sessionStorage.setItem("EComImageTags", JSON.stringify(newImageKeys));
+    else {
+      const previousList = JSON.parse(imageTagsList);
+      sessionStorage.setItem(
+        "EComImageTags",
+        JSON.stringify([...previousList, ...newImageKeys])
+      );
+    }
+    sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(true));
+    const newImageUrls = await getImageUrls(newImageKeys);
+    setImageUrls((prev) => [...prev, ...newImageUrls]);
+    setImageTags((prev) => [...prev, ...newImageKeys]);
   }
 
   async function getImageUrls(imageKeys) {
