@@ -194,6 +194,7 @@ function MerchantEditProduct() {
       }, 3500);
     }
   }
+  
   async function handleImageUpload() {
     const imagesData = [];
     for (let i = 0; i < newFiles.length; i++) {
@@ -205,6 +206,16 @@ function MerchantEditProduct() {
       `${import.meta.env.VITE_BASE_URL}/generateputurls`,
       { imagesData }
     );
+    const imageKeys = [];
+    for (let i = 0; i < response.data.length; i++) {
+      const url = response.data[i].url;
+      const file = newFiles[i];
+      const contentType = response.data[i].imageType;
+      const putResponse = await axios.put(url, file, {
+        headers: { "Content-Type": contentType },
+      });
+      imageKeys.push(response.data[i].key);
+    }
   }
 
   async function getImageUrls(imageKeys) {
