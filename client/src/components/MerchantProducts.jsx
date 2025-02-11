@@ -118,7 +118,10 @@ function MerchantProducts() {
                     ₹{finalPriceCurrency}
                   </p>
                   <p className="MerchantProducts--Product_MRP">
-                    M.R.P: ₹{priceCurrency}
+                    M.R.P:{" "}
+                    <span className="MerchantProducts--Product_MRP--Strike">
+                      ₹{priceCurrency}
+                    </span>
                   </p>
                   <p className="MerchantProducts--Product_Stock">
                     In stock: {product.stock_left}
