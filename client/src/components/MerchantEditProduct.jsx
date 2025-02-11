@@ -194,6 +194,18 @@ function MerchantEditProduct() {
       }, 3500);
     }
   }
+  async function handleImageUpload() {
+    const imagesData = [];
+    for (let i = 0; i < newFiles.length; i++) {
+      const imageName = newFiles[i]?.name.split(".")[0] || "productImage";
+      const imageType = newFiles[i]?.type;
+      imagesData.push({ imageName, imageType });
+    }
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generateputurls`,
+      { imagesData }
+    );
+  }
 
   async function getImageUrls(imageKeys) {
     const getUrlResponse = await axios.post(
@@ -248,6 +260,10 @@ function MerchantEditProduct() {
     let finalAmount = amountArray.reverse().join("");
     return finalAmount;
   }
+
+  useEffect(() => {
+    if (newFiles.length) handleImageUpload();
+  }, [newFiles]);
 
   useEffect(() => {
     if (merchantMail) {
