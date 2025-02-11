@@ -35,9 +35,12 @@ function AddProduct() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
+  const imageTags = sessionStorage.getItem("EComImageTags");
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
+    const imageTags = [];
+    imageUrls.forEach((image) => imageTags.push(image.imageTag));
     const company = merchantInfo?.company;
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/addproduct`,
@@ -52,18 +55,9 @@ function AddProduct() {
         limit: buyLimit,
         quantity: stockQuantity,
         alert: stockAlert,
-        // type: files.type,
+        imageTags,
       }
     );
-    console.log(response);
-    // const putURL = response.data;
-    /* USE FOR LOOP TO ITERATE OVER ALL IMAGES */
-    // await axios.put(putURL, files, { headers: { "Content-Type": files.type } });
-    // setNewFiles("");
-    // setTitle("");
-    // setPrice("");
-    // setDiscount("");
-    // setCategory("");
   }
 
   async function addNewCategory(e) {
