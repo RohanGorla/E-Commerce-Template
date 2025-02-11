@@ -65,6 +65,8 @@ function AddProduct() {
       setErrorMessage("");
       setSuccess(true);
       setSuccessMessage(response.data.successMsg);
+      sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(false));
+      sessionStorage.setItem("EComImageTags", JSON.stringify([]));
       setTimeout(() => {
         setSuccess(false);
         navigate("/merchant");
