@@ -5,8 +5,10 @@ import { MdDeleteForever } from "react-icons/md";
 import "../styles/AddProduct.css";
 
 function MerchantEditProduct() {
+  const [newFiles, setNewFiles] = useState([]);
+  const [imageTags, setImageTags] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
-  const [files, setFiles] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -36,7 +38,6 @@ function MerchantEditProduct() {
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const merchantMail = merchantInfo.mailId;
-  console.log(files);
 
   /* Get Product Details API */
 
@@ -47,7 +48,11 @@ function MerchantEditProduct() {
     );
     if (response.data.access) {
       const productDetails = response.data.data[0];
-      setProductDetails(productDetails);
+      const imageUrlsResponse = await getImageUrls(
+        JSON.parse(productDetails.imageTags)
+      );
+      setImageUrls(imageUrlsResponse);
+      setImageTags(JSON.parse(productDetails.imageTags));
       setTitle(productDetails.title);
       setDescription(productDetails.description);
       setPrice(productDetails.price);
@@ -190,6 +195,15 @@ function MerchantEditProduct() {
     }
   }
 
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys }
+    );
+    const getUrls = getUrlResponse.data;
+    return getUrls;
+  }
+
   function calculateFinalPrice(price, discount) {
     const finalPriceValue =
       Math.round(price * (1 - discount / 100) * 100) / 100;
@@ -299,34 +313,32 @@ function MerchantEditProduct() {
                     accept="image/*"
                     multiple
                     onChange={(e) => {
-                      if (e.target.files.length + files.length > 5) {
+                      if (e.target.files.length + imageUrls.length > 5) {
                         setError(true);
                         setErrorMessage("You can only select upto 5 images!");
                         setTimeout(() => {
                           setError(false);
                         }, 3500);
                       } else {
-                        setFiles((prev) => {
-                          return [...prev, ...e.target.files];
-                        });
+                        setNewFiles(e.target.files);
                       }
                     }}
                   ></input>
                   <div className="AddProduct_Image_Display">
-                    {Array.from(files).map((_, index) => {
+                    {imageUrls.map((image, index) => {
                       return (
                         <div
                           key={index}
                           className="AddProduct_Image_Display--Image"
                         >
                           <MdDeleteForever className="AddProduct_Image_Display--Image_Remove" />
-                          <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                          <img src={image.imageUrl}></img>
                         </div>
                       );
                     })}
                     <div
                       className={
-                        files.length < 5
+                        imageUrls.length < 5
                           ? "AddProduct_Image_Display--Select"
                           : "AddProduct_Image_Display--Select--Inactive"
                       }
