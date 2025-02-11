@@ -241,6 +241,22 @@ function MerchantEditProduct() {
     return getUrls;
   }
 
+  async function handleImageDelete(image) {
+    const updateImageUrls = imageUrls.filter(
+      (url) => url.imageTag !== image.imageTag
+    );
+    setImageUrls(updateImageUrls);
+    const imageTagsList = JSON.parse(imageTagsList);
+    const updatedImageTagsList = imageTagsList.filter(
+      (imageTag) => imageTag !== image.imageTag
+    );
+    sessionStorage.setItem(
+      "EComImageTags",
+      JSON.stringify(updatedImageTagsList)
+    );
+    setImageTags(updatedImageTagsList);
+  }
+
   function calculateFinalPrice(price, discount) {
     const finalPriceValue =
       Math.round(price * (1 - discount / 100) * 100) / 100;
@@ -372,7 +388,10 @@ function MerchantEditProduct() {
                           key={index}
                           className="AddProduct_Image_Display--Image"
                         >
-                          <MdDeleteForever className="AddProduct_Image_Display--Image_Remove" />
+                          <MdDeleteForever
+                            onClick={() => handleImageDelete(image)}
+                            className="AddProduct_Image_Display--Image_Remove"
+                          />
                           <img src={image.imageUrl}></img>
                         </div>
                       );
