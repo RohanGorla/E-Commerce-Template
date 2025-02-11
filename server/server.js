@@ -932,6 +932,20 @@ app.delete("/deleteimages", async (req, res) => {
   res.send("Images deleted!");
 });
 
+app.post("/deleteimages", async (req, res) => {
+  const data = JSON.parse(req.body);
+  const { imageTags } = data;
+  for (let i = 0; i < imageTags.length; i++) {
+    const params = {
+      Bucket: bucketName,
+      Key: imageTags[i],
+    };
+    const command = new DeleteObjectCommand(params);
+    const deleteOldPictureResponse = await s3.send(command);
+  }
+  res.send("Images deleted!");
+});
+
 /* Reviews and Ratings Routes */
 
 app.post("/getreviews", (req, res) => {
