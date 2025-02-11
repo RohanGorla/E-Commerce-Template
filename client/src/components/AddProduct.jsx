@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MdDeleteForever } from "react-icons/md";
 import "../styles/AddProduct.css";
@@ -37,7 +36,6 @@ function AddProduct() {
   const [successMessage, setSuccessMessage] = useState("");
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const imageTags = sessionStorage.getItem("EComImageTags");
-  const navigate = useNavigate();
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
@@ -69,7 +67,7 @@ function AddProduct() {
       sessionStorage.setItem("EComImageTags", JSON.stringify([]));
       setTimeout(() => {
         setSuccess(false);
-        navigate("/merchant");
+        window.close();
       }, 3500);
     } else {
       setSuccess(false);
