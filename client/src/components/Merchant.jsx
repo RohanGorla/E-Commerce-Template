@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Merchant.css";
 
@@ -31,7 +31,6 @@ function Merchant() {
         }
       );
       if (response.data.access) {
-        console.log("Orders details -> ", response.data.ordersData);
         let totalRevenue = 0;
         let totalRevenueCurrency;
         response.data.ordersData.forEach((order) => {
@@ -48,8 +47,6 @@ function Merchant() {
             case "Order delivered":
               setFinishedOrders((prev) => [...prev, order]);
               break;
-            default:
-              break;
           }
         });
         if (totalRevenue.toString().split(".").length !== 1) {
@@ -62,7 +59,6 @@ function Merchant() {
         }
         setTotalRevenue(totalRevenue);
         setTotalRevenueCurrency(totalRevenueCurrency);
-        console.log("Inventory details -> ", response.data.inventoryData);
         setTotalStocks(response.data.inventoryData);
         response.data.inventoryData.forEach((product) => {
           setTotalStocksQuantity((prev) => prev + product.stock_left);
@@ -100,17 +96,11 @@ function Merchant() {
   }
 
   useEffect(() => {
-    // checkMerchantCredentials();
+    checkMerchantCredentials();
   }, []);
 
   return (
-    <div
-      className="Merchant_Page"
-      onClick={(e) => {
-        e.stopPropagation();
-        checkMerchantCredentials();
-      }}
-    >
+    <div className="Merchant_Page">
       {/* Error Message Box */}
       <div
         className={
