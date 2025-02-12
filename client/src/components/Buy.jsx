@@ -35,6 +35,17 @@ function Buy() {
   const mailId = userInfo?.mailId;
   const order = JSON.parse(sessionStorage.getItem("order"));
 
+  /* GET PRODUCT IMAGE URLS FROM S3 */
+
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys: [imageKeys[0]] }
+    );
+    const getUrls = getUrlResponse.data;
+    return getUrls;
+  }
+
   /* Get Buy Product API */
 
   async function getProduct() {
@@ -46,6 +57,8 @@ function Buy() {
     );
     if (response.data.access) {
       let data = response.data.data[0];
+      if (data.imageTag)
+        data.imageUrl = await getImageUrls(JSON.parse(data.imageTag));
       let cost = data.final_price;
       let total = cost * data.count;
       let priceCurrency;
@@ -556,7 +569,13 @@ function Buy() {
               <div className="Buy_Products_Container">
                 <div className="Buy_Products--Product">
                   <div className="Buy_Products--Product_Image">
-                    <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    <img
+                      src={
+                        productData.imageUrl
+                          ? productData.imageUrl[0].imageUrl
+                          : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                      }
+                    ></img>
                   </div>
                   <div className="Buy_Products--Product_Details">
                     <p className="Buy_Product_Details--Name">
