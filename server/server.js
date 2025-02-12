@@ -838,6 +838,7 @@ app.post("/addproduct", async (req, res) => {
 });
 
 app.put("/updateproduct", async (req, res) => {
+  const imageTags = JSON.stringify(req.body.imageTags);
   db.query(
     "update products set ? where id = ?",
     [
@@ -852,6 +853,7 @@ app.put("/updateproduct", async (req, res) => {
         buy_limit: Number(req.body.limit),
         stock_left: Number(req.body.quantity),
         stock_alert: Number(req.body.alert),
+        imageTags: imageTags,
       },
       req.body.id,
     ],

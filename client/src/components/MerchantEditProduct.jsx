@@ -182,6 +182,7 @@ function MerchantEditProduct() {
         limit: buyLimit,
         quantity: stockQuantity,
         alert: stockAlert,
+        imageTags,
       }
     );
     if (response.data.access) {
