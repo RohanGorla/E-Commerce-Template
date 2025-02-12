@@ -34,24 +34,31 @@ function Items() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
 
+  /* GET PRODUCT IMAGE URLS FROM S3 */
+
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys: [imageKeys[0]] }
+    );
+    const getUrls = getUrlResponse.data;
+    return getUrls;
+  }
+
   /* Wishlist APIs */
 
   async function getWishlists() {
-    if (mailId) {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/getwishlists`,
-        {
-          mailId: mailId,
-        }
-      );
-      if (response.data.access) {
-        setWishlists(response.data.data);
-      } else {
-        setError(true);
-        setErrorMessage(response.data.errorMsg);
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getwishlists`,
+      {
+        mailId: mailId,
       }
+    );
+    if (response.data.access) {
+      setWishlists(response.data.data);
     } else {
-      // navigate("/account");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
     }
   }
 
@@ -190,9 +197,11 @@ function Items() {
     if (response.data.access) {
       const data = response.data.data;
       let productsId = [];
-      data.map((product) => {
-        productsId.push(product.id);
-      });
+      for (let i = 0; i < data.length; i++) {
+        productsId.push(data[i].id);
+        if (data[i].imageTags)
+          data[i].imageUrl = await getImageUrls(JSON.parse(data[i].imageTags));
+      }
       async function getReviews() {
         let response = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/getallreviews`,
@@ -673,7 +682,11 @@ function Items() {
                   <div key={index} className="Item_Container">
                     <div className="Item_Image">
                       <img
-                        src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                        src={
+                          product.imageUrl
+                            ? product.imageUrl[0].imageUrl
+                            : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                        }
                         onClick={() => {
                           window.open(
                             `${window.location.origin}/products/product/${product.id}`

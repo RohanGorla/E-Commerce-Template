@@ -731,14 +731,12 @@ app.post("/getproducts", (req, res) => {
     "select * from products where category = ?",
     category,
     (err, productsData) => {
-      if (err) {
-        console.log(err);
+      if (err)
         return res.send({
           access: false,
           errorMsg:
             "Some error has occurred! Please try again or refresh the page!",
         });
-      }
       res.send({ access: true, data: productsData });
     }
   );
