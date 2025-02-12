@@ -63,7 +63,18 @@ function Product() {
       src: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D",
     },
   ];
-  const [currentUrl, setCurrentUrl] = useState(imageUrls[0].src);
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  /* GET PRODUCT IMAGE URLS FROM S3 */
+
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys }
+    );
+    const getUrls = getUrlResponse.data;
+    return getUrls;
+  }
 
   /* Product APIs */
 
@@ -89,6 +100,11 @@ function Product() {
       }
       data.mrp = mrp;
       data.actualPrice = offerPriceActual;
+      if (data?.imageTags) {
+        data.imageUrls = await getImageUrls(JSON.parse(data?.imageTags));
+        setCurrentUrl(data.imageUrls[0].imageUrl);
+      } else setCurrentUrl(imageUrls[0].src);
+      console.log(data);
       setProductData(data);
     } else {
       setSuccess(false);
@@ -1022,23 +1038,41 @@ function Product() {
                 <img src={currentUrl}></img>
               </div>
               <div className="Product_Images--More_Images">
-                {imageUrls.map((url, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={
-                        url.src == currentUrl
-                          ? "Product_More_Images--Image Product_More_Images--Image--Active"
-                          : "Product_More_Images--Image"
-                      }
-                      onClick={() => {
-                        setCurrentUrl(url.src);
-                      }}
-                    >
-                      <img src={url.src} />
-                    </div>
-                  );
-                })}
+                {productData?.imageUrls
+                  ? productData.imageUrls.map((image, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={
+                            image.imageUrl == currentUrl
+                              ? "Product_More_Images--Image Product_More_Images--Image--Active"
+                              : "Product_More_Images--Image"
+                          }
+                          onClick={() => {
+                            setCurrentUrl(image.imageUrl);
+                          }}
+                        >
+                          <img src={image.imageUrl} />
+                        </div>
+                      );
+                    })
+                  : imageUrls.map((url, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={
+                            url.src == currentUrl
+                              ? "Product_More_Images--Image Product_More_Images--Image--Active"
+                              : "Product_More_Images--Image"
+                          }
+                          onClick={() => {
+                            setCurrentUrl(url.src);
+                          }}
+                        >
+                          <img src={url.src} />
+                        </div>
+                      );
+                    })}
               </div>
             </div>
             <div className="Product_Main--Product_Details">
