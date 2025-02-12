@@ -190,8 +190,19 @@ function MerchantEditProduct() {
       setErrorMessage("");
       setSuccess(true);
       setSuccessMessage(response.data.successMsg);
+      sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(false));
+      sessionStorage.setItem("EComImageTags", JSON.stringify([]));
       setTimeout(() => {
         setSuccess(false);
+        window.close();
+      }, 3500);
+    } else {
+      setSuccess(false);
+      setSuccessMessage("");
+      setError(true);
+      setErrorMessage(response.data.errorMsg);
+      setTimeout(() => {
+        setError(false);
       }, 3500);
     }
   }
