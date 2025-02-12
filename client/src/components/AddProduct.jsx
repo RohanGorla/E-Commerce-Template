@@ -289,12 +289,11 @@ function AddProduct() {
         sessionStorage.getItem("EComAddOrEditProduct")
       );
       const imageTagsList = JSON.parse(sessionStorage.getItem("EComImageTags"));
-      if (editedOrAdded && imageTagsList.length) {
+      if (editedOrAdded && imageTagsList.length)
         navigator.sendBeacon(
           `${import.meta.env.VITE_BASE_URL}/deleteimages`,
           JSON.stringify({ imageTags: imageTagsList })
         );
-      }
     });
   }, []);
 

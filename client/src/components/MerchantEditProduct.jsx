@@ -8,7 +8,6 @@ function MerchantEditProduct() {
   const [newFiles, setNewFiles] = useState([]);
   const [imageTags, setImageTags] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
-  const [productDetails, setProductDetails] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -310,6 +309,21 @@ function MerchantEditProduct() {
     if (merchantMail) {
       getProductDetails();
       getAllCategories();
+      sessionStorage.setItem("EComAddOrEditProduct", JSON.stringify(false));
+      sessionStorage.setItem("EComImageTags", JSON.stringify([]));
+      window.addEventListener("beforeunload", () => {
+        const editedOrAdded = JSON.parse(
+          sessionStorage.getItem("EComAddOrEditProduct")
+        );
+        const imageTagsList = JSON.parse(
+          sessionStorage.getItem("EComImageTags")
+        );
+        if (editedOrAdded && imageTagsList.length)
+          navigator.sendBeacon(
+            `${import.meta.env.VITE_BASE_URL}/deleteimages`,
+            JSON.stringify({ imageTags: imageTagsList })
+          );
+      });
     } else {
       navigate("/merchant/merchantlogin");
     }
