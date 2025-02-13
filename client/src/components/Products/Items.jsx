@@ -116,13 +116,7 @@ function Items() {
         `${import.meta.env.VITE_BASE_URL}/addtowish`,
         {
           id: product.id,
-          title: product.title,
           mailId: mailId,
-          price: product.price,
-          discount: product.discount,
-          company: product.company,
-          category: product.category,
-          final_price: product.final_price,
           wishlist: list,
         }
       );
@@ -156,12 +150,6 @@ function Items() {
       `${import.meta.env.VITE_BASE_URL}/addtocart`,
       {
         id: product.id,
-        title: product.title,
-        price: product.price,
-        discount: product.discount,
-        company: product.company,
-        category: product.category,
-        final_price: product.final_price,
         mailId: mailId,
         count: 1,
       }
