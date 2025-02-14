@@ -1862,38 +1862,42 @@ app.post("/getbuyproduct", (req, res) => {
 
 app.post("/initiatebuypayment", (req, res) => {
   let mail = req.body.mail;
-  db.query("select * from buy where mailid = ?", mail, async (err, data) => {
-    if (err)
-      return res.send({
-        access: false,
-        errorMsg:
-          "Some error has occurred! Please try again or refresh the page!",
-      });
-    let cost = data[0].price * (1 - data[0].discount / 100);
-    let total = cost * data[0].count;
-    let totalAmount;
-    if (total >= 500) {
-      totalAmount = total;
-    } else {
-      totalAmount = total + 20;
-    }
-    try {
-      var options = {
-        amount: Math.round(totalAmount * 100),
-        currency: "INR",
-      };
+  db.query(
+    "select buy.*, products.* from buy inner join products on products.id = buy.productid where buy.mailid = ?",
+    mail,
+    async (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      let cost = data[0].price * (1 - data[0].discount / 100);
+      let total = cost * data[0].count;
+      let totalAmount;
+      if (total >= 500) {
+        totalAmount = total;
+      } else {
+        totalAmount = total + 20;
+      }
+      try {
+        var options = {
+          amount: Math.round(totalAmount * 100),
+          currency: "INR",
+        };
 
-      var instance = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY,
-        key_secret: process.env.RAZORPAY_SECRET,
-      });
+        var instance = new Razorpay({
+          key_id: process.env.RAZORPAY_KEY,
+          key_secret: process.env.RAZORPAY_SECRET,
+        });
 
-      let response = await instance.orders.create(options);
-      res.send({ access: true, data: response });
-    } catch (e) {
-      console.log(e);
+        let response = await instance.orders.create(options);
+        res.send({ access: true, data: response });
+      } catch (e) {
+        console.log(e);
+      }
     }
-  });
+  );
 });
 
 app.post("/placebuyorder", (req, res) => {
