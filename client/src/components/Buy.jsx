@@ -57,8 +57,8 @@ function Buy() {
     );
     if (response.data.access) {
       let data = response.data.data[0];
-      if (data.imageTag)
-        data.imageUrl = await getImageUrls(JSON.parse(data.imageTag));
+      if (data.imageTags)
+        data.imageUrl = await getImageUrls(JSON.parse(data.imageTags));
       let cost = data.final_price;
       let total = cost * data.count;
       let priceCurrency;

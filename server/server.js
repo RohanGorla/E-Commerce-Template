@@ -1845,15 +1845,19 @@ app.post("/buyproduct", (req, res) => {
 
 app.post("/getbuyproduct", (req, res) => {
   const mail = req.body.mail;
-  db.query("select * from buy where mailid = ?", mail, (err, data) => {
-    if (err)
-      return res.send({
-        access: false,
-        errorMsg:
-          "Some error has occurred! Please try again or refresh the page!",
-      });
-    return res.send({ access: true, data: data });
-  });
+  db.query(
+    "select buy.*, products.* from buy inner join products on products.id = buy.productid where buy.mailid = ?",
+    mail,
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      return res.send({ access: true, data: data });
+    }
+  );
 });
 
 app.post("/initiatebuypayment", (req, res) => {
