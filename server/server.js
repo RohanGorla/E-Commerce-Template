@@ -1920,18 +1920,13 @@ app.post("/placebuyorder", (req, res) => {
   let values = [
     mail,
     product.productid,
-    product.title,
-    product.price,
-    product.discount,
     product.count,
-    product.category,
-    product.company,
     addressData,
     deliveryDate,
     orderStatus,
   ];
   db.query(
-    "insert into orders (mailid, productid, title, price, discount, count, category, company, address, delivery_date, order_status) values (?)",
+    "insert into orders (mailid, productid, count, address, delivery_date, order_status) values (?)",
     [values],
     (err, data) => {
       if (err)
