@@ -224,18 +224,11 @@ function Product() {
         `${import.meta.env.VITE_BASE_URL}/addtowish`,
         {
           id: productData.id,
-          title: productData.title,
           mailId: mailId,
-          price: productData.price,
-          discount: productData.discount,
-          company: productData.company,
-          category: productData.category,
-          final_price: productData.final_price,
           wishlist: list,
         }
       );
       if (response.data.access) {
-        setShowSelectlist(false);
         setError(false);
         setErrorMessage("");
         setSuccess(true);
@@ -271,7 +264,6 @@ function Product() {
         setSuccessMessage(response.data.successMsg);
         setError(false);
         setErrorMessage("");
-        setShowSelectlist(false);
         setTimeout(() => {
           setSuccess(false);
         }, 3500);
@@ -285,9 +277,7 @@ function Product() {
           setError(false);
         }, 3500);
       }
-    } else {
-      navigate("/account");
-    }
+    } else navigate("/account/login");
   }
 
   /* Cart API */
@@ -298,14 +288,8 @@ function Product() {
         `${import.meta.env.VITE_BASE_URL}/addtocart`,
         {
           id: product,
-          title: productData.title,
-          price: productData.price,
-          discount: productData.discount,
-          company: productData.company,
-          category: productData.category,
-          final_price: productData.final_price,
-          count: count,
           mailId: mailId,
+          count: count,
         }
       );
       if (response.data.access) {
@@ -715,13 +699,16 @@ function Product() {
             {wishlists.length ? (
               wishlists.map((list, index) => {
                 return (
-                  <div className="Product_Wishlist_Selector--List" key={index}>
-                    <p
-                      className="Product_Wishlist_Selector--Listname"
-                      onClick={() => {
-                        addToWishlist(list.wishlistname);
-                      }}
-                    >
+                  <div
+                    key={index}
+                    className="Product_Wishlist_Selector--List"
+                    onClick={() => {
+                      if (wishedLists.includes(list.wishlistname))
+                        removeFromWishlist(list.wishlistname);
+                      else addToWishlist(list.wishlistname);
+                    }}
+                  >
+                    <p className="Product_Wishlist_Selector--Listname">
                       {list.wishlistname}
                     </p>
                     <FaHeart
@@ -731,9 +718,6 @@ function Product() {
                           : "Product_Wishlist_Selector--Heart--Notwished"
                       }
                       size={20}
-                      onClick={() => {
-                        removeFromWishlist(list.wishlistname);
-                      }}
                     />
                   </div>
                 );
