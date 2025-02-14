@@ -1795,20 +1795,7 @@ app.post("/buyproduct", (req, res) => {
   let mail = req.body.mail;
   let count = req.body.count;
   let deliveryDate = req.body.deliveryDate;
-  const productImageTags = JSON.parse(productData.imageTags);
-  let values = [
-    mail,
-    productData.id,
-    productData.title,
-    productData.price,
-    productData.discount,
-    productData.final_price,
-    count,
-    productData.category,
-    productData.company,
-    deliveryDate,
-    JSON.stringify([productImageTags[0]]),
-  ];
+  let values = [mail, productData.id, count, deliveryDate];
   db.query("select id from buy where mailid = ?", mail, (err, data) => {
     if (err)
       return res.send({
@@ -1825,7 +1812,7 @@ app.post("/buyproduct", (req, res) => {
               "Some error has occurred! Please try again or refresh the page!",
           });
         db.query(
-          "insert into buy (mailid, productid, title, price, discount, final_price, count, category, company, delivery_date, imageTag) values (?)",
+          "insert into buy (mailid, productid, count, delivery_date) values (?)",
           [values],
           (err, data) => {
             if (err)
@@ -1840,7 +1827,7 @@ app.post("/buyproduct", (req, res) => {
       });
     } else {
       db.query(
-        "insert into buy (mailid, productid, title, price, discount, final_price, count, category, company, delivery_date, imageTag) values (?)",
+        "insert into buy (mailid, productid, count, delivery_date) values (?)",
         [values],
         (err, data) => {
           if (err)
