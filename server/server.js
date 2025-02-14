@@ -1277,17 +1277,19 @@ app.delete("/removefromwish", (req, res) => {
 
 app.post("/getcartitems", (req, res) => {
   const mailId = req.body.mailId;
-  db.query("select * from cart where mailid = ?", mailId, (err, cartData) => {
-    if (err) {
-      console.log(err);
-      return res.send({
-        access: false,
-        errorMsg:
-          "Some error has occurred! Please try again or refresh the page!",
-      });
+  db.query(
+    "select cart.*, products.* from cart inner join products on products.id = cart.productid where mailid = ?",
+    mailId,
+    (err, cartData) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      res.send({ access: true, data: cartData });
     }
-    res.send({ access: true, data: cartData });
-  });
+  );
 });
 
 app.post("/addtocart", (req, res) => {
