@@ -1170,7 +1170,7 @@ app.delete("/deletewishlist", (req, res) => {
 app.post("/getfromwish", (req, res) => {
   const mailId = req.body.mailId;
   db.query(
-    "select * from wishlistitems where mailid = ?",
+    "select wishlistitems.*, products.* from wishlistitems inner join products on wishlistitems.productid = products.id where mailid = ?",
     mailId,
     (err, data) => {
       if (err) {
@@ -1209,17 +1209,7 @@ app.post("/checkwished", (req, res) => {
 });
 
 app.post("/addtowish", (req, res) => {
-  const values = [
-    req.body.id,
-    req.body.title,
-    req.body.mailId,
-    req.body.price,
-    req.body.discount,
-    req.body.wishlist,
-    req.body.category,
-    req.body.company,
-    req.body.final_price,
-  ];
+  const values = [req.body.id, req.body.mailId, req.body.wishlist];
   db.query(
     "select * from wishlistitems where mailid = ? and wishlistname = ? and productid = ?",
     [req.body.mailId, req.body.wishlist, req.body.id],
@@ -1237,7 +1227,7 @@ app.post("/addtowish", (req, res) => {
         });
       } else {
         db.query(
-          "insert into wishlistitems (productid, title, mailid, price, discount, wishlistname, category, company, final_price) values (?)",
+          "insert into wishlistitems (productid, mailid, wishlistname) values (?)",
           [values],
           (err, data) => {
             if (err) {
@@ -1302,14 +1292,8 @@ app.post("/getcartitems", (req, res) => {
 
 app.post("/addtocart", (req, res) => {
   const id = req.body.id;
-  const title = req.body.title;
-  const price = req.body.price;
-  const discount = req.body.discount;
-  const category = req.body.category;
-  const company = req.body.company;
   const mailId = req.body.mailId;
   const itemCount = req.body.count;
-  const finalPrice = req.body.final_price;
   db.query(
     "select count from cart where productid = ? and mailid = ?",
     [id, mailId],
@@ -1346,19 +1330,9 @@ app.post("/addtocart", (req, res) => {
           );
         }
       } else {
-        const values = [
-          mailId,
-          id,
-          title,
-          price,
-          discount,
-          category,
-          company,
-          itemCount,
-          finalPrice,
-        ];
+        const values = [mailId, id, itemCount];
         db.query(
-          "insert into cart (mailid, productid, title, price, discount, category, company, count, final_price) values (?)",
+          "insert into cart (mailid, productid, count) values (?)",
           [values],
           (err, data) => {
             if (err) {
