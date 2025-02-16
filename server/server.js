@@ -2024,69 +2024,66 @@ app.post("/placeorder", (req, res) => {
     country: req.body.address.country,
   });
   const order_status = "Order placed";
-  db.query("select * from cart where mailid = ?", mail, (err, cartData) => {
-    if (err) {
-      console.log(err);
-      return res.send({
-        access: false,
-        errorMsg:
-          "Some error has occurred! Please try again or refresh the page!",
+  db.query(
+    "select cart.*, products.* from cart inner join products on cart.productid = products.id where mailid = ?",
+    mail,
+    (err, cartData) => {
+      if (err) {
+        console.log(err);
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      }
+      cartData.forEach((product) => {
+        let values = [
+          mail,
+          product.productid,
+          product.count,
+          address,
+          order_status,
+        ];
+        db.query(
+          "insert into orders (mailid, productid, count, address, order_status) values (?)",
+          [values],
+          (err, data) => {
+            if (err)
+              return res.send({
+                access: false,
+                errorMsg:
+                  "Some error has occurred! Please try again or refresh the page!",
+              });
+            db.query(
+              "select (total_sales) from products where id = ?",
+              [product.productid],
+              (err, data) => {
+                if (err)
+                  return res.send({
+                    access: false,
+                    errorMsg:
+                      "Some error has occurred! Please try again or refresh the page!",
+                  });
+                let sales = data[0].total_sales + product.count;
+                db.query(
+                  "update products set ? where id = ?",
+                  [{ total_sales: sales }, product.productid],
+                  (err, data) => {
+                    if (err)
+                      return res.send({
+                        access: false,
+                        errorMsg:
+                          "Some error has occurred! Please try again or refresh the page!",
+                      });
+                  }
+                );
+              }
+            );
+          }
+        );
       });
     }
-    cartData.forEach((product) => {
-      let values = [
-        mail,
-        product.productid,
-        product.title,
-        product.price,
-        product.discount,
-        product.count,
-        product.category,
-        product.company,
-        address,
-        order_status,
-      ];
-      db.query(
-        "insert into orders (mailid, productid, title, price, discount, count, category, company, address, order_status) values (?)",
-        [values],
-        (err, data) => {
-          if (err) {
-            console.log(err);
-            return res.send({
-              access: false,
-              errorMsg:
-                "Some error has occurred! Please try again or refresh the page!",
-            });
-          }
-          db.query(
-            "select (total_sales) from products where id = ?",
-            [product.productid],
-            (err, data) => {
-              if (err)
-                return res.send({
-                  access: false,
-                  errorMsg:
-                    "Some error has occurred! Please try again or refresh the page!",
-                });
-              let sales = data[0].total_sales + product.count;
-              db.query(
-                "update products set ? where id = ?",
-                [{ total_sales: sales }, product.productid],
-                (err, data) => {
-                  if (err)
-                    return res.send({
-                      access: false,
-                      errorMsg:
-                        "Some error has occurred! Please try again or refresh the page!",
-                    });
-                }
-              );
-            }
-          );
-        }
-      );
-    });
-  });
+  );
   db.query("delete from cart where mailid = ?", mail, (err, data) => {
     if (err)
       return res.send({
