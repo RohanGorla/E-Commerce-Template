@@ -247,7 +247,11 @@ function Cart() {
                       <div key={index} className="Cart_Items_Display">
                         <div className="Cart_Items_Display--Image">
                           <img
-                            src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                            src={
+                              item.imageUrl
+                                ? item.imageUrl[0].imageUrl
+                                : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                            }
                             onClick={() => {
                               window.open(
                                 `${window.location.origin}/products/product/${item.productid}`
