@@ -42,9 +42,13 @@ function Cart() {
         if (response.data.data.length) {
           const cartData = response.data.data;
           let cartProductIds = [];
-          cartData?.map((product) => {
-            cartProductIds.push(product.productid);
-          });
+          for (let i = 0; i < cartData.length; i++) {
+            cartProductIds.push(cartData[i].productid);
+            if (cartData[i].imageTags)
+              cartData[i].imageUrl = await getImageUrls(
+                JSON.parse(cartData[i].imageTags)
+              );
+          }
 
           /* Get Reviews Of All Cart Products API */
           async function getCartProductReviews() {
