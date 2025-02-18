@@ -554,7 +554,7 @@ app.post("/markasshipped", (req, res) => {
           err: err,
         });
       db.query(
-        "select * from orders where order_status = 'Order placed' and company = ?",
+        "select orders.*, products.* from orders inner join products on orders.productid = products.id where order_status = 'Order placed' and company = ?",
         company,
         (err, data) => {
           if (err)
