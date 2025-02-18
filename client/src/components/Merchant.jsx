@@ -34,8 +34,7 @@ function Merchant() {
         let totalRevenue = 0;
         let totalRevenueCurrency;
         response.data.ordersData.forEach((order) => {
-          const finalPrice = order.price * (1 - order.discount / 100);
-          totalRevenue += Math.round(finalPrice * 100) / 100;
+          totalRevenue += order.final_price * order.count;
           const orderStatus = order.order_status;
           switch (orderStatus) {
             case "Order placed":
