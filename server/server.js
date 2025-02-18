@@ -1387,21 +1387,23 @@ app.put("/updatecartitemcount", (req, res) => {
 });
 
 app.delete("/removecartitem", (req, res) => {
-  const id = req.body.id;
-  db.query("delete from cart where id = ?", id, (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.send({
-        access: false,
-        errorMsg:
-          "Some error has occurred! Please try again or refresh the page!",
+  const { id, mailId } = req.body;
+  db.query(
+    "delete from cart where productid = ? and mailid = ?",
+    [id, mailId],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      res.send({
+        access: true,
+        successMsg: "Product has been removed from cart successfully!",
       });
     }
-    res.send({
-      access: true,
-      successMsg: "Product has been removed from cart successfully!",
-    });
-  });
+  );
 });
 
 /* User Credentials Server Routes */
