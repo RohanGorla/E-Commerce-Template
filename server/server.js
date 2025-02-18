@@ -477,7 +477,7 @@ app.post("/checkmerchant", (req, res) => {
         let ordersData;
         let inventoryData;
         db.query(
-          "select * from orders where company = ?",
+          "select orders.*, products.* from orders inner join products on orders.productid = products.id where company = ?",
           company,
           (err, data) => {
             if (err)
