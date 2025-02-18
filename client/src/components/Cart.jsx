@@ -111,7 +111,7 @@ function Cart() {
     let response = await axios.delete(
       `${import.meta.env.VITE_BASE_URL}/removecartitem`,
       {
-        data: { id },
+        data: { id, mailId },
       }
     );
     if (response.data.access) {
@@ -399,7 +399,7 @@ function Cart() {
                             <button
                               className="Cart_Items_Buttons--Remove"
                               onClick={() => {
-                                removeFromCart(item.id);
+                                removeFromCart(item.productid);
                               }}
                             >
                               Remove from cart
