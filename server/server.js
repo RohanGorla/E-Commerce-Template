@@ -745,14 +745,12 @@ app.post("/getproducts", (req, res) => {
 app.post("/getmerchantproducts", (req, res) => {
   const company = req.body.company;
   db.query("select * from products where company = ?", company, (err, data) => {
-    if (err) {
-      console.log(err);
+    if (err)
       return res.send({
         access: false,
         errorMsg:
           "Some error has occurred! Please try again or refresh the page!",
       });
-    }
     res.send({ access: true, data });
   });
 });
@@ -2099,15 +2097,19 @@ app.post("/placeorder", (req, res) => {
 
 app.post("/getorders", (req, res) => {
   let mail = req.body.mail;
-  db.query("select * from orders where mailid = ?", mail, (err, ordersData) => {
-    if (err)
-      return res.send({
-        access: false,
-        errorMsg:
-          "Some error has occurred! Please try again or refresh the page!",
-      });
-    return res.send({ access: true, data: ordersData });
-  });
+  db.query(
+    "select orders.*, products.* from orders inner join products on orders.productid = products.id where mailid = ?",
+    mail,
+    (err, ordersData) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      return res.send({ access: true, data: ordersData });
+    }
+  );
 });
 
 app.listen(PORT, () => {
