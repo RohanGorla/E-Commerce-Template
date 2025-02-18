@@ -525,7 +525,7 @@ app.post("/getmerchantorders", (req, res) => {
   const company = req.body.company;
   const orderStatus = req.body.orderStatus;
   db.query(
-    "select * from orders where company = ? and order_status = ?",
+    "select orders.*, products.* from orders inner join products on orders.productid = products.id where company = ? and order_status = ?",
     [company, orderStatus],
     (err, data) => {
       if (err)
