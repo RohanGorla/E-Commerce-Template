@@ -48,11 +48,13 @@ function MerchantEditProduct() {
     );
     if (response.data.access) {
       const productDetails = response.data.data[0];
-      const imageUrlsResponse = await getImageUrls(
-        JSON.parse(productDetails.imageTags)
-      );
-      setImageUrls(imageUrlsResponse);
-      setImageTags(JSON.parse(productDetails.imageTags));
+      if (productDetails.imageTags) {
+        const imageUrlsResponse = await getImageUrls(
+          JSON.parse(productDetails.imageTags)
+        );
+        setImageUrls(imageUrlsResponse);
+        setImageTags(JSON.parse(productDetails.imageTags));
+      }
       setTitle(productDetails.title);
       setDescription(productDetails.description);
       setPrice(productDetails.price);
@@ -408,7 +410,7 @@ function MerchantEditProduct() {
                     }}
                   ></input>
                   <div className="AddProduct_Image_Display">
-                    {imageUrls.map((image, index) => {
+                    {imageUrls?.map((image, index) => {
                       return (
                         <div
                           key={index}
