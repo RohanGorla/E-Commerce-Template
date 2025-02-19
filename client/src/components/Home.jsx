@@ -160,7 +160,11 @@ function Home() {
                 <div key={index} className="Home_Product">
                   <div className="Home_Product--Image">
                     <img
-                      src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                      src={
+                        product.imageUrl
+                          ? product.imageUrl[0].imageUrl
+                          : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                      }
                       onClick={() => {
                         window.open(
                           `${window.location.origin}/products/product/${product.id}`
