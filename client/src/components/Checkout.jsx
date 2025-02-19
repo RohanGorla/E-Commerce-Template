@@ -626,7 +626,13 @@ function Checkout() {
                   return (
                     <div className="Checkout_Products--Product" key={index}>
                       <div className="Checkout_Products--Product_Image">
-                        <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                        <img
+                          src={
+                            product.imageUrl
+                              ? product.imageUrl[0].imageUrl
+                              : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                          }
+                        ></img>
                       </div>
                       <div className="Checkout_Products--Product_Details">
                         <p className="Checkout_Product_Details--Name">
