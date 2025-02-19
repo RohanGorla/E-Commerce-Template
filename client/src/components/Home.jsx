@@ -35,7 +35,14 @@ function Home() {
           );
       }
       setMostDiscount(mostDiscountProducts);
-      setMostBought(response.data.mostBought);
+      const mostBoughtProducts = response.data.mostBought;
+      for (let i = 0; i < mostBoughtProducts.length; i++) {
+        if (mostBoughtProducts[i].imageTags)
+          mostBoughtProducts.imageUrl = await getImageUrls(
+            JSON.stringify(mostBoughtProducts[i].imageTags)
+          );
+      }
+      setMostBought(mostBoughtProducts);
     }
   }
 
