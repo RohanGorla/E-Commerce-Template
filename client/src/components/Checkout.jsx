@@ -86,7 +86,14 @@ function Checkout() {
       }
     );
     if (response.data.access) {
-      setCartData(response.data.data);
+      const cartProducts = response.data.data;
+      for (let i = 0; i < cartProducts.length; i++) {
+        if (cartProducts[i].imageTags)
+          cartProducts[i].imageUrl = await getImageUrls(
+            JSON.parse(cartProducts[i].imageTags)
+          );
+      }
+      setCartData(cartProducts);
       let count = 0;
       let totalCost = 0;
       response.data.data.forEach((product) => {
