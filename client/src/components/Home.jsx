@@ -27,7 +27,14 @@ function Home() {
       `${import.meta.env.VITE_BASE_URL}/gethomeproducts`
     );
     if (response.data.access) {
-      setMostDiscount(response.data.mostDiscount);
+      const mostDiscountProducts = response.data.mostDiscount;
+      for (let i = 0; i < mostDiscountProducts.length; i++) {
+        if (mostDiscountProducts[i].imageTags)
+          mostDiscountProducts.imageUrl = await getImageUrls(
+            JSON.stringify(mostDiscountProducts[i].imageTags)
+          );
+      }
+      setMostDiscount(mostDiscountProducts);
       setMostBought(response.data.mostBought);
     }
   }
