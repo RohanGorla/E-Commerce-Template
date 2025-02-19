@@ -9,6 +9,19 @@ function Home() {
   const [mostDiscount, setMostDiscount] = useState([]);
   const navigate = useNavigate();
 
+  /* GET PRODUCT IMAGE URLS FROM S3 */
+
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys: [imageKeys[0]] }
+    );
+    const getUrls = getUrlResponse.data;
+    return getUrls;
+  }
+
+  /* GET MOST DISCOUNT AND MOST BOUGHT PRODUCTS */
+
   async function getProducts() {
     const response = await axios.get(
       `${import.meta.env.VITE_BASE_URL}/gethomeproducts`
@@ -18,6 +31,8 @@ function Home() {
       setMostBought(response.data.mostBought);
     }
   }
+
+  /* CURRENCY CONVERTER FUNCTION */
 
   function currencyConvert(amount) {
     let amountString = amount.toString();
