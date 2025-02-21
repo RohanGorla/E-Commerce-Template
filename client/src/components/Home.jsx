@@ -31,7 +31,7 @@ function Home() {
       for (let i = 0; i < mostDiscountProducts.length; i++) {
         if (mostDiscountProducts[i].imageTags)
           mostDiscountProducts.imageUrl = await getImageUrls(
-            JSON.stringify(mostDiscountProducts[i].imageTags)
+            JSON.parse(mostDiscountProducts[i].imageTags)
           );
       }
       setMostDiscount(mostDiscountProducts);
