@@ -13,6 +13,17 @@ function MerchantOrders() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  /* GET PRODUCT IMAGE URLS FROM S3 */
+
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys: [imageKeys[0]] }
+    );
+    const getUrls = getUrlResponse.data;
+    return getUrls;
+  }
+
   async function getPendingOrders() {
     const company = merchantInfo?.company;
     if (company) {
