@@ -47,7 +47,14 @@ function MerchantOrders() {
         }
       );
       if (response.data.access) {
-        setOrders(response.data.data);
+        const ordersData = response.data.data;
+        for (let i = 0; i < ordersData.length; i++) {
+          if (JSON.parse(ordersData[i]?.imageTags).length)
+            ordersData[i].imageUrl = await getImageUrls(
+              JSON.parse(ordersData[i].imageTags)
+            );
+        }
+        setOrders(ordersData);
       } else {
         setError(true);
         setErrorMessage(response.data.errorMsg);
