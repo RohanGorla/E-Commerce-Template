@@ -161,7 +161,13 @@ function MerchantOrders() {
             return (
               <div className="MerchantOrders_Order" key={index}>
                 <div className="MerchantOrders_Order_Image">
-                  <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                  <img
+                    src={
+                      order.imageUrl
+                        ? order.imageUrl[0].imageUrl
+                        : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                    }
+                  ></img>
                 </div>
                 <div className="MerchantOrders_Order_Details">
                   <p className="MerchantOrders_Order_Details--Name">
