@@ -157,7 +157,13 @@ function MerchantInventory() {
               return (
                 <div key={index} className="MerchantInventory--Product">
                   <div className="MerchantInventory--Product_Image">
-                    <img src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"></img>
+                    <img
+                      src={
+                        product.imageUrl
+                          ? product.imageUrl[0].imageUrl
+                          : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                      }
+                    ></img>
                   </div>
                   <div className="MerchantInventory--Product_Details">
                     <p className="MerchantInventory--Product_Name">
