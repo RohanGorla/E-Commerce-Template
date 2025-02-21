@@ -39,6 +39,12 @@ function MerchantInventory() {
       );
       if (response.data.access) {
         const allInventory = response.data.data;
+        for (let i = 0; i < allInventory.length; i++) {
+          if (allInventory[i].imageTags);
+          allInventory.imageUrl = await getImageUrls(
+            JSON.stringify(allInventory[i].imageTags)
+          );
+        }
         filterInventoryData(allInventory);
       }
     } else {
