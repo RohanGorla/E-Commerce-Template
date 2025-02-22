@@ -155,9 +155,14 @@ function Wishlist() {
       if (response.data.access) {
         const data = response.data.data;
         let productsId = [];
-        data?.map((product) => {
-          productsId.push(product.productid);
-        });
+        for (let i = 0; i < data.length; i++) {
+          if (JSON.parse(data[i].imageTags).length) {
+            data[i].imageUrl = await getImageUrls(
+              JSON.parse(data[i].imageTags)
+            );
+          }
+          productsId.push(data[i].productid);
+        }
         async function getReviews() {
           let response = await axios.post(
             `${import.meta.env.VITE_BASE_URL}/getallreviews`,
