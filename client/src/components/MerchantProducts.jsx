@@ -12,6 +12,17 @@ function MerchantProducts() {
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
 
+  /* GET PRODUCT IMAGE URLS FROM S3 */
+
+  async function getImageUrls(imageKeys) {
+    const getUrlResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/generategeturls`,
+      { imageKeys: [imageKeys[0]] }
+    );
+    const getUrls = getUrlResponse.data;
+    return getUrls;
+  }
+
   async function getMerchantProducts() {
     const company = merchantInfo.company;
     const response = await axios.post(
