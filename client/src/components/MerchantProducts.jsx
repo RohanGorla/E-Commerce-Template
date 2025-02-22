@@ -30,7 +30,14 @@ function MerchantProducts() {
       { company }
     );
     if (response.data.access) {
-      setMerchantProducts(response.data.data);
+      const merchantProductsData = response.data.data;
+      for (let i = 0; i < merchantProductsData.length; i++) {
+        if (JSON.parse(merchantProductsData[i]?.imageTags).length)
+          merchantProductsData[i].imageUrl = await getImageUrls(
+            JSON.parse(merchantProductsData[i].imageTags)
+          );
+      }
+      setMerchantProducts(merchantProductsData);
     } else {
       setSuccess(false);
       setSuccessMessage("");
