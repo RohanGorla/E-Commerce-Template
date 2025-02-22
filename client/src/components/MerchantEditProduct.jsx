@@ -48,7 +48,7 @@ function MerchantEditProduct() {
     );
     if (response.data.access) {
       const productDetails = response.data.data[0];
-      if (productDetails.imageTags) {
+      if (JSON.parse(productDetails.imageTags).length) {
         const imageUrlsResponse = await getImageUrls(
           JSON.parse(productDetails.imageTags)
         );

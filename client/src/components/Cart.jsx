@@ -44,7 +44,7 @@ function Cart() {
           let cartProductIds = [];
           for (let i = 0; i < cartData.length; i++) {
             cartProductIds.push(cartData[i].productid);
-            if (cartData[i].imageTags)
+            if (JSON.parse(cartData[i].imageTags).length)
               cartData[i].imageUrl = await getImageUrls(
                 JSON.parse(cartData[i].imageTags)
               );

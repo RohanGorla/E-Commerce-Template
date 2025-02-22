@@ -187,7 +187,7 @@ function Items() {
       let productsId = [];
       for (let i = 0; i < data.length; i++) {
         productsId.push(data[i].id);
-        if (data[i].imageTags)
+        if (JSON.parse(data[i].imageTags).length)
           data[i].imageUrl = await getImageUrls(JSON.parse(data[i].imageTags));
       }
       async function getReviews() {

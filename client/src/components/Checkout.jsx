@@ -88,7 +88,7 @@ function Checkout() {
     if (response.data.access) {
       const cartProducts = response.data.data;
       for (let i = 0; i < cartProducts.length; i++) {
-        if (cartProducts[i].imageTags)
+        if (JSON.parse(cartProducts[i].imageTags))
           cartProducts[i].imageUrl = await getImageUrls(
             JSON.parse(cartProducts[i].imageTags)
           );

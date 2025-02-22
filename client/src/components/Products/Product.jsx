@@ -100,7 +100,7 @@ function Product() {
       }
       data.mrp = mrp;
       data.actualPrice = offerPriceActual;
-      if (data?.imageTags) {
+      if (JSON.parse(data.imageTags).length) {
         data.imageUrls = await getImageUrls(JSON.parse(data?.imageTags));
         setCurrentUrl(data.imageUrls[0].imageUrl);
       } else setCurrentUrl(imageUrls[0].src);

@@ -29,7 +29,7 @@ function Home() {
     if (response.data.access) {
       const mostDiscountProducts = response.data.mostDiscount;
       for (let i = 0; i < mostDiscountProducts.length; i++) {
-        if (mostDiscountProducts[i].imageTags)
+        if (JSON.parse(mostDiscountProducts[i].imageTags).length)
           mostDiscountProducts.imageUrl = await getImageUrls(
             JSON.parse(mostDiscountProducts[i].imageTags)
           );
