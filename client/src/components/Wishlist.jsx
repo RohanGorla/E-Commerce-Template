@@ -228,11 +228,6 @@ function Wishlist() {
       `${import.meta.env.VITE_BASE_URL}/addtocart`,
       {
         id: product.productid,
-        title: product.title,
-        price: product.price,
-        discount: product.discount,
-        category: product.category,
-        company: product.company,
         mailId: mailId,
         count: 1,
       }
