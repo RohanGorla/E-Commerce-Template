@@ -502,7 +502,11 @@ function Wishlist() {
                         <div key={index} className="Wish_Items--Item">
                           <div className="Wish_Item--Image">
                             <img
-                              src="https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                              src={
+                                item.imageUrl
+                                  ? item.imageUrl[0].imageUrl
+                                  : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                              }
                               onClick={() => {
                                 window.open(
                                   `${window.location.origin}/products/product/${item.productid}`
