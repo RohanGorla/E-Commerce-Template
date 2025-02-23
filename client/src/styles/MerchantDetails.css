@@ -54,3 +54,12 @@
   font-family: var(--MerchantDetails_Second_Font);
   font-size: var(--MerchantDetails_Information);
 }
+
+.MerchantDetails_Edit_Button {
+  font-family: var(--MerchantDetails_Main_Font);
+  font-weight: 700;
+  padding: 0.5em 1.7em;
+  border-style: none;
+  border-radius: 100px;
+  cursor: pointer;
+}
