@@ -1,136 +1,145 @@
 :root {
-    --Merchant_Main_Font: "Inter", sans-serif;
-    --Merchant_Second_Font: "Roboto", sans-serif;
-    --Merchant_Header: 40px;
-    --Merchant_Details--Company_Name: 20px;
-    --Merchant_Details--Mail: 16px;
-    --Merchant_Section_Name: 25px;
-    --Merchant_Signout--Button: 14px;
-    --Merchant_Dashboard--Item--Text: 18px;
-    --Merchant_Dashboard--Item--Value: 25px;
+  --Merchant_Main_Font: "Inter", sans-serif;
+  --Merchant_Second_Font: "Roboto", sans-serif;
+  --Merchant_Header: 40px;
+  --Merchant_Details--Company_Name: 20px;
+  --Merchant_Details--Mail: 16px;
+  --Merchant_Section_Name: 25px;
+  --Merchant_Signout--Button: 14px;
+  --Merchant_Dashboard--Item--Text: 18px;
+  --Merchant_Dashboard--Item--Value: 25px;
 }
 
 .Merchant_Page {
-    padding: 1.5em 0em;
+  padding: 1.5em 0em;
 }
 
 .Merchant_Main {
-    max-width: 1300px;
-    margin: 0em auto;
+  max-width: 1300px;
+  margin: 0em auto;
 }
 
 .Merchant_Header {
-    background-color: black;
-    position: sticky;
-    top: 0px;
-    padding-bottom: 1.5em;
+  background-color: black;
+  position: sticky;
+  top: 0px;
+  padding-bottom: 1.5em;
 }
 
 .Merchant_Header--Title {
-    background-color: rgb(25, 25, 25);
-    font-family: var(--Merchant_Main_Font);
-    font-size: var(--Merchant_Header);
-    text-align: center;
-    letter-spacing: 2px;
-    padding: .7em 0em;
-    border-style: none;
-    border-radius: 9px;
-    border: 2px solid white;
+  background-color: rgb(25, 25, 25);
+  font-family: var(--Merchant_Main_Font);
+  font-size: var(--Merchant_Header);
+  text-align: center;
+  letter-spacing: 2px;
+  padding: 0.7em 0em;
+  border-style: none;
+  border-radius: 9px;
+  border: 2px solid white;
 }
 
 .Merchant_Dashboard--Section {
-    background-color: rgb(25, 25, 25);
-    max-width: 1200px;
-    padding: 1em;
-    margin: 0em auto;
-    border-style: none;
-    border-radius: 10px;
+  background-color: rgb(25, 25, 25);
+  max-width: 1200px;
+  padding: 1em;
+  margin: 0em auto;
+  border-style: none;
+  border-radius: 10px;
 }
 
-.Merchant_Dashboard--Section +
-.Merchant_Dashboard--Section {
-    margin-top: 1em;
+.Merchant_Dashboard--Section + .Merchant_Dashboard--Section {
+  margin-top: 1em;
 }
 
 .Merchant_Dashboard--Section_Name {
-    font-family: var(--Merchant_Main_Font);
-    font-size: var(--Merchant_Section_Name);
-    letter-spacing: 1px;
+  font-family: var(--Merchant_Main_Font);
+  font-size: var(--Merchant_Section_Name);
+  letter-spacing: 1px;
 }
 
-.Merchant_Dashboard_Details_And_Signout {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0em 3em;
+.Merchant_Dashboard_Details_And_Options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0em 3em;
 }
 
 .Merchant_Details--Company_Name {
-    font-family: var(--Merchant_Second_Font);
-    font-size: var(--Merchant_Details--Company_Name);
-    font-weight: 500;
-    margin-bottom: .5em;
+  font-family: var(--Merchant_Second_Font);
+  font-size: var(--Merchant_Details--Company_Name);
+  font-weight: 500;
+  margin-bottom: 0.5em;
 }
 
 .Merchant_Details--Mail {
-    font-family: var(--Merchant_Second_Font);
-    font-size: var(--Merchant_Details--Mail);
+  font-family: var(--Merchant_Second_Font);
+  font-size: var(--Merchant_Details--Mail);
 }
 
-.Merchant_Signout--Button {
-    background-color: rgb(10, 10, 10);
+.Merchant_Options button {
+  font-family: var(--Merchant_Second_Font);
+  font-size: var(--Merchant_Signout--Button);
+  font-weight: 600;
+  padding: 0.8em 1.6em;
+  border-style: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.Merchant_Options--MyAccount_Button {
+  margin-right: 1em;
+  &:hover {
+    background-color: black;
     color: white;
-    font-family: var(--Merchant_Second_Font);
-    font-size: var(--Merchant_Signout--Button);
-    font-weight: 600;
-    padding: .8em 1.6em;
-    border-style: none;
-    border-radius: 8px;
-    cursor: pointer;
-    &:hover {
-        background-color: white;
-        color: black;
-    }
+  }
+}
+
+.Merchant_Options--Signout_Button {
+  background-color: red;
+  &:hover {
+    background-color: black;
+    color: red;
+  }
 }
 
 .Merchant_Dashboard--Grid {
-    max-width: 1100px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-    margin: 0em auto;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  margin: 0em auto;
 }
 
 .Merchant_Dashboard--Item_Container {
-    display: flex;
-    justify-content: center;
-    padding: 1em 0em;
+  display: flex;
+  justify-content: center;
+  padding: 1em 0em;
 }
 
 .Merchant_Dashboard--Item {
-    background-color: rgb(10, 10, 10);
-    width: 80%;
-    max-width: 250px;
-    padding: 1.5em 0em;
-    border-style: none;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  background-color: rgb(10, 10, 10);
+  width: 80%;
+  max-width: 250px;
+  padding: 1.5em 0em;
+  border-style: none;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .Merchant_Dashboard--Item--Text {
-    font-family: var(--Merchant_Second_Font);
-    font-size: var(--Merchant_Dashboard--Item--Text);
-    font-weight: 600;
-    letter-spacing: 1px;
+  font-family: var(--Merchant_Second_Font);
+  font-size: var(--Merchant_Dashboard--Item--Text);
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .Merchant_Dashboard--Item--Value {
-    font-family: var(--Merchant_Main_Font);
-    font-size: var(--Merchant_Dashboard--Item--Value);
-    font-weight: 600;
-    letter-spacing: 2px;
-    margin-top: 1em;
+  font-family: var(--Merchant_Main_Font);
+  font-size: var(--Merchant_Dashboard--Item--Value);
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-top: 1em;
 }
