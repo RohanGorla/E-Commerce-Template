@@ -1,0 +1,61 @@
+:root {
+  --MerchantEditDetails_Main_Font: "Inter", sans-serif;
+  --MerchantEditDetails_Secondary_Font: "Roboto", sans-serif;
+  --MerchantEditDetails_Main_Fontsize: 15px;
+  --MerchantEditDetails_Secondary_Fontsize: 17px;
+  --MerchantEditDetails_Button: 15px;
+}
+
+.MerchantEditDetail_Main {
+  max-width: 650px;
+  margin: 0 auto;
+  margin-top: 5em;
+  background-color: rgb(67, 66, 66);
+  padding: 2em 1.5em;
+  border-radius: 10px;
+}
+
+.MerchantEditDetail_Header {
+  margin-bottom: 2em;
+  font-family: var(--MerchantEditDetails_Secondary_Font);
+}
+
+.MerchantEditDetail_Header h2 {
+  margin-bottom: 0.2em;
+}
+
+.MerchantEditDetail_Input_Container {
+  margin: 1em 0;
+}
+
+.MerchantEditDetail_Input_Container label {
+  font-family: var(--MerchantEditDetails_Secondary_Font);
+  font-size: var(--MerchantEditDetails_Secondary_Fontsize);
+  font-weight: 500;
+}
+
+.MerchantEditDetail_Input {
+  display: block;
+  font-family: var(--MerchantEditDetails_Secondary_Font);
+  font-size: var(--MerchantEditDetails_Main_Fontsize);
+  font-weight: 400;
+  margin-top: 0.3em;
+  padding: 0.2em 0 0.2em 0.3em;
+  border-style: none;
+  border-radius: 2px;
+}
+
+.MerchantEditCompany_Input {
+  width: 130px;
+}
+
+.MerchantEditDetail_Savechanges_Option button {
+  font-size: var(--MerchantEditDetails_Secondary_Font);
+  font-size: var(--MerchantEditDetails_Button);
+  font-weight: 500;
+  padding: 0.5em 1.7em;
+  background-color: gold;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
