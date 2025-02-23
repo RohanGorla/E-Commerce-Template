@@ -9,6 +9,35 @@ function MerchantEditCompany() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  async function editcompany() {
+    if (newCompany.length !== 0) {
+      if (merchantInfo.company == newCompany) {
+        setSuccess(false);
+        setError(true);
+        setErrorMessage("Old and New company names cannot be the same!");
+        setTimeout(() => {
+          setError(false);
+        }, 2500);
+      } else {
+        let response = await axios.put(
+          `${import.meta.env.VITE_BASE_URL}/editcompanyname`,
+          {
+            newCompany: newCompany,
+            oldCompany: merchantInfo.company,
+            merchantmail: merchantmail,
+          }
+        );
+      }
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage("Company name cannot be empty!");
+      setTimeout(() => {
+        setError(false);
+      }, 2500);
+    }
+  }
+
   return (
     <div className="MerchantEditCompany_Page">
       {/* Error Message Box */}
@@ -56,7 +85,7 @@ function MerchantEditCompany() {
             ></input>
           </div>
           <div className="MerchantEditDetail_Savechanges_Option">
-            <button>Save</button>
+            <button onClick={editcompany}>Save</button>
           </div>
         </div>
       </div>
