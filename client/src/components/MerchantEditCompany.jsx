@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../styles/MerchantEditDetails.css";
 
 function MerchantEditCompany() {
+  const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
+  const merchantmail = merchantInfo.mailId;
   const [newCompany, setNewCompany] = useState(merchantInfo.company);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,6 +31,28 @@ function MerchantEditCompany() {
             merchantmail: merchantmail,
           }
         );
+        if (response.data.access) {
+          localStorage.setItem(
+            "merchantInfo",
+            JSON.stringify({
+              ...merchantInfo,
+              company: newCompany,
+            })
+          );
+          setSuccess(true);
+          setSuccessMessage(response.data.successMsg);
+          setTimeout(() => {
+            setSuccess(false);
+            navigate("/merchant/merchantdetails");
+          }, 1500);
+        } else {
+          setSuccess(false);
+          setError(true);
+          setErrorMessage(response.data.errorMsg);
+          setTimeout(() => {
+            setError(false);
+          }, 2500);
+        }
       }
     } else {
       setSuccess(false);
