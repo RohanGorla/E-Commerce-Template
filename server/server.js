@@ -624,6 +624,24 @@ app.post("/updateinventory", (req, res) => {
   );
 });
 
+app.put("/editcompanyname", (req, res) => {
+  const newCompany = req.body.newCompany;
+  const merchantmail = req.body.merchantmail;
+  const oldCompany = req.body.oldCompany;
+  db.query(
+    "update merchant set ? where mailid = ?",
+    [{ company: newCompany }, merchantmail],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+    }
+  );
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
