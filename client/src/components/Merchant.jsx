@@ -122,16 +122,19 @@ function Merchant() {
         <div className="Merchant_Dashboard">
           {/* Merchant Details Section */}
           <div className="Merchant_Dashboard--Section">
-            <div className="Merchant_Dashboard_Details_And_Signout">
+            <div className="Merchant_Dashboard_Details_And_Options">
               <div className="Merchant_Details">
                 <p className="Merchant_Details--Company_Name">
                   {merchantInfo?.company}
                 </p>
                 <p className="Merchant_Details--Mail">{merchantInfo?.mailId}</p>
               </div>
-              <div className="Merchant_Signout">
+              <div className="Merchant_Options">
+                <button className="Merchant_Options--MyAccount_Button">
+                  My Account
+                </button>
                 <button
-                  className="Merchant_Signout--Button"
+                  className="Merchant_Options--Signout_Button"
                   onClick={() => {
                     localStorage.removeItem("merchantInfo");
                     navigate("merchantregister");
