@@ -638,6 +638,18 @@ app.put("/editcompanyname", (req, res) => {
           errorMsg:
             "Some error has occurred! Please try again or refresh the page!",
         });
+      db.query(
+        "update products set ? where company = ?",
+        [{ company: newCompany }, oldCompany],
+        (err, data) => {
+          if (err)
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+            });
+        }
+      );
     }
   );
 });
