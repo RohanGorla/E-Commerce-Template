@@ -130,8 +130,13 @@ function Merchant() {
                 <p className="Merchant_Details--Mail">{merchantInfo?.mailId}</p>
               </div>
               <div className="Merchant_Options">
-                <button className="Merchant_Options--MyAccount_Button">
-                  My Account
+                <button
+                  className="Merchant_Options--MyAccount_Button"
+                  onClick={() => {
+                    navigate("/merchant/accountdetails");
+                  }}
+                >
+                  Account details
                 </button>
                 <button
                   className="Merchant_Options--Signout_Button"
