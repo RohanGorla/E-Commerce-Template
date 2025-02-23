@@ -12,18 +12,35 @@ function MerchantDetails() {
         </div>
         <div className="MerchantDetails_Content">
           <div className="MerchantDetails_Section">
-            <p className="MerchantDetails_Labels">Company</p>
-            <p className="MerchantDetails_Information">
-              {merchantInfo.company}
-            </p>
+            <div className="MerchantDetails_Labels_And_Information">
+              <p className="MerchantDetails_Labels">Company</p>
+              <p className="MerchantDetails_Information">
+                {merchantInfo.company}
+              </p>
+            </div>
+            <div className="MerchantDetails_Edit_Option">
+              <button className="MerchantDetails_Edit_Button">Edit</button>
+            </div>
           </div>
           <div className="MerchantDetails_Section">
-            <p className="MerchantDetails_Labels">Email</p>
-            <p className="MerchantDetails_Information">{merchantInfo.mailId}</p>
+            <div className="MerchantDetails_Labels_And_Information">
+              <p className="MerchantDetails_Labels">Email</p>
+              <p className="MerchantDetails_Information">
+                {merchantInfo.mailId}
+              </p>
+            </div>
+            <div className="MerchantDetails_Edit_Option">
+              <button className="MerchantDetails_Edit_Button">Edit</button>
+            </div>
           </div>
           <div className="MerchantDetails_Section">
-            <p className="MerchantDetails_Labels">Password</p>
-            <p className="MerchantDetails_Information">********</p>
+            <div className="MerchantDetails_Labels_And_Information">
+              <p className="MerchantDetails_Labels">Password</p>
+              <p className="MerchantDetails_Information">********</p>
+            </div>
+            <div className="MerchantDetails_Edit_Option">
+              <button className="MerchantDetails_Edit_Button">Edit</button>
+            </div>
           </div>
         </div>
       </div>
