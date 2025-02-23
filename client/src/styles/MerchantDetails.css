@@ -1,0 +1,56 @@
+:root {
+  --MerchantDetails_Main_Font: "Inter", sans-serif;
+  --MerchantDetails_Second_Font: "Roboto", sans-serif;
+  --MerchantDetails_Header: 40px;
+  --MerchantDetails_Label: 18px;
+  --MerchantDetails_Information: 16px;
+}
+
+.MerchantDetails_Page {
+  padding: 1.5em 0em;
+}
+
+.MerchantDetails_Container {
+  max-width: 1300px;
+  margin: 0em auto;
+}
+
+.MerchantDetails_Header--Title {
+  background-color: rgb(25, 25, 25);
+  font-family: var(--MerchantDetails_Main_Font);
+  font-size: var(--MerchantDetails_Header);
+  text-align: center;
+  letter-spacing: 2px;
+  padding: 0.7em 0em;
+  border-style: none;
+  border-radius: 9px;
+  border: 2px solid white;
+}
+
+.MerchantDetails_Content {
+  margin: 2em auto 0em auto;
+  max-width: 700px;
+}
+
+.MerchantDetails_Section {
+  background-color: rgb(25, 25, 25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 3em;
+  margin: 1em auto;
+  border-style: none;
+  border-radius: 10px;
+}
+
+.MerchantDetails_Labels {
+  font-family: var(--MerchantDetails_Main_Font);
+  font-size: var(--MerchantDetails_Label);
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.MerchantDetails_Information {
+  font-family: var(--MerchantDetails_Second_Font);
+  font-size: var(--MerchantDetails_Information);
+}
