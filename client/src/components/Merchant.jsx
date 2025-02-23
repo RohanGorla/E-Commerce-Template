@@ -133,10 +133,10 @@ function Merchant() {
                 <button
                   className="Merchant_Options--MyAccount_Button"
                   onClick={() => {
-                    navigate("/merchant/accountdetails");
+                    navigate("/merchant/merchantdetails");
                   }}
                 >
-                  Account details
+                  Merchant credentials
                 </button>
                 <button
                   className="Merchant_Options--Signout_Button"
