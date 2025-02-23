@@ -39,6 +39,7 @@ import AddProduct from "./components/AddProduct.jsx";
 import MerchantEditProduct from "./components/MerchantEditProduct.jsx";
 import MerchantOrders from "./components/MerchantOrders.jsx";
 import MerchantInventory from "./components/MerchantInventory.jsx";
+import MerchantEditDetails from "./components/MerchantEditDetails.jsx";
 import Profile from "./components/Profile.jsx";
 import "./index.css";
 
@@ -89,9 +90,13 @@ const router = createBrowserRouter(
         <Route path="merchantlogin" element={<MerchantLogin />} />
         <Route path="products" element={<MerchantProducts />} />
         <Route path="addproduct" element={<AddProduct />} />
-        <Route path="editproduct/:productid" element={<MerchantEditProduct />} />
+        <Route
+          path="editproduct/:productid"
+          element={<MerchantEditProduct />}
+        />
         <Route path="orders/:status" element={<MerchantOrders />} />
         <Route path="inventory/:type" element={<MerchantInventory />} />
+        <Route path="merchanteditdetails" element={<MerchantEditDetails />} />
       </Route>
     </>
   )
