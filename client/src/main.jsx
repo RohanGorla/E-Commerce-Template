@@ -97,7 +97,8 @@ const router = createBrowserRouter(
         />
         <Route path="orders/:status" element={<MerchantOrders />} />
         <Route path="inventory/:type" element={<MerchantInventory />} />
-        <Route path="merchantdetails" element={<MerchantDetails />}>
+        <Route path="merchantdetails">
+          <Route path="" element={<MerchantDetails />} />
           <Route path="editcompany" element={<MerchantEditCompany />} />
         </Route>
       </Route>

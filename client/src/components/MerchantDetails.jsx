@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/MerchantDetails.css";
 
 function MerchantDetails() {
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
+  const navigate = useNavigate();
 
   return (
     <div className="MerchantDetails_Page">
@@ -19,7 +21,14 @@ function MerchantDetails() {
               </p>
             </div>
             <div className="MerchantDetails_Edit_Option">
-              <button className="MerchantDetails_Edit_Button">Edit</button>
+              <button
+                className="MerchantDetails_Edit_Button"
+                onClick={() => {
+                  navigate("editcompany");
+                }}
+              >
+                Edit
+              </button>
             </div>
           </div>
           <div className="MerchantDetails_Section">
