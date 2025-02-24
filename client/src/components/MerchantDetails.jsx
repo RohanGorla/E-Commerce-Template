@@ -55,7 +55,14 @@ function MerchantDetails() {
               <p className="MerchantDetails_Information">********</p>
             </div>
             <div className="MerchantDetails_Edit_Option">
-              <button className="MerchantDetails_Edit_Button">Edit</button>
+              <button
+                className="MerchantDetails_Edit_Button"
+                onClick={() => {
+                  navigate("editpassword");
+                }}
+              >
+                Edit
+              </button>
             </div>
           </div>
         </div>

@@ -57,6 +57,10 @@
   width: 100px;
 }
 
+.MerchantEditPassword_Input {
+  width: 170px;
+}
+
 .MerchantEditDetail_Savechanges_Button {
   font-size: var(--MerchantEditDetails_Secondary_Font);
   font-size: var(--MerchantEditDetails_Button);

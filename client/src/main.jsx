@@ -44,6 +44,7 @@ import MerchantEditCompany from "./components/MerchantEditCompany.jsx";
 import MerchantEditmailBase from "./components/MerchantEditmailBase.jsx";
 import MerchantEditmail from "./components/MerchantEditmail.jsx";
 import MerchantEditmailOtp from "./components/MerchantEditmailOtp.jsx";
+import MerchantEditPassword from "./components/MerchantEditPassword.jsx";
 import Profile from "./components/Profile.jsx";
 import "./index.css";
 
@@ -107,6 +108,7 @@ const router = createBrowserRouter(
             <Route path="" element={<MerchantEditmail />} />
             <Route path="editemailotp" element={<MerchantEditmailOtp />} />
           </Route>
+          <Route path="editpassword" element={<MerchantEditPassword />} />
         </Route>
       </Route>
     </>
