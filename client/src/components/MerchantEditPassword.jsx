@@ -139,7 +139,7 @@ function MerchantEditPassword() {
           <div>
             <button
               className="MerchantEditDetail_Savechanges_Button"
-              onChange={editpassword}
+              onClick={editpassword}
             >
               Save
             </button>
