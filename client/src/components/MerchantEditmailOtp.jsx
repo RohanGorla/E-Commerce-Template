@@ -5,6 +5,16 @@ function MerchantEditmailOtp() {
   const context = useOutletContext();
   const [OTP, setOTP] = useState("");
 
+  async function checkotp() {
+    const checkOtpResponse = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/checkotp`,
+      {
+        enteredOTP: OTP,
+        sentOTP: context.otp,
+      }
+    );
+  }
+
   return (
     <div className="MerchantEmailEditOtp_Page">
       <div className="MerchantEditDetail_Main">
@@ -27,7 +37,10 @@ function MerchantEditmailOtp() {
             ></input>
           </div>
           <div>
-            <button className="MerchantEditDetail_Savechanges_Button">
+            <button
+              className="MerchantEditDetail_Savechanges_Button"
+              onClick={checkotp}
+            >
               Submit
             </button>
           </div>
