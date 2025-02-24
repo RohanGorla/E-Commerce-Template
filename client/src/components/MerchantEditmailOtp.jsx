@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function MerchantEditmailOtp() {
   const context = useOutletContext();
