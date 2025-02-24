@@ -760,6 +760,58 @@ app.put("/editmerchantemail", async (req, res) => {
   );
 });
 
+app.put("/editmerchantpassword", (req, res) => {
+  const mail = req.body.mail;
+  const token = req.body.token;
+  const oldPassword = req.body.old;
+  const newPassword = req.body.new;
+  db.query(
+    "select password from merchant where mailid = ?",
+    [mail],
+    async (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      let checkOld = await bcrypt.compare(oldPassword, data[0].password);
+      if (checkOld) {
+        let checkNew = await bcrypt.compare(newPassword, data[0].password);
+        if (checkNew) {
+          res.send({
+            access: false,
+            errorMsg: "New and Old passwords cannot be the same!",
+          });
+        } else {
+          let newPasswordToken = await bcrypt.hash(newPassword, 10);
+          db.query(
+            "update merchant set ? where token = ?",
+            [{ password: newPasswordToken }, token],
+            (err, data) => {
+              if (err)
+                return res.send({
+                  access: false,
+                  errorMsg:
+                    "Some error has occurred! Please try again or refresh the page!",
+                });
+              res.send({
+                access: true,
+                successMsg: "Password changed successfully!",
+              });
+            }
+          );
+        }
+      } else {
+        res.send({
+          access: false,
+          errorMsg: "Oldpassword is incorrect! Please try again.",
+        });
+      }
+    }
+  );
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
