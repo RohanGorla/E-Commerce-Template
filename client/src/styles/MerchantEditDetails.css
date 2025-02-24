@@ -49,7 +49,11 @@
   width: 130px;
 }
 
-.MerchantEditDetail_Savechanges_Option button {
+.MerchantEditEmail_Input {
+  width: 250px;
+}
+
+.MerchantEditDetail_Savechanges_button {
   font-size: var(--MerchantEditDetails_Secondary_Font);
   font-size: var(--MerchantEditDetails_Button);
   font-weight: 500;
