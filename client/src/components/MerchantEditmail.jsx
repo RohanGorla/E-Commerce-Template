@@ -1,12 +1,36 @@
-import React from "react";
-import { useOutletContext } from "react-router-dom";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import "../styles/MerchantEditDetails.css";
 
 function MerchantEditmail() {
+  const navigate = useNavigate();
   const context = useOutletContext();
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function editmail(e) {
+    e.preventDefault();
+    if (context.merchantInfo.mailId === context.newMail) {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage("New and old emails cannot be the same!");
+      setTimeout(() => {
+        setError(false);
+      }, 2500);
+    } else {
+      let otpResponse = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/getmerchantemailchangeotp`,
+        {
+          mail: context.newMail,
+        }
+      );
+    }
+  }
 
   return (
     <div className="MerchantEditmail_Page">
+      {/* ERROR MESSAGE BOX */}
       <div
         className={
           error
@@ -19,12 +43,13 @@ function MerchantEditmail() {
           <p className="Error_Message_Box--Message">{errorMessage}</p>
         </div>
       </div>
+      {/* EDIT MERCHANT EMAIL */}
       <div className="MerchantEditDetail_Main">
         <div className="MerchantEditDetail_Header">
           <h2>Change your company email.</h2>
           <p>Edit your company email id and click save to save changes.</p>
         </div>
-        <form className="MerchantEditDetail_Container">
+        <form className="MerchantEditDetail_Container" onSubmit={editmail}>
           <div className="MerchantEditDetail_Input_Container">
             <label>New company email</label>
             <input
