@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 function MerchantEditmailOtp() {
   const context = useOutletContext();
+  const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const [OTP, setOTP] = useState("");
   const [error, setError] = useState(false);
@@ -22,11 +23,42 @@ function MerchantEditmailOtp() {
       const response = await axios.put(
         `${import.meta.env.VITE_BASE_URL}/editmerchantemail`,
         {
-          newmail: context.newMail,
-          oldmail: merchantInfo.mailId,
+          newMail: context.newMail,
+          oldMail: merchantInfo.mailId,
           token: merchantInfo.token,
         }
       );
+      if (response.data.access) {
+        localStorage.setItem(
+          "merchantInfo",
+          JSON.stringify({
+            ...merchantInfo,
+            mailId: context.newMail,
+            token: response.data.token,
+          })
+        );
+        setError(false);
+        setSuccess(true);
+        setSuccessMessage(response.data.successMsg);
+        setTimeout(() => {
+          setSuccess(false);
+          navigate("/merchant/merchantdetails");
+        }, 1500);
+      } else {
+        setSuccess(false);
+        setError(true);
+        setErrorMessage(response.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 2500);
+      }
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage("Wrong OTP! Please try again.");
+      setTimeout(() => {
+        setError(false);
+      }, 2500);
     }
   }
 
