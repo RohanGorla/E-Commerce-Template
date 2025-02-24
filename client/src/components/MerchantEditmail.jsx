@@ -7,6 +7,18 @@ function MerchantEditmail() {
 
   return (
     <div className="MerchantEditmail_Page">
+      <div
+        className={
+          error
+            ? "Error_Message_Box Error_Message_Box--Active"
+            : "Error_Message_Box Error_Message_Box--Inactive"
+        }
+      >
+        <div className="Error_Message_Box--Container">
+          <p className="Error_Message_Box--Heading">Error!</p>
+          <p className="Error_Message_Box--Message">{errorMessage}</p>
+        </div>
+      </div>
       <div className="MerchantEditDetail_Main">
         <div className="MerchantEditDetail_Header">
           <h2>Change your company email.</h2>
