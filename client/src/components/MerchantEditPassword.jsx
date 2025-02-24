@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../styles/MerchantEditDetails.css";
 
 function MerchantEditPassword() {
+  const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const mailId = merchantInfo.mailId;
   const token = merchantInfo.token;
@@ -14,7 +17,7 @@ function MerchantEditPassword() {
   const [successMessage, setSuccessMessage] = useState("");
 
   async function editpassword() {
-    if (newpass.length !== 0) {
+    if (newpass.length !== 0 && confirm.length !== 0 && pass.length !== 0) {
       if (newpass === confirm) {
         let response = await axios.put(
           `${import.meta.env.VITE_BASE_URL}/editmerchantpassword`,
@@ -25,6 +28,22 @@ function MerchantEditPassword() {
             new: newpass,
           }
         );
+        if (response.data.access) {
+          setError(false);
+          setSuccess(true);
+          setSuccessMessage(response.data.successMsg);
+          setTimeout(() => {
+            setSuccess(false);
+            navigate("/merchant/merchantdetails");
+          }, 1500);
+        } else {
+          setSuccess(false);
+          setError(true);
+          setErrorMessage(response.data.errorMsg);
+          setTimeout(() => {
+            setError(false);
+          }, 2500);
+        }
       } else {
         setSuccess(false);
         setError(true);
