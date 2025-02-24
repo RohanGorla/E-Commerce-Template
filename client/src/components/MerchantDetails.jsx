@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/MerchantDetails.css";
 
@@ -39,7 +39,14 @@ function MerchantDetails() {
               </p>
             </div>
             <div className="MerchantDetails_Edit_Option">
-              <button className="MerchantDetails_Edit_Button">Edit</button>
+              <button
+                className="MerchantDetails_Edit_Button"
+                onClick={() => {
+                  navigate("editmail");
+                }}
+              >
+                Edit
+              </button>
             </div>
           </div>
           <div className="MerchantDetails_Section">
