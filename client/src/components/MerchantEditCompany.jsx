@@ -92,7 +92,7 @@ function MerchantEditCompany() {
           <p className="Success_Message_Box--Message">{successMessage}</p>
         </div>
       </div>
-
+      {/* Edit Company Name */}
       <div className="MerchantEditDetail_Main">
         <div className="MerchantEditDetail_Header">
           <h2>Change your company name</h2>
@@ -110,8 +110,13 @@ function MerchantEditCompany() {
               }}
             ></input>
           </div>
-          <div className="MerchantEditDetail_Savechanges_Option">
-            <button onClick={editcompany}>Save</button>
+          <div>
+            <button
+              className="MerchantEditDetail_Savechanges_Button"
+              onClick={editcompany}
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>
