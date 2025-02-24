@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 
 function MerchantEditmailOtp() {
   const context = useOutletContext();
+  const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const [OTP, setOTP] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,6 +18,16 @@ function MerchantEditmailOtp() {
         sentOTP: context.otp,
       }
     );
+    if (checkOtpResponse.data.access) {
+      const response = await axios.put(
+        `${import.meta.env.VITE_BASE_URL}/editmerchantemail`,
+        {
+          newmail: context.newMail,
+          oldmail: merchantInfo.mailId,
+          token: merchantInfo.token,
+        }
+      );
+    }
   }
 
   return (
