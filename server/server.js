@@ -714,10 +714,11 @@ app.post("/getmerchantemailchangeotp", (req, res) => {
   );
 });
 
-app.post("/editmerchantemail", async (req, res) => {
+app.put("/editmerchantemail", async (req, res) => {
   const newMail = req.body.newMail;
   const oldMail = req.body.oldMail;
   const token = req.body.token;
+  const newToken = await bcrypt.hash(newMail, 10);
   db.query(
     "select * from merchant where mailid = ?",
     oldMail,
@@ -732,7 +733,7 @@ app.post("/editmerchantemail", async (req, res) => {
       if (actualToken === token) {
         db.query(
           "update merchant set ? where mailid = ?",
-          [{ mailid: newMail }, oldMail],
+          [{ mailid: newMail, token: newToken }, oldMail],
           (err, data) => {
             if (err)
               return res.send({
@@ -742,6 +743,7 @@ app.post("/editmerchantemail", async (req, res) => {
               });
             res.send({
               access: true,
+              token: newToken,
               successMsg: "Your company email has been updated successfully!",
             });
           }
