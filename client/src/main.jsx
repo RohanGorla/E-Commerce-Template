@@ -105,7 +105,7 @@ const router = createBrowserRouter(
           <Route path="editcompany" element={<MerchantEditCompany />} />
           <Route path="editmail" element={<MerchantEditmailBase />}>
             <Route path="" element={<MerchantEditmail />} />
-            <Route path="editmailotp" element={<MerchantEditmailOtp />} />
+            <Route path="editemailotp" element={<MerchantEditmailOtp />} />
           </Route>
         </Route>
       </Route>

@@ -12,7 +12,6 @@ function MerchantEditmail() {
   async function editmail(e) {
     e.preventDefault();
     if (context.merchantInfo.mailId === context.newMail) {
-      setSuccess(false);
       setError(true);
       setErrorMessage("New and old emails cannot be the same!");
       setTimeout(() => {
@@ -25,6 +24,16 @@ function MerchantEditmail() {
           mail: context.newMail,
         }
       );
+      if (otpResponse.data.access) {
+        context.setOtp(otpResponse.data.otp);
+        navigate("editemailotp");
+      } else {
+        setError(true);
+        setErrorMessage(otpResponse.data.errorMsg);
+        setTimeout(() => {
+          setError(false);
+        }, 2500);
+      }
     }
   }
 
