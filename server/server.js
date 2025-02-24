@@ -670,6 +670,94 @@ app.put("/editcompanyname", (req, res) => {
   );
 });
 
+app.post("/getmerchantemailchangeotp", (req, res) => {
+  const mailId = req.body.mail;
+  db.query(
+    "select mailid from merchant where mailid = ?",
+    [mailId],
+    (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      if (data.length) {
+        res.send({
+          access: false,
+          errorMsg: "Email is already linked with another account!",
+        });
+      } else {
+        const transporter = nodemailer.createTransport({
+          host: process.env.SMTP_HOST,
+          port: process.env.SMTP_PORT,
+          secure: true,
+          auth: {
+            user: process.env.SMTP_MAIL,
+            pass: process.env.SMTP_PASS,
+          },
+        });
+
+        async function sendmail() {
+          const OTP = await crypto.randomInt(100000, 999999);
+          transporter.sendMail({
+            to: mailId,
+            subject: "Company email change OTP request!",
+            html: `Your OTP to change your company's email is - ${OTP}`,
+          });
+          let hashedOTP = await bcrypt.hash(OTP.toString(), 10);
+          res.send({ access: true, otp: hashedOTP });
+        }
+        sendmail();
+      }
+    }
+  );
+});
+
+app.post("/editmerchantemail", async (req, res) => {
+  const newMail = req.body.newMail;
+  const oldMail = req.body.oldMail;
+  const token = req.body.token;
+  db.query(
+    "select * from merchant where mailid = ?",
+    oldMail,
+    async (err, data) => {
+      if (err)
+        return res.send({
+          access: false,
+          errorMsg:
+            "Some error has occurred! Please try again or refresh the page!",
+        });
+      const actualToken = data[0].token;
+      if (actualToken === token) {
+        db.query(
+          "update merchant set ? where mailid = ?",
+          [{ mailid: newMail }, oldMail],
+          (err, data) => {
+            if (err)
+              return res.send({
+                access: false,
+                errorMsg:
+                  "Some error has occurred! Please try again or refresh the page!",
+              });
+            res.send({
+              access: true,
+              successMsg: "Your company email has been updated successfully!",
+            });
+          }
+        );
+      } else {
+        res.send({
+          access: false,
+          errorMsg:
+            "Your credentials have been compromised please login again!",
+          logout: true,
+        });
+      }
+    }
+  );
+});
+
 /* Categories and Companies Server Routes */
 
 app.get("/getallcategories", async (req, res) => {
@@ -1521,50 +1609,6 @@ app.post("/getemailchangeotp", (req, res) => {
             to: mailId,
             subject: "Account email change OTP request!",
             html: `Your OTP to change your account's email is - ${OTP}`,
-          });
-          let hashedOTP = await bcrypt.hash(OTP.toString(), 10);
-          res.send({ access: true, otp: hashedOTP });
-        }
-        sendmail();
-      }
-    }
-  );
-});
-
-app.post("/getmerchantemailchangeotp", (req, res) => {
-  const mailId = req.body.mail;
-  db.query(
-    "select mailid from merchant where mailid = ?",
-    [mailId],
-    (err, data) => {
-      if (err)
-        return res.send({
-          access: false,
-          errorMsg:
-            "Some error has occurred! Please try again or refresh the page!",
-        });
-      if (data.length) {
-        res.send({
-          access: false,
-          errorMsg: "Email is already linked with another account!",
-        });
-      } else {
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
-          port: process.env.SMTP_PORT,
-          secure: true,
-          auth: {
-            user: process.env.SMTP_MAIL,
-            pass: process.env.SMTP_PASS,
-          },
-        });
-
-        async function sendmail() {
-          const OTP = await crypto.randomInt(100000, 999999);
-          transporter.sendMail({
-            to: mailId,
-            subject: "Company email change OTP request!",
-            html: `Your OTP to change your company's email is - ${OTP}`,
           });
           let hashedOTP = await bcrypt.hash(OTP.toString(), 10);
           res.send({ access: true, otp: hashedOTP });
