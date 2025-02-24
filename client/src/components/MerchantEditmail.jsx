@@ -72,7 +72,7 @@ function MerchantEditmail() {
           </div>
           <div>
             <input
-              className="MerchantEditDetail_Savechanges_button"
+              className="MerchantEditDetail_Savechanges_Button"
               type="submit"
               value="Save"
             ></input>
