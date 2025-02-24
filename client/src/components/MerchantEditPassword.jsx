@@ -13,6 +13,36 @@ function MerchantEditPassword() {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  async function editpassword() {
+    if (newpass.length !== 0) {
+      if (newpass === confirm) {
+        let response = await axios.put(
+          `${import.meta.env.VITE_BASE_URL}/editmerchantpassword`,
+          {
+            mail: mailId,
+            token: token,
+            old: pass,
+            new: newpass,
+          }
+        );
+      } else {
+        setSuccess(false);
+        setError(true);
+        setErrorMessage("Passwords do not match!");
+        setTimeout(() => {
+          setError(false);
+        }, 2500);
+      }
+    } else {
+      setSuccess(false);
+      setError(true);
+      setErrorMessage("Password cannot be empty!");
+      setTimeout(() => {
+        setError(false);
+      }, 2500);
+    }
+  }
+
   return (
     <div className="MerchantEditPassword_Page">
       {/* Error Message Box */}
@@ -88,7 +118,10 @@ function MerchantEditPassword() {
             ></input>
           </div>
           <div>
-            <button className="MerchantEditDetail_Savechanges_Button">
+            <button
+              className="MerchantEditDetail_Savechanges_Button"
+              onChange={editpassword}
+            >
               Save
             </button>
           </div>
