@@ -1,11 +1,34 @@
+.Navbar_Container {
+  position: relative;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Navbar_Logo {
+  position: absolute;
+  top: 0px;
+  left: 30px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Navbar_Logo img {
+  width: 300px;
+}
+
 .Navbar_List {
-    display: flex;
-    justify-content: center;
-    gap: 3em;
-    list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 3em;
+  list-style: none;
 }
 
 .Navbar_Item {
-    font-family: "Roboto", sans-serif;
-    font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
 }

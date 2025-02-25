@@ -1,165 +1,167 @@
 :root {
-    --Home_Main_Font: "Inter", sans-serif;
-    --Home_Secondary_Font: "Roboto", sans-serif;
-    --Home_Store_Name: 80px;
-    --Home_Store_Quote: 20px;
-    --Home_Shop_Now_Button: 18px;
-    --Home_Products_Section_Name: 26px;
-    --Home_Product_Name: 16px;
-    --Home_Product_Price: 20px;
-    --Home_Product_Discount: 16px;
-    --Home_Product_MRP: 14px;
+  --Home_Main_Font: "Inter", sans-serif;
+  --Home_Secondary_Font: "Roboto", sans-serif;
+  --Home_Store_Name: 80px;
+  --Home_Store_Quote: 22px;
+  --Home_Shop_Now_Button: 18px;
+  --Home_Products_Section_Name: 26px;
+  --Home_Product_Name: 16px;
+  --Home_Product_Price: 20px;
+  --Home_Product_Discount: 16px;
+  --Home_Product_MRP: 14px;
 }
 
 .Home_Header {
-    position: relative;
+  position: relative;
 }
 
 .Home_Title {
-    position: absolute;
-    top: 150px;
-    left: 200px;
+  position: absolute;
+  top: 150px;
+  left: 200px;
 }
 
 .Home_Title h1 {
-    font-family: var(--Home_Main_Font);
-    font-size: var(--Home_Store_Name);
+  font-family: var(--Home_Main_Font);
+  font-size: var(--Home_Store_Name);
+  font-weight: 900;
+  color: black;
 }
 
 .Home_Title p {
-    font-family: var(--Home_Main_Font);
-    font-size: var(--Home_Store_Quote);
+  font-family: var(--Home_Main_Font);
+  font-size: var(--Home_Store_Quote);
+  font-weight: 600;
 }
 
 .Home_Title button {
-    background-color: black;
-    color: white;
-    font-family: var(--Home_Main_Font);
-    font-size: var(--Home_Shop_Now_Button);
-    font-weight: 600;
-    padding: .6em 1.4em;
-    border-style: none;
-    border-radius: 7px;
-    margin-top: 1em;
-    cursor: pointer;
-    &:hover {
-        background-color: white;
-        color: black;
-    }
+  background-color: black;
+  color: white;
+  font-family: var(--Home_Main_Font);
+  font-size: var(--Home_Shop_Now_Button);
+  font-weight: 600;
+  padding: 0.6em 1.4em;
+  border-style: none;
+  border-radius: 7px;
+  margin-top: 1em;
+  cursor: pointer;
+  &:hover {
+    background-color: white;
+    color: black;
+  }
 }
 
 .Home_BG--Image {
-    max-width: 100dvw;
+  max-width: 100dvw;
 }
 
 .Home_BG--Image img {
-    width: 100%;
+  width: 100%;
 }
 
 .Home_Main {
-    max-width: 1700px;
-    margin: 0em auto;
+  max-width: 1700px;
+  margin: 0em auto;
 }
 
 .Home_Products_Section {
-    background-color: rgb(45, 45, 45);
-    padding: 1em;
-    border-style: none;
-    border-radius: 8px;
-    margin: 2em 0em;
-    &:hover {
-        .Home_Products_Container::-webkit-scrollbar-thumb {
-            background-color: rgb(15, 15, 15);
-            border-style: none;
-            border-radius: 100px;
-            cursor: pointer;
-        }
+  background-color: rgb(45, 45, 45);
+  padding: 1em;
+  border-style: none;
+  border-radius: 8px;
+  margin: 2em 0em;
+  &:hover {
+    .Home_Products_Container::-webkit-scrollbar-thumb {
+      background-color: rgb(15, 15, 15);
+      border-style: none;
+      border-radius: 100px;
+      cursor: pointer;
     }
+  }
 }
 
 .Home_Products_Section h2 {
-    font-family: var(--Home_Main_Font);
-    font-size: var(--Home_Products_Section_Name);
-    margin-bottom: .5em;
+  font-family: var(--Home_Main_Font);
+  font-size: var(--Home_Products_Section_Name);
+  margin-bottom: 0.5em;
 }
 
 .Home_Products_Container {
-    width: 100%;
-    display: flex;
-    overflow-x: scroll;
+  width: 100%;
+  display: flex;
+  overflow-x: scroll;
 }
 
 .Home_Products_Container::-webkit-scrollbar {
-    height: 10px;
-    visibility: hidden;
+  height: 10px;
+  visibility: hidden;
 }
 
 .Home_Products_Container::-webkit-scrollbar-thumb {
-    background-color: rgb(45, 45, 45);
-    border-style: none;
-    border-radius: 100px;
-    cursor: pointer;
+  background-color: rgb(45, 45, 45);
+  border-style: none;
+  border-radius: 100px;
+  cursor: pointer;
 }
 
 .Home_Product {
-    background-color: black;
-    flex-shrink: 0;
-    width: 400px;
-    border-style: none;
-    border-radius: 8px;
-    padding: 1em;
-    margin-bottom: 1em;
+  background-color: black;
+  flex-shrink: 0;
+  width: 400px;
+  border-style: none;
+  border-radius: 8px;
+  padding: 1em;
+  margin-bottom: 1em;
 }
 
-.Home_Product +
-.Home_Product {
-    margin-left: 1em;
+.Home_Product + .Home_Product {
+  margin-left: 1em;
 }
 
 .Home_Product--Image {
-    width: 100%;
+  width: 100%;
 }
 
 .Home_Product--Image img {
-    max-width: 100%;
-    cursor: pointer;
+  max-width: 100%;
+  cursor: pointer;
 }
 
 .Home_Product--Name {
-    font-family: var(--Home_Secondary_Font);
-    font-size: var(--Home_Product_Name);
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 1em;
-    cursor: pointer;
-    &:hover {
-        color: orangered;
-    }
+  font-family: var(--Home_Secondary_Font);
+  font-size: var(--Home_Product_Name);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1em;
+  cursor: pointer;
+  &:hover {
+    color: orangered;
+  }
 }
 
 .Home_Product--Price {
-    font-family: var(--Home_Main_Font);
-    font-size: var(--Home_Product_Price);
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    margin: .4em 0em .1em 0em;
+  font-family: var(--Home_Main_Font);
+  font-size: var(--Home_Product_Price);
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  margin: 0.4em 0em 0.1em 0em;
 }
 
 .Home_Product--Discount {
-    font-family: var(--Home_Main_Font);
-    font-size: var(--Home_Product_Discount);
-    color: red;
-    display: inline-block;
-    margin-right: .5em;
+  font-family: var(--Home_Main_Font);
+  font-size: var(--Home_Product_Discount);
+  color: red;
+  display: inline-block;
+  margin-right: 0.5em;
 }
 
 .Home_Product--MRP {
-    font-family: var(--Home_Main_Font);
-    font-size: var(--Home_Product_MRP);
-    text-decoration: line-through;
+  font-family: var(--Home_Main_Font);
+  font-size: var(--Home_Product_MRP);
+  text-decoration: line-through;
 }

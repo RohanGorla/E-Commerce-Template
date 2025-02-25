@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+import imageUrl from "../assets/Dreamkart_Logo";
 import "../styles/Navbar.css";
 
 function Navbar() {
   return (
-    <div className="navbar">
+    <div className="Navbar_Container">
+      <div className="Navbar_Logo">
+        <img src={`data:image/png;base64,${imageUrl}`}></img>
+      </div>
       <ul
         className="Navbar_List"
         style={{

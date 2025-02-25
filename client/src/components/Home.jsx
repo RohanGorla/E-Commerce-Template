@@ -69,8 +69,8 @@ function Home() {
     <div className="Home_Page">
       <div className="Home_Header">
         <div className="Home_Title">
-          <h1>E-Commerce Store</h1>
-          <p>For all your needs and more!</p>
+          <h1>Dreamkart</h1>
+          <p>Find It. Love It. Own It.</p>
           <button
             onClick={() => {
               navigate("/products");
