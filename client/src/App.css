@@ -51,6 +51,7 @@
 
 .App_Outlet_Container {
     height: calc(100vh - 90px);
+    overflow-y: scroll;
 }
 
 /* Error Message Box */
