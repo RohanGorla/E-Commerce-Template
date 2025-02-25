@@ -23,7 +23,7 @@ function Navbar() {
             to={""}
             style={({ isActive }) => {
               return isActive
-                ? { textDecoration: "none", color: "red" }
+                ? { textDecoration: "none", color: "#ff851b" }
                 : { textDecoration: "none", color: "white" };
             }}
           >
@@ -35,7 +35,7 @@ function Navbar() {
             to={"/products"}
             style={({ isActive }) => {
               return isActive
-                ? { textDecoration: "none", color: "red" }
+                ? { textDecoration: "none", color: "#ff851b" }
                 : { textDecoration: "none", color: "white" };
             }}
           >
@@ -47,7 +47,7 @@ function Navbar() {
             to={"/cart"}
             style={({ isActive }) => {
               return isActive
-                ? { textDecoration: "none", color: "red" }
+                ? { textDecoration: "none", color: "#ff851b" }
                 : { textDecoration: "none", color: "white" };
             }}
           >
@@ -59,7 +59,7 @@ function Navbar() {
             to={"/account"}
             style={({ isActive }) => {
               return isActive
-                ? { textDecoration: "none", color: "red" }
+                ? { textDecoration: "none", color: "#ff851b" }
                 : { textDecoration: "none", color: "white" };
             }}
           >
