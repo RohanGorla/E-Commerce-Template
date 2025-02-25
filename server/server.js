@@ -672,6 +672,7 @@ app.put("/editcompanyname", (req, res) => {
 
 app.post("/getmerchantemailchangeotp", (req, res) => {
   const mailId = req.body.mail;
+  const company = req.body.company;
   db.query(
     "select mailid from merchant where mailid = ?",
     [mailId],
@@ -703,7 +704,12 @@ app.post("/getmerchantemailchangeotp", (req, res) => {
           transporter.sendMail({
             to: mailId,
             subject: "Company email change OTP request!",
-            html: `Your OTP to change your company's email is - ${OTP}`,
+            html: `
+            <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 10px; max-width: 500px; margin: auto;">
+              <h2 style="color: #333;">Email Verification</h2>
+              <p style="font-size: 16px; color: #555;">Your OTP to change the email address for your company, ${company}, is:</p>
+              <h1 style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; display: inline-block;">${OTP}</h1>
+            </div>`,
           });
           let hashedOTP = await bcrypt.hash(OTP.toString(), 10);
           res.send({ access: true, otp: hashedOTP });

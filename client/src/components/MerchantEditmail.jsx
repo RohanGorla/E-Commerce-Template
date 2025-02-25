@@ -22,6 +22,7 @@ function MerchantEditmail() {
         `${import.meta.env.VITE_BASE_URL}/getmerchantemailchangeotp`,
         {
           mail: context.newMail,
+          company: context.merchantInfo.company,
         }
       );
       if (otpResponse.data.access) {
