@@ -50,9 +50,7 @@ function MerchantLogin() {
         </div>
         {/* Login Main */}
         <div className="Merchant_Login_Notes">
-          <p>
-            Log into your account and enjoy shopping for your favourite product!
-          </p>
+          <h2>Login to your Merchant Account!</h2>
         </div>
         <form className="Merchant_Login_Form">
           <div className="Merchant_Login_Email">
@@ -97,7 +95,7 @@ function MerchantLogin() {
             <p>Don't have a merchant account?</p>
             <button
               onClick={() => {
-                navigate("/account/register");
+                navigate("/merchant/merchantregister");
               }}
             >
               Create new account
