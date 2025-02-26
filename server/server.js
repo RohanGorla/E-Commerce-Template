@@ -1638,7 +1638,7 @@ app.put("/editusername", (req, res) => {
 app.post("/getemailchangeotp", (req, res) => {
   const mailId = req.body.mail;
   db.query(
-    "select mailid from userInfo where mailid = ?",
+    "select mailid from userinfo where mailid = ?",
     [mailId],
     (err, data) => {
       if (err)
@@ -1929,7 +1929,7 @@ app.put("/updatebaseaddress", (req, res) => {
   let mail = req.body.mailId;
   let baseAddressName = address.addressname;
   db.query(
-    "update userInfo set ? where mailid = ?",
+    "update userinfo set ? where mailid = ?",
     [{ base_address: baseAddressName }, mail],
     (err, data) => {
       if (err)
@@ -1963,7 +1963,7 @@ app.delete("/deleteaddress", (req, res) => {
     }
   );
   db.query(
-    "update userInfo set ? where base_address = ? and mailid = ?",
+    "update userinfo set ? where base_address = ? and mailid = ?",
     [{ base_address: null }, addressname, mail],
     (err, res) => {
       if (err)
