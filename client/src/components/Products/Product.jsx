@@ -1143,7 +1143,14 @@ function Product() {
                     className="Product_Details_Counter--Decrement"
                     onClick={() => {
                       setCount((prev) => {
-                        return prev - 1;
+                        if (prev === 1 || prev === 0) {
+                          setError(true);
+                          setErrorMessage("Minimum quantity is 1!");
+                          setTimeout(() => {
+                            setError(false);
+                          }, 3500);
+                          return 1;
+                        } else return prev - 1;
                       });
                     }}
                   >
@@ -1154,14 +1161,50 @@ function Product() {
                     type="input"
                     value={count}
                     onChange={(e) => {
-                      setCount(e.target.value);
+                      if (e.target.value === "") {
+                        setCount(0);
+                      } else if (!isNaN(e.target.value)) {
+                        if (
+                          e.target.value > productData.stock_left ||
+                          e.target.value > productData.buy_limit
+                        ) {
+                          setError(true);
+                          setErrorMessage(
+                            e.target.value > productData.buy_limit
+                              ? `The seller has put a buy limit of ${productData.buy_limit} per customer!`
+                              : `Only ${productData.stock_left} left in stock!`
+                          );
+                          setTimeout(() => {
+                            setError(false);
+                          }, 3500);
+                        } else if (e.target.value <= 0) {
+                          setCount(1);
+                        } else setCount(Number(e.target.value));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      if (e.target.value === "0") setCount(1);
                     }}
                   ></input>
                   <button
                     className="Product_Details_Counter--Increment"
                     onClick={() => {
                       setCount((prev) => {
-                        return prev + 1;
+                        if (
+                          prev === productData.stock_left ||
+                          prev === productData.buy_limit
+                        ) {
+                          setError(true);
+                          setErrorMessage(
+                            prev === productData.buy_limit
+                              ? `The seller has put a buy limit of ${productData.buy_limit} per customer!`
+                              : `Only ${productData.stock_left} left in stock!`
+                          );
+                          setTimeout(() => {
+                            setError(false);
+                          }, 3500);
+                          return prev;
+                        } else return prev + 1;
                       });
                     }}
                   >
