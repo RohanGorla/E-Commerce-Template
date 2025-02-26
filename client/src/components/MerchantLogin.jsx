@@ -50,7 +50,8 @@ function MerchantLogin() {
         </div>
         {/* Login Main */}
         <div className="Merchant_Login_Notes">
-          <h2>Login to your Merchant Account!</h2>
+          <h2>Login to your merchant account!</h2>
+          <p>Your marketplace awaits, log in and start selling.</p>
         </div>
         <form className="Merchant_Login_Form">
           <div className="Merchant_Login_Email">

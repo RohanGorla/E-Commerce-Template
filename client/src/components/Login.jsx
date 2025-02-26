@@ -60,6 +60,7 @@ function Login() {
         </div>
         {/* Login Main */}
         <div className="Login_Notes">
+          <h2>Login to your account</h2>
           <p>
             Log into your account and enjoy shopping for your favourite product!
           </p>

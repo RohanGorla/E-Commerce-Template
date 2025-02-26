@@ -41,7 +41,10 @@ function Register() {
         <p className="Register_ErrorMsg">{errorMsg}</p>
       </div>
       <div className="Register_Notes">
-        <h2>Create Account!</h2>
+        <h2>Create new account!</h2>
+        <p>
+          Create your account and enjoy shopping for your favourite products!
+        </p>
       </div>
       <form className="Register_Form" onSubmit={addUser}>
         <div className="Register_Firstname">

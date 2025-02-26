@@ -41,7 +41,8 @@ function MerchantRegister() {
         <p className="Merchant_Register_ErrorMsg">{errorMsg}</p>
       </div>
       <div className="Merchant_Register_Notes">
-        <h2>Create Merchant Account!</h2>
+        <h2>Create your merchant account!</h2>
+        <p>Turn your products into profit, register now!</p>
       </div>
       <form className="Merchant_Register_Form" onSubmit={addMerchant}>
         <div className="Merchant_Register_Companyname">
