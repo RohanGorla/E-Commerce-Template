@@ -319,17 +319,27 @@ function Cart() {
                                 onClick={() => {
                                   setSelectedItem(item.productid);
                                   let newCount = item.count - 1;
-                                  setCount(newCount);
                                   setCart((prev) => {
                                     let prevValues = prev;
                                     prevValues.map((current) => {
                                       if (item.productid == current.productid) {
-                                        // console.log("Before -> ", current.count);
-                                        current.count = newCount;
-                                        // console.log("After -> ", current.count);
+                                        if (newCount <= 0) {
+                                          setError(true);
+                                          setErrorMessage(
+                                            "Minimum quantity is 1!"
+                                          );
+                                          setTimeout(() => {
+                                            setError(false);
+                                          }, 3500);
+                                          newCount = 1;
+                                          current.count = newCount;
+                                          setCount(newCount);
+                                        } else {
+                                          current.count = newCount;
+                                          setCount(newCount);
+                                        }
                                       }
                                     });
-                                    // console.log(prevValues);
                                     return prevValues;
                                   });
                                 }}
@@ -344,23 +354,53 @@ function Cart() {
                                     ? count
                                     : item.count
                                 }
-                                // value={item.count}
                                 onClick={() => {
                                   setSelectedItem(item.productid);
                                   setCount(item.count);
                                 }}
                                 onChange={(e) => {
-                                  setCount(e.target.value);
                                   setCart((prev) => {
                                     let prevValues = prev;
                                     prevValues.map((current) => {
                                       if (item.productid == current.productid) {
-                                        current.count = Number(e.target.value);
+                                        if (e.target.value === "") {
+                                          current.count = 1;
+                                          setCount(0);
+                                        } else if (!isNaN(e.target.value)) {
+                                          if (
+                                            e.target.value > item.stock_left ||
+                                            e.target.value > item.buy_limit
+                                          ) {
+                                            setError(true);
+                                            setErrorMessage(
+                                              e.target.value > item.buy_limit
+                                                ? `The seller has put a buy limit of ${item.buy_limit} per customer!`
+                                                : `Only ${item.stock_left} left in stock!`
+                                            );
+                                            setTimeout(() => {
+                                              setError(false);
+                                            }, 3500);
+                                          } else if (e.target.value <= 0) {
+                                            current.count = 1;
+                                            setCount(1);
+                                          } else {
+                                            setCount(Number(e.target.value));
+                                            current.count = Number(
+                                              e.target.value
+                                            );
+                                          }
+                                        }
                                       }
                                     });
-                                    // console.log(prevValues);
                                     return prevValues;
                                   });
+                                }}
+                                onBlur={(e) => {
+                                  if (
+                                    selectedItem === item.productid &&
+                                    e.target.value === "0"
+                                  )
+                                    setCount(1);
                                 }}
                               ></input>
                               <button
@@ -368,17 +408,30 @@ function Cart() {
                                 onClick={() => {
                                   setSelectedItem(item.productid);
                                   let newCount = item.count + 1;
-                                  setCount(newCount);
                                   setCart((prev) => {
                                     let prevValues = prev;
                                     prevValues.map((current) => {
                                       if (item.productid == current.productid) {
-                                        // console.log("Before -> ", current.count);
-                                        current.count = newCount;
-                                        // console.log("After -> ", current.count);
+                                        if (
+                                          newCount > item.stock_left ||
+                                          newCount > item.buy_limit
+                                        ) {
+                                          setError(true);
+                                          setErrorMessage(
+                                            newCount > current.buy_limit
+                                              ? `The seller has put a buy limit of ${current.buy_limit} per customer!`
+                                              : `Only ${current.stock_left} left in stock!`
+                                          );
+                                          setTimeout(() => {
+                                            setError(false);
+                                          }, 3500);
+                                          setCount(item.count);
+                                        } else {
+                                          current.count = newCount;
+                                          setCount(newCount);
+                                        }
                                       }
                                     });
-                                    // console.log(prevValues);
                                     return prevValues;
                                   });
                                 }}
