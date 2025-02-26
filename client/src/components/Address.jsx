@@ -17,9 +17,12 @@ function Address() {
   /* Get Address API */
 
   async function getAddress() {
-    let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/getaddress`, {
-      mail: mailId,
-    });
+    let response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/getaddress`,
+      {
+        mail: mailId,
+      }
+    );
     if (response.data.access) {
       setOrderedAddress(response.data.data);
       let baseAddress = [];
@@ -45,10 +48,13 @@ function Address() {
   /* Update Base Address API */
 
   async function changeBaseAddress(current) {
-    let response = await axios.put(`${import.meta.env.VITE_BASE_URL}/updatebaseaddress`, {
-      address: current,
-      mailId: mailId,
-    });
+    let response = await axios.put(
+      `${import.meta.env.VITE_BASE_URL}/updatebaseaddress`,
+      {
+        address: current,
+        mailId: mailId,
+      }
+    );
     if (response.data.access) {
       localStorage.setItem(
         "userInfo",
@@ -84,13 +90,16 @@ function Address() {
   /* Remove Address API */
 
   async function removeAddress(address) {
-    let response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/deleteaddress`, {
-      data: {
-        mail: mailId,
-        addressname: address.addressname,
-        addressId: address.id,
-      },
-    });
+    let response = await axios.delete(
+      `${import.meta.env.VITE_BASE_URL}/deleteaddress`,
+      {
+        data: {
+          mail: mailId,
+          addressname: address.addressname,
+          addressId: address.id,
+        },
+      }
+    );
     if (response.data.access) {
       if (address.addressname === userInfo?.base_address) {
         setOrderedAddress(response.data.data);
@@ -178,73 +187,97 @@ function Address() {
             Add Address
           </button>
         </div>
-        <div className="Address_Main--Addresses">
-          {address?.map((address, index) => {
-            return (
-              <div key={index} className="Address_Main--Address_Container">
-                <div
-                  className={
-                    userInfo?.base_address === address.addressname
-                      ? "Address_Main--Address Address_Main--Address--Default"
-                      : "Address_Main--Address"
-                  }
-                >
-                  <p className="Address_Main--Address_Name">
-                    {address.addressname}
-                    <span className="Address_Main--Address_Name--Default_Note">
-                      {userInfo?.base_address === address.addressname
-                        ? " (Default)"
-                        : ""}
-                    </span>
-                  </p>
-                  <p className="Address_Main--Address_Info">{address.house}</p>
-                  <p className="Address_Main--Address_Info">{address.street}</p>
-                  <p className="Address_Main--Address_Info">
-                    {address.landmark}
-                  </p>
-                  <p className="Address_Main--Address_Info">
-                    {address.city}, {address.state}
-                  </p>
-                  <p className="Address_Main--Address_Info">
-                    {address.country}
-                  </p>
-                  {address.addressname === userInfo?.base_address ? (
-                    <div className="Address_Main--Address_Options">
-                      <span
-                        className="Address_Main--Address_Options--Option"
-                        onClick={() => {
-                          removeAddress(address);
-                        }}
-                      >
-                        Remove
+        {address.length ? (
+          <div className="Address_Main--Addresses">
+            {address?.map((address, index) => {
+              return (
+                <div key={index} className="Address_Main--Address_Container">
+                  <div
+                    className={
+                      userInfo?.base_address === address.addressname
+                        ? "Address_Main--Address Address_Main--Address--Default"
+                        : "Address_Main--Address"
+                    }
+                  >
+                    <p className="Address_Main--Address_Name">
+                      {address.addressname}
+                      <span className="Address_Main--Address_Name--Default_Note">
+                        {userInfo?.base_address === address.addressname
+                          ? " (Default)"
+                          : ""}
                       </span>
-                    </div>
-                  ) : (
-                    <div className="Address_Main--Address_Options">
-                      <span
-                        className="Address_Main--Address_Options--Option"
-                        onClick={() => {
-                          removeAddress(address);
-                        }}
-                      >
-                        Remove
-                      </span>{" "}
-                      |{" "}
-                      <span
-                        className="Address_Main--Address_Options--Option"
-                        onClick={() => {
-                          changeBaseAddress(address);
-                        }}
-                      >
-                        Set as default
-                      </span>
-                    </div>
-                  )}
+                    </p>
+                    <p className="Address_Main--Address_Info">
+                      {address.house}
+                    </p>
+                    <p className="Address_Main--Address_Info">
+                      {address.street}
+                    </p>
+                    <p className="Address_Main--Address_Info">
+                      {address.landmark}
+                    </p>
+                    <p className="Address_Main--Address_Info">
+                      {address.city}, {address.state}
+                    </p>
+                    <p className="Address_Main--Address_Info">
+                      {address.country}
+                    </p>
+                    {address.addressname === userInfo?.base_address ? (
+                      <div className="Address_Main--Address_Options">
+                        <span
+                          className="Address_Main--Address_Options--Option"
+                          onClick={() => {
+                            removeAddress(address);
+                          }}
+                        >
+                          Remove
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="Address_Main--Address_Options">
+                        <span
+                          className="Address_Main--Address_Options--Option"
+                          onClick={() => {
+                            removeAddress(address);
+                          }}
+                        >
+                          Remove
+                        </span>{" "}
+                        |{" "}
+                        <span
+                          className="Address_Main--Address_Options--Option"
+                          onClick={() => {
+                            changeBaseAddress(address);
+                          }}
+                        >
+                          Set as default
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="Address_Main--NoAddress">
+            <div className="Address_Main--NoAddress_Container">
+              <p className="Address_Main--NoAddress--Title">No address found</p>
+              <p className="Address_Main--NoAddress--Message">
+                You donot have any delivery addresses. Please add a delivery
+                address to where your products need to be delivered!
+              </p>
+              <button
+                className="Address_Main--NoAddress--Button"
+                onClick={() => {
+                  navigate("addaddress");
+                }}
+              >
+                Add Address
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
