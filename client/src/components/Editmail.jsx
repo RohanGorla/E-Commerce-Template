@@ -27,6 +27,7 @@ function Editmail() {
         `${import.meta.env.VITE_BASE_URL}/getemailchangeotp`,
         {
           mail: context.newMail,
+          type: "edit",
         }
       );
       if (otpResponse.data.access) {

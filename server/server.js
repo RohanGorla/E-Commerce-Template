@@ -1637,6 +1637,7 @@ app.put("/editusername", (req, res) => {
 
 app.post("/getemailchangeotp", (req, res) => {
   const mailId = req.body.mail;
+  const type = req.body.type;
   db.query(
     "select mailid from userinfo where mailid = ?",
     [mailId],
@@ -1663,15 +1664,29 @@ app.post("/getemailchangeotp", (req, res) => {
           },
         });
 
+        let subject, htmlMsg;
+        switch (type) {
+          case "register":
+            subject = "DREAMKART account register OTP request!";
+            htmlMsg = "Your OTP to register your DREAMKART account is:";
+            break;
+
+          case "edit":
+            subject = "DREAMKART account email change OTP request!";
+            htmlMsg =
+              "Your OTP to change your DREAMKART account's email address is:";
+            break;
+        }
+
         async function sendmail() {
           const OTP = await crypto.randomInt(100000, 999999);
           transporter.sendMail({
             to: mailId,
-            subject: "Account email change OTP request!",
+            subject: subject,
             html: `
             <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 10px; max-width: 500px; margin: auto;">
               <h2 style="color: #333;">Email Verification</h2>
-              <p style="font-size: 16px; color: #555;">Your OTP to change your DREAMKART account's email address is:</p>
+              <p style="font-size: 16px; color: #555;">${htmlMsg}</p>
               <h1 style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; display: inline-block;">${OTP}</h1>
             </div>`,
           });

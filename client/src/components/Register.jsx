@@ -17,6 +17,7 @@ function Register() {
       `${import.meta.env.VITE_BASE_URL}/getemailchangeotp`,
       {
         mail: context.mail,
+        type: "register",
       }
     );
     if (otpResponse.data.access) {
