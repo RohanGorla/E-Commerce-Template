@@ -13,6 +13,11 @@ function MerchantDetails() {
           <h1 className="MerchantDetails_Header--Title">Merchant Details</h1>
         </div>
         <div className="MerchantDetails_Content">
+          <div className="MerchantDetails_Back_Button">
+            <button onClick={() => navigate("/merchant")}>
+              Back to dashboard
+            </button>
+          </div>
           <div className="MerchantDetails_Section">
             <div className="MerchantDetails_Labels_And_Information">
               <p className="MerchantDetails_Labels">Company</p>
