@@ -19,10 +19,10 @@ function MerchantEditmail() {
       }, 2500);
     } else {
       let otpResponse = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/getmerchantemailchangeotp`,
+        `${import.meta.env.VITE_BASE_URL}/getmerchantemailotp`,
         {
           mail: context.newMail,
-          company: context.merchantInfo.company,
+          type: "edit",
         }
       );
       if (otpResponse.data.access) {

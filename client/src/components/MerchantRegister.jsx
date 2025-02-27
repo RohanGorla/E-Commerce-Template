@@ -14,9 +14,10 @@ function MerchantRegister() {
   async function addMerchant(e) {
     e.preventDefault();
     let otpResponse = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/getregistermerchantotp`,
+      `${import.meta.env.VITE_BASE_URL}/getmerchantemailotp`,
       {
         mail: context.mail,
+        type: "register",
       }
     );
     if (otpResponse.data.access) {
