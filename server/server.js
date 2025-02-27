@@ -355,8 +355,8 @@ app.post("/addmerchant", async (req, res) => {
   const token = await bcrypt.hash(mail, 10);
   const values = [company, mail, passwordHash, token];
   db.query(
-    "insert into merchant (company, mailid, password, token) values (?)",
-    [values],
+    "select company from merchant where company = ?",
+    company,
     (err, data) => {
       if (err)
         return res.send({
@@ -364,7 +364,24 @@ app.post("/addmerchant", async (req, res) => {
           errorMsg:
             "Some error has occurred. Please re-try or refresh the page!",
         });
-      res.send({ access: true, token: token });
+      if (data.length)
+        return res.send({
+          access: false,
+          errorMsg: "This company is already linked to an existing account!",
+        });
+      db.query(
+        "insert into merchant (company, mailid, password, token) values (?)",
+        [values],
+        (err, data) => {
+          if (err)
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred. Please re-try or refresh the page!",
+            });
+          res.send({ access: true, token: token });
+        }
+      );
     }
   );
 });
