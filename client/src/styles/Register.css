@@ -1,9 +1,9 @@
 :root {
-  --Main_Font: "Inter", sans-serif;
-  --Main_Fontsize: 15px;
-  --Secondary_Font: "Roboto", sans-serif;
-  --Secondary_Fontsize: 17px;
-  --Button_Fontsize: 15px;
+  --Register_Main_Font: "Inter", sans-serif;
+  --Register_Secondary_Font: "Roboto", sans-serif;
+  --Register_Main_Fontsize: 15px;
+  --Register_Secondary_Fontsize: 17px;
+  --Register_Button_Fontsize: 15px;
 }
 
 .Register_Main {
@@ -29,13 +29,13 @@
 
 .Register_ErrorMsgHeading,
 .Register_ErrorMsg {
-  font-family: var(--Secondary_Font);
-  font-size: var(--Secondary_Fontsize);
+  font-family: var(--Register_Secondary_Font);
+  font-size: var(--Register_Secondary_Fontsize);
 }
 
 .Register_Notes {
   margin-bottom: 1.3em;
-  font-family: var(--Secondary_Font);
+  font-family: var(--Register_Secondary_Font);
 }
 
 .Register_Notes h2 {
@@ -53,8 +53,8 @@
 .Register_Lastname label,
 .Register_Email label,
 .Register_Password label {
-  font-family: var(--Secondary_Font);
-  font-size: var(--Secondary_Fontsize);
+  font-family: var(--Register_Secondary_Font);
+  font-size: var(--Register_Secondary_Fontsize);
   font-weight: 500;
 }
 
@@ -64,8 +64,8 @@
 .Register_Password--Input {
   display: block;
   width: 250px;
-  font-family: var(--Secondary_Font);
-  font-size: var(--Main_Fontsize);
+  font-family: var(--Register_Secondary_Font);
+  font-size: var(--Register_Main_Fontsize);
   font-weight: 400;
   margin-top: 0.3em;
   padding: 0.2em 0 0.2em 0.3em;
@@ -78,8 +78,8 @@
 }
 
 .Register_Signup input {
-  font-size: var(--Secondary_Font);
-  font-size: var(--Button_Fontsize);
+  font-size: var(--Register_Secondary_Font);
+  font-size: var(--Register_Button_Fontsize);
   font-weight: 500;
   padding: 0.5em 1.7em;
   background-color: gold;
@@ -93,12 +93,12 @@
 
 .Register_Login p {
   margin-bottom: 0.5em;
-  font-family: var(--Secondary_Font);
+  font-family: var(--Register_Secondary_Font);
 }
 
 .Register_Login button {
-  font-size: var(--Secondary_Font);
-  font-size: var(--Button_Fontsize);
+  font-size: var(--Register_Secondary_Font);
+  font-size: var(--Register_Button_Fontsize);
   font-weight: 500;
   padding: 0.5em 1.7em;
   /* background-color: gold; */
@@ -112,11 +112,17 @@
   margin-bottom: 1em;
 }
 
+.Register_Input label {
+  font-family: var(--Register_Secondary_Font);
+  font-size: var(--Register_Secondary_Fontsize);
+  font-weight: 500;
+}
+
 .Registerotp_Input {
   display: block;
   width: 100px;
-  font-family: var(--Secondary_Font);
-  font-size: var(--Main_Fontsize);
+  font-family: var(--Register_Secondary_Font);
+  font-size: var(--Register_Main_Fontsize);
   font-weight: 400;
   margin-top: 0.3em;
   padding: 0.2em 0 0.2em 0.3em;
@@ -125,8 +131,8 @@
 }
 
 .Register_Savechanges_Btn {
-  font-size: var(--Secondary_Font);
-  font-size: var(--Button_Fontsize);
+  font-size: var(--Register_Secondary_Font);
+  font-size: var(--Register_Button_Fontsize);
   font-weight: 500;
   padding: 0.5em 1.7em;
   background-color: gold;
