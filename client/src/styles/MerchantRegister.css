@@ -1,9 +1,9 @@
 :root {
-  --Main_Font: "Inter", sans-serif;
-  --Main_Fontsize: 15px;
-  --Secondary_Font: "Roboto", sans-serif;
-  --Secondary_Fontsize: 17px;
-  --Button_Fontsize: 15px;
+  --MerchantRegister_Main_Font: "Inter", sans-serif;
+  --MerchantRegister_Main_Fontsize: 15px;
+  --MerchantRegister_Secondary_Font: "Roboto", sans-serif;
+  --MerchantRegister_Secondary_Fontsize: 17px;
+  --MerchantRegister_Button_Fontsize: 15px;
 }
 
 .Merchant_Register_Main {
@@ -29,13 +29,13 @@
 
 .Merchant_Register_ErrorMsgHeading,
 .Merchant_Register_ErrorMsg {
-  font-family: var(--Secondary_Font);
-  font-size: var(--Secondary_Fontsize);
+  font-family: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Secondary_Fontsize);
 }
 
 .Merchant_Register_Notes {
   margin-bottom: 1.3em;
-  font-family: var(--Secondary_Font);
+  font-family: var(--MerchantRegister_Secondary_Font);
 }
 
 .Merchant_Register_Notes h2 {
@@ -52,8 +52,8 @@
 .Merchant_Register_Companyname label,
 .Merchant_Register_Email label,
 .Merchant_Register_Password label {
-  font-family: var(--Secondary_Font);
-  font-size: var(--Secondary_Fontsize);
+  font-family: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Secondary_Fontsize);
   font-weight: 500;
 }
 
@@ -62,8 +62,8 @@
 .Merchant_Register_Password--Input {
   display: block;
   width: 250px;
-  font-family: var(--Secondary_Font);
-  font-size: var(--Main_Fontsize);
+  font-family: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Main_Fontsize);
   font-weight: 400;
   margin-top: 0.3em;
   padding: 0.2em 0 0.2em 0.3em;
@@ -76,8 +76,8 @@
 }
 
 .Merchant_Register_Signup input {
-  font-size: var(--Secondary_Font);
-  font-size: var(--Button_Fontsize);
+  font-size: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Button_Fontsize);
   font-weight: 500;
   padding: 0.5em 1.7em;
   background-color: gold;
@@ -91,12 +91,12 @@
 
 .Merchant_Register_Login p {
   margin-bottom: 0.5em;
-  font-family: var(--Secondary_Font);
+  font-family: var(--MerchantRegister_Secondary_Font);
 }
 
 .Merchant_Register_Login button {
-  font-size: var(--Secondary_Font);
-  font-size: var(--Button_Fontsize);
+  font-size: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Button_Fontsize);
   font-weight: 500;
   padding: 0.5em 1.7em;
   background-color: black;
@@ -109,11 +109,17 @@
   margin-bottom: 1em;
 }
 
+.Merchant_Register_Input label {
+  font-family: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Secondary_Fontsize);
+  font-weight: 500;
+}
+
 .Merchant_Registerotp_Input {
   display: block;
   width: 100px;
-  font-family: var(--Secondary_Font);
-  font-size: var(--Main_Fontsize);
+  font-family: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Main_Fontsize);
   font-weight: 400;
   margin-top: 0.3em;
   padding: 0.2em 0 0.2em 0.3em;
@@ -122,8 +128,8 @@
 }
 
 .Merchant_Register_Savechanges_Btn {
-  font-size: var(--Secondary_Font);
-  font-size: var(--Button_Fontsize);
+  font-size: var(--MerchantRegister_Secondary_Font);
+  font-size: var(--MerchantRegister_Button_Fontsize);
   font-weight: 500;
   padding: 0.5em 1.7em;
   background-color: gold;
