@@ -8,6 +8,9 @@ function Credentials() {
 
   return (
     <div className="Credentials_Main">
+      <div className="Credentianl_Back_Button">
+        <button onClick={() => navigate("/account")}>Back to my account</button>
+      </div>
       <div className="Credential">
         <div className="Credential_Box">
           <p className="Credential_Labels">Name</p>
