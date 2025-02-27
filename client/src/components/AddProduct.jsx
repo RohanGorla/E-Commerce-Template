@@ -22,7 +22,6 @@ function AddProduct() {
   const [showAddCategory, setShowAddCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [newCompany, setNewCompany] = useState("");
-  const [allCompanies, setAllCompanies] = useState([]);
   const [fetch, setFetch] = useState(true);
   const [buyLimit, setBuyLimit] = useState(0);
   const [buyLimitString, setBuyLimitString] = useState("0");
@@ -267,11 +266,10 @@ function AddProduct() {
   useEffect(() => {
     async function getCatAndCom() {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/getcatandcom`
+        `${import.meta.env.VITE_BASE_URL}/getallcategories`
       );
       if (response.data.access) {
-        setAllCategories(response.data.categoryData);
-        setAllCompanies(response.data.companyData);
+        setAllCategories(response.data.data);
       }
     }
     getCatAndCom();
