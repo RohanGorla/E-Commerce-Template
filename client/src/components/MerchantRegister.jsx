@@ -22,7 +22,7 @@ function MerchantRegister() {
     );
     if (otpResponse.data.access) {
       context.setOtp(otpResponse.data.otp);
-      navigate("merchantotp");
+      navigate("merchantregisterotp");
     } else {
       setError(true);
       setErrorMsg(otpResponse.data.errorMsg);

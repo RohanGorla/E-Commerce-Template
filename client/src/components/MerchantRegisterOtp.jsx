@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import "../styles/MerchantRegister.css";
 
-function MerchantOtp() {
+function MerchantRegisterOtp() {
   const context = useOutletContext();
   const navigate = useNavigate();
   const [OTP, setOTP] = useState("");
@@ -93,4 +93,4 @@ function MerchantOtp() {
   );
 }
 
-export default MerchantOtp;
+export default MerchantRegisterOtp;

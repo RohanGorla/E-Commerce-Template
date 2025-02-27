@@ -13,13 +13,11 @@ function Items() {
   const [wishProduct, setWishProduct] = useState({});
   const [addListShow, setAddListShow] = useState(false);
   const [newlist, setNewlist] = useState("");
-  const [selectedWishlist, setSelectedWistlist] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
   const [lowerPrice, setLowerPrice] = useState("");
   const [upperPrice, setUpperPrice] = useState("");
   const [lowerPriceFilter, setLowerPriceFilter] = useState("");
   const [upperPriceFilter, setUpperPriceFilter] = useState("");
-  const [allCat, setAllCat] = useState([]);
   const [allCom, setAllCom] = useState([]);
   const [showSelectlist, setShowSelectlist] = useState(false);
   const [showCompany, setShowCompany] = useState(false);
@@ -97,9 +95,6 @@ function Items() {
           setAddlistError(false);
           setaddListErrorMessage("");
           addToWishlist(wishProduct, newlist);
-          if (wishlists.length == 0) {
-            setSelectedWistlist(newlist);
-          }
         }
       } else {
         setAddlistError(true);
@@ -429,7 +424,6 @@ function Items() {
                     className="Items_Wishlist_Selector--List"
                     key={index}
                     onClick={() => {
-                      setSelectedWistlist(list.wishlistname);
                       addToWishlist(wishProduct, list.wishlistname);
                     }}
                   >
