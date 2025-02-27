@@ -379,7 +379,19 @@ app.post("/addmerchant", async (req, res) => {
               errorMsg:
                 "Some error has occurred. Please re-try or refresh the page!",
             });
-          res.send({ access: true, token: token });
+          db.query(
+            "insert into company (company) values (?)",
+            [company],
+            (err, data) => {
+              if (err)
+                return res.send({
+                  access: false,
+                  errorMsg:
+                    "Some error has occurred. Please re-try or refresh the page!",
+                });
+              res.send({ access: true, token: token });
+            }
+          );
         }
       );
     }
