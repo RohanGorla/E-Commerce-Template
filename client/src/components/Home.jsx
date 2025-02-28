@@ -30,16 +30,16 @@ function Home() {
       const mostDiscountProducts = response.data.mostDiscount;
       for (let i = 0; i < mostDiscountProducts.length; i++) {
         if (JSON.parse(mostDiscountProducts[i].imageTags).length)
-          mostDiscountProducts.imageUrl = await getImageUrls(
+          mostDiscountProducts[i].imageUrl = await getImageUrls(
             JSON.parse(mostDiscountProducts[i].imageTags)
           );
       }
       setMostDiscount(mostDiscountProducts);
       const mostBoughtProducts = response.data.mostBought;
       for (let i = 0; i < mostBoughtProducts.length; i++) {
-        if (mostBoughtProducts[i].imageTags)
-          mostBoughtProducts.imageUrl = await getImageUrls(
-            JSON.stringify(mostBoughtProducts[i].imageTags)
+        if (JSON.parse(mostBoughtProducts[i].imageTags).length)
+          mostBoughtProducts[i].imageUrl = await getImageUrls(
+            JSON.parse(mostBoughtProducts[i].imageTags)
           );
       }
       setMostBought(mostBoughtProducts);
