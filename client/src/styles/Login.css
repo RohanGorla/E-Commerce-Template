@@ -86,6 +86,21 @@
   border-radius: 2px;
 }
 
+.Login_Password--Input_And_Eye {
+  display: flex;
+  align-items: center;
+}
+
+.Login_Password--Eye {
+  font-size: 20px;
+  margin-left: 1em;
+  cursor: pointer;
+}
+
+.Login_Password--Eye--Inactive {
+  display: none;
+}
+
 .Login_Buttons--Login button {
   font-size: var(--Secondary_Font);
   font-size: var(--Button_Fontsize);
