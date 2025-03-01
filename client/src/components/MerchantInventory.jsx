@@ -60,7 +60,6 @@ function MerchantInventory() {
         {
           id,
           stockValue,
-          company,
         }
       );
       if (response.data.access) {
@@ -69,7 +68,11 @@ function MerchantInventory() {
         setTimeout(() => {
           setSuccess(false);
         }, 3500);
-        filterInventoryData(response.data.data);
+        const updatedInventoryData = inventoryData.map((product) => {
+          if (product.id == id) product.stock_left = stockValue;
+          return product;
+        });
+        setInventoryData(updatedInventoryData);
       } else {
         setError(true);
         setErrorMessage(response.data.errorMsg);
