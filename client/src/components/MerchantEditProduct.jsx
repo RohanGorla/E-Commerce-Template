@@ -636,11 +636,17 @@ function MerchantEditProduct() {
                   }
                 >
                   <div className="AddProduct_Section--Field">
-                    <label>Add New Category</label>
+                    <div className="AddProduct_AddNewCategory--Label_And_Count">
+                      <label>Add New Category</label>
+                      <p className="AddProduct_AddNewCategory--Count">
+                        {newCategory.length}/25
+                      </p>
+                    </div>
                     <input
                       type="text"
                       onChange={(e) => {
-                        setNewCategory(e.target.value);
+                        if (e.target.value.length <= 25)
+                          setNewCategory(e.target.value);
                       }}
                       value={newCategory}
                       placeholder="Enter New Category..."
