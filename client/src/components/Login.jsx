@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import "../styles/Login.css";
 
 function Login() {
@@ -8,6 +9,7 @@ function Login() {
   const [pass, setPass] = useState("");
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   /* Login API */
@@ -79,14 +81,32 @@ function Login() {
           </div>
           <div className="Login_Password">
             <label>Password</label>
-            <input
-              className="Login_Password--Input"
-              type="password"
-              onChange={(e) => {
-                setPass(e.target.value);
-              }}
-              value={pass}
-            ></input>
+            <div className="Login_Password--Input_And_Eye">
+              <input
+                className="Login_Password--Input"
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => {
+                  setPass(e.target.value);
+                }}
+                value={pass}
+              ></input>
+              <FaEyeSlash
+                className={
+                  showPassword
+                    ? "Login_Password--Eye"
+                    : "Login_Password--Eye--Inactive"
+                }
+                onClick={() => setShowPassword(false)}
+              ></FaEyeSlash>
+              <FaEye
+                className={
+                  showPassword
+                    ? "Login_Password--Eye--Inactive"
+                    : "Login_Password--Eye"
+                }
+                onClick={() => setShowPassword(true)}
+              ></FaEye>
+            </div>
           </div>
         </form>
         <div className="Login_Buttons">
