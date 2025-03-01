@@ -203,6 +203,17 @@
   display: none;
 }
 
+.AddProduct_AddNewCategory--Label_And_Count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.AddProduct_AddNewCategory--Count {
+  font-family: var(--AddProduct_Second_Font);
+  color: white;
+}
+
 .AddProduct_AddNewCategory--Buttons button {
   font-family: var(--AddProduct_Main_Font);
   font-size: var(--AddProduct_Submit);
