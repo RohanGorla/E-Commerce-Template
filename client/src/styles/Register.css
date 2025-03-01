@@ -42,6 +42,17 @@
   margin-bottom: 0.3em;
 }
 
+.Register_Field--Label_And_Count {
+  max-width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Register_Field--Count {
+  font-family: var(--Register_Secondary_Font);
+  font-size: var(--Register_Secondary_Fontsize);
+}
+
 .Register_Firstname,
 .Register_Lastname,
 .Register_Email,
@@ -101,7 +112,6 @@
   font-size: var(--Register_Button_Fontsize);
   font-weight: 500;
   padding: 0.5em 1.7em;
-  /* background-color: gold; */
   background-color: black;
   color: white;
   border-style: none;
