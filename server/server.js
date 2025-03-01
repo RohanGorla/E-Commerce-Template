@@ -2178,7 +2178,7 @@ app.post("/placebuyorder", (req, res) => {
 
 app.post("/initiatepayment", (req, res) => {
   let mail = req.body.mail;
-  db.query("select * from cart where mailid = ?", mail, async (err, data) => {
+  db.query("select cart.*, products.* from cart inner join products on products.id = cart.productid where mailid = ?", mail, async (err, data) => {
     if (err)
       return res.send({
         access: false,
