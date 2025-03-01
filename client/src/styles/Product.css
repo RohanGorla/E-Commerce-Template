@@ -456,7 +456,7 @@
 
 .Product_Images--Main_Image img {
   display: block;
-  width: 100%;
+  max-width: 100%;
   max-height: 100%;
 }
 
