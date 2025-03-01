@@ -1,495 +1,498 @@
 :root {
-    --Wish_Main_Font: "Inter", sans-serif;
-    --Wish_Secondary_Font: "Roboto", sans-serif;
-    --Wish_AddNewList--Header_Heading: 20px;
-    --Wish_AddNewList--Header_Note: 16px;
-    --Wish_AddNewList_Input--Label: 18px;
-    --Wish_AddNewList_Input: 16px;
-    --Wish_Lists_Header: 22px;
-    --Wish_Lists--Header_Button: 14px;
-    --Wish_Lists--List_Name: 18px;
-    --Wist_Items--Header_Listname: 20px;
-    --Wish_Item_Name: 18px;
-    --Wish_Item_Rating: 15px;
-    --Wish_Item_Price: 22px;
-    --Wish_Item_Discount: 15px;
-    --Wish_Item_Mrp: 14px;
-    --Wish_Item--Buttons: 15px;
-    --Wish_Items--Empty_Heading: 22px;
+  --Wish_Main_Font: "Inter", sans-serif;
+  --Wish_Secondary_Font: "Roboto", sans-serif;
+  --Wish_AddNewList--Header_Heading: 20px;
+  --Wish_AddNewList--Header_Note: 16px;
+  --Wish_AddNewList_Input--Label: 18px;
+  --Wish_AddNewList_Input: 16px;
+  --Wish_Lists_Header: 22px;
+  --Wish_Lists--Header_Button: 14px;
+  --Wish_Lists--List_Name: 18px;
+  --Wist_Items--Header_Listname: 20px;
+  --Wish_Item_Name: 18px;
+  --Wish_Item_Rating: 15px;
+  --Wish_Item_Price: 22px;
+  --Wish_Item_Discount: 15px;
+  --Wish_Item_Mrp: 14px;
+  --Wish_Item--Buttons: 15px;
+  --Wish_Items--Empty_Heading: 22px;
 }
 
 .Wish_Page {
-    height: 100%;
+  height: 100%;
 }
 
 .Wish_Container {
-    position: relative;
-    background-color: rgb(64, 64, 64);
-    height: 100%;
-    overflow-y: scroll;
+  position: relative;
+  background-color: rgb(64, 64, 64);
+  height: 100%;
+  overflow-y: scroll;
 }
 
 /* Add New List Display */
 
 .Wish_AddNewList_Container {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Wish_AddNewList_Container--Inactive {
-    display: none;
+  display: none;
 }
 
 .Wish_AddNewList--Tint {
-    background-color: black;
-    position: absolute;
-    z-index: 2;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    opacity: .8;
+  background-color: black;
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
 }
 
 .Wish_AddNewList {
-    background-color: rgb(64, 64, 64);
-    position: relative;
-    z-index: 3;
-    width: 700px;
-    padding: 2em 4em;
-    border-style: none;
-    border-radius: 10px;
-    border: solid 1.5px white;
+  background-color: rgb(64, 64, 64);
+  position: relative;
+  z-index: 3;
+  width: 700px;
+  padding: 2em 4em;
+  border-style: none;
+  border-radius: 10px;
+  border: solid 1.5px white;
 }
 
 .Wish_AddNewList--Header,
 .Wish_AddNewList--Error {
-    background-color: rgb(25, 25, 25);
-    padding: 1.4em .7em;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
+  background-color: rgb(25, 25, 25);
+  padding: 1.4em 0.7em;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
 }
 
 .Wish_AddNewList--Error {
-    background-color: rgb(197, 61, 61);
-    margin-top: .5em;
+  background-color: rgb(197, 61, 61);
+  margin-top: 0.5em;
 }
 
 .Wish_AddNewList--Error--Inactive {
-    display: none;
+  display: none;
 }
 
 .Wish_AddNewList--Header_Heading,
 .Wish_AddNewList--Error_Heading {
-    font-size: var(--Wish_AddNewList--Header_Heading);
-    font-family: var(--Wish_Main_Font);
-    font-weight: 700;
-    margin-bottom: .2em;
+  font-size: var(--Wish_AddNewList--Header_Heading);
+  font-family: var(--Wish_Main_Font);
+  font-weight: 700;
+  margin-bottom: 0.2em;
 }
 
 .Wish_AddNewList--Header_Note,
 .Wish_AddNewList--Error_Note {
-    font-size: var(--Wish_AddNewList--Header_Note);
-    font-family: var(--Wish_Secondary_Font);
+  font-size: var(--Wish_AddNewList--Header_Note);
+  font-family: var(--Wish_Secondary_Font);
 }
 
 .Wish_AddNewList--Input {
-    background-color: rgb(25, 25, 25);
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
-    margin-top: 1.3em;
-    padding: 1.4em 2.7em;
+  background-color: rgb(25, 25, 25);
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
+  margin-top: 1.3em;
+  padding: 1.4em 2.7em;
 }
 
 .Wish_AddNewList--Input label {
-    font-size: var(--Wish_AddNewList_Input--Label);
-    font-family: var(--Wish_Secondary_Font);
-    font-weight: 500;
-    display: block;
-    margin-bottom: .3em;
+  font-size: var(--Wish_AddNewList_Input--Label);
+  font-family: var(--Wish_Secondary_Font);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.3em;
 }
 
 .Wish_AddNewList--Input input {
-    font-size: var(--Wish_AddNewList_Input);
-    font-family: var(--Wish_Secondary_Font);
-    padding: .3em .2em .2em .4em;
-    margin-bottom: 1em;
-    border-style: none;
+  font-size: var(--Wish_AddNewList_Input);
+  font-family: var(--Wish_Secondary_Font);
+  padding: 0.3em 0.2em 0.2em 0.4em;
+  margin-bottom: 1em;
+  border-style: none;
 }
 
 .Wish_AddNewList--Input_Buttons button {
-    font-size: var(--Wish_AddNewList_Buttons);
-    font-family: var(--Wish_Secondary_Font);
-    font-weight: 500;
-    padding: .4em .8em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: var(--Wish_AddNewList_Buttons);
+  font-family: var(--Wish_Secondary_Font);
+  font-weight: 500;
+  padding: 0.4em 0.8em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .Wish_AddNewList--Buttons_Cancel {
-    background-color: rgb(248, 66, 66);
-    color: white;
+  background-color: rgb(248, 66, 66);
+  color: white;
 }
 
 .Wish_AddNewList--Buttons_Create {
-    background-color: goldenrod;
-    color: black;
-    margin-left: .5em;
+  background-color: goldenrod;
+  color: black;
+  margin-left: 0.5em;
 }
 
 .Wish_Subcontainer {
-    position: relative;
-    height: 100%;
-    margin: 0 auto;
-    background-color: rgb(64, 64, 64);
-    background-color: black;
-    display: flex;
+  position: relative;
+  height: 100%;
+  margin: 0 auto;
+  background-color: rgb(64, 64, 64);
+  background-color: black;
+  display: flex;
 }
 
 /* Wish Lists */
 
 .Wish_Lists_Container {
-    width: 25%;
-    height: 100%;
-    padding: .5em;
+  width: 25%;
+  height: 100%;
+  padding: 0.5em;
 }
 
 .Wish_Lists_Subcontainer {
-    background-color: black;
-    background-color: rgb(64, 64, 64);
-    height: 100%;
-    max-width: 400px;
-    margin-left: auto;
-    overflow-y: scroll;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
-    padding-bottom: 1em;
+  background-color: black;
+  background-color: rgb(64, 64, 64);
+  height: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  overflow-y: scroll;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
+  padding-bottom: 1em;
 }
 
 .Wish_Lists_Innercontainer {
-    height: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .Wish_Lists--Header {
-    background-color: rgb(25, 25, 25);
-    position: sticky;
-    z-index: 1;
-    top: 0px;
-    width: 100%;
-    padding: 2em;
+  background-color: rgb(25, 25, 25);
+  position: sticky;
+  z-index: 1;
+  top: 0px;
+  width: 100%;
+  padding: 2em;
 }
 
 .Wish_Lists--Header h2 {
-    font-size: var(--Wish_Lists_Header);
-    font-family: var(--Wish_Main_Font);
+  font-size: var(--Wish_Lists_Header);
+  font-family: var(--Wish_Main_Font);
 }
 
 .Wish_Lists--Header button {
-    background-color: goldenrod;
-    font-size: var(--Wish_Lists--Header_Button);
-    font-family: var(--Wish_Main_Font);
-    font-weight: 600;
-    padding: .6em 1em;
-    margin-top: 1em;
-    border-style: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.05) scaleY(1.07);
-    }
+  background-color: goldenrod;
+  font-size: var(--Wish_Lists--Header_Button);
+  font-family: var(--Wish_Main_Font);
+  font-weight: 600;
+  padding: 0.6em 1em;
+  margin-top: 1em;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.05) scaleY(1.07);
+  }
 }
 
 .Wish_Lists--Main {
-    padding: 0 1em;
+  padding: 0 1em;
 }
 
 .Wish_Lists--List {
-    background-color: rgb(25, 25, 25);
-    padding: 1em;
-    margin-top: 1em;
-    border-style: none;
-    border-radius: 8px;
-    cursor: pointer;
-    &:hover {
-        background-color: rgb(10, 10, 10);
-        transform: scaleX(1.012) scaleY(1.1);
-    }
+  background-color: rgb(25, 25, 25);
+  padding: 1em;
+  margin-top: 1em;
+  border-style: none;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(10, 10, 10);
+    transform: scaleX(1.012) scaleY(1.1);
+  }
 }
 
 .Wish_Lists--List--Selected {
-    background-color: rgb(4, 4, 4);
-    border: 2px white solid;
-    color: red;
-    &:hover {
-        transform: scaleX(1) scaleY(1);
-    }
+  background-color: rgb(4, 4, 4);
+  border: 2px white solid;
+  color: red;
+  &:hover {
+    transform: scaleX(1) scaleY(1);
+  }
 }
 
 .Wish_Lists--List p {
-    font-size: var(--Wish_Lists--List_Name);
-    font-family: var(--Wish_Secondary_Font);
+  font-size: var(--Wish_Lists--List_Name);
+  font-family: var(--Wish_Secondary_Font);
 }
 
 /* Wish Items */
 
 .Wish_Items_Container {
-    width: 75%;
-    height: 100%;
-    padding: .5em;
+  width: 75%;
+  height: 100%;
+  padding: 0.5em;
 }
 
 .Wish_Items_Subcontainer {
-    background-color: black;
-    background-color: rgb(64, 64, 64);
-    height: 100%;
-    overflow-y: scroll;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
-    padding-bottom: 1em;
+  background-color: black;
+  background-color: rgb(64, 64, 64);
+  height: 100%;
+  overflow-y: scroll;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
+  padding-bottom: 1em;
 }
 
 .Wish_Items_Innercontainer {
-    height: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .Wish_Items--Header {
-    background-color: rgb(25, 25, 25);
-    position: sticky;
-    z-index: 1;
-    top: 0px;
-    width: 100%;
-    padding: 2em;
+  background-color: rgb(25, 25, 25);
+  position: sticky;
+  z-index: 1;
+  top: 0px;
+  width: 100%;
+  padding: 2em;
 }
 
 .Wish_Items--Header h2 {
-    font-size: var(--Wish_Lists_Header);
-    font-family: var(--Wish_Main_Font);
+  font-size: var(--Wish_Lists_Header);
+  font-family: var(--Wish_Main_Font);
 }
 
 .Wish_Items--Header_Selectedlist_And_Delete {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Wish_Items--Header_Selectedlist_And_Delete p {
-    font-size: var(--Wist_Items--Header_Listname);
-    font-family: var(--Wish_Main_Font);
-    font-weight: 600;
-    align-self: flex-end;
+  font-size: var(--Wist_Items--Header_Listname);
+  font-family: var(--Wish_Main_Font);
+  font-weight: 600;
+  align-self: flex-end;
 }
 
 .Wish_Items--Header_Buttons--Delete {
-    background-color: red;
-    color: white;
-    font-size: var(--Wish_Lists--Header_Button);
-    font-family: var(--Wish_Main_Font);
-    font-weight: 600;
-    padding: .6em 1em;
-    border-style: none;
-    border-radius: 4px;
-    margin-top: 1em;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.05) scaleY(1.07);
-    }
+  background-color: red;
+  color: white;
+  font-size: var(--Wish_Lists--Header_Button);
+  font-family: var(--Wish_Main_Font);
+  font-weight: 600;
+  padding: 0.6em 1em;
+  border-style: none;
+  border-radius: 4px;
+  margin-top: 1em;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.05) scaleY(1.07);
+  }
 }
 
 .Wish_Items--Header_Buttons--Delete--Hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .Wish_Items--Main {
-    padding: 0 1em;
+  padding: 0 1em;
 }
 
 .Wish_Items--Item {
-    background-color: rgb(25, 25, 25);
-    height: 220px;
-    padding: 1em;
-    margin-top: 1em;
-    border-style: none;
-    border-radius: 8px;
-    display: flex;
+  background-color: rgb(25, 25, 25);
+  height: 220px;
+  padding: 1em;
+  margin-top: 1em;
+  border-style: none;
+  border-radius: 8px;
+  display: flex;
 }
 
 /* Wish Item Image Container */
 
 .Wish_Item--Image {
-    width: 18%;
-    margin-right: 2em;
-    display: flex;
-    align-items: center;
+  width: 18%;
+  height: 100%;
+  margin-right: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Wish_Item--Image img {
-    width: 100%;
-    cursor: pointer;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: pointer;
 }
 
 /* Wish Item Detail Container */
 
 .Wish_Item--Details {
-    width: 60%;
-    position: relative;
+  width: 60%;
+  position: relative;
 }
 
 .Wish_Item_Details--Name {
-    font-family: var(--Wish_Main_Font);
-    font-size: var(--Wish_Item_Name);
-    margin-bottom: .3em;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    &:hover {
-        color: orangered;
-    }
+  font-family: var(--Wish_Main_Font);
+  font-size: var(--Wish_Item_Name);
+  margin-bottom: 0.3em;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  &:hover {
+    color: orangered;
+  }
 }
 
 .Wish_Items_Details--Rating {
-    display: flex;
-    align-items: center;
-    margin: .3em 0em .7em 0em;
+  display: flex;
+  align-items: center;
+  margin: 0.3em 0em 0.7em 0em;
 }
 
 .Wish_Items_Rating--Average_Rating,
 .Wish_Items_Rating--Total_Ratings {
-    font-size: var(--Wish_Item_Rating);
-    font-family: var(--Wish_Secondary_Font);
+  font-size: var(--Wish_Item_Rating);
+  font-family: var(--Wish_Secondary_Font);
 }
 
 .Wish_Items_Rating--Star_Container {
-    margin: 0em 1em 0em .5em;
+  margin: 0em 1em 0em 0.5em;
 }
 
 .Wish_Items_Rating--Star {
-    margin-left: .2em;
+  margin-left: 0.2em;
 }
 
 .Wish_Item_Details--Price {
-    font-family: var(--Wish_Main_Font);
-    font-size: var(--Wish_Item_Price);
-    margin-bottom: .2em;
+  font-family: var(--Wish_Main_Font);
+  font-size: var(--Wish_Item_Price);
+  margin-bottom: 0.2em;
 }
 
 .Wish_Item_Details--Discount {
-    font-family: var(--Wish_Main_Font);
-    font-size: var(--Wish_Item_Discount);
+  font-family: var(--Wish_Main_Font);
+  font-size: var(--Wish_Item_Discount);
 }
 
 .Wish_Item_Details--Mrp {
-    font-family: var(--Wish_Main_Font);
-    font-size: var(--Wish_Item_Mrp);
+  font-family: var(--Wish_Main_Font);
+  font-size: var(--Wish_Item_Mrp);
 }
 
 .Wish_Item_Details--Mrp--Strike {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .Wish_Item--Buttons {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 }
 
 .Wish_Item--Buttons button {
-    font-family: var(--Wish_Main_Font);
-    font-size: var(--Wish_Item--Buttons);
-    font-weight: 600;
-    padding: .5em 1.5em;
-    border-style: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.05) scaleY(1.07);
-    }
+  font-family: var(--Wish_Main_Font);
+  font-size: var(--Wish_Item--Buttons);
+  font-weight: 600;
+  padding: 0.5em 1.5em;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.05) scaleY(1.07);
+  }
 }
 
 .Wish_Item_Buttons--Add {
-    background-color: goldenrod;
+  background-color: goldenrod;
 }
 
 .Wish_Item_Buttons--Remove {
-    background-color: red;
-    color: white;
-    margin-left: 1em;
+  background-color: red;
+  color: white;
+  margin-left: 1em;
 }
 
 /* Wish Lists Empty Container */
 
 .Wish_Lists--Empty {
-    background-color: rgb(25, 25, 25);
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 2em;
-    padding: 2em 1em;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
+  background-color: rgb(25, 25, 25);
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 2em;
+  padding: 2em 1em;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
 }
 
 .Wish_Lists--Empty_Heading {
-    font-size: var(--Wish_Items--Empty_Heading);
-    font-family: var(--Wish_Main_Font);
-    font-weight: 700;
-    margin-bottom: .3em;
+  font-size: var(--Wish_Items--Empty_Heading);
+  font-family: var(--Wish_Main_Font);
+  font-weight: 700;
+  margin-bottom: 0.3em;
 }
 
 /* Wish Items Empty Container */
 
 .Wish_Items--Empty {
-    background-color: rgb(25, 25, 25);
-    width: 700px;
-    margin: 0em auto;
-    margin-top: 2em;
-    padding: 2em 4em;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
+  background-color: rgb(25, 25, 25);
+  width: 700px;
+  margin: 0em auto;
+  margin-top: 2em;
+  padding: 2em 4em;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
 }
 
 .Wish_Items--Empty_Heading {
-    font-size: var(--Wish_Items--Empty_Heading);
-    font-family: var(--Wish_Main_Font);
-    font-weight: 700;
-    margin-bottom: .3em;
+  font-size: var(--Wish_Items--Empty_Heading);
+  font-family: var(--Wish_Main_Font);
+  font-weight: 700;
+  margin-bottom: 0.3em;
 }
 
 .Wish_Items--Empty_Note {
-    font-family: var(--Wish_Secondary_Font);
-    font-size: var(--Wish_AddNewList--Header_Note);
-    line-height: 1.5;
+  font-family: var(--Wish_Secondary_Font);
+  font-size: var(--Wish_AddNewList--Header_Note);
+  line-height: 1.5;
 }
 
 .Wish_Items--Empty_Button button {
-    background-color: goldenrod;
-    font-size: var(--Wish_Lists--Header_Button);
-    font-family: var(--Wish_Main_Font);
-    font-weight: 600;
-    padding: .6em 1.5em;
-    margin-top: 1.8em;
-    border-style: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        transform: scaleX(1.05) scaleY(1.07);
-    }
+  background-color: goldenrod;
+  font-size: var(--Wish_Lists--Header_Button);
+  font-family: var(--Wish_Main_Font);
+  font-weight: 600;
+  padding: 0.6em 1.5em;
+  margin-top: 1.8em;
+  border-style: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.05) scaleY(1.07);
+  }
 }
