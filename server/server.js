@@ -1,7 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
-import express, { query } from "express";
+import express from "express";
 import cors from "cors";
 import mysql from "mysql2";
 import nodemailer from "nodemailer";
@@ -12,10 +12,8 @@ import {
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { access } from "fs";
 import Razorpay from "razorpay";
 import { v4 } from "uuid";
-import { disconnect } from "process";
 
 const app = express();
 app.use(express.json());
@@ -48,10 +46,6 @@ db.connect((err) => {
   if (err) console.log(err);
   console.log("Database connected");
 });
-
-function random() {
-  return crypto.randomBytes(32).toString("hex");
-}
 
 function setcompany() {
   db.query("select DISTINCT productid from wishlistitems", (err, orderdata) => {
