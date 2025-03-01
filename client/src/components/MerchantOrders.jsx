@@ -69,12 +69,10 @@ function MerchantOrders() {
 
   async function markAsShipped(id) {
     const orderId = id;
-    const company = merchantInfo?.company;
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/markasshipped`,
       {
         orderId,
-        company,
       }
     );
     if (response.data.access) {
@@ -83,9 +81,9 @@ function MerchantOrders() {
       setTimeout(() => {
         setSuccess(false);
       }, 3500);
-      setOrders(response.data.data);
+      const updatedOrders = orders.filter((order) => order.id !== id);
+      setOrders(updatedOrders);
     } else {
-      console.log(response.data.err);
       setError(true);
       setErrorMessage(response.data.errorMsg);
       setTimeout(() => {
