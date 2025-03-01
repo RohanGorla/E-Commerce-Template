@@ -49,24 +49,30 @@ function Register() {
       </div>
       <form className="Register_Form" onSubmit={addUser}>
         <div className="Register_Firstname">
-          <label>First name</label>
+          <div className="Register_Field--Label_And_Count">
+            <label>First name</label>
+            <p className="Register_Field--Count">{context.first.length}/15</p>
+          </div>
           <input
             className="Register_Firstname--Input"
             type="text"
             required
             onChange={(e) => {
-              context.setFirst(e.target.value);
+              if (e.target.value.length <= 15) context.setFirst(e.target.value);
             }}
             value={context.first}
           ></input>
         </div>
         <div className="Register_Lastname">
-          <label>Last name</label>
+          <div className="Register_Field--Label_And_Count">
+            <label>Last name</label>
+            <p className="Register_Field--Count">{context.last.length}/15</p>
+          </div>
           <input
             className="Register_Lastname--Input"
             type="text"
             onChange={(e) => {
-              context.setLast(e.target.value);
+              if (e.target.value.length <= 15) context.setLast(e.target.value);
             }}
             value={context.last}
           ></input>
