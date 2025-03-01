@@ -566,38 +566,34 @@ function Buy() {
           </div>
           <div className="Buy_Main">
             <div className="Buy_Main--Products">
-              <div className="Buy_Products_Container">
-                <div className="Buy_Products--Product">
-                  <div className="Buy_Products--Product_Image">
-                    <img
-                      src={
-                        productData.imageUrl
-                          ? productData.imageUrl[0].imageUrl
-                          : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
-                      }
-                    ></img>
-                  </div>
-                  <div className="Buy_Products--Product_Details">
-                    <p className="Buy_Product_Details--Name">
-                      {productData.title}
+              <div className="Buy_Products--Product">
+                <div className="Buy_Products--Product_Image">
+                  <img
+                    src={
+                      productData.imageUrl
+                        ? productData.imageUrl[0].imageUrl
+                        : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                    }
+                  ></img>
+                </div>
+                <div className="Buy_Products--Product_Details">
+                  <p className="Buy_Product_Details--Name">
+                    {productData.title}
+                  </p>
+                  <p className="Buy_Product_Details--Price">
+                    <span className="Buy_Product_Details--Price_Symbol">₹</span>
+                    {productPrice}
+                  </p>
+                  <div className="Buy_Product_Details--Total_Cost">
+                    <p className="Buy_Product_Details--Quantity">
+                      Qty: {productData.count}
                     </p>
-                    <p className="Buy_Product_Details--Price">
-                      <span className="Buy_Product_Details--Price_Symbol">
+                    <p className="Buy_Product_Details--Total">
+                      <span className="Buy_Product_Details--Total_Symbol">
                         ₹
                       </span>
-                      {productPrice}
+                      {productTotal}
                     </p>
-                    <div className="Buy_Product_Details--Total_Cost">
-                      <p className="Buy_Product_Details--Quantity">
-                        Qty: {productData.count}
-                      </p>
-                      <p className="Buy_Product_Details--Total">
-                        <span className="Buy_Product_Details--Total_Symbol">
-                          ₹
-                        </span>
-                        {productTotal}
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
