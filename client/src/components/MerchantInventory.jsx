@@ -54,7 +54,6 @@ function MerchantInventory() {
 
   async function updateProductStock(id) {
     if (merchantInfo.company) {
-      const company = merchantInfo.company;
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/updateinventory`,
         {

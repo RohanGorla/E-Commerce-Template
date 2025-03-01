@@ -1,141 +1,147 @@
 :root {
-    --MerchantOrders_Main_Font: "Inter", sans-serif;
-    --MerchantOrders_Second_Font: "Roboto", sans-serif;
-    --MerchantOrders_Header: 40px;
-    --MerchantOrders_Empty--Header: 22px;
-    --MerchantOrders_Empty--Text: 17px;
-    --MerchantOrders_Name: 19px;
-    --MerchantOrders_Qty: 15px;
-    --MerchantOrders_Address--Heading: 18px;
-    --MerchantOrders_Address: 15px;
-    --MerchantOrders_Button: 15px;
+  --MerchantOrders_Main_Font: "Inter", sans-serif;
+  --MerchantOrders_Second_Font: "Roboto", sans-serif;
+  --MerchantOrders_Header: 40px;
+  --MerchantOrders_Empty--Header: 22px;
+  --MerchantOrders_Empty--Text: 17px;
+  --MerchantOrders_Name: 19px;
+  --MerchantOrders_Qty: 15px;
+  --MerchantOrders_Address--Heading: 18px;
+  --MerchantOrders_Address: 15px;
+  --MerchantOrders_Button: 15px;
 }
 
 .MerchantOrders_Page {
-    padding: 1em 0em;
+  padding: 1em 0em;
 }
 
 .MerchantOrders_Main {
-    max-width: 1300px;
-    margin: 0em auto;
+  max-width: 1300px;
+  margin: 0em auto;
 }
 
 .MerchantOrders_Header {
-    background-color: black;
-    position: sticky;
-    top: 0px;
-    padding-bottom: 1.5em;
+  background-color: black;
+  position: sticky;
+  top: 0px;
+  padding-bottom: 1.5em;
 }
 
 .MerchantOrders_Header--Title {
-    background-color: rgb(25, 25, 25);
-    font-family: var(--MerchantOrders_Main_Font);
-    font-size: var(--MerchantOrders_Header);
-    text-align: center;
-    letter-spacing: 2px;
-    padding: .7em 0em;
-    border-style: none;
-    border-radius: 9px;
-    border: 2px solid white;
+  background-color: rgb(25, 25, 25);
+  font-family: var(--MerchantOrders_Main_Font);
+  font-size: var(--MerchantOrders_Header);
+  text-align: center;
+  letter-spacing: 2px;
+  padding: 0.7em 0em;
+  border-style: none;
+  border-radius: 9px;
+  border: 2px solid white;
 }
 
 .MerchantOrders_Container--Inactive,
 .MerchantOrders_Empty_Container--Inactive {
-    display: none;
+  display: none;
 }
 
 .MerchantOrders_Empty {
-    background-color: rgb(25, 25, 25);
-    max-width: 700px;
-    margin: 0em auto;
-    margin-top: 3em;
-    padding: 1em 2em;
-    border-style: none;
-    border: 2px solid white;
-    border-radius: 8px;
+  background-color: rgb(25, 25, 25);
+  max-width: 700px;
+  margin: 0em auto;
+  margin-top: 3em;
+  padding: 1em 2em;
+  border-style: none;
+  border: 2px solid white;
+  border-radius: 8px;
 }
 
 .MerchantOrders_Empty--Header {
-    font-family: var(--MerchantOrders_Second_Font);
-    font-size: var(--MerchantOrders_Empty--Header);
-    font-weight: 600;
-    margin-bottom: .7em;
+  font-family: var(--MerchantOrders_Second_Font);
+  font-size: var(--MerchantOrders_Empty--Header);
+  font-weight: 600;
+  margin-bottom: 0.7em;
 }
 
 .MerchantOrders_Empty--Text {
-    font-family: var(--MerchantOrders_Main_Font);
-    font-size: var(--MerchantOrders_Empty--Text);
-    letter-spacing: .5px;
+  font-family: var(--MerchantOrders_Main_Font);
+  font-size: var(--MerchantOrders_Empty--Text);
+  letter-spacing: 0.5px;
 }
 
 .MerchantOrders_Order {
-    background-color: rgb(25, 25, 25);
-    display: flex;
-    gap: 1em;
-    padding: 1em .5em;
-    border-style: none;
-    border-radius: 8px;
+  background-color: rgb(25, 25, 25);
+  height: 300px;
+  display: flex;
+  gap: 1em;
+  padding: 1em 0.5em;
+  border-style: none;
+  border-radius: 8px;
 }
 
-.MerchantOrders_Order +
-.MerchantOrders_Order {
-    margin-top: .5em;
+.MerchantOrders_Order + .MerchantOrders_Order {
+  margin-top: 0.5em;
 }
 
 .MerchantOrders_Order_Image {
-    width: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .MerchantOrders_Order_Image img {
-    width: 100%;
-    max-width: 300px;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .MerchantOrders_Order_Details {
-    width: 65%;
-    font-family: var(--MerchantOrders_Main_Font);
+  font-family: var(--MerchantOrders_Main_Font);
+  width: 65%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
 }
 
 .MerchantOrders_Order_Details--Name {
-    font-size: var(--MerchantOrders_Name);
+  font-size: var(--MerchantOrders_Name);
 }
 
 .MerchantOrders_Order_Details--Quantity {
- font-size: var(--MerchantOrders_Qty);
- margin: .5em 0em 1em 0em;
+  font-size: var(--MerchantOrders_Qty);
+  margin: 0.5em 0em 1em 0em;
 }
 
 .MerchantOrders_Order_Details--Delivery_Address--Heading {
-    font-size: var(--MerchantOrders_Address--Heading);
+  font-size: var(--MerchantOrders_Address--Heading);
 }
 
 .MerchantOrders_Order_Details--Delivery_Address--Section {
-    font-size: var(--MerchantOrders_Address);
-    margin: .3em 0em;
+  font-size: var(--MerchantOrders_Address);
+  margin: 0.3em 0em;
 }
 
 .MerchantOrders_Order_Details--Button {
-    font-family: var(--MerchantOrders_Second_Font);
-    font-size: var(--MerchantOrders_Button);
-    font-weight: 600;
-    background-color: white;
-    color: black;
-    margin-top: 1em;
-    padding: .6em 1.6em;
-    border-style: none;
-    border-radius: 4px;
-    border: 1px solid black;
-    cursor: pointer;
-    &:hover {
-        background-color: black;
-        color: white;
-        border: 1px solid white;
-    }
+  font-family: var(--MerchantOrders_Second_Font);
+  font-size: var(--MerchantOrders_Button);
+  font-weight: 600;
+  background-color: white;
+  color: black;
+  margin-top: 1em;
+  padding: 0.6em 1.6em;
+  border-style: none;
+  border-radius: 4px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:hover {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+  }
 }
 
 .MerchantOrders_Order_Details--Button--Inactive {
-    display: none;
+  display: none;
 }
