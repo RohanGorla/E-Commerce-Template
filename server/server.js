@@ -978,19 +978,19 @@ app.get("/gethomeproducts", (req, res) => {
             "Some error has occurred! Please try again or refresh the page!",
         });
       mostDiscount = data;
-    }
-  );
-  db.query(
-    "select * from products order by total_sales desc limit 5",
-    (err, data) => {
-      if (err)
-        return res.send({
-          access: false,
-          errorMsg:
-            "Some error has occurred! Please try again or refresh the page!",
-        });
-      mostBought = data;
-      res.send({ access: true, mostDiscount, mostBought });
+      db.query(
+        "select * from products order by total_sales desc limit 5",
+        (err, data) => {
+          if (err)
+            return res.send({
+              access: false,
+              errorMsg:
+                "Some error has occurred! Please try again or refresh the page!",
+            });
+          mostBought = data;
+          res.send({ access: true, mostDiscount, mostBought });
+        }
+      );
     }
   );
 });
