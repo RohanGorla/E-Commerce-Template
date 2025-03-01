@@ -381,8 +381,7 @@ function Buy() {
           </p>
           <p className="Buy_Order_Placed--Timer">
             You can close this tab now or it will be closed automatically in{" "}
-            {time}
-            seconds.
+            {time} seconds.
           </p>
         </div>
       ) : (

@@ -29,7 +29,7 @@
 }
 
 .Checkout_Order_Placed {
-  background-color: rgb(75, 218, 67);
+  background-color: rgb(10, 110, 0);
   font-family: var(--Checkout_Main_Font);
   width: 90%;
   max-width: 1000px;

@@ -402,8 +402,7 @@ function Checkout() {
           </p>
           <p className="Checkout_Order_Placed--Timer">
             You can close this tab now or it will be closed automatically in{" "}
-            {time}
-            seconds.
+            {time} seconds.
           </p>
         </div>
       ) : (
