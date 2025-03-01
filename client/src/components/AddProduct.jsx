@@ -38,6 +38,24 @@ function AddProduct() {
 
   async function handleSubmitProduct(e) {
     e.preventDefault();
+    if (
+      !title.length ||
+      !description.length ||
+      !imageUrls.length ||
+      !price ||
+      !discount.length ||
+      !category ||
+      !buyLimit ||
+      !stockQuantity ||
+      !stockAlert
+    ) {
+      setError(true);
+      setErrorMessage("Please fill all the fields!");
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+      return;
+    }
     const imageTags = [];
     imageUrls.forEach((image) => imageTags.push(image.imageTag));
     const company = merchantInfo?.company;
@@ -572,7 +590,9 @@ function AddProduct() {
                   <div className="AddProduct_Section--Field">
                     <div className="AddProduct_AddNewCategory--Label_And_Count">
                       <label>Add New Category</label>
-                      <p className="AddProduct_AddNewCategory--Count">{newCategory.length}/25</p>
+                      <p className="AddProduct_AddNewCategory--Count">
+                        {newCategory.length}/25
+                      </p>
                     </div>
                     <input
                       type="text"
