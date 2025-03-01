@@ -1,497 +1,504 @@
 :root {
-    --Checkout_Main_Font: "Roboto", sans-serif;
-    --Checkout_Secondary_Font: "Inter", sans-serif;
-    --Checkout_Order_Placed--Success: 20px;
-    --Checkout_Order_Placed--Timer: 16px;
-    --Checkout_Header--Heading: 28px;
-    --Checkout_Add_Address--Label: 16px;
-    --Checkout_Add_Address--Input: 15px;
-    --Checkout_Select_Address--Header_Heading: 24px;
-    --Checkout_Select_Address--Name: 18px;
-    --Checkout_Select_Address--Button: 16px;
-    --Checkout_Select_Address--Empty--Note: 16px;
-    --Checkout_Product_Details--Name: 18px;
-    --Checkout_Product_Details--Price: 20px;
-    --Checkout_Product_Details--Quantity: 14px;
-    --Checkout_Product_Details--Total: 18px;
-    --Checkout_Product_Details--Price_Symbol: 14px;
-    --Checkout_Product_Details--Total_Symbol: 12px;
-    --Checkout_Info_Header--Heading: 26px;
-    --Checkout_Info_Details--Heading: 20px;
-    --Checkout_Info_Details--Info: 16px;
-    --Checkout_Info_Address--Button: 14px;
-    --Checkout_Info--Payment_Note: 14px;
-    --Checkout_Info--Payment_Button: 16px;
+  --Checkout_Main_Font: "Roboto", sans-serif;
+  --Checkout_Secondary_Font: "Inter", sans-serif;
+  --Checkout_Order_Placed--Success: 20px;
+  --Checkout_Order_Placed--Timer: 16px;
+  --Checkout_Header--Heading: 28px;
+  --Checkout_Add_Address--Label: 16px;
+  --Checkout_Add_Address--Input: 15px;
+  --Checkout_Select_Address--Header_Heading: 24px;
+  --Checkout_Select_Address--Name: 18px;
+  --Checkout_Select_Address--Button: 16px;
+  --Checkout_Select_Address--Empty--Note: 16px;
+  --Checkout_Product_Details--Name: 18px;
+  --Checkout_Product_Details--Price: 20px;
+  --Checkout_Product_Details--Quantity: 14px;
+  --Checkout_Product_Details--Total: 18px;
+  --Checkout_Product_Details--Price_Symbol: 14px;
+  --Checkout_Product_Details--Total_Symbol: 12px;
+  --Checkout_Info_Header--Heading: 26px;
+  --Checkout_Info_Details--Heading: 20px;
+  --Checkout_Info_Details--Info: 16px;
+  --Checkout_Info_Address--Button: 14px;
+  --Checkout_Info--Payment_Note: 14px;
+  --Checkout_Info--Payment_Button: 16px;
 }
 
 .Checkout_Page {
-    position: relative;
+  position: relative;
 }
 
 .Checkout_Order_Placed {
-    background-color: rgb(75, 218, 67);
-    font-family: var(--Checkout_Main_Font);
-    width: 90%;
-    max-width: 1000px;
-    margin: 0em auto;
-    margin-top: 4em;
-    padding: 2em 3em;
-    border-style: none;
-    border: 2px solid white;
-    border-radius: 9px;
+  background-color: rgb(75, 218, 67);
+  font-family: var(--Checkout_Main_Font);
+  width: 90%;
+  max-width: 1000px;
+  margin: 0em auto;
+  margin-top: 4em;
+  padding: 2em 3em;
+  border-style: none;
+  border: 2px solid white;
+  border-radius: 9px;
 }
 
 .Checkout_Order_Placed--Success {
-    font-size: var(--Checkout_Order_Placed--Success);
-    font-weight: 600;
-    margin-bottom: 1em;
+  font-size: var(--Checkout_Order_Placed--Success);
+  font-weight: 600;
+  margin-bottom: 1em;
 }
 
 .Checkout_Order_Placed--Timer {
-    font-size: var(--Checkout_Order_Placed--Timer);
+  font-size: var(--Checkout_Order_Placed--Timer);
 }
 
 .Checkout_Main_Container {
-    height: 100vh;
-    width: 100vw;
-    overflow-y: scroll;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
 }
 
 .Checkout_Add_Address,
 .Checkout_Select_Address {
-    font-family: var(--Checkout_Main_Font);
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: var(--Checkout_Main_Font);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Checkout_Order_Placed--Inactive,
 .Checkout_Add_Address--Inactive,
 .Checkout_Select_Address--Inactive {
-    display: none;
+  display: none;
 }
 
 .Checkout_Add_Address--Tint,
 .Checkout_Select_Address--Tint {
-    position: absolute;
-    z-index: 2;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: .8;
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.8;
 }
 
 .Checkout_Add_Address--Container,
 .Checkout_Select_Address--Address_Container {
-    background-color: rgb(35, 35, 35);
-    position: relative;
-    z-index: 3;
-    width: 400px;
-    height: 600px;
-    padding: 1em;
-    border-style: none;
-    border-radius: 9px;
-    border: 2px solid white;
+  background-color: rgb(35, 35, 35);
+  position: relative;
+  z-index: 3;
+  width: 400px;
+  height: 600px;
+  padding: 1em;
+  border-style: none;
+  border-radius: 9px;
+  border: 2px solid white;
 }
 
 .Checkout_Add_Address--Header h3,
 .Checkout_Select_Address--Header h3 {
-    font-size: var(--Checkout_Select_Address--Header_Heading);
+  font-size: var(--Checkout_Select_Address--Header_Heading);
 }
 
 .Checkout_Select_Address--Header button {
-    font-size: var(--Product_Select_Address--Button);
-    font-weight: 600;
-    background-color: goldenrod;
-    padding: .5em 1.5em;
-    border-style: none;
-    border-radius: 5px;
-    margin-top: .5em;
-    cursor: pointer;
+  font-size: var(--Product_Select_Address--Button);
+  font-weight: 600;
+  background-color: goldenrod;
+  padding: 0.5em 1.5em;
+  border-style: none;
+  border-radius: 5px;
+  margin-top: 0.5em;
+  cursor: pointer;
 }
 
 .Checkout_Add_Address--Subcontainer,
 .Checkout_Select_Address--Address_Subcontainer {
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
 }
 
 .Checkout_Add_Address--Header {
-    background-color: rgb(35, 35, 35);
-    position: sticky;
-    top: 0px;
-    padding: .2em 0em .5em 0em;
+  background-color: rgb(35, 35, 35);
+  position: sticky;
+  top: 0px;
+  padding: 0.2em 0em 0.5em 0em;
 }
 
-.Checkout_Add_Address--Portion +
-.Checkout_Add_Address--Portion {
-    margin-top: 1em;
+.Checkout_Add_Address--Portion + .Checkout_Add_Address--Portion {
+  margin-top: 1em;
 }
 
 .Checkout_Add_Address--Portion label {
-    font-size: var(--Checkout_Add_Address--Label);
-    display: block;
+  font-size: var(--Checkout_Add_Address--Label);
+  display: block;
 }
 
 .Checkout_Add_Address--Portion input {
-    font-size: var(--Checkout_Add_Address--Input);
-    width: 250px;
-    margin-top: .3em;
-    padding: .3em .2em .2em .3em;
+  font-size: var(--Checkout_Add_Address--Input);
+  width: 250px;
+  margin-top: 0.3em;
+  padding: 0.3em 0.2em 0.2em 0.3em;
 }
 
 .Checkout_Add_Address--Portion button {
-    font-size: var(--Checkout_Select_Address--Button);
-    font-weight: 600;
-    background-color: goldenrod;
-    padding: .5em 2em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: var(--Checkout_Select_Address--Button);
+  font-weight: 600;
+  background-color: goldenrod;
+  padding: 0.5em 2em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .Checkout_Select_Address--Header {
-    background-color: rgb(35, 35, 35);
-    position: sticky;
-    top: 0px;
-    padding: .5em 0em 1em 0em;
+  background-color: rgb(35, 35, 35);
+  position: sticky;
+  top: 0px;
+  padding: 0.5em 0em 1em 0em;
 }
 
 .Close--Checkout_Add_Address,
 .Close--Checkout_Select_Address {
-    position: absolute;
-    z-index: 3;
-    top: 1.5em;
-    right: 1.5em;
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-    &:hover {
-
-        .Close--Checkout_Add_Address--Cross::after,
-        .Close--Checkout_Select_Address--Cross::after {
-            background-color: red;
-        }
-        
-        .Close--Checkout_Add_Address--Cross::before,
-        .Close--Checkout_Select_Address--Cross::before {
-            background-color: red;
-        }
+  position: absolute;
+  z-index: 3;
+  top: 1.5em;
+  right: 1.5em;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  &:hover {
+    .Close--Checkout_Add_Address--Cross::after,
+    .Close--Checkout_Select_Address--Cross::after {
+      background-color: red;
     }
+
+    .Close--Checkout_Add_Address--Cross::before,
+    .Close--Checkout_Select_Address--Cross::before {
+      background-color: red;
+    }
+  }
 }
 
 .Close--Checkout_Add_Address--Cross,
 .Close--Checkout_Select_Address--Cross {
-    position: relative;
-    width: 28px;
-    height: 28px;
-    z-index: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Close--Checkout_Add_Address--Cross::after,
 .Close--Checkout_Select_Address--Cross::after {
-    background-color: white;
-    position: absolute;
-    display: block;
-    content: "";
-    width: 20px;
-    height: 3px;
-    margin: 0em auto;
-    transform: rotate(-45deg);
+  background-color: white;
+  position: absolute;
+  display: block;
+  content: "";
+  width: 20px;
+  height: 3px;
+  margin: 0em auto;
+  transform: rotate(-45deg);
 }
 
 .Close--Checkout_Add_Address--Cross::before,
 .Close--Checkout_Select_Address--Cross::before {
-    background-color: white;
-    position: absolute;
-    display: block;
-    content: "";
-    width: 20px;
-    height: 3px;
-    margin: 0em auto;
-    transform: rotate(45deg);
+  background-color: white;
+  position: absolute;
+  display: block;
+  content: "";
+  width: 20px;
+  height: 3px;
+  margin: 0em auto;
+  transform: rotate(45deg);
 }
 
 .Checkout_Select_Address--Address {
-    background-color: black;
-    padding: 1em;
-    border-style: none;
-    border-radius: 7px;
-    border: 1px solid white;
+  background-color: black;
+  padding: 1em;
+  border-style: none;
+  border-radius: 7px;
+  border: 1px solid white;
 }
 
-.Checkout_Select_Address--Address +
-.Checkout_Select_Address--Address {
-    margin-top: 1em;
+.Checkout_Select_Address--Address + .Checkout_Select_Address--Address {
+  margin-top: 1em;
 }
 
 .Checkout_Select_Address--Address p {
-    margin: .3em 0em;
+  margin: 0.3em 0em;
 }
 
 .Checkout_Select_Address--Name {
-    font-size: var(--Checkout_Select_Address--Name);
-    font-weight: 600;
+  font-size: var(--Checkout_Select_Address--Name);
+  font-weight: 600;
 }
 
 .Checkout_Select_Address--Button {
-    margin-top: 1em;
-    display: flex;
-    justify-content: center;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
 }
 
 .Checkout_Select_Address--Button button {
-    background-color: rgb(246, 195, 77);
-    font-size: var(--Checkout_Select_Address--Button);
-    font-weight: 600;
-    padding: .5em 1.5em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-        background-color: goldenrod;
-        transform: scaleX(1.01) scaleY(1.02);
-    }
+  background-color: rgb(246, 195, 77);
+  font-size: var(--Checkout_Select_Address--Button);
+  font-weight: 600;
+  padding: 0.5em 1.5em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: goldenrod;
+    transform: scaleX(1.01) scaleY(1.02);
+  }
 }
 
 .Checkout_Select_Address--Empty {
-    margin-top: 2em;
+  margin-top: 2em;
 }
 
 .Checkout_Select_Address--Empty--Note {
-    font-size: var(--Checkout_Select_Address--Empty--Note);
-    margin-bottom: .7em;
+  font-size: var(--Checkout_Select_Address--Empty--Note);
+  margin-bottom: 0.7em;
 }
 
 .Checkout_Select_Address--Empty--Button {
-    background-color: black;
-    color: white;
-    font-size: var(--Checkout_Select_Address--Button);
-    font-weight: 600;
-    padding: .65em 2em;
-    border-style: none;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-        background-color: rgb(210, 209, 209);
-        color: black;
-        transform: scaleX(1.01) scaleY(1.02);
-        border-radius: 7px;
-    }
+  background-color: black;
+  color: white;
+  font-size: var(--Checkout_Select_Address--Button);
+  font-weight: 600;
+  padding: 0.65em 2em;
+  border-style: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(210, 209, 209);
+    color: black;
+    transform: scaleX(1.01) scaleY(1.02);
+    border-radius: 7px;
+  }
 }
 
 .Checkout_Header {
-    background-color: rgb(35, 35, 35);
-    padding: 1em 0em;
+  background-color: rgb(35, 35, 35);
+  padding: 1em 0em;
 }
 
 .Checkout_Header--Heading {
-    font-size: var(--Checkout_Header--Heading);
-    font-family: var(--Checkout_Main_Font);
-    text-align: center;
+  font-size: var(--Checkout_Header--Heading);
+  font-family: var(--Checkout_Main_Font);
+  text-align: center;
 }
 
 .Checkout_Main {
-    display: flex;
-    max-width: 1300px;
-    margin: 0em auto;
-    padding: 1em;
+  display: flex;
+  max-width: 1300px;
+  margin: 0em auto;
+  padding: 1em;
 }
 
 .Checkout_Main--Products {
-    width: 70%;
-    padding-right: .5em;
+  width: 70%;
+  height: 160px;
+  padding-right: 0.5em;
+}
+
+.Checkout_Products_Container {
+  height: 100%;
 }
 
 .Checkout_Products--Product {
-    background-color: rgb(35, 35, 35);
-    display: flex;
-    padding: 1em;
-    border-style: none;
-    border-radius: 7px;
-    border: 2px solid white;
+  background-color: rgb(35, 35, 35);
+  height: 100%;
+  display: flex;
+  padding: 1em;
+  border-style: none;
+  border-radius: 7px;
+  border: 2px solid white;
 }
 
-.Checkout_Products--Product +
-.Checkout_Products--Product {
-    margin-top: 1em;
+.Checkout_Products--Product + .Checkout_Products--Product {
+  margin-top: 1em;
 }
 
 .Checkout_Products--Product_Image {
-    width: 25%;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Checkout_Products--Product_Image img {
-    max-width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .Checkout_Products--Product_Details {
-    font-family: var(--Checkout_Main_Font);
-    width: 70%;
-    margin-left: 2em;
+  font-family: var(--Checkout_Main_Font);
+  width: 70%;
+  margin-left: 2em;
 }
 
 .Checkout_Product_Details--Name {
-    font-size: var(--Checkout_Product_Details--Name);
-    font-family: var(--Checkout_Secondary_Font);
-    max-width: 550px;
-    margin-bottom: .6em;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: var(--Checkout_Product_Details--Name);
+  font-family: var(--Checkout_Secondary_Font);
+  max-width: 550px;
+  margin-bottom: 0.6em;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Checkout_Product_Details--Price {
-    font-size: var(--Checkout_Product_Details--Price);
-    display: flex;
+  font-size: var(--Checkout_Product_Details--Price);
+  display: flex;
 }
 
 .Checkout_Product_Details--Price_Symbol {
-    font-size: var(--Checkout_Product_Details--Price_Symbol);
-    align-self: self-start;
-    margin-top: .15em;
+  font-size: var(--Checkout_Product_Details--Price_Symbol);
+  align-self: self-start;
+  margin-top: 0.15em;
 }
 
 .Checkout_Product_Details--Total_Cost {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
 }
 
 .Checkout_Product_Details--Quantity {
-    font-size: var(--Checkout_Product_Details--Quantity);
+  font-size: var(--Checkout_Product_Details--Quantity);
 }
 
 .Checkout_Product_Details--Total {
-    font-size: var(--Checkout_Product_Details--Total);
-    display: flex;
-    font-weight: 600;
+  font-size: var(--Checkout_Product_Details--Total);
+  display: flex;
+  font-weight: 600;
 }
 
 .Checkout_Product_Details--Total_Symbol {
-    font-size: var(--Checkout_Product_Details--Total_Symbol);
-    align-self: flex-start;
-    font-weight: 500;
-    margin-top: .25em;
+  font-size: var(--Checkout_Product_Details--Total_Symbol);
+  align-self: flex-start;
+  font-weight: 500;
+  margin-top: 0.25em;
 }
 
 .Checkout_Main--Info {
-    font-family: var(--Checkout_Secondary_Font);
-    align-self: flex-start;
-    position: sticky;
-    top: 20px;
-    z-index: 1;
-    width: 30%;
+  font-family: var(--Checkout_Secondary_Font);
+  align-self: flex-start;
+  position: sticky;
+  top: 20px;
+  z-index: 1;
+  width: 30%;
 }
 
 .Checkout_Info_Container {
-    background-color: rgb(35, 35, 35);
-    padding: 1em;
-    border-style: none;
-    border-radius: 8px;
-    border: 2px solid white;
+  background-color: rgb(35, 35, 35);
+  padding: 1em;
+  border-style: none;
+  border-radius: 8px;
+  border: 2px solid white;
 }
 
 .Checkout_Info_Order--Quantity,
 .Checkout_Info_Order--Total,
 .Checkout_Info_Order--Delivery,
 .Checkout_Info_Order--Final {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Checkout_Info--Header {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .Checkout_Info--Header h2 {
-    font-size: var(--Checkout_Info_Header--Heading);
+  font-size: var(--Checkout_Info_Header--Heading);
 }
 
 .Checkout_Info--Details h3 {
-    font-size: var(--Checkout_Info_Details--Heading);
+  font-size: var(--Checkout_Info_Details--Heading);
 }
 
 .Checkout_Info--Details p {
-    font-size: var(--Checkout_Info_Details--Info);
-    margin-top: .4em;
+  font-size: var(--Checkout_Info_Details--Info);
+  margin-top: 0.4em;
 }
 
 .Checkout_Info_Details--Address {
-    margin-bottom: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 .Checkout_Info_Address--Button {
-    margin-top: .5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-top: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Checkout_Info_Address--Button button {
-    background-color: black;
-    color: white;
-    font-size: var(--Checkout_Info_Address--Button);
-    font-weight: 600;
-    padding: .6em 2em;
-    border-style: none;
-    border-radius: 5px;
-    border: 3px solid black;
-    cursor: pointer;
-    &:hover {
-        background-color: rgb(210, 209, 209);
-        color: black;
-    }
+  background-color: black;
+  color: white;
+  font-size: var(--Checkout_Info_Address--Button);
+  font-weight: 600;
+  padding: 0.6em 2em;
+  border-style: none;
+  border-radius: 5px;
+  border: 3px solid black;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(210, 209, 209);
+    color: black;
+  }
 }
 
 .Checkout_Info_Order--Final {
-    margin-top: .6em;
-    padding: .3em 0em;
-    border-style: none;
-    border-top: 1px solid white;
+  margin-top: 0.6em;
+  padding: 0.3em 0em;
+  border-style: none;
+  border-top: 1px solid white;
 }
 
 .Checkout_Info--Payment {
-    margin-top: 1em;
+  margin-top: 1em;
 }
 
 .Checkout_Info--Payment_Note {
-    font-size: var(--Checkout_Info--Payment_Note);
+  font-size: var(--Checkout_Info--Payment_Note);
 }
 
 .Checkout_Info--Payment_Button {
-    background-color: goldenrod;
-    display: block;
-    font-size: var(--Checkout_Info--Payment_Button);
-    font-weight: 600;
-    width: 80%;
-    margin: 1em auto;
-    padding: .6em 0em;
-    border-style: none;
-    border-radius: 4px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    &:hover {
-        background-color: white;
-        color: goldenrod;
-        border: 2px solid goldenrod;
-    }
+  background-color: goldenrod;
+  display: block;
+  font-size: var(--Checkout_Info--Payment_Button);
+  font-weight: 600;
+  width: 80%;
+  margin: 1em auto;
+  padding: 0.6em 0em;
+  border-style: none;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  &:hover {
+    background-color: white;
+    color: goldenrod;
+    border: 2px solid goldenrod;
+  }
 }
