@@ -170,6 +170,24 @@ function MerchantEditProduct() {
 
   async function handleEditProduct(e) {
     e.preventDefault();
+    if (
+      !title.length ||
+      !description.length ||
+      !imageUrls.length ||
+      !price ||
+      !discount.length ||
+      !category.length ||
+      !buyLimit ||
+      !stockQuantity ||
+      !stockAlert
+    ) {
+      setError(true);
+      setErrorMessage("Please fill all the fields!");
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+      return;
+    }
     const response = await axios.put(
       `${import.meta.env.VITE_BASE_URL}/updateproduct`,
       {

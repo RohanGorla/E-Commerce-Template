@@ -44,7 +44,7 @@ function AddProduct() {
       !imageUrls.length ||
       !price ||
       !discount.length ||
-      !category ||
+      !category.length ||
       !buyLimit ||
       !stockQuantity ||
       !stockAlert
