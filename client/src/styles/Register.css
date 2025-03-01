@@ -84,6 +84,21 @@
   border-radius: 2px;
 }
 
+.Register_Password--Input_And_Eye {
+  display: flex;
+  align-items: center;
+}
+
+.Register_Password--Eye {
+  font-size: 20px;
+  margin-left: 1em;
+  cursor: pointer;
+}
+
+.Register_Password--Eye--Inactive {
+  display: none;
+}
+
 .Register_Signup {
   margin-top: 1em;
 }
