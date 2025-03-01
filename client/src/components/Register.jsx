@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import "../styles/Register.css";
 
 function Register() {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const context = useOutletContext();
   const navigate = useNavigate();
 
@@ -91,15 +93,33 @@ function Register() {
         </div>
         <div className="Register_Password">
           <label>Password</label>
-          <input
-            className="Register_Password--Input"
-            type="password"
-            required
-            onChange={(e) => {
-              context.setPassword(e.target.value);
-            }}
-            value={context.password}
-          ></input>
+          <div className="Register_Password--Input_And_Eye">
+            <input
+              className="Register_Password--Input"
+              type={showPassword ? "text" : "password"}
+              required
+              onChange={(e) => {
+                context.setPassword(e.target.value);
+              }}
+              value={context.password}
+            ></input>
+            <FaEyeSlash
+              className={
+                showPassword
+                  ? "Register_Password--Eye"
+                  : "Register_Password--Eye--Inactive"
+              }
+              onClick={() => setShowPassword(false)}
+            />
+            <FaEye
+              className={
+                showPassword
+                  ? "Register_Password--Eye--Inactive"
+                  : "Register_Password--Eye"
+              }
+              onClick={() => setShowPassword(true)}
+            />
+          </div>
         </div>
         <div className="Register_Signup">
           <input type="submit" value="Sign up"></input>
