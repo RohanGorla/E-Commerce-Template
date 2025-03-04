@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import bg from "../assets/homepagebg.js";
+import altImgUrl from "../assets/alternateImage.js";
 import "../styles/Home.css";
 
 function Home() {
   const [mostBought, setMostBought] = useState([]);
   const [mostDiscount, setMostDiscount] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const navigate = useNavigate();
 
   /* GET PRODUCT IMAGE URLS FROM S3 */
@@ -105,15 +107,22 @@ function Home() {
                   <div className="Home_Product--Image">
                     <img
                       src={
-                        product.imageUrl
+                        product.imageUrl &&
+                        loadedImages.includes(JSON.parse(product.imageTags)[0])
                           ? product.imageUrl[0].imageUrl
-                          : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                          : `data:image/jpeg;base64,${altImgUrl}`
                       }
                       onClick={() => {
                         window.open(
                           `${window.location.origin}/products/product/${product.id}`
                         );
                       }}
+                      onLoad={() => {
+                        const imageTag = JSON.parse(product.imageTags)[0];
+                        if (!loadedImages.includes(imageTag))
+                          setLoadedImages((prev) => [...prev, imageTag]);
+                      }}
+                      loading="lazy"
                     ></img>
                   </div>
                   <div className="Home_Product--Details">

@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
+import altImgUrl from "../../assets/alternateImage.js";
 import "../../styles/Items.css";
 
 function Items() {
@@ -9,6 +10,7 @@ function Items() {
   const { item } = useParams();
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [wishlists, setWishlists] = useState([]);
   const [wishProduct, setWishProduct] = useState({});
   const [addListShow, setAddListShow] = useState(false);
@@ -665,14 +667,22 @@ function Items() {
                     <div className="Item_Image">
                       <img
                         src={
-                          product.imageUrl
+                          product.imageUrl &&
+                          loadedImages.includes(
+                            JSON.parse(product.imageTags)[0]
+                          )
                             ? product.imageUrl[0].imageUrl
-                            : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                            : `data:image/jpeg;base64,${altImgUrl}`
                         }
                         onClick={() => {
                           window.open(
                             `${window.location.origin}/products/product/${product.id}`
                           );
+                        }}
+                        onLoad={() => {
+                          const imageTag = JSON.parse(product.imageTags)[0];
+                          if (!loadedImages.includes(imageTag))
+                            setLoadedImages((prev) => [...prev, imageTag]);
                         }}
                       ></img>
                     </div>
