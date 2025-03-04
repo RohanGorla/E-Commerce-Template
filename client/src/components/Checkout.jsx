@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import altImgUrl from "../../assets/alternateImage.js";
 import "../styles/Checkout.css";
 
 function Checkout() {
   const [cartData, setCartData] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [addressData, setAddressData] = useState([]);
   const [showAddress, setShowSelectAddress] = useState(false);
   const [addAddress, setShowAddAddress] = useState(false);
@@ -627,10 +629,18 @@ function Checkout() {
                       <div className="Checkout_Products--Product_Image">
                         <img
                           src={
-                            product.imageUrl
+                            product.imageUrl &&
+                            loadedImages.includes(
+                              JSON.parse(product.imageTags)[0]
+                            )
                               ? product.imageUrl[0].imageUrl
-                              : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                              : `data:image/jpeg;base64,${altImgUrl}`
                           }
+                          onLoad={() => {
+                            const imageTag = JSON.parse(product.imageTags)[0];
+                            if (!loadedImages.includes(imageTag))
+                              setLoadedImages((prev) => [...prev, imageTag]);
+                          }}
                         ></img>
                       </div>
                       <div className="Checkout_Products--Product_Details">
