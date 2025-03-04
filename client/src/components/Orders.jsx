@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import altImgUrl from "../assets/alternateImage.js";
 import "../styles/Orders.css";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
   const [showAddressId, setShowAddressId] = useState(-1);
   const [error, setError] = useState(false);
@@ -151,7 +153,8 @@ function Orders() {
                   <div className="Orders_Main--Order_Image">
                     <img
                       src={
-                        order.imageUrl
+                        order.imageUrl &&
+                        loadedImages.includes(JSON.parse(order.imageTags)[0])
                           ? order.imageUrl[0].imageUrl
                           : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
                       }
@@ -159,6 +162,11 @@ function Orders() {
                         window.open(
                           `${window.location.origin}/products/product/${order.productid}`
                         );
+                      }}
+                      onLoad={() => {
+                        const imageTag = JSON.parse(order.imageTags)[0];
+                        if (!loadedImages.includes(imageTag))
+                          setLoadedImages((prev) => [...prev, imageTag]);
                       }}
                     ></img>
                   </div>
