@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import altImgUrl from "../../assets/alternateImage.js";
+import altImgUrl from "../assets/alternateImage.js";
 import "../styles/Checkout.css";
 
 function Checkout() {

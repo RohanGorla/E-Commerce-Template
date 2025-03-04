@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "../styles/MerchantInventory.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import altImgUrl from "../assets/alternateImage.js";
+import "../styles/MerchantInventory.css";
 
 function MerchantInventory() {
   const { type } = useParams();
@@ -9,6 +10,7 @@ function MerchantInventory() {
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const [inventoryType, setInventoryType] = useState("");
   const [inventoryData, setInventoryData] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [showStockEditor, setShowStockEditor] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(0);
   const [stockValue, setStockValue] = useState(0);
@@ -161,10 +163,16 @@ function MerchantInventory() {
                   <div className="MerchantInventory--Product_Image">
                     <img
                       src={
-                        product.imageUrl
+                        product.imageUrl &&
+                        loadedImages.includes(JSON.parse(product.imageTags)[0])
                           ? product.imageUrl[0].imageUrl
-                          : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                          : `data:image/jpeg;base64,${altImgUrl}`
                       }
+                      onLoad={() => {
+                        const imageTag = JSON.parse(product.imageTags)[0];
+                        if (!loadedImages.includes(imageTag))
+                          setLoadedImages((prev) => [...prev, imageTag]);
+                      }}
                     ></img>
                   </div>
                   <div className="MerchantInventory--Product_Details">
