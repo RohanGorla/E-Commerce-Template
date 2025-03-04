@@ -4,7 +4,6 @@ import { FaStar, FaHeart } from "react-icons/fa";
 import axios from "axios";
 import altImgUrl from "../../assets/alternateImage.js";
 import "../../styles/Product.css";
-import imageUrl from "../../assets/Dreamkart_Logo.js";
 
 function Product() {
   const { product } = useParams();

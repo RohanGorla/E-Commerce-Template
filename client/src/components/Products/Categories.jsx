@@ -19,6 +19,7 @@ function Categories() {
       const categoryData = response.data.data;
       setCategories(categoryData);
     } else {
+      console.log(response.data.err);
       setError(true);
       setErrorMessage(response.data.errorMsg);
       setTimeout(() => {
