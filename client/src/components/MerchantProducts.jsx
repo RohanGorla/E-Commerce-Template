@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import "../styles/MerchantProducts.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import altImgUrl from "../assets/alternateImage.js";
 
 function MerchantProducts() {
   const [merchantProducts, setMerchantProducts] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -122,10 +124,16 @@ function MerchantProducts() {
                 <div className="MerchantProducts--Product_Image">
                   <img
                     src={
-                      product.imageUrl
+                      product.imageUrl &&
+                      loadedImages.includes(JSON.parse(product.imageTags)[0])
                         ? product.imageUrl[0].imageUrl
-                        : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                        : `data:image/jpeg;base64,${altImgUrl}`
                     }
+                    onLoad={() => {
+                      const imageTag = JSON.parse(product.imageTags)[0];
+                      if (!loadedImages.includes(imageTag))
+                        setLoadedImages((prev) => [...prev, imageTag]);
+                    }}
                   />
                 </div>
                 <div className="MerchantProducts--Product_Details">
