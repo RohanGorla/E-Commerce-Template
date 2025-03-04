@@ -846,13 +846,12 @@ app.put("/editmerchantpassword", (req, res) => {
 app.get("/getallcategories", async (req, res) => {
   try {
     db.query("select * from category", (err, data) => {
-      if (err) {
+      if (err)
         return res.send({
           access: false,
           errorMsg:
             "Some error has occurred. Please re-try or refresh the page!",
         });
-      }
       return res.send({ access: true, data });
     });
   } catch (err) {

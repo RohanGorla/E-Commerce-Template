@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaStar, FaHeart } from "react-icons/fa";
 import axios from "axios";
+import altImgUrl from "../../assets/alternateImage.js";
 import "../../styles/Product.css";
+import imageUrl from "../../assets/Dreamkart_Logo.js";
 
 function Product() {
   const { product } = useParams();
   const navigate = useNavigate();
   const [productData, setProductData] = useState({});
+  const [loadedImages, setLoadedImages] = useState([]);
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
   const [review, setReview] = useState("");
@@ -46,24 +49,7 @@ function Product() {
   const address = JSON.parse(localStorage.getItem("address"));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const mailId = userInfo?.mailId;
-  const imageUrls = [
-    {
-      src: "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg",
-    },
-    {
-      src: "https://cdn.thewirecutter.com/wp-content/media/2023/06/bestlaptops-2048px-9765.jpg?auto=webp&quality=75&width=1024",
-    },
-    {
-      src: "https://www.itaf.eu/wp-content/uploads/2021/01/Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg",
-    },
-    {
-      src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlygWcz51gyDexlstejSgZZ2LSxqF4rBz3wQ&s",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D",
-    },
-  ];
-  const [currentUrl, setCurrentUrl] = useState("");
+  const [currentImage, setCurrentImage] = useState({});
 
   /* GET PRODUCT IMAGE URLS FROM S3 */
 
@@ -100,11 +86,11 @@ function Product() {
       }
       data.mrp = mrp;
       data.actualPrice = offerPriceActual;
-      if (JSON.parse(data.imageTags).length) {
-        data.imageUrls = await getImageUrls(JSON.parse(data?.imageTags));
-        setCurrentUrl(data.imageUrls[0].imageUrl);
-      } else setCurrentUrl(imageUrls[0].src);
-      console.log(data);
+      data.imageUrls = await getImageUrls(JSON.parse(data?.imageTags));
+      setCurrentImage({
+        imageTag: JSON.parse(data?.imageTags)[0],
+        imageUrl: data.imageUrls[0].imageUrl,
+      });
       setProductData(data);
     } else {
       setSuccess(false);
@@ -1019,44 +1005,48 @@ function Product() {
           <div className="Product_Main--Product">
             <div className="Product_Main--Product_Images">
               <div className="Product_Images--Main_Image">
-                <img src={currentUrl}></img>
+                <img
+                  src={
+                    loadedImages.includes(currentImage.imageTag)
+                      ? currentImage.imageUrl
+                      : `data:image/jpeg;base64,${altImgUrl}`
+                  }
+                ></img>
               </div>
               <div className="Product_Images--More_Images">
-                {productData?.imageUrls
-                  ? productData.imageUrls.map((image, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className={
-                            image.imageUrl == currentUrl
-                              ? "Product_More_Images--Image Product_More_Images--Image--Active"
-                              : "Product_More_Images--Image"
-                          }
-                          onClick={() => {
-                            setCurrentUrl(image.imageUrl);
-                          }}
-                        >
-                          <img src={image.imageUrl} />
-                        </div>
-                      );
-                    })
-                  : imageUrls.map((url, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className={
-                            url.src == currentUrl
-                              ? "Product_More_Images--Image Product_More_Images--Image--Active"
-                              : "Product_More_Images--Image"
-                          }
-                          onClick={() => {
-                            setCurrentUrl(url.src);
-                          }}
-                        >
-                          <img src={url.src} />
-                        </div>
-                      );
-                    })}
+                {productData.imageUrls?.map((image, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={
+                        image.imageTag === currentImage.imageTag
+                          ? "Product_More_Images--Image Product_More_Images--Image--Active"
+                          : "Product_More_Images--Image"
+                      }
+                      onClick={() => {
+                        setCurrentImage({
+                          imageTag: image.imageTag,
+                          imageUrl: image.imageUrl,
+                        });
+                      }}
+                    >
+                      <img
+                        src={
+                          loadedImages.includes(image.imageTag)
+                            ? image.imageUrl
+                            : `data:image/jpeg;base64,${altImgUrl}`
+                        }
+                        onLoad={() => {
+                          if (!loadedImages.includes(image.imageTag))
+                            setLoadedImages((prev) => [
+                              ...prev,
+                              image.imageTag,
+                            ]);
+                        }}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className="Product_Main--Product_Details">
