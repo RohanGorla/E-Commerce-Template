@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import altImgUrl from "../assets/alternateImage.js";
 import "../styles/Buy.css";
 
 function Buy() {
   const [productData, setProductData] = useState({});
+  const [loadedImages, setLoadedImages] = useState([]);
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryDateDisplay, setDeliveryDateDisplay] = useState("");
   const [addressData, setAddressData] = useState([]);
@@ -569,10 +571,16 @@ function Buy() {
                 <div className="Buy_Products--Product_Image">
                   <img
                     src={
-                      productData.imageUrl
+                      productData.imageUrl &&
+                      loadedImages.includes(JSON.parse(product.imageTags)[0])
                         ? productData.imageUrl[0].imageUrl
-                        : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                        : `data:image/jpeg;base64,${altImgUrl}`
                     }
+                    onLoad={() => {
+                      const imageTag = JSON.parse(productData.imageTags)[0];
+                      if (!loadedImages.includes(imageTag))
+                        setLoadedImages((prev) => [...prev, imageTag]);
+                    }}
                   ></img>
                 </div>
                 <div className="Buy_Products--Product_Details">
