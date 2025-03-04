@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
+import altImgUrl from "../assets/alternateImage.js";
 import "../styles/Cart.css";
 
 function Cart() {
   const [cart, setCart] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [count, setCount] = useState(-1);
   const [selectedItem, setSelectedItem] = useState(-1);
@@ -248,14 +250,22 @@ function Cart() {
                         <div className="Cart_Items_Display--Image">
                           <img
                             src={
-                              item.imageUrl
+                              item.imageUrl &&
+                              loadedImages.includes(
+                                JSON.parse(item.imageTags)[0]
+                              )
                                 ? item.imageUrl[0].imageUrl
-                                : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                                : `data:image/jpeg;base64,${altImgUrl}`
                             }
                             onClick={() => {
                               window.open(
                                 `${window.location.origin}/products/product/${item.productid}`
                               );
+                            }}
+                            onLoad={() => {
+                              const imageTag = JSON.parse(item.imageTags)[0];
+                              if (!loadedImages.includes(imageTag))
+                                setLoadedImages((prev) => [...prev, imageTag]);
                             }}
                           ></img>
                         </div>
