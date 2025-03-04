@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import altImgUrl from "../assets/alternateImage.js";
 import "../styles/MerchantOrders.css";
 
 function MerchantOrders() {
@@ -8,6 +9,7 @@ function MerchantOrders() {
   const navigate = useNavigate();
   const merchantInfo = JSON.parse(localStorage.getItem("merchantInfo"));
   const [orders, setOrders] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -161,10 +163,16 @@ function MerchantOrders() {
                 <div className="MerchantOrders_Order_Image">
                   <img
                     src={
-                      order.imageUrl
+                      order.imageUrl &&
+                      loadedImages.includes(JSON.parse(order.imageTags)[0])
                         ? order.imageUrl[0].imageUrl
-                        : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                        : `data:image/jpeg;base64,${altImgUrl}`
                     }
+                    onLoad={() => {
+                      const imageTag = JSON.parse(order.imageTags)[0];
+                      if (!loadedImages.includes(imageTag))
+                        setLoadedImages((prev) => [...prev, imageTag]);
+                    }}
                   ></img>
                 </div>
                 <div className="MerchantOrders_Order_Details">
