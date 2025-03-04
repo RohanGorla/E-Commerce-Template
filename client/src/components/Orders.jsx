@@ -156,7 +156,7 @@ function Orders() {
                         order.imageUrl &&
                         loadedImages.includes(JSON.parse(order.imageTags)[0])
                           ? order.imageUrl[0].imageUrl
-                          : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                          : `data:image/jpeg;base64,${altImgUrl}`
                       }
                       onClick={() => {
                         window.open(

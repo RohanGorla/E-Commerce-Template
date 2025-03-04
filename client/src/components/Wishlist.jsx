@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
-import "../styles/Wishlist.css";
 import axios from "axios";
+import altImgUrl from "../assets/alternateImage.js";
+import "../styles/Wishlist.css";
 
 function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
   const [allWishitems, setAllWishitems] = useState([]);
+  const [loadedImages, setLoadedImages] = useState([]);
   const [wishlists, setWishlists] = useState([]);
   const [selectedWishlist, setSelectedWistlist] = useState("");
   const [addListShow, setAddListShow] = useState(false);
@@ -498,14 +500,25 @@ function Wishlist() {
                           <div className="Wish_Item--Image">
                             <img
                               src={
-                                item.imageUrl
+                                item.imageUrl &&
+                                loadedImages.includes(
+                                  JSON.parse(item.imageTags)[0]
+                                )
                                   ? item.imageUrl[0].imageUrl
-                                  : "https://cdn.thewirecutter.com/wp-content/media/2023/06/businesslaptops-2048px-0943.jpg"
+                                  : `data:image/jpeg;base64,${altImgUrl}`
                               }
                               onClick={() => {
                                 window.open(
                                   `${window.location.origin}/products/product/${item.productid}`
                                 );
+                              }}
+                              onLoad={() => {
+                                const imageTag = JSON.parse(item.imageTags)[0];
+                                if (!loadedImages.includes(imageTag))
+                                  setLoadedImages((prev) => [
+                                    ...prev,
+                                    imageTag,
+                                  ]);
                               }}
                             ></img>
                           </div>
